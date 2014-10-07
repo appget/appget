@@ -5,10 +5,10 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{0DF5E722-8458-4963-9285-E80D0AD98027}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AppGet.Core</RootNamespace>
-    <AssemblyName>Com</AssemblyName>
+    <RootNamespace>AppGet</RootNamespace>
+    <AssemblyName>appget</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
@@ -30,6 +30,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>AppGet.Application</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="SharpCompress.3.5">
       <HintPath>..\packages\sharpcompress.0.8.2\lib\net35\SharpCompress.3.5.dll</HintPath>
@@ -43,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compression\CompressionService.cs" />
+    <Compile Include="Application.cs" />
     <Compile Include="ProgressTracker\IReportProgress.cs" />
     <Compile Include="ProgressTracker\ProgressState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
