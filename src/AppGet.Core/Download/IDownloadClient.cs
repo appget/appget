@@ -1,6 +1,6 @@
-﻿using AppGet.Core.ProgressTracker;
+﻿using AppGet.ProgressTracker;
 
-namespace AppGet.Core.Download
+namespace AppGet.Download
 {
     public interface IDownloadClient : IReportProgress
     {

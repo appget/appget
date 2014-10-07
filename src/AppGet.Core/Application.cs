@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using AppGet.Core.Download;
+using AppGet.Download;
 using TinyIoC;
 
 namespace AppGet

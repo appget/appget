@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using AppGet.ProgressTracker;
 
-namespace AppGet.Core.Download
+namespace AppGet.Download
 {
     public class HttpDownloadClient : IDownloadClient
     {
@@ -24,8 +24,8 @@ namespace AppGet.Core.Download
         public void DownloadFile(string url, string fileName)
         {
             var webClient = new WebClient();
-            webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressCallback);
-            webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadCompletedCallback);
+            webClient.DownloadProgressChanged += DownloadProgressCallback;
+            webClient.DownloadFileCompleted += DownloadCompletedCallback;
             webClient.DownloadFileAsync(new Uri(url), fileName);
 
             _downloading = true;
