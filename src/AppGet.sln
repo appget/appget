@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppGet", "AppGet.Core\AppGet.csproj", "{0DF5E722-8458-4963-9285-E80D0AD98027}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppGet", "AppGet\AppGet.csproj", "{0DF5E722-8458-4963-9285-E80D0AD98027}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppGet.Tests", "AppGet.Tests\AppGet.Tests.csproj", "{1BC812FD-E91C-4278-9224-3678DAEB66AA}"
 EndProject
