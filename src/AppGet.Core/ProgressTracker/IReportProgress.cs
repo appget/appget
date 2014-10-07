@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AppGet.Core.ProgressTracker
+namespace AppGet.ProgressTracker
 {
     public interface IReportProgress
     {

@@ -34,6 +34,9 @@
     <StartupObject>AppGet.Application</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.3.1.0.0\lib\net35\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="SharpCompress.3.5">
       <HintPath>..\packages\sharpcompress.0.8.2\lib\net35\SharpCompress.3.5.dll</HintPath>
     </Reference>

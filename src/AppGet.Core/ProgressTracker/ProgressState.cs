@@ -1,4 +1,4 @@
-﻿namespace AppGet.Core.ProgressTracker
+﻿namespace AppGet.ProgressTracker
 {
     public class ProgressState
     {

@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Text;
-using AppGet.Core.ProgressTracker;
+using AppGet.ProgressTracker;
 using SharpCompress.Archive;
 using SharpCompress.Common;
-using SharpCompress.Reader;
 
-namespace AppGet.Core.Compression
+namespace AppGet.Compression
 {
     public class CompressionService : IReportProgress
     {
