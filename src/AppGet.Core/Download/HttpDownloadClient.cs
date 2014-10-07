@@ -1,10 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading;
-using AppGet.Core.ProgressTracker;
+using AppGet.ProgressTracker;
 
 namespace AppGet.Core.Download
 {
