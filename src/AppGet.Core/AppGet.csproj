@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Compression\CompressionService.cs" />
     <Compile Include="Application.cs" />
+    <Compile Include="Download\DownloadService.cs" />
     <Compile Include="Download\HttpDownloadClient.cs" />
     <Compile Include="Download\IDownloadClient.cs" />
     <Compile Include="ProgressTracker\IReportProgress.cs" />

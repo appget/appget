@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using AppGet.Core.Download;
+using NLog;
 
 namespace AppGet.Download
 {
@@ -12,6 +13,7 @@ namespace AppGet.Download
     public class DownloadService : IDownloadService
     {
         private readonly IEnumerable<IDownloadClient> _downloadClients;
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         public DownloadService(IEnumerable<IDownloadClient> downloadClients)
         {
@@ -22,7 +24,12 @@ namespace AppGet.Download
         {
             var client = _downloadClients.SingleOrDefault(c => c.CanHandleProtocol(url));
 
-            if (client == null) return;
+            if (client == null)
+            {
+                _logger.Error("No download client found that could handle: {0}", url);
+                
+                throw new DownloadClientNotFoundException("No download client found that could handle: {0}", url);
+            }
 
             client.DownloadFile(url, fileName);
         }
