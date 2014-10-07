@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using AppGet.Core.Download;
 using TinyIoC;
 
 namespace AppGet
@@ -20,7 +22,15 @@ namespace AppGet
         {
             var container = new TinyIoCContainer();
             container.AutoRegister();
+
+            RegisterDownloadClients(container);
+
             return 0;
+        }
+
+        private static void RegisterDownloadClients(TinyIoCContainer container)
+        {
+            container.RegisterMultiple<IDownloadClient>(new List<Type> { typeof(HttpDownloadClient) });
         }
     }
 }
