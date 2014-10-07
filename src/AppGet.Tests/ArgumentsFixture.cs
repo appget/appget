@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Linq;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace AppGet.Tests
@@ -15,7 +16,7 @@ namespace AppGet.Tests
         }
 
         [TestCase("install /t /c=12 /awd")]
-        [TestCase("INSTALL -t -c=12 =awd")]
+        [TestCase("INSTALL -t -c=12 -awd")]
         [TestCase("INSTALL /t /awd")]
         [TestCase("INSTALL -t -awd")]
         [TestCase("INSTALL -t /awd")]
@@ -29,5 +30,19 @@ namespace AppGet.Tests
             arguments.Flags.Should().Contain("awd");
         }
 
+        [TestCase("install /t /c=12 /awd", "c", "12")]
+        [TestCase("INSTALL -t -c=12 -awd", "c", "12")]
+        [TestCase("install /url:http://test", "url", "http://test")]
+        [TestCase("install -url:http://test", "url", "http://test")]
+        [TestCase("install /url=http://test", "url", "http://test")]
+        [TestCase("install -url=http://test", "url", "http://test")]
+        [TestCase("install -url:\"C:\\Path With Spaces\\\"", "url", "C:\\Path With Spaces\\")]
+        public void should_parse_params(string args, string expectedParam, string expectedValue)
+        {
+            var arguments = new Arguments(args);
+            arguments.Params.Should().HaveCount(1);
+            arguments.Params.First().Key.Should().Be(expectedParam);
+            arguments.Params.First().Value.Should().Be(expectedValue);
+        }
     }
 }
