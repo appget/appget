@@ -10,7 +10,8 @@ namespace AppGet.Serialization
         {
             using (var textWriter = new StringWriter(CultureInfo.InvariantCulture))
             {
-                var serializer = new Serializer();
+                var serializer = new Serializer(SerializationOptions.EmitDefaults);
+               
                 serializer.Serialize(textWriter, obj);
                 return textWriter.ToString();
             }

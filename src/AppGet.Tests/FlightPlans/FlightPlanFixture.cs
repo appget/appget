@@ -16,13 +16,14 @@ namespace AppGet.Tests.FlightPlans
                 Id = "firefox",
                 Version = "latest",
                 Exe = new[] { "firefox.exe" },
-                Sha256 = "730e109bd7a8a32b1cb9d9a09aa2325d2430587ddbc0c38bad911525",
+       
                 Installer = InstallerType.MSI,
                 Packages = new[]
                 {
                     new PackageSource
                     {
                         Source = "http://mozilla.com/firefox.exe",
+                        Sha256 = "730e109bd7a8a32b1cb9d9a09aa2325d2430587ddbc0c38bad911525",
                         Architecture = ArchitectureType.x86,
                         MinWindowsVersion =5.1,
                         MaxWindowsVersion = 6.4
@@ -30,7 +31,8 @@ namespace AppGet.Tests.FlightPlans
                     new PackageSource
                     {
                         Source = "http://mozilla.com/firefox_x64.exe",
-                        Architecture = ArchitectureType.AMD64,
+                        Sha256 = "38b060a751ac96384cd9327eb1b1e36a21fdb71114be07434c0cc7bf",
+                        Architecture = ArchitectureType.x64,
                         MinWindowsVersion =5.1,
                         MaxWindowsVersion = 6.4
                     }

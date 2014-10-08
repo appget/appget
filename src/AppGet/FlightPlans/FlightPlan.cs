@@ -6,8 +6,7 @@ namespace AppGet.FlightPlans
     {
         public string Id { get; set; }
         public string Version { get; set; }
-        public Uri Url { get; set; }
-        public string Sha256 { get; set; }
+        public Uri ApplicationUrl { get; set; }
 
         public string[] Exe { get; set; }
         public InstallerType Installer { get; set; }
@@ -18,6 +17,8 @@ namespace AppGet.FlightPlans
     public class PackageSource
     {
         public string Source { get; set; }
+        public string Sha256 { get; set; }
+
         public ArchitectureType Architecture { get; set; }
 
         //http://en.wikipedia.org/wiki/List_of_Microsoft_Windows_versions
@@ -28,8 +29,9 @@ namespace AppGet.FlightPlans
     public enum ArchitectureType
     {
         x86,
-        AMD64,
-        IA64
+        x64,
+        Itanium,
+        ARM
     }
 
     public enum InstallerType
