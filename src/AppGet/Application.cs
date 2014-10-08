@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using AppGet.Commands;
-using AppGet.Download;
+using AppGet.Composition;
 using AppGet.Exceptions;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
-using TinyIoC;
 
 namespace AppGet
 {
@@ -31,11 +28,7 @@ namespace AppGet
                 ConfigureLogger();
 
                 var options = Options.Parse(args);
-
-                var container = new TinyIoCContainer();
-                container.AutoRegister();
-
-                RegisterDownloadClients(container);
+                var container = ContainerBuilder.Build();
 
 
                 return 0;
@@ -57,12 +50,6 @@ namespace AppGet
             LogManager.Configuration.LoggingRules.Add(rule);
 
             LogManager.ReconfigExistingLoggers();
-        }
-
-        private static void RegisterDownloadClients(TinyIoCContainer container)
-        {
-            container.RegisterMultiple<IDownloadClient>(new List<Type> { typeof(HttpDownloadClient) });
-            container.RegisterMultiple<ICommandExecutor>(new List<Type> { typeof(HttpDownloadClient) });
         }
     }
 }

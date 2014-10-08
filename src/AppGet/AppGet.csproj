@@ -58,6 +58,7 @@
     <Compile Include="Commands\CommandExecutor.cs" />
     <Compile Include="Commands\ICommandExecutor.cs" />
     <Compile Include="Commands\UnknownCommandException.cs" />
+    <Compile Include="Composition\Application.cs" />
     <Compile Include="Compression\CompressionService.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="Download\WindowsPathDownloadClient.cs" />
@@ -73,7 +74,7 @@
     <Compile Include="ProgressTracker\ProgressState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\Yaml.cs" />
-    <Compile Include="TinyIoC.cs" />
+    <Compile Include="Composition\TinyIoC.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
