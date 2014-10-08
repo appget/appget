@@ -11,8 +11,6 @@ namespace AppGet.Download
     {
         private static readonly Regex HttpRegex = new Regex(@"^https?\:\/\/", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private bool _downloading;
-        private long _bytesReceived;
-        private long _totalBytes;
 
         private ProgressState _progress;
 
@@ -29,6 +27,7 @@ namespace AppGet.Download
             webClient.DownloadFileAsync(new Uri(url), fileName);
 
             _downloading = true;
+            _progress = new ProgressState();
 
             while (_downloading)
             {

@@ -60,6 +60,7 @@
     <Compile Include="Commands\UnknownCommandException.cs" />
     <Compile Include="Compression\CompressionService.cs" />
     <Compile Include="Application.cs" />
+    <Compile Include="Download\WindowsPathDownloadClient.cs" />
     <Compile Include="Download\ProtocolNotSupportedException.cs" />
     <Compile Include="Download\DownloadService.cs" />
     <Compile Include="Download\HttpDownloadClient.cs" />
