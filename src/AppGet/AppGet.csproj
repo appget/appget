@@ -68,6 +68,7 @@
     <Compile Include="Exceptions\AppGetException.cs" />
     <Compile Include="FileSystem\PathService.cs" />
     <Compile Include="FlightPlans\FlightPlan.cs" />
+    <Compile Include="Options.cs" />
     <Compile Include="ProgressTracker\IReportProgress.cs" />
     <Compile Include="ProgressTracker\ProgressState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
