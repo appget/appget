@@ -7,6 +7,7 @@ using AppGet.Exceptions;
 using AppGet.Options;
 using NLog;
 using NLog.Config;
+using NLog.Layouts;
 using NLog.Targets;
 
 namespace AppGet
@@ -57,7 +58,10 @@ namespace AppGet
         {
             LogManager.Configuration = new LoggingConfiguration();
 
-            var consoleTarget = new ColoredConsoleTarget();
+            var consoleTarget = new ColoredConsoleTarget
+            {
+                Layout = new SimpleLayout("> ${message}")
+            };
             var rule = new LoggingRule("*", LogLevel.Trace, consoleTarget);
             LogManager.Configuration.AddTarget("console", consoleTarget);
             LogManager.Configuration.LoggingRules.Add(rule);

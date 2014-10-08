@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using AppGet.Options;
 using NLog;
 
@@ -20,7 +21,9 @@ namespace AppGet.Commands.ShowFlightPlan
 
         public void Execute(CommandOptions commandOptions)
         {
-          _logger.Info("bluup!");
+            var options = (ShowFlightPlanOptions)commandOptions;
+
+            _logger.Info("bluup! " + options.PackageName);
         }
     }
 }

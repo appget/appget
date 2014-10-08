@@ -15,18 +15,20 @@ namespace AppGet.Options
         [ValueList(typeof(List<string>), MaximumElements = -1)]
         public IList<string> LeftOvers { get; set; }
 
-        public List<string> Packages { get; set; }
-        public List<string> UnknowArgs { get; set; }
+        public string PackageName { get; private set; }
+        public List<string> UnknowArgs { get; private set; }
 
         public void ProcessUnknowArgs()
         {
-            Packages = new List<string>();
             UnknowArgs = new List<string>();
-            foreach (var leftOver in LeftOvers)
+
+            for (int i = 0; i < LeftOvers.Count; i++)
             {
-                if (PackageNameRegex.IsMatch(leftOver) && !UnknowArgs.Any())
+                var leftOver = LeftOvers[i];
+
+                if (i == 0 && PackageNameRegex.IsMatch(leftOver))
                 {
-                    Packages.Add(leftOver);
+                    PackageName = leftOver;
                 }
                 else
                 {

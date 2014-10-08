@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using AppGet.Commands.ShowFlightPlan;
 using AppGet.Options;
 using FluentAssertions;
@@ -24,11 +23,11 @@ namespace AppGet.Tests.Options
         {
             var option = Parse(arg);
             option.CommandName.Should().Be("ShowFlightPlan");
-            option.Packages.Should().HaveCount(1);
-            option.Packages.Single().Should().Be("firefox");
+            option.PackageName.Should().Be("firefox");
         }
 
         [TestCase("showflightplan /invalid")]
+        [TestCase("showflightplan firefox secondpackage")]
         public void should_throw_with_unknow_params(string args)
         {
             Assert.Throws<UnknownOptionException>(() => Parse(args));

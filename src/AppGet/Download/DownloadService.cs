@@ -12,11 +12,12 @@ namespace AppGet.Download
     public class DownloadService : IDownloadService
     {
         private readonly IEnumerable<IDownloadClient> _downloadClients;
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly Logger _logger;
 
-        public DownloadService(IEnumerable<IDownloadClient> downloadClients)
+        public DownloadService(IEnumerable<IDownloadClient> downloadClients, Logger logger)
         {
             _downloadClients = downloadClients;
+            _logger = logger;
         }
 
         public void DownloadFile(string url, string fileName)

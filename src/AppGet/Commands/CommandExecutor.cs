@@ -13,12 +13,13 @@ namespace AppGet.Commands
 
     public class CommandExecutor : ICommandExecutor
     {
+        private readonly Logger _logger;
         private readonly List<ICommandHandler> _consoleCommands;
 
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        public CommandExecutor(IEnumerable<ICommandHandler> consoleCommands)
+        public CommandExecutor(IEnumerable<ICommandHandler> consoleCommands, Logger logger)
         {
+            _logger = logger;
             _consoleCommands = consoleCommands.ToList();
         }
 
@@ -31,13 +32,13 @@ namespace AppGet.Commands
                 throw new UnknownCommandException(arguments.CommandName);
             }
 
-            Logger.Debug("starting {0}", arguments.CommandName);
+            _logger.Debug("starting {0}", arguments.CommandName);
 
             var stopwatch = Stopwatch.StartNew();
             commandHandler.Execute(arguments);
             stopwatch.Stop();
 
-            Logger.Info("completed {0} duration: {1}s", arguments.CommandName, stopwatch.Elapsed.TotalSeconds);
+            _logger.Info("completed {0}. took: {1:N}s", arguments.CommandName, stopwatch.Elapsed.TotalSeconds);
         }
     }
 }
