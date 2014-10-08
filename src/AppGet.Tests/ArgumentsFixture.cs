@@ -21,7 +21,7 @@ namespace AppGet.Tests
         [TestCase("INSTALL -t -awd")]
         [TestCase("INSTALL -t /awd")]
         [TestCase("INSTALL /t /awd /url:http://test")]
-        [TestCase("INSTALL -t -awd -url:http://test")]
+        [TestCase("INSTALL -t text -awd -url:http://test")]
         public void should_parse_flags_name(string args)
         {
             var arguments = new Arguments(args);
@@ -44,5 +44,8 @@ namespace AppGet.Tests
             arguments.Params.First().Key.Should().Be(expectedParam);
             arguments.Params.First().Value.Should().Be(expectedValue);
         }
+
+
+     
     }
 }

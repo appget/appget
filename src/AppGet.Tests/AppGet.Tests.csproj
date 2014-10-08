@@ -67,10 +67,14 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="YamlDotNet">
+      <HintPath>..\packages\YamlDotNet.3.3.0\lib\net35\YamlDotNet.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArgumentsFixture.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="FlightPlans\FlightPlanFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -81,6 +85,9 @@
       <Project>{0DF5E722-8458-4963-9285-E80D0AD98027}</Project>
       <Name>AppGet</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="FlightPlans\SampleFlightPlans\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

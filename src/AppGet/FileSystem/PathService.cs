@@ -8,6 +8,5 @@
 
     public class PathService
     {
-        public string GetDownloadDestination()
     }
 }
