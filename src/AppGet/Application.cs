@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Reflection;
+using AppGet.Commands;
 using AppGet.Composition;
 using AppGet.Exceptions;
 using AppGet.Options;
@@ -29,8 +31,12 @@ namespace AppGet
                 ConfigureLogger();
 
                 var container = ContainerBuilder.Build();
-                var optionsService = container.Resolve<OptionsService>();
+               
+                var optionsService = container.Resolve<IOptionsService>();
                 var options = optionsService.Parse(args);
+
+                var commandProcessor = container.Resolve<CommandExecutor>();
+                commandProcessor.ExecuteCommand(options);
 
 
                 return 0;

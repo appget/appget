@@ -5,7 +5,12 @@ using CommandLine;
 
 namespace AppGet.Options
 {
-    public class OptionsService
+    public interface IOptionsService
+    {
+        CommandOptions Parse(params string[] args);
+    }
+
+    public class OptionsService : IOptionsService
     {
         public CommandOptions Parse(params string[] args)
         {
@@ -34,10 +39,6 @@ namespace AppGet.Options
 
                 commandOptions.CommandName = commandName;
             });
-
-
-
-            Console.WriteLine(c);
 
             return commandOptions;
         }

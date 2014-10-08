@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using AppGet.Options;
 using CommandLine;
 using CommandLine.Text;
@@ -7,7 +8,7 @@ namespace AppGet.Commands.ShowFlightPlan
 {
     public class ShowFlightPlanOptions : CommandOptions
     {
-  [HelpOption]
+        [HelpOption]
         public string GetUsage()
         {
             var help = new HelpText

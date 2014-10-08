@@ -57,8 +57,9 @@
   <ItemGroup>
     <Compile Include="Commands\CommandExecutor.cs" />
     <Compile Include="Commands\ICommandExecutor.cs" />
+    <Compile Include="Commands\ShowFlightPlan\ShowFlightPlanCommandHandler.cs" />
     <Compile Include="Commands\UnknownCommandException.cs" />
-    <Compile Include="Composition\Application.cs" />
+    <Compile Include="Composition\ContainerBuilder.cs" />
     <Compile Include="Compression\CompressionService.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="Download\WindowsPathDownloadClient.cs" />
