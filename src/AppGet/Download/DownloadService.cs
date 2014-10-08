@@ -25,9 +25,9 @@ namespace AppGet.Download
 
             if (client == null)
             {
-                _logger.Error("No download client found that could handle: {0}", url);
+                _logger.Trace("No download client found that could handle: {0}", url);
                 
-                throw new DownloadClientNotFoundException("No download client found that could handle: {0}", url);
+                throw new ProtocolNotSupportedException("No download client found that could handle: {0}", url);
             }
 
             client.DownloadFile(url, fileName);
