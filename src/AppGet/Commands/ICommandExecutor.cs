@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Remoting;
+using AppGet.Options;
 
 namespace AppGet.Commands
 {

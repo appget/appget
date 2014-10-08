@@ -1,0 +1,52 @@
+﻿using System;
+using System.Linq;
+using AppGet.Commands.ShowFlightPlan;
+using AppGet.Options;
+using FluentAssertions;
+using NUnit.Framework;
+
+namespace AppGet.Tests.Options
+{
+    [TestFixture]
+    public class OptionsServiceFixture : TestBase<OptionsService>
+    {
+        [TestCase("showflightplan", typeof(ShowFlightPlanOptions))]
+        [TestCase("ShowFlightPlan", typeof(ShowFlightPlanOptions))]
+        public void should_parse_verb(string arg, Type optionType)
+        {
+            var option = Parse(arg);
+            option.CommandName.Should().Be(arg);
+            option.Should().BeOfType(optionType);
+        }
+
+        [TestCase("ShowFlightPlan firefox")]
+        public void should_parse_verb_with_package_name(string arg)
+        {
+            var option = Parse(arg);
+            option.CommandName.Should().Be("ShowFlightPlan");
+            option.Packages.Should().HaveCount(1);
+            option.Packages.Single().Should().Be("firefox");
+        }
+
+        [TestCase("showflightplan /invalid")]
+        public void should_throw_with_unknow_params(string args)
+        {
+            Assert.Throws<UnknownOptionException>(() => Parse(args));
+        }
+
+        [TestCase("invalid command")]
+        [TestCase("-showflightplan")]
+        [TestCase("")]
+        public void should_throw_on_unknown_verb(string verb)
+        {
+            Assert.Throws<UnknownCommandException>(() => Parse(verb));
+        }
+
+
+
+        private CommandOptions Parse(string args)
+        {
+            return Subject.Parse(args.Split(' '));
+        }
+    }
+}

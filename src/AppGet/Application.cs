@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using AppGet.Composition;
 using AppGet.Exceptions;
+using AppGet.Options;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
@@ -27,8 +28,9 @@ namespace AppGet
             {
                 ConfigureLogger();
 
-                var options = Options.Parse(args);
                 var container = ContainerBuilder.Build();
+                var optionsService = container.Resolve<OptionsService>();
+                var options = optionsService.Parse(args);
 
 
                 return 0;
@@ -36,6 +38,11 @@ namespace AppGet
             catch (AppGetException ex)
             {
                 Logger.Error(ex.Message);
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                Logger.Fatal(ex);
                 return 1;
             }
         }

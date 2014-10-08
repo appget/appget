@@ -34,8 +34,9 @@
     <StartupObject>AppGet.Application</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CommandLine">
-      <HintPath>..\packages\CommandLineParser.1.9.71\lib\net35\CommandLine.dll</HintPath>
+    <Reference Include="CommandLine, Version=1.9.72.0, Culture=neutral, PublicKeyToken=de6f01bd326f8c32, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\CommandLineParser19.1.9.74\lib\net35\CommandLine.dll</HintPath>
     </Reference>
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.3.1.0.0\lib\net35\NLog.dll</HintPath>
@@ -54,7 +55,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Arguments.cs" />
     <Compile Include="Commands\CommandExecutor.cs" />
     <Compile Include="Commands\ICommandExecutor.cs" />
     <Compile Include="Commands\UnknownCommandException.cs" />
@@ -69,7 +69,12 @@
     <Compile Include="Exceptions\AppGetException.cs" />
     <Compile Include="FileSystem\PathService.cs" />
     <Compile Include="FlightPlans\FlightPlan.cs" />
-    <Compile Include="Options.cs" />
+    <Compile Include="Options\CommandOptions.cs" />
+    <Compile Include="Options\UnknownCommandException.cs" />
+    <Compile Include="Options\OptionException.cs" />
+    <Compile Include="Options\Options.cs" />
+    <Compile Include="Options\OptionsService.cs" />
+    <Compile Include="Commands\ShowFlightPlan\ShowFlightPlanOptions.cs" />
     <Compile Include="ProgressTracker\IReportProgress.cs" />
     <Compile Include="ProgressTracker\ProgressState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
