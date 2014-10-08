@@ -7,27 +7,27 @@ namespace AppGet.Commands
 {
     public interface ICommandExecutor
     {
-        void ExecuteCommand(Arguments arguments);
+        void ExecuteCommand(CommandOptions options);
     }
 
     public class CommandExecutor : ICommandExecutor
     {
-        private readonly List<ICommand> _consoleCommands;
+        private readonly List<ICommandHandler> _consoleCommands;
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        public CommandExecutor(IEnumerable<ICommand> consoleCommands)
+        public CommandExecutor(IEnumerable<ICommandHandler> consoleCommands)
         {
             _consoleCommands = consoleCommands.ToList();
         }
 
-        public void ExecuteCommand(Arguments arguments)
+        public void ExecuteCommand(CommandOptions arguments)
         {
-            var commandHandler = _consoleCommands.SingleOrDefault(c => c.CommandName.ToLower() == arguments.Command);
+            var commandHandler = _consoleCommands.FirstOrDefault(c => c.CanExecute(arguments));
 
             if (commandHandler == null)
             {
-                throw new UnknownCommandException(arguments.Command);
+                throw new UnknownCommandException(arguments.CommandName);
             }
 
             Logger.Debug(commandHandler.StartMessage);

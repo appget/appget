@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace AppGet.Tests
 {
     [TestFixture]
-    public class OptionsTests
+    public class OptionsFixture
     {
         [Test]
         public void should_parse_verb()

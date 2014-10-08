@@ -56,7 +56,7 @@
   <ItemGroup>
     <Compile Include="Arguments.cs" />
     <Compile Include="Commands\CommandExecutor.cs" />
-    <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\ICommandExecutor.cs" />
     <Compile Include="Commands\UnknownCommandException.cs" />
     <Compile Include="Compression\CompressionService.cs" />
     <Compile Include="Application.cs" />

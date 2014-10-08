@@ -74,7 +74,7 @@
   <ItemGroup>
     <Compile Include="ArgumentsFixture.cs" />
     <Compile Include="FlightPlans\FlightPlanFixture.cs" />
-    <Compile Include="OptionsTests.cs" />
+    <Compile Include="OptionsFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,3 @@
-using System.Diagnostics;
-using System.Security.AccessControl;
 using System.Text;
 using AppGet.Commands;
 using CommandLine;
@@ -7,23 +5,25 @@ using CommandLine;
 namespace AppGet
 {
 
-    public abstract class VerbOptions
+    public abstract class CommandOptions
     {
+        public string CommandName { get; set; }
         public Options Common { get; set; }
     }
 
-    public class ShowFlightPlanOptions : VerbOptions
+    public class ShowFlightPlanOptions : CommandOptions
     {
 
     }
 
     public class Options
     {
-        private static VerbOptions verbOptions;
 
-        public static VerbOptions Parse(string[] args)
+        public static CommandOptions Parse(string[] args)
         {
             var options = new Options(args);
+
+            CommandOptions commandOptions = null;
 
             Parser.Default.ParseArguments(args, options, (verb, subOptions) =>
             {
@@ -33,12 +33,13 @@ namespace AppGet
                     throw new UnknownCommandException(verb);
                 }
 
-                verbOptions = ((VerbOptions)subOptions);
-                verbOptions.Common = options;
+                commandOptions = ((CommandOptions)subOptions);
+                commandOptions.Common = options;
+                commandOptions.CommandName = verb;
 
             });
 
-            return verbOptions;
+            return commandOptions;
         }
 
         private Options(string[] args)

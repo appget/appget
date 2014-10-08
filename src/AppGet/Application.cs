@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using AppGet.Commands;
 using AppGet.Download;
 using AppGet.Exceptions;
 using NLog;
@@ -61,6 +62,7 @@ namespace AppGet
         private static void RegisterDownloadClients(TinyIoCContainer container)
         {
             container.RegisterMultiple<IDownloadClient>(new List<Type> { typeof(HttpDownloadClient) });
+            container.RegisterMultiple<ICommandExecutor>(new List<Type> { typeof(HttpDownloadClient) });
         }
     }
 }
