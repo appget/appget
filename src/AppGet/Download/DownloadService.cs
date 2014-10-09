@@ -26,9 +26,9 @@ namespace AppGet.Download
 
             if (client == null)
             {
-                _logger.Trace("No download client found that could handle: {0}", url);
-                
-                throw new ProtocolNotSupportedException("No download client found that could handle: {0}", url);
+                _logger.Debug("Unable to handle protocol for: {0} - Unknown Protocol", url);
+
+                throw new ProtocolNotSupportedException("Unable to handle download for: {0} - Unknown Protocol", url);
             }
 
             client.DownloadFile(url, fileName);
