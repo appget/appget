@@ -22,8 +22,8 @@ namespace AppGet.FlightPlans
         public ArchitectureType Architecture { get; set; }
 
         //http://en.wikipedia.org/wiki/List_of_Microsoft_Windows_versions
-        public double MinWindowsVersion { get; set; }
-        public double MaxWindowsVersion { get; set; }
+        public Version MinWindowsVersion { get; set; }
+        public Version MaxWindowsVersion { get; set; }
     }
 
     public enum ArchitectureType

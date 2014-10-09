@@ -67,6 +67,7 @@
     <Compile Include="Download\DownloadService.cs" />
     <Compile Include="Download\HttpDownloadClient.cs" />
     <Compile Include="Download\IDownloadClient.cs" />
+    <Compile Include="EnvironmentProxy.cs" />
     <Compile Include="Exceptions\AppGetException.cs" />
     <Compile Include="FileSystem\PathService.cs" />
     <Compile Include="FlightPlans\FlightPlan.cs" />
@@ -79,8 +80,12 @@
     <Compile Include="ProgressTracker\IReportProgress.cs" />
     <Compile Include="ProgressTracker\ProgressState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serialization\VersionConverter.cs" />
     <Compile Include="Serialization\Yaml.cs" />
     <Compile Include="Composition\TinyIoC.cs" />
+    <Compile Include="Requirements\IEnforceRequirements.cs" />
+    <Compile Include="Requirements\Specifications\MaxOsVersionSpecification.cs" />
+    <Compile Include="Requirements\Specifications\MinOsVersionSpecification.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

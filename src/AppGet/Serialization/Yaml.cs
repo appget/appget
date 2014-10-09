@@ -11,7 +11,8 @@ namespace AppGet.Serialization
         {
             using (var textWriter = new StringWriter(CultureInfo.InvariantCulture))
             {
-                var serializer = new Serializer(SerializationOptions.EmitDefaults, new CamelCaseNamingConvention());
+                var serializer = new Serializer(SerializationOptions.EmitDefaults | SerializationOptions.DisableAliases, new CamelCaseNamingConvention());
+                serializer.RegisterTypeConverter(new VersionConverter());
 
                 serializer.Serialize(textWriter, obj);
                 return textWriter.ToString();
