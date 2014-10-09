@@ -13,7 +13,8 @@ namespace AppGet.Requirements.Specifications
 
         public bool IsRequirementSatisfied(PackageSource packageSource)
         {
-            //TODO: Handle MaxWindowsVersion not being set
+            if (packageSource.MaxWindowsVersion == null) return true;
+
             return _environmentProxy.OSVersion.Version <= packageSource.MaxWindowsVersion;
         }
     }

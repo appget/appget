@@ -13,7 +13,8 @@ namespace AppGet.Requirements.Specifications
 
         public bool IsRequirementSatisfied(PackageSource packageSource)
         {
-            //TODO: Handle MinWindowsVersion not being set
+            if (packageSource.MinWindowsVersion == null) return true;
+
             return _environmentProxy.OSVersion.Version >= packageSource.MinWindowsVersion;
         }
     }
