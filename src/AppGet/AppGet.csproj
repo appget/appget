@@ -67,7 +67,8 @@
     <Compile Include="Download\DownloadService.cs" />
     <Compile Include="Download\HttpDownloadClient.cs" />
     <Compile Include="Download\IDownloadClient.cs" />
-    <Compile Include="EnvironmentProxy.cs" />
+    <Compile Include="Environment\EnvironmentProxy.cs" />
+    <Compile Include="Environment\OsBitness.cs" />
     <Compile Include="Exceptions\AppGetException.cs" />
     <Compile Include="FileSystem\PathService.cs" />
     <Compile Include="FlightPlans\FlightPlan.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="ProgressTracker\ProgressState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="Serialization\fastJSON\License.text" />
+    <Compile Include="Requirements\Specifications\OsArchitectureSpecification.cs" />
     <Compile Include="Serialization\fastJSON\Formatter.cs" />
     <Compile Include="Serialization\fastJSON\Getters.cs" />
     <Compile Include="Serialization\fastJSON\FastJson.cs" />

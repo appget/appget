@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="FlightPlans\FlightPlanFixture.cs" />
     <Compile Include="Options\OptionsServiceFixture.cs" />
+    <Compile Include="Requirements\OsArchitectureSpecificationFixture.cs" />
     <Compile Include="Requirements\MinOsVersionSpecificationFixture.cs" />
     <Compile Include="Requirements\MaxOsVersionSpecificationFixture.cs" />
     <Compile Include="TestBase.cs" />
