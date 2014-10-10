@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using AppGet.ProgressTracker;
+using NLog;
 using SharpCompress.Archive;
 using SharpCompress.Common;
 
@@ -8,13 +9,21 @@ namespace AppGet.Compression
 {
     public interface ICompressionService : IReportProgress
     {
-        void Decompress(string sourcePath, string sourceDestination);
+        void Decompress(string sourcePath, string destination);
     }
 
     public class CompressionService : ICompressionService
     {
-        public void Decompress(string sourcePath, string sourceDestination)
+        private readonly Logger _logger;
+
+        public CompressionService(Logger logger)
         {
+            _logger = logger;
+        }
+
+        public void Decompress(string sourcePath, string destination)
+        {
+            _logger.Info("Extracting package to " + destination);
             var archive = ArchiveFactory.Open(sourcePath).Entries.ToList();
 
             var progress = new ProgressState
@@ -26,8 +35,7 @@ namespace AppGet.Compression
             {
                 if (!entry.IsDirectory)
                 {
-                    Console.WriteLine(entry.FilePath);
-                    entry.WriteToDirectory(sourceDestination, ExtractOptions.ExtractFullPath | ExtractOptions.Overwrite);
+                    entry.WriteToDirectory(destination, ExtractOptions.ExtractFullPath | ExtractOptions.Overwrite);
                 }
 
                 progress.Completed++;

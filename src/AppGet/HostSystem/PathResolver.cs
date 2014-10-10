@@ -7,6 +7,7 @@ namespace AppGet.HostSystem
     public interface IPathResolver
     {
         string GetInstallerTempPath(string fileName);
+        string GetInstallationPath(FlightPlan flightPlan);
     }
 
     public class PathResolver : IPathResolver
@@ -32,13 +33,16 @@ namespace AppGet.HostSystem
             return Path.Combine(TempFolder, fileName);
         }
 
+
         public string GetInstallationPath(FlightPlan flightPlan)
         {
             switch (flightPlan.Installer)
             {
                 case InstallerType.Zip:
                     {
-                        return Path.Combine(ProgramData, flightPlan.Id + flightPlan.Version);
+                        var appGetFolder = Path.Combine(ProgramData, "AppGet");
+                        var folderName = string.Format("{0}-{1}", flightPlan.Id, flightPlan.Version);
+                        return Path.Combine(appGetFolder, folderName);
                     }
                 default:
                     {

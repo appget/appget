@@ -1,6 +1,5 @@
 ﻿using AppGet.Commands.Install;
 using AppGet.Compression;
-using AppGet.FileTransfer;
 using AppGet.FlightPlans;
 using AppGet.HostSystem;
 using NLog;
@@ -10,19 +9,20 @@ namespace AppGet.Install
     public class ZipInstaller
     {
         private readonly Logger _logger;
-        private readonly IFileTransferService _fileTransferService;
+        private readonly ICompressionService _compressionService;
         private readonly IPathResolver _pathResolver;
 
-        public ZipInstaller(Logger logger, CompressionService compressionService, IFileTransferService fileTransferService, IPathResolver pathResolver)
+        public ZipInstaller(Logger logger, ICompressionService compressionService, IPathResolver pathResolver)
         {
             _logger = logger;
-            _fileTransferService = fileTransferService;
+            _compressionService = compressionService;
             _pathResolver = pathResolver;
         }
 
         public void Install(string installerLocation, FlightPlan flightPlan, InstallOptions installOptions)
         {
-
+            var target = _pathResolver.GetInstallationPath(flightPlan);
+            _compressionService.Decompress(installerLocation, target);
         }
     }
 }
