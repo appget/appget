@@ -35,7 +35,7 @@ namespace AppGet.Commands.Install
         {
 
             var installOptions = (InstallOptions)commandOptions;
-            _logger.Info("Getting flightplan for " + commandOptions.PackageName);
+   
             var flightPlan = _packageProvider.GetFlightPlan(commandOptions.PackageName);
 
             var package = flightPlan.Packages.Single();

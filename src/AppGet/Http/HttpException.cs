@@ -1,14 +1,15 @@
 using System;
+using AppGet.Exceptions;
 
 namespace AppGet.Http
 {
-    public class HttpException : Exception
+    public class HttpException : AppGetException
     {
         public HttpRequest Request { get; private set; }
         public HttpResponse Response { get; private set; }
 
         public HttpException(HttpRequest request, HttpResponse response)
-            : base(string.Format("HTTP request failed: [{0}:{1}] [{2}] at [{3}]", (int)response.StatusCode, response.StatusCode, request.Method, request.Url.ToString()))
+            : base("HTTP request failed: " + response)
         {
             Request = request;
             Response = response;
@@ -18,16 +19,6 @@ namespace AppGet.Http
             : this(response.Request, response)
         {
 
-        }
-
-        public override string ToString()
-        {
-            if (Response != null)
-            {
-                return base.ToString() + System.Environment.NewLine + Response.Content;
-            }
-
-            return base.ToString();
         }
     }
 }

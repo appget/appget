@@ -6,7 +6,12 @@ using SharpCompress.Common;
 
 namespace AppGet.Compression
 {
-    public class CompressionService : IReportProgress
+    public interface ICompressionService : IReportProgress
+    {
+        void Decompress(string sourcePath, string sourceDestination);
+    }
+
+    public class CompressionService : ICompressionService
     {
         public void Decompress(string sourcePath, string sourceDestination)
         {

@@ -33,12 +33,6 @@ namespace AppGet.Http
         public override string ToString()
         {
             var result = string.Format("Res: [{0}] {1} : {2}.{3}", Request.Method, Request.Url, (int)StatusCode, StatusCode);
-
-            if (HasHttpError)
-            {
-                result += System.Environment.NewLine + Content;
-            }
-
             return result;
         }
     }

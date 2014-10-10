@@ -29,7 +29,7 @@ namespace AppGet.Http
 
         public HttpResponse Execute(HttpRequest request)
         {
-            _logger.Trace(request);
+            _logger.Debug(request);
 
             var webRequest = (HttpWebRequest)WebRequest.Create(request.Url);
 
@@ -94,11 +94,11 @@ namespace AppGet.Http
             stopWatch.Stop();
 
             var response = new HttpResponse(request, new HttpHeader(httpWebResponse.Headers), data, httpWebResponse.StatusCode);
-            _logger.Trace("{0} ({1:n0} ms)", response, stopWatch.ElapsedMilliseconds);
+            _logger.Debug("{0} ({1:n0} ms)", response, stopWatch.ElapsedMilliseconds);
 
             if (response.HasHttpError)
             {
-                _logger.Warn("HTTP Error - {0}", response);
+                _logger.Debug("HTTP Error - {0}", response);
                 throw new HttpException(request, response);
             }
 
