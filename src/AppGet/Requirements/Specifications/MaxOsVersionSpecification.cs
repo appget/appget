@@ -1,5 +1,4 @@
-﻿using System;
-using AppGet.Environment;
+﻿using AppGet.Environment;
 using AppGet.FlightPlans;
 
 namespace AppGet.Requirements.Specifications
@@ -22,6 +21,7 @@ namespace AppGet.Requirements.Specifications
                 return EnforcementResult.Pass();
             }
 
+            //TODO: make this the print the proper widnows version eg. Windows 7/Windows XP vs 6.2
             return EnforcementResult.Fail("Max supported OS version: {0}. Current version: {1}",
                                                         packageSource.MaxWindowsVersion,
                                                         _environmentProxy.OSVersion.Version);
