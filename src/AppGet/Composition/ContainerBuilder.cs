@@ -1,4 +1,5 @@
 ﻿using AppGet.Commands;
+using AppGet.Commands.Install;
 using AppGet.Commands.ShowFlightPlan;
 using AppGet.Download;
 using NLog;
@@ -27,7 +28,8 @@ namespace AppGet.Composition
         {
             container.RegisterMultiple<ICommandHandler>(new[]
             {
-                typeof(ShowFlightPlanCommandHandler)
+                typeof(ShowFlightPlanCommandHandler),
+                typeof(InstallCommandHandler)
             });
         }
 

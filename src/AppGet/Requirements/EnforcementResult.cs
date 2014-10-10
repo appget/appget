@@ -1,19 +1,33 @@
-﻿namespace AppGet.Requirements
+﻿using System;
+
+namespace AppGet.Requirements
 {
     public class EnforcementResult
     {
-        public bool Success { get; set; }
-        public string Message { get; set; }
-
-        public EnforcementResult(bool success)
+        public static EnforcementResult Pass()
         {
-            Success = success;
+            return new EnforcementResult
+            {
+                Success = true
+            };
         }
 
-        public EnforcementResult(bool success, string message)
+        public static EnforcementResult Fail(string reason, params object[] args)
         {
-            Success = success;
-            Message = message;
+            return Fail(String.Format(reason, args));
         }
+
+        public static EnforcementResult Fail(string reason)
+        {
+            return new EnforcementResult
+            {
+                Success = false,
+                Reason = reason
+            };
+        }
+
+        public bool Success { get; private set; }
+        public string Reason { get; private set; }
+
     }
 }

@@ -14,32 +14,33 @@ namespace AppGet.Requirements.Specifications
 
         public EnforcementResult IsRequirementSatisfied(PackageSource packageSource)
         {
-            if (packageSource.Architecture == ArchitectureType.x86)
+            switch (packageSource.Architecture)
             {
-                return new EnforcementResult(true);
+                case ArchitectureType.x86:
+                    {
+                        return EnforcementResult.Pass();
+                    }
+                case ArchitectureType.x64:
+                    {
+                        if (_environmentProxy.Is64BitOperatingSystem)
+                        {
+                            return EnforcementResult.Pass();
+                        }
+                        return EnforcementResult.Fail("x64 OS required for installation");
+                    }
+                case ArchitectureType.ARM:
+                    {
+                        return EnforcementResult.Fail("ARM is not supported at this time");
+                    }
+                case ArchitectureType.Itanium:
+                    {
+                        return EnforcementResult.Fail("Itanium is not supported at this time");
+                    }
+                default:
+                    {
+                        return EnforcementResult.Fail("Unsupported architecture: " + packageSource.Architecture);
+                    }
             }
-
-            if (packageSource.Architecture == ArchitectureType.x64)
-            {
-                if (_environmentProxy.Is64BitOperatingSystem)
-                {
-                    return new EnforcementResult(true);
-                }
-
-                return new EnforcementResult(false, "x64 OS required for installation");
-            }
-
-            if (packageSource.Architecture == ArchitectureType.ARM)
-            {
-                return new EnforcementResult(false, "ARM is not supported at this time");
-            }
-
-            if (packageSource.Architecture == ArchitectureType.Itanium)
-            {
-                return new EnforcementResult(false, "Itanium is not supported at this time");
-            }
-
-            return new EnforcementResult(false, "Unsupported architecture: " + packageSource.Architecture);
         }
     }
 }

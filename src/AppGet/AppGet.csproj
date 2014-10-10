@@ -57,6 +57,8 @@
   <ItemGroup>
     <Compile Include="Commands\CommandExecutor.cs" />
     <Compile Include="Commands\ICommandExecutor.cs" />
+    <Compile Include="Commands\Install\InstallCommandHandler.cs" />
+    <Compile Include="Commands\Install\InstallOptions.cs" />
     <Compile Include="Commands\ShowFlightPlan\ShowFlightPlanCommandHandler.cs" />
     <Compile Include="Commands\UnknownCommandException.cs" />
     <Compile Include="Composition\ContainerBuilder.cs" />
@@ -84,6 +86,7 @@
     <Compile Include="Http\HttpRequestBuilder.cs" />
     <Compile Include="Http\HttpResponse.cs" />
     <Compile Include="Http\UriExtensions.cs" />
+    <Compile Include="Install\InstallService.cs" />
     <Compile Include="Options\CommandOptions.cs" />
     <Compile Include="Options\UnknownCommandException.cs" />
     <Compile Include="Options\OptionException.cs" />

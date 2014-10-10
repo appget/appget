@@ -15,17 +15,16 @@ namespace AppGet.Requirements.Specifications
 
         public EnforcementResult IsRequirementSatisfied(PackageSource packageSource)
         {
-            if (packageSource.MinWindowsVersion == null) return new EnforcementResult(true);
+            if (packageSource.MinWindowsVersion == null) return EnforcementResult.Pass();
 
             if (_environmentProxy.OSVersion.Version >= packageSource.MinWindowsVersion)
             {
-                return new EnforcementResult(true);
+                return EnforcementResult.Pass();
             }
 
-            return new EnforcementResult(false,
-                                         String.Format("Min supported OS version: {0}. Current version: {1}",
+            return EnforcementResult.Fail("Min supported OS version: {0}. Current version: {1}",
                                                         packageSource.MaxWindowsVersion,
-                                                        _environmentProxy.OSVersion.Version));
+                                                        _environmentProxy.OSVersion.Version);
         }
     }
 }
