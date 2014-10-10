@@ -24,17 +24,10 @@ namespace AppGet.Serialization
 
         public void WriteYaml(IEmitter emitter, object value, Type type)
         {
-            if (value == null)
-            {
-                emitter.Emit(new Scalar(""));
-            }
-            else
+            if (value != null)
             {
                 emitter.Emit(new Scalar(((Version)value).ToString(2))); 
             }
-            
-               
-            
         }
     }
 }
