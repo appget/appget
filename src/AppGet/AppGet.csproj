@@ -72,12 +72,27 @@
     <Compile Include="Exceptions\AppGetException.cs" />
     <Compile Include="FileSystem\PathService.cs" />
     <Compile Include="FlightPlans\FlightPlan.cs" />
+    <Compile Include="Http\GZipWebClient.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Http\HttpAccept.cs" />
+    <Compile Include="Http\HttpClient.cs" />
+    <Compile Include="Http\HttpException.cs" />
+    <Compile Include="Http\HttpHeader.cs" />
+    <Compile Include="Http\HttpMethod.cs" />
+    <Compile Include="Http\HttpRequest.cs" />
+    <Compile Include="Http\HttpRequestBuilder.cs" />
+    <Compile Include="Http\HttpResponse.cs" />
+    <Compile Include="Http\UriExtensions.cs" />
     <Compile Include="Options\CommandOptions.cs" />
     <Compile Include="Options\UnknownCommandException.cs" />
     <Compile Include="Options\OptionException.cs" />
     <Compile Include="Options\Options.cs" />
     <Compile Include="Options\OptionsService.cs" />
     <Compile Include="Commands\ShowFlightPlan\ShowFlightPlanOptions.cs" />
+    <Compile Include="PackageProvider\AppGetServerProvider.cs" />
+    <Compile Include="PackageProvider\IPackageProvider.cs" />
+    <Compile Include="PackageProvider\PackageInfo.cs" />
     <Compile Include="ProgressTracker\IReportProgress.cs" />
     <Compile Include="ProgressTracker\ProgressState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -91,6 +106,7 @@
     <Compile Include="Serialization\fastJSON\JsonSerializer.cs" />
     <Compile Include="Serialization\fastJSON\Reflection.cs" />
     <Compile Include="Serialization\fastJSON\SafeDictionary.cs" />
+    <Compile Include="Serialization\Json.cs" />
     <Compile Include="Serialization\VersionConverter.cs" />
     <Compile Include="Serialization\Yaml.cs" />
     <Compile Include="Composition\TinyIoC.cs" />

@@ -57,6 +57,10 @@
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=3.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NLog.3.1.0.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -75,6 +79,7 @@
     <Compile Include="FlightPlans\FlightPlanFixture.cs" />
     <Compile Include="Options\OptionsServiceFixture.cs" />
     <Compile Include="Requirements\MaxOsVersionSpecificationFixture.cs" />
+    <Compile Include="PackageProvider\AppGetServerProviderFixture.cs" />
     <Compile Include="Requirements\MinOsVersionSpecificationFixture.cs" />
     <Compile Include="Requirements\OsArchitectureSpecificationFixture.cs" />
     <Compile Include="TestBase.cs" />

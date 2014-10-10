@@ -1,4 +1,5 @@
 ﻿using AutoMoq;
+using NLog;
 using NUnit.Framework;
 
 namespace AppGet.Tests
@@ -7,6 +8,8 @@ namespace AppGet.Tests
     {
 
         protected AutoMoqer Mocker { get; private set; }
+
+        protected Logger logger = LogManager.GetLogger("logger"); 
 
         [SetUp]
         public void BaseSetup()
