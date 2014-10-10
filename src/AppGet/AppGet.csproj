@@ -69,11 +69,11 @@
     <Compile Include="Download\DownloadService.cs" />
     <Compile Include="Download\HttpDownloadClient.cs" />
     <Compile Include="Download\IDownloadClient.cs" />
-    <Compile Include="Environment\EnvironmentProxy.cs" />
-    <Compile Include="Environment\OsBitness.cs" />
+    <Compile Include="HostSystem\EnvironmentProxy.cs" />
     <Compile Include="Exceptions\AppGetException.cs" />
     <Compile Include="FileSystem\PathService.cs" />
     <Compile Include="FlightPlans\FlightPlan.cs" />
+    <Compile Include="HostSystem\FolderResolver.cs" />
     <Compile Include="Http\GZipWebClient.cs">
       <SubType>Component</SubType>
     </Compile>

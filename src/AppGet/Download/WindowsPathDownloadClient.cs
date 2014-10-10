@@ -14,7 +14,7 @@ namespace AppGet.Download
             return WindowsPathRegex.IsMatch(url);
         }
 
-        public void DownloadFile(string url, string fileName)
+        public void DownloadFile(string url, string destination)
         {
             var progress = new ProgressState
                         {
@@ -22,7 +22,7 @@ namespace AppGet.Download
                         };
 
 
-            File.Copy(url, fileName);
+            File.Copy(url, destination);
 
             progress.Completed = 1;
             OnStatusUpdates(progress);

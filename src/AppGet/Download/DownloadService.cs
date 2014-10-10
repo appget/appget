@@ -6,7 +6,7 @@ namespace AppGet.Download
 {
     public interface IDownloadService
     {
-        void DownloadFile(string url, string fileName);
+        void DownloadFile(string url, string destination);
     }
 
     public class DownloadService : IDownloadService
@@ -20,7 +20,7 @@ namespace AppGet.Download
             _logger = logger;
         }
 
-        public void DownloadFile(string url, string fileName)
+        public void DownloadFile(string url, string destination)
         {
             var client = _downloadClients.SingleOrDefault(c => c.CanHandleProtocol(url));
 
@@ -31,7 +31,7 @@ namespace AppGet.Download
                 throw new ProtocolNotSupportedException("Unable to handle download for: {0} - Unknown Protocol", url);
             }
 
-            client.DownloadFile(url, fileName);
+            client.DownloadFile(url, destination);
         }
     }
 }

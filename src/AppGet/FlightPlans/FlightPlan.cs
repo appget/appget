@@ -17,6 +17,7 @@ namespace AppGet.FlightPlans
     public class PackageSource
     {
         public string Source { get; set; }
+        public string FileName { get; set; }
         public string Sha256 { get; set; }
 
         public ArchitectureType Architecture { get; set; }

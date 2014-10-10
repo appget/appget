@@ -1,5 +1,5 @@
-﻿using AppGet.Environment;
-using AppGet.FlightPlans;
+﻿using AppGet.FlightPlans;
+using AppGet.HostSystem;
 using AppGet.Requirements.Specifications;
 using FluentAssertions;
 using NUnit.Framework;

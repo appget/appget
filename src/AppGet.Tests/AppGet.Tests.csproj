@@ -76,6 +76,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Download\HttpDownloadClientFixture.cs" />
     <Compile Include="FlightPlans\FlightPlanFixture.cs" />
     <Compile Include="Options\OptionsServiceFixture.cs" />
     <Compile Include="Requirements\MaxOsVersionSpecificationFixture.cs" />

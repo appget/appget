@@ -1,5 +1,5 @@
-﻿using AppGet.Environment;
-using AppGet.FlightPlans;
+﻿using AppGet.FlightPlans;
+using AppGet.HostSystem;
 
 namespace AppGet.Requirements.Specifications
 {

@@ -1,6 +1,6 @@
 ﻿using System;
-using AppGet.Environment;
 using AppGet.FlightPlans;
+using AppGet.HostSystem;
 
 namespace AppGet.Requirements.Specifications
 {
@@ -17,14 +17,14 @@ namespace AppGet.Requirements.Specifications
         {
             if (packageSource.MinWindowsVersion == null) return EnforcementResult.Pass();
 
-            if (_environmentProxy.OSVersion.Version >= packageSource.MinWindowsVersion)
+            if (_environmentProxy.WindowsVersion.Version >= packageSource.MinWindowsVersion)
             {
                 return EnforcementResult.Pass();
             }
 
             return EnforcementResult.Fail("Min supported OS version: {0}. Current version: {1}",
                                                         packageSource.MaxWindowsVersion,
-                                                        _environmentProxy.OSVersion.Version);
+                                                        _environmentProxy.WindowsVersion.Version);
         }
     }
 }

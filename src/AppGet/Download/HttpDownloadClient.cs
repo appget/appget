@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -13,18 +14,19 @@ namespace AppGet.Download
         private bool _downloading;
 
         private ProgressState _progress;
+        private Exception _error;
 
         public bool CanHandleProtocol(String url)
         {
             return HttpRegex.IsMatch(url);
         }
 
-        public void DownloadFile(string url, string fileName)
+        public void DownloadFile(string url, string destination)
         {
             var webClient = new WebClient();
             webClient.DownloadProgressChanged += DownloadProgressCallback;
             webClient.DownloadFileCompleted += DownloadCompletedCallback;
-            webClient.DownloadFileAsync(new Uri(url), fileName);
+            webClient.DownloadFileAsync(new Uri(url), destination);
 
             _downloading = true;
             _progress = new ProgressState();
@@ -33,17 +35,27 @@ namespace AppGet.Download
             {
                 Thread.Sleep(100);
             }
+
+            if (_error != null)
+            {
+                throw _error;
+            }
         }
 
         private void DownloadProgressCallback(object sender, DownloadProgressChangedEventArgs e)
         {
             _progress.Completed = e.BytesReceived;
             _progress.Total = e.TotalBytesToReceive;
-            OnStatusUpdates(_progress);
+
+            if (OnStatusUpdates != null)
+            {
+                OnStatusUpdates(_progress);
+            }
         }
 
         private void DownloadCompletedCallback(object sender, AsyncCompletedEventArgs e)
         {
+            _error = e.Error;
             _downloading = false;
         }
 
