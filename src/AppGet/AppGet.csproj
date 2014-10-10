@@ -80,6 +80,14 @@
     <Compile Include="ProgressTracker\IReportProgress.cs" />
     <Compile Include="ProgressTracker\ProgressState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="Serialization\fastJSON\License.text" />
+    <Compile Include="Serialization\fastJSON\Formatter.cs" />
+    <Compile Include="Serialization\fastJSON\Getters.cs" />
+    <Compile Include="Serialization\fastJSON\FastJson.cs" />
+    <Compile Include="Serialization\fastJSON\JsonParser.cs" />
+    <Compile Include="Serialization\fastJSON\JsonSerializer.cs" />
+    <Compile Include="Serialization\fastJSON\Reflection.cs" />
+    <Compile Include="Serialization\fastJSON\SafeDictionary.cs" />
     <Compile Include="Serialization\VersionConverter.cs" />
     <Compile Include="Serialization\Yaml.cs" />
     <Compile Include="Composition\TinyIoC.cs" />
