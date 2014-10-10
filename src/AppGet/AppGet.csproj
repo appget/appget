@@ -71,9 +71,8 @@
     <Compile Include="Download\IDownloadClient.cs" />
     <Compile Include="HostSystem\EnvironmentProxy.cs" />
     <Compile Include="Exceptions\AppGetException.cs" />
-    <Compile Include="FileSystem\PathService.cs" />
     <Compile Include="FlightPlans\FlightPlan.cs" />
-    <Compile Include="HostSystem\FolderResolver.cs" />
+    <Compile Include="HostSystem\PathResolver.cs" />
     <Compile Include="Http\GZipWebClient.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -96,6 +95,7 @@
     <Compile Include="PackageProvider\AppGetServerProvider.cs" />
     <Compile Include="PackageProvider\IPackageProvider.cs" />
     <Compile Include="PackageProvider\PackageInfo.cs" />
+    <Compile Include="ProgressTracker\ConsoleProgressReporter.cs" />
     <Compile Include="ProgressTracker\IReportProgress.cs" />
     <Compile Include="ProgressTracker\ProgressState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -120,7 +120,9 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="FileSystem\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

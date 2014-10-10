@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using AppGet.Download;
 using FluentAssertions;
 using NUnit.Framework;
@@ -12,8 +13,8 @@ namespace AppGet.Tests.Download
         public void should_download_file_using_correct_name()
         {
             var temp = Path.GetTempPath();
-
-            Subject.DownloadFile("http://www.linqpad.net/GetFile.aspx?LINQPad4.zip", Path.Combine(temp, "LINQPad4.zip"));
+            Subject.OnStatusUpdates = state => Console.WriteLine(state.ToString());
+            Subject.DownloadFile("http://www.linqpad.net/GetFile.aspx?LINQPad4-AnyCPU.zip", Path.Combine(temp, "LINQPad4.zip"));
             Directory.GetFiles(temp, "LINQPad4.zip").Should().NotBeEmpty();
         }
     }

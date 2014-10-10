@@ -1,11 +1,12 @@
 ﻿using System;
+using AppGet.Exceptions;
 
 namespace AppGet.Download
 {
-    public class ProtocolNotSupportedException : Exception
+    public class ProtocolNotSupportedException : AppGetException
     {
         public ProtocolNotSupportedException(string message, params object[] args)
-            : base(String.Format(message, args))
+            : base(message, args)
         {
         }
     }

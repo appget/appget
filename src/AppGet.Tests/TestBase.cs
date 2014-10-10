@@ -4,12 +4,14 @@ using NUnit.Framework;
 
 namespace AppGet.Tests
 {
-    public abstract class TestBase<T>
+    public abstract class TestBase<T> where T : class
     {
 
         protected AutoMoqer Mocker { get; private set; }
 
-        protected Logger logger = LogManager.GetLogger("logger"); 
+        private T _subject = null;
+
+        protected Logger logger = LogManager.GetLogger("logger");
 
         [SetUp]
         public void BaseSetup()
@@ -21,7 +23,12 @@ namespace AppGet.Tests
         {
             get
             {
-                return Mocker.Resolve<T>();
+                if (_subject == null)
+                {
+                    _subject = Mocker.Resolve<T>();
+                }
+
+                return _subject;
             }
         }
 

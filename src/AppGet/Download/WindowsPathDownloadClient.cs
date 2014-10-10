@@ -21,13 +21,23 @@ namespace AppGet.Download
                             Total = 1
                         };
 
-
+            //TODO: move this to a Copy using streams/that way we can provide progress
             File.Copy(url, destination);
 
             progress.Completed = 1;
-            OnStatusUpdates(progress);
+            
+            if (OnStatusUpdates != null)
+            {
+                OnStatusUpdates(progress);
+            }
+
+            if (OnCompleted != null)
+            {
+                OnCompleted(progress);
+            }
         }
 
         public Action<ProgressState> OnStatusUpdates { get; set; }
+        public Action<ProgressState> OnCompleted { get; set; }
     }
 }

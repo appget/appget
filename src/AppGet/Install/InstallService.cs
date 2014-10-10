@@ -2,11 +2,17 @@
 using AppGet.Compression;
 using AppGet.Download;
 using AppGet.FlightPlans;
+using AppGet.HostSystem;
 using NLog;
 
 namespace AppGet.Install
 {
-    public class InstallService
+    public interface IInstallService
+    {
+        void Install(string installerLocation, FlightPlan flightPlan, InstallOptions installOptions);
+    }
+
+    public class InstallService : IInstallService
     {
         private readonly Logger _logger;
         private readonly ZipInstaller _zipInstaller;
@@ -17,11 +23,11 @@ namespace AppGet.Install
             _zipInstaller = zipInstaller;
         }
 
-        public void Install(FlightPlan flightPlan, InstallOptions installOptions)
+        public void Install(string installerLocation, FlightPlan flightPlan, InstallOptions installOptions)
         {
-            _zipInstaller.Install(flightPlan, installOptions);
+            _logger.Info("Begignig installation of " + flightPlan.Id);
+            _zipInstaller.Install(installerLocation, flightPlan, installOptions);
         }
-
     }
 
 
@@ -29,14 +35,16 @@ namespace AppGet.Install
     {
         private readonly Logger _logger;
         private readonly IDownloadService _downloadService;
+        private readonly IPathResolver _pathResolver;
 
-        public ZipInstaller(Logger logger, CompressionService compressionService, IDownloadService downloadService)
+        public ZipInstaller(Logger logger, CompressionService compressionService, IDownloadService downloadService, IPathResolver pathResolver)
         {
             _logger = logger;
             _downloadService = downloadService;
+            _pathResolver = pathResolver;
         }
 
-        public void Install(FlightPlan flightPlan, InstallOptions installOptions)
+        public void Install(string installerLocation, FlightPlan flightPlan, InstallOptions installOptions)
         {
 
         }

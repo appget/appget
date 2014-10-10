@@ -1,4 +1,5 @@
-﻿namespace AppGet.ProgressTracker
+﻿
+namespace AppGet.ProgressTracker
 {
     public class ProgressState
     {
@@ -9,8 +10,13 @@
         {
             get
             {
-                return Total / Completed * 100;
+                return Completed / (decimal)Total * (decimal)100.0;
             }
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0:00}%: {1:N0} / {2:N0}", PercentCompleted, Completed, Total);
         }
     }
 }

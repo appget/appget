@@ -57,8 +57,14 @@ namespace AppGet.Download
         {
             _error = e.Error;
             _downloading = false;
+
+            if (OnCompleted != null)
+            {
+                OnCompleted(_progress);
+            }
         }
 
         public Action<ProgressState> OnStatusUpdates { get; set; }
+        public Action<ProgressState> OnCompleted { get; set; }
     }
 }

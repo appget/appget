@@ -29,10 +29,16 @@ namespace AppGet
         {
             try
             {
+                if (Debugger.IsAttached)
+                {
+                    args = TakeArgsFromInput();
+                }
+
+
                 ConfigureLogger();
 
                 var container = ContainerBuilder.Build();
-               
+
                 var optionsService = container.Resolve<IOptionsService>();
                 var options = optionsService.Parse(args);
 
@@ -52,6 +58,13 @@ namespace AppGet
                 Logger.Fatal(ex);
                 return 1;
             }
+        }
+
+        private static string[] TakeArgsFromInput()
+        {
+            Console.WriteLine("In debug mode. Please enter arguments");
+            var input = Console.ReadLine();
+            return input.Split(' ');
         }
 
         private static void ConfigureLogger()

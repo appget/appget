@@ -26,10 +26,19 @@ namespace AppGet.Compression
                 }
 
                 progress.Completed++;
-                OnStatusUpdates(progress);
+
+                if (OnStatusUpdates != null)
+                {
+                    OnStatusUpdates(progress);
+                }
+                if (OnCompleted != null)
+                {
+                    OnCompleted(progress);
+                }
             }
         }
 
         public Action<ProgressState> OnStatusUpdates { get; set; }
+        public Action<ProgressState> OnCompleted { get; set; }
     }
 }
