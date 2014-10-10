@@ -36,7 +36,7 @@ namespace AppGet.Http
 
             if (HasHttpError)
             {
-                result += Environment.NewLine + Content;
+                result += System.Environment.NewLine + Content;
             }
 
             return result;

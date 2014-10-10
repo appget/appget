@@ -24,7 +24,7 @@ namespace AppGet.Http
         {
             if (Response != null)
             {
-                return base.ToString() + Environment.NewLine + Response.Content;
+                return base.ToString() + System.Environment.NewLine + Response.Content;
             }
 
             return base.ToString();

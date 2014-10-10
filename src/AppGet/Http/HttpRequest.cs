@@ -52,7 +52,7 @@ namespace AppGet.Http
                 return string.Format("Req: [{0}] {1}", Method, Url);
             }
 
-            return string.Format("Req: [{0}] {1} {2} {3}", Method, Url, Environment.NewLine, Body);
+            return string.Format("Req: [{0}] {1} {2} {3}", Method, Url, System.Environment.NewLine, Body);
         }
 
         public void AddSegment(string segment, string value)
