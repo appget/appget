@@ -1,5 +1,6 @@
 ﻿using AppGet.Http;
 using AppGet.PackageProvider;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace AppGet.Tests.PackageProvider
@@ -12,8 +13,9 @@ namespace AppGet.Tests.PackageProvider
         {
 
             Mocker.SetInstance<IHttpClient>(new HttpClient(logger));
+            var c = Subject.FindPackage("linqpad");
 
-            var c = Subject.GetFlightPlan("linqpad");
+            c.Should().NotBeNull();
         }
     }
 }

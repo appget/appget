@@ -18,7 +18,7 @@ namespace AppGet.PackageProvider
         }
 
 
-        public FlightPlan GetFlightPlan(string name)
+        public PackageInfo FindPackage(string name)
         {
             _logger.Info("Finding package " + name);
             var requestBuilder = new HttpRequestBuilder("http://appget.azurewebsites.net/api/v1/");
@@ -26,12 +26,19 @@ namespace AppGet.PackageProvider
             var request = requestBuilder.Build("packages/{package}/latest");
             request.AddSegment("package", name);
 
-            var package = _httpClient.Get<PackageInfo>(request);
-
-            _logger.Info("Downloading flighplan for " + name);
-            var response = _httpClient.Get(new HttpRequest(package.Resource.FlightPlanUrl));
-
-            return Yaml.Deserialize<FlightPlan>(response.Content);
+            try
+            {
+                var package = _httpClient.Get<PackageInfo>(request);
+                return package.Resource;
+            }
+            catch (HttpException ex)
+            {
+                if (ex.Response.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return null;
+                }
+                throw;
+            }
         }
     }
 }

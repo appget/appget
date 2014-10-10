@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using AppGet.Download;
+using AppGet.FlightPlans;
 using AppGet.HostSystem;
 using AppGet.Install;
 using AppGet.Options;
@@ -14,14 +15,16 @@ namespace AppGet.Commands.Install
         private readonly IPackageProvider _packageProvider;
         private readonly IPathResolver _pathResolver;
         private readonly IDownloadService _downloadService;
+        private readonly IFlightPlanService _flightPlanService;
         private readonly IInstallService _installService;
         private readonly Logger _logger;
 
-        public InstallCommandHandler(IPackageProvider packageProvider, IPathResolver pathResolver, IDownloadService downloadService, IInstallService installService, Logger logger)
+        public InstallCommandHandler(IPackageProvider packageProvider, IPathResolver pathResolver, IDownloadService downloadService,IFlightPlanService flightPlanService, IInstallService installService, Logger logger)
         {
             _packageProvider = packageProvider;
             _pathResolver = pathResolver;
             _downloadService = downloadService;
+            _flightPlanService = flightPlanService;
             _installService = installService;
             _logger = logger;
         }
@@ -35,14 +38,20 @@ namespace AppGet.Commands.Install
         {
 
             var installOptions = (InstallOptions)commandOptions;
-   
-            var flightPlan = _packageProvider.GetFlightPlan(commandOptions.PackageName);
 
-            var package = flightPlan.Packages.Single();
+            var package = _packageProvider.FindPackage(commandOptions.PackageName);
+            if (package == null)
+            {
+                throw new PackageNotFoundException(installOptions.PackageName);
+            }
 
-            var installerTempLocation = _pathResolver.GetInstallerDownloadPath(package.FileName);
+            var flightPlan = _flightPlanService.LoadFlightPlan(package);
 
-            _downloadService.DownloadFile(package.Source, installerTempLocation);
+            var installer = flightPlan.Packages.Single();
+
+            var installerTempLocation = _pathResolver.GetInstallerDownloadPath(installer.FileName);
+
+            _downloadService.DownloadFile(installer.Source, installerTempLocation);
 
             _installService.Install(installerTempLocation, flightPlan, installOptions);
 

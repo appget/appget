@@ -69,6 +69,7 @@
     <Compile Include="Download\DownloadService.cs" />
     <Compile Include="Download\HttpDownloadClient.cs" />
     <Compile Include="Download\IDownloadClient.cs" />
+    <Compile Include="FlightPlans\FlightPlanService.cs" />
     <Compile Include="HostSystem\EnvironmentProxy.cs" />
     <Compile Include="Exceptions\AppGetException.cs" />
     <Compile Include="FlightPlans\FlightPlan.cs" />

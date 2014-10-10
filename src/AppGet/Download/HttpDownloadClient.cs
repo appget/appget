@@ -1,32 +1,39 @@
 ﻿using System;
 using System.ComponentModel;
-using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading;
+using AppGet.Http;
 using AppGet.ProgressTracker;
 
 namespace AppGet.Download
 {
     public class HttpDownloadClient : IDownloadClient
     {
+        private readonly IHttpClient _httpClient;
         private static readonly Regex HttpRegex = new Regex(@"^https?\:\/\/", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private bool _downloading;
 
         private ProgressState _progress;
         private Exception _error;
 
-        public bool CanHandleProtocol(String url)
+
+        public HttpDownloadClient(IHttpClient httpClient)
         {
-            return HttpRegex.IsMatch(url);
+            _httpClient = httpClient;
         }
 
-        public void DownloadFile(string url, string destination)
+        public bool CanHandleProtocol(String source)
+        {
+            return HttpRegex.IsMatch(source);
+        }
+
+        public void DownloadFile(string source, string destination)
         {
             var webClient = new WebClient();
             webClient.DownloadProgressChanged += DownloadProgressCallback;
             webClient.DownloadFileCompleted += DownloadCompletedCallback;
-            webClient.DownloadFileAsync(new Uri(url), destination);
+            webClient.DownloadFileAsync(new Uri(source), destination);
 
             _downloading = true;
             _progress = new ProgressState();
@@ -40,6 +47,12 @@ namespace AppGet.Download
             {
                 throw _error;
             }
+        }
+
+        public string ReadString(string source)
+        {
+            var resp = _httpClient.Get(new HttpRequest(source));
+            return resp.Content;
         }
 
         private void DownloadProgressCallback(object sender, DownloadProgressChangedEventArgs e)

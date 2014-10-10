@@ -1,4 +1,6 @@
-﻿namespace AppGet.PackageProvider
+﻿using AppGet.Exceptions;
+
+namespace AppGet.PackageProvider
 {
     public class PackageInfo
     {
@@ -6,5 +8,16 @@
         public string Version { get; set; }
         public string FlightPlanUrl { get; set; }
         public string SourceUrl { get; set; }
+    }
+
+
+    public class PackageNotFoundException : AppGetException
+    {
+        public PackageNotFoundException(string packageName)
+            : base("Package [{0}] could not be found", packageName)
+        {
+        }
+
+
     }
 }

@@ -8,6 +8,7 @@ namespace AppGet.Download
     public interface IDownloadService
     {
         void DownloadFile(string source, string destination);
+        string ReadString(string source);
     }
 
     public class DownloadService : IDownloadService
@@ -21,7 +22,8 @@ namespace AppGet.Download
             _logger = logger;
         }
 
-        public void DownloadFile(string source, string destination)
+
+        private IDownloadClient GetClient(string source)
         {
             var client = _downloadClients.SingleOrDefault(c => c.CanHandleProtocol(source));
 
@@ -32,12 +34,25 @@ namespace AppGet.Download
                 throw new ProtocolNotSupportedException("Unable to handle download for: {0} - Unknown Protocol", source);
             }
 
+            return client;
+        }
+
+        public void DownloadFile(string source, string destination)
+        {
+            var client = GetClient(source);
+
             client.OnStatusUpdates = ConsoleProgressReporter.HandleProgress;
             client.OnCompleted = ConsoleProgressReporter.HandleCompleted;
 
             _logger.Info("Downloading installer from " + source);
             client.DownloadFile(source, destination);
             _logger.Info("Installer downloaded to " + destination);
+        }
+
+        public string ReadString(string source)
+        {
+            var client = GetClient(source);
+            return client.ReadString(source);
         }
     }
 }

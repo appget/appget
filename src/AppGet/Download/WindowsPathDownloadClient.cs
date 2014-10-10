@@ -9,12 +9,12 @@ namespace AppGet.Download
     {
         private static readonly Regex WindowsPathRegex = new Regex(@"^\\\\|^[a-z]:\\", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-        public bool CanHandleProtocol(String url)
+        public bool CanHandleProtocol(String source)
         {
-            return WindowsPathRegex.IsMatch(url);
+            return WindowsPathRegex.IsMatch(source);
         }
 
-        public void DownloadFile(string url, string destination)
+        public void DownloadFile(string source, string destination)
         {
             var progress = new ProgressState
                         {
@@ -22,7 +22,7 @@ namespace AppGet.Download
                         };
 
             //TODO: move this to a Copy using streams/that way we can provide progress
-            File.Copy(url, destination);
+            File.Copy(source, destination);
 
             progress.Completed = 1;
             
@@ -35,6 +35,11 @@ namespace AppGet.Download
             {
                 OnCompleted(progress);
             }
+        }
+
+        public string ReadString(string source)
+        {
+            return File.ReadAllText(source);
         }
 
         public Action<ProgressState> OnStatusUpdates { get; set; }
