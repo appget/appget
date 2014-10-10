@@ -10,12 +10,12 @@ namespace AppGet.Serialization
     {
         public bool Accepts(Type type)
         {
-            return type == typeof (Version);
+            return type == typeof(Version);
         }
 
         public object ReadYaml(IParser parser, Type type)
         {
-            var value = ((Scalar) parser.Current).Value;
+            var value = ((Scalar)parser.Current).Value;
             var version = new Version(value);
 
             parser.MoveNext();
@@ -24,7 +24,17 @@ namespace AppGet.Serialization
 
         public void WriteYaml(IEmitter emitter, object value, Type type)
         {
-            emitter.Emit(new Scalar(((Version)value).ToString(2)));
+            if (value == null)
+            {
+                emitter.Emit(new Scalar(""));
+            }
+            else
+            {
+                emitter.Emit(new Scalar(((Version)value).ToString(2))); 
+            }
+            
+               
+            
         }
     }
 }

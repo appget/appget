@@ -6,7 +6,7 @@ namespace AppGet.FlightPlans
     {
         public string Id { get; set; }
         public string Version { get; set; }
-        public Uri ApplicationUrl { get; set; }
+        public string ApplicationUrl { get; set; }
 
         public string[] Exe { get; set; }
         public InstallerType Installer { get; set; }
@@ -28,6 +28,7 @@ namespace AppGet.FlightPlans
 
     public enum ArchitectureType
     {
+        Any,
         x86,
         x64,
         Itanium,
