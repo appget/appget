@@ -1,6 +1,6 @@
 ﻿using AppGet.Exceptions;
 
-namespace AppGet.PackageProvider
+namespace AppGet.PackageRepository
 {
     public class PackageInfo
     {

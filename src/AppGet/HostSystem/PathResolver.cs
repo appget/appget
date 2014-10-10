@@ -6,7 +6,7 @@ namespace AppGet.HostSystem
 {
     public interface IPathResolver
     {
-        string GetInstallerDownloadPath(string fileName);
+        string GetInstallerTempPath(string fileName);
     }
 
     public class PathResolver : IPathResolver
@@ -27,7 +27,7 @@ namespace AppGet.HostSystem
             }
         }
 
-        public string GetInstallerDownloadPath(string fileName)
+        public string GetInstallerTempPath(string fileName)
         {
             return Path.Combine(TempFolder, fileName);
         }

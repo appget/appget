@@ -3,29 +3,29 @@ using System.Linq;
 using AppGet.ProgressTracker;
 using NLog;
 
-namespace AppGet.Download
+namespace AppGet.FileTransfer
 {
-    public interface IDownloadService
+    public interface IFileTransferService
     {
-        void DownloadFile(string source, string destination);
-        string ReadString(string source);
+        void TransferFile(string source, string destination);
+        string ReadContent(string source);
     }
 
-    public class DownloadService : IDownloadService
+    public class FileTransferService : IFileTransferService
     {
-        private readonly IEnumerable<IDownloadClient> _downloadClients;
+        private readonly IEnumerable<IFileTransferClient> _transferClients;
         private readonly Logger _logger;
 
-        public DownloadService(IEnumerable<IDownloadClient> downloadClients, Logger logger)
+        public FileTransferService(IEnumerable<IFileTransferClient> transferClients, Logger logger)
         {
-            _downloadClients = downloadClients;
+            _transferClients = transferClients;
             _logger = logger;
         }
 
 
-        private IDownloadClient GetClient(string source)
+        private IFileTransferClient GetClient(string source)
         {
-            var client = _downloadClients.SingleOrDefault(c => c.CanHandleProtocol(source));
+            var client = _transferClients.SingleOrDefault(c => c.CanHandleProtocol(source));
 
             if (client == null)
             {
@@ -37,7 +37,7 @@ namespace AppGet.Download
             return client;
         }
 
-        public void DownloadFile(string source, string destination)
+        public void TransferFile(string source, string destination)
         {
             var client = GetClient(source);
 
@@ -45,11 +45,11 @@ namespace AppGet.Download
             client.OnCompleted = ConsoleProgressReporter.HandleCompleted;
 
             _logger.Info("Downloading installer from " + source);
-            client.DownloadFile(source, destination);
+            client.TransferFile(source, destination);
             _logger.Info("Installer downloaded to " + destination);
         }
 
-        public string ReadString(string source)
+        public string ReadContent(string source)
         {
             var client = GetClient(source);
             return client.ReadString(source);

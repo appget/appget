@@ -1,17 +1,15 @@
 ﻿using System.Net;
-using AppGet.FlightPlans;
 using AppGet.Http;
-using AppGet.Serialization;
 using NLog;
 
-namespace AppGet.PackageProvider
+namespace AppGet.PackageRepository
 {
-    public class AppGetServerProvider : IPackageProvider
+    public class AppGetServerClient : IPackageRepository
     {
         private readonly IHttpClient _httpClient;
         private readonly Logger _logger;
 
-        public AppGetServerProvider(IHttpClient httpClient, Logger logger)
+        public AppGetServerClient(IHttpClient httpClient, Logger logger)
         {
             _httpClient = httpClient;
             _logger = logger;

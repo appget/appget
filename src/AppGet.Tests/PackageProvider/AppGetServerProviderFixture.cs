@@ -1,12 +1,12 @@
 ﻿using AppGet.Http;
-using AppGet.PackageProvider;
+using AppGet.PackageRepository;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace AppGet.Tests.PackageProvider
 {
     [TestFixture]
-    public class AppGetServerProviderFixture : TestBase<AppGetServerProvider>
+    public class AppGetServerProviderFixture : TestBase<AppGetServerClient>
     {
         [Test]
         public void should_get_flightplan()

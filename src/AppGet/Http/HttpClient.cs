@@ -9,7 +9,6 @@ namespace AppGet.Http
     public interface IHttpClient
     {
         HttpResponse Execute(HttpRequest request);
-        void DownloadFile(string url, string fileName);
         HttpResponse Get(HttpRequest request);
         HttpResponse<T> Get<T>(HttpRequest request) where T : new();
         HttpResponse Head(HttpRequest request);
@@ -103,37 +102,6 @@ namespace AppGet.Http
             }
 
             return response;
-        }
-
-        public void DownloadFile(string url, string fileName)
-        {
-            try
-            {
-                var fileInfo = new FileInfo(fileName);
-                if (fileInfo.Directory != null && !fileInfo.Directory.Exists)
-                {
-                    fileInfo.Directory.Create();
-                }
-
-                _logger.Debug("Downloading [{0}] to [{1}]", url, fileName);
-
-                var stopWatch = Stopwatch.StartNew();
-                var webClient = new GZipWebClient();
-                webClient.Headers.Add(HttpRequestHeader.UserAgent, _userAgent);
-                webClient.DownloadFile(url, fileName);
-                stopWatch.Stop();
-                _logger.Debug("Downloading Completed. took {0:0}s", stopWatch.Elapsed.Seconds);
-            }
-            catch (WebException e)
-            {
-                _logger.Warn("Failed to get response from: {0} {1}", url, e.Message);
-                throw;
-            }
-            catch (Exception e)
-            {
-                _logger.WarnException("Failed to get response from: " + url, e);
-                throw;
-            }
         }
 
         public HttpResponse Get(HttpRequest request)

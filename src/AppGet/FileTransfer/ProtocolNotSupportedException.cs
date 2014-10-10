@@ -1,7 +1,6 @@
-﻿using System;
-using AppGet.Exceptions;
+﻿using AppGet.Exceptions;
 
-namespace AppGet.Download
+namespace AppGet.FileTransfer
 {
     public class ProtocolNotSupportedException : AppGetException
     {

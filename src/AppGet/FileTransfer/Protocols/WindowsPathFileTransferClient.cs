@@ -3,9 +3,9 @@ using System.IO;
 using System.Text.RegularExpressions;
 using AppGet.ProgressTracker;
 
-namespace AppGet.Download
+namespace AppGet.FileTransfer.Protocols
 {
-    public class WindowsPathDownloadClient : IDownloadClient
+    public class WindowsPathFileTransferClient : IFileTransferClient
     {
         private static readonly Regex WindowsPathRegex = new Regex(@"^\\\\|^[a-z]:\\", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
@@ -14,7 +14,7 @@ namespace AppGet.Download
             return WindowsPathRegex.IsMatch(source);
         }
 
-        public void DownloadFile(string source, string destination)
+        public void TransferFile(string source, string destination)
         {
             var progress = new ProgressState
                         {

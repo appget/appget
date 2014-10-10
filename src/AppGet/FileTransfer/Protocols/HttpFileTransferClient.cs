@@ -6,19 +6,19 @@ using System.Threading;
 using AppGet.Http;
 using AppGet.ProgressTracker;
 
-namespace AppGet.Download
+namespace AppGet.FileTransfer.Protocols
 {
-    public class HttpDownloadClient : IDownloadClient
+    public class HttpFileTransferClient : IFileTransferClient
     {
         private readonly IHttpClient _httpClient;
         private static readonly Regex HttpRegex = new Regex(@"^https?\:\/\/", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        private bool _downloading;
+        private bool _inTransit;
 
         private ProgressState _progress;
         private Exception _error;
 
 
-        public HttpDownloadClient(IHttpClient httpClient)
+        public HttpFileTransferClient(IHttpClient httpClient)
         {
             _httpClient = httpClient;
         }
@@ -28,17 +28,17 @@ namespace AppGet.Download
             return HttpRegex.IsMatch(source);
         }
 
-        public void DownloadFile(string source, string destination)
+        public void TransferFile(string source, string destination)
         {
             var webClient = new WebClient();
-            webClient.DownloadProgressChanged += DownloadProgressCallback;
-            webClient.DownloadFileCompleted += DownloadCompletedCallback;
+            webClient.DownloadProgressChanged += TransferProgressCallback;
+            webClient.DownloadFileCompleted += TransferCompletedCallback;
             webClient.DownloadFileAsync(new Uri(source), destination);
 
-            _downloading = true;
+            _inTransit = true;
             _progress = new ProgressState();
 
-            while (_downloading)
+            while (_inTransit)
             {
                 Thread.Sleep(100);
             }
@@ -55,7 +55,7 @@ namespace AppGet.Download
             return resp.Content;
         }
 
-        private void DownloadProgressCallback(object sender, DownloadProgressChangedEventArgs e)
+        private void TransferProgressCallback(object sender, DownloadProgressChangedEventArgs e)
         {
             _progress.Completed = e.BytesReceived;
             _progress.Total = e.TotalBytesToReceive;
@@ -66,10 +66,10 @@ namespace AppGet.Download
             }
         }
 
-        private void DownloadCompletedCallback(object sender, AsyncCompletedEventArgs e)
+        private void TransferCompletedCallback(object sender, AsyncCompletedEventArgs e)
         {
             _error = e.Error;
-            _downloading = false;
+            _inTransit = false;
 
             if (OnCompleted != null)
             {

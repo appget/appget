@@ -1,7 +1,8 @@
 ﻿using AppGet.Commands;
 using AppGet.Commands.Install;
 using AppGet.Commands.ShowFlightPlan;
-using AppGet.Download;
+using AppGet.FileTransfer;
+using AppGet.FileTransfer.Protocols;
 using NLog;
 using TinyIoC;
 
@@ -35,9 +36,9 @@ namespace AppGet.Composition
 
         private static void RegisterDownloadClients(TinyIoCContainer container)
         {
-            container.RegisterMultiple<IDownloadClient>(new[]
+            container.RegisterMultiple<IFileTransferClient>(new[]
             {
-                typeof(HttpDownloadClient)
+                typeof(HttpFileTransferClient)
             });
         }
     }

@@ -1,6 +1,5 @@
-﻿using AppGet.Download;
-using AppGet.Http;
-using AppGet.PackageProvider;
+﻿using AppGet.FileTransfer;
+using AppGet.PackageRepository;
 using AppGet.Serialization;
 using NLog;
 
@@ -13,12 +12,12 @@ namespace AppGet.FlightPlans
 
     public class FlightPlanService : IFlightPlanService
     {
-        private readonly IDownloadService _downloadService;
+        private readonly IFileTransferService _fileTransferService;
         private readonly Logger _logger;
 
-        public FlightPlanService(IDownloadService downloadService, Logger logger)
+        public FlightPlanService(IFileTransferService fileTransferService, Logger logger)
         {
-            _downloadService = downloadService;
+            _fileTransferService = fileTransferService;
             _logger = logger;
         }
 
@@ -26,7 +25,7 @@ namespace AppGet.FlightPlans
         public FlightPlan LoadFlightPlan(PackageInfo packageInfo)
         {
             _logger.Info("Loading flighplan for " + packageInfo.Name);
-            var text = _downloadService.ReadString(packageInfo.FlightPlanUrl);
+            var text = _fileTransferService.ReadContent(packageInfo.FlightPlanUrl);
             return Yaml.Deserialize<FlightPlan>(text);
         }
     }
