@@ -1,4 +1,5 @@
-﻿using AppGet.Environment;
+﻿using System;
+using AppGet.Environment;
 using AppGet.FlightPlans;
 
 namespace AppGet.Requirements.Specifications
@@ -12,11 +13,19 @@ namespace AppGet.Requirements.Specifications
             _environmentProxy = environmentProxy;
         }
 
-        public bool IsRequirementSatisfied(PackageSource packageSource)
+        public EnforcementResult IsRequirementSatisfied(PackageSource packageSource)
         {
-            if (packageSource.MaxWindowsVersion == null) return true;
+            if (packageSource.MaxWindowsVersion == null) return new EnforcementResult(true);
 
-            return _environmentProxy.OSVersion.Version <= packageSource.MaxWindowsVersion;
+            if (_environmentProxy.OSVersion.Version <= packageSource.MaxWindowsVersion)
+            {
+                return new EnforcementResult(true);
+            }
+
+            return new EnforcementResult(false,
+                                         String.Format("Max supported OS version: {0}. Current version: {1}",
+                                                        packageSource.MaxWindowsVersion,
+                                                        _environmentProxy.OSVersion.Version));
         }
     }
 }

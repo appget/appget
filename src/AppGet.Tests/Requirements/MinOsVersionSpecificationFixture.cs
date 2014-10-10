@@ -17,7 +17,7 @@ namespace AppGet.Tests.Requirements
                   .SetupGet(s => s.OSVersion)
                   .Returns(new OperatingSystem(PlatformID.Win32NT, new Version(6, 3, 9600, 0)));
 
-            Subject.IsRequirementSatisfied(new PackageSource()).Should().BeTrue();
+            Subject.IsRequirementSatisfied(new PackageSource()).Success.Should().BeTrue();
         }
 
         [Test]
@@ -30,7 +30,7 @@ namespace AppGet.Tests.Requirements
             Subject.IsRequirementSatisfied(new PackageSource
                                            {
                                                MinWindowsVersion = new Version(5, 1)
-                                           }).Should().BeTrue();
+                                           }).Success.Should().BeTrue();
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace AppGet.Tests.Requirements
             Subject.IsRequirementSatisfied(new PackageSource
                                            {
                                                MinWindowsVersion = new Version(6, 4)
-                                           }).Should().BeFalse();
+                                           }).Success.Should().BeFalse();
         }
     }
 }

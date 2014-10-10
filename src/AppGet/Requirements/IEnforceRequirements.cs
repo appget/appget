@@ -4,6 +4,6 @@ namespace AppGet.Requirements
 {
     public interface IEnforceRequirements
     {
-        bool IsRequirementSatisfied(PackageSource packageSource);
+        EnforcementResult IsRequirementSatisfied(PackageSource packageSource);
     }
 }

@@ -81,6 +81,7 @@
     <Compile Include="ProgressTracker\IReportProgress.cs" />
     <Compile Include="ProgressTracker\ProgressState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requirements\EnforcementResult.cs" />
     <None Include="Serialization\fastJSON\License.text" />
     <Compile Include="Requirements\Specifications\OsArchitectureSpecification.cs" />
     <Compile Include="Serialization\fastJSON\Formatter.cs" />
