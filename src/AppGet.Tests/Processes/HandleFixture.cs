@@ -11,10 +11,14 @@ namespace AppGet.Tests.Processes
         [TestCase]
         public void should_get_locking_process()
         {
-            var tempFile = Path.GetTempFileName();
-            File.OpenWrite(tempFile);
-            var processes = Handle.GetLockers(tempFile);
+            var tempFile1 = Path.GetTempFileName();
+            var tempFile2 = Path.GetTempFileName();
+            File.OpenWrite(tempFile1);
+            File.OpenWrite(tempFile2);
+            var processes = FileInUse.GetLockers(tempFile1, tempFile2);
             processes.Should().NotBeNull();
+            processes.Should().NotBeEmpty();
+            processes.Should().HaveCount(1);
         }
     }
 }
