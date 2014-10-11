@@ -197,7 +197,7 @@ namespace TinyIoC
 //		/// <summary>
 //		/// Gets a generic method from a type given the method name, generic types and parameter types
 //		/// </summary>
-//		/// <param name="sourceType">Source type</param>
+//		/// <param name="sourceType">Location type</param>
 //		/// <param name="methodName">Name of the method</param>
 //		/// <param name="genericTypes">Generic types to use to make the method generic</param>
 //		/// <param name="parameterTypes">Method parameters</param>
@@ -224,7 +224,7 @@ namespace TinyIoC
         /// <summary>
         /// Gets a generic method from a type given the method name, binding flags, generic types and parameter types
         /// </summary>
-        /// <param name="sourceType">Source type</param>
+        /// <param name="sourceType">Location type</param>
         /// <param name="bindingFlags">Binding flags</param>
         /// <param name="methodName">Name of the method</param>
         /// <param name="genericTypes">Generic types to use to make the method generic</param>

@@ -16,7 +16,7 @@ namespace AppGet.Tests.Requirements
                   .SetupGet(s => s.Is64BitOperatingSystem)
                   .Returns(true);
 
-            Subject.IsRequirementSatisfied(new PackageSource
+            Subject.IsRequirementSatisfied(new Installer
                                            {
                                                Architecture = ArchitectureType.x86
                                            }).Success.Should().BeTrue();
@@ -30,7 +30,7 @@ namespace AppGet.Tests.Requirements
                   .SetupGet(s => s.Is64BitOperatingSystem)
                   .Returns(true);
 
-            Subject.IsRequirementSatisfied(new PackageSource
+            Subject.IsRequirementSatisfied(new Installer
                                            {
                                                Architecture = ArchitectureType.x64
                                            }).Success.Should().BeTrue();
@@ -43,7 +43,7 @@ namespace AppGet.Tests.Requirements
                   .SetupGet(s => s.Is64BitOperatingSystem)
                   .Returns(false);
 
-            Subject.IsRequirementSatisfied(new PackageSource
+            Subject.IsRequirementSatisfied(new Installer
                                            {
                                                Architecture = ArchitectureType.x64
                                            }).Success.Should().BeFalse();
@@ -52,7 +52,7 @@ namespace AppGet.Tests.Requirements
         [Test]
         public void should_be_false_when_itanium()
         {
-            Subject.IsRequirementSatisfied(new PackageSource
+            Subject.IsRequirementSatisfied(new Installer
             {
                 Architecture = ArchitectureType.Itanium
             }).Success.Should().BeFalse();
@@ -61,7 +61,7 @@ namespace AppGet.Tests.Requirements
         [Test]
         public void should_be_false_when_arm()
         {
-            Subject.IsRequirementSatisfied(new PackageSource
+            Subject.IsRequirementSatisfied(new Installer
             {
                 Architecture = ArchitectureType.ARM
             }).Success.Should().BeFalse();

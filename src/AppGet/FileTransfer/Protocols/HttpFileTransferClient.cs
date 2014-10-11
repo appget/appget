@@ -51,7 +51,9 @@ namespace AppGet.FileTransfer.Protocols
 
         public string ReadString(string source)
         {
-            var resp = _httpClient.Get(new HttpRequest(source));
+            var req = new HttpRequest(source);
+            req.DisableCache();
+            var resp = _httpClient.Get(req);
             return resp.Content;
         }
 

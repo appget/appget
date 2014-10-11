@@ -48,11 +48,11 @@ namespace AppGet.Commands.Install
 
             var flightPlan = _flightPlanService.LoadFlightPlan(package);
 
-            var installer = flightPlan.Packages.Single();
+            var installer = flightPlan.Installers.Single();
 
             var installerTempLocation = _pathResolver.GetInstallerTempPath(installer.FileName);
 
-            _fileTransferService.TransferFile(installer.Source, installerTempLocation);
+            _fileTransferService.TransferFile(installer.Location, installerTempLocation);
 
             _installService.Install(installerTempLocation, flightPlan, installOptions);
 

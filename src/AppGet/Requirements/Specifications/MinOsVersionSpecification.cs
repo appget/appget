@@ -13,17 +13,17 @@ namespace AppGet.Requirements.Specifications
             _environmentProxy = environmentProxy;
         }
 
-        public EnforcementResult IsRequirementSatisfied(PackageSource packageSource)
+        public EnforcementResult IsRequirementSatisfied(Installer installer)
         {
-            if (packageSource.MinWindowsVersion == null) return EnforcementResult.Pass();
+            if (installer.MinWindowsVersion == null) return EnforcementResult.Pass();
 
-            if (_environmentProxy.WindowsVersion.Version >= packageSource.MinWindowsVersion)
+            if (_environmentProxy.WindowsVersion.Version >= installer.MinWindowsVersion)
             {
                 return EnforcementResult.Pass();
             }
 
             return EnforcementResult.Fail("Min supported OS version: {0}. Current version: {1}",
-                                                        packageSource.MaxWindowsVersion,
+                                                        installer.MaxWindowsVersion,
                                                         _environmentProxy.WindowsVersion.Version);
         }
     }

@@ -16,13 +16,13 @@ namespace AppGet.Tests.FlightPlans
                 Id = "linqpad",
                 Version = "4.51.03",
                 Exe = new[] { "LINQPad.exe" },
-                ApplicationUrl ="http://www.linqpad.net/",
-                Installer = InstallerType.Zip,
-                Packages = new[]
+                ProductUrl ="http://www.linqpad.net/",
+                InstallMethod = InstallMethodType.Zip,
+                Installers = new[]
                 {
-                    new PackageSource
+                    new Installer
                     {
-                        Source = "http://www.linqpad.net/GetFile.aspx?LINQPad4-AnyCPU.zip",
+                        Location = "http://www.linqpad.net/GetFile.aspx?LINQPad4-AnyCPU.zip",
                         Architecture = ArchitectureType.Any
                     }
                 }

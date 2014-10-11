@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
 
 namespace AppGet.Http
 {
@@ -15,6 +13,7 @@ namespace AppGet.Http
                 this[key] = headers[key];
             }
         }
+
 
         public HttpHeader()
         {
@@ -50,6 +49,22 @@ namespace AppGet.Http
             set
             {
                 this["Content-Type"] = value;
+            }
+        }
+
+        public string CacheControl  
+        {
+            get
+            {
+                if (!ContainsKey("Cache-Control"))
+                {
+                    return null;
+                }
+                return this["Cache-Control"].ToString();
+            }
+            set
+            {
+                this["Cache-Control"] = value;
             }
         }
 

@@ -12,9 +12,9 @@ namespace AppGet.Requirements.Specifications
             _environmentProxy = environmentProxy;
         }
 
-        public EnforcementResult IsRequirementSatisfied(PackageSource packageSource)
+        public EnforcementResult IsRequirementSatisfied(Installer installer)
         {
-            switch (packageSource.Architecture)
+            switch (installer.Architecture)
             {
                 case ArchitectureType.x86:
                     {
@@ -38,7 +38,7 @@ namespace AppGet.Requirements.Specifications
                     }
                 default:
                     {
-                        return EnforcementResult.Fail("Unsupported architecture: " + packageSource.Architecture);
+                        return EnforcementResult.Fail("Unsupported architecture: " + installer.Architecture);
                     }
             }
         }

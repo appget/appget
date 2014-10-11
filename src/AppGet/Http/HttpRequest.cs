@@ -61,10 +61,22 @@ namespace AppGet.Http
 
             if (!UriBuilder.Uri.ToString().Contains(key))
             {
-                throw new InvalidOperationException("Segment " + key +" is not defined in Uri");
+                throw new InvalidOperationException("Segment " + key + " is not defined in Uri");
             }
 
             _segments.Add(key, value);
+        }
+
+        public void DisableCache()
+        {
+            Headers.CacheControl = "no-cache";
+
+            if (!string.IsNullOrEmpty(UriBuilder.Query))
+            {
+                UriBuilder.Query += "&";
+            }
+
+            UriBuilder.Query += "no_cache=" + DateTime.Now.Ticks;
         }
     }
 }

@@ -46,7 +46,7 @@ namespace AppGet.FileTransfer
 
             _logger.Info("Downloading installer from " + source);
             client.TransferFile(source, destination);
-            _logger.Info("Installer downloaded to " + destination);
+            _logger.Info("InstallMethod downloaded to " + destination);
         }
 
         public string ReadContent(string source)

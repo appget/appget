@@ -17,7 +17,7 @@ namespace AppGet.Tests.Requirements
                   .SetupGet(s => s.WindowsVersion)
                   .Returns(new OperatingSystem(PlatformID.Win32NT, new Version(6, 3, 9600, 0)));
 
-            Subject.IsRequirementSatisfied(new PackageSource()).Success.Should().BeTrue();
+            Subject.IsRequirementSatisfied(new Installer()).Success.Should().BeTrue();
         }
 
         [Test]
@@ -27,7 +27,7 @@ namespace AppGet.Tests.Requirements
                   .SetupGet(s => s.WindowsVersion)
                   .Returns(new OperatingSystem(PlatformID.Win32NT, new Version(6, 3, 9600, 0)));
 
-            Subject.IsRequirementSatisfied(new PackageSource
+            Subject.IsRequirementSatisfied(new Installer
                                            {
                                                MaxWindowsVersion = new Version(6, 4)
                                            }).Success.Should().BeTrue();
@@ -40,7 +40,7 @@ namespace AppGet.Tests.Requirements
                   .SetupGet(s => s.WindowsVersion)
                   .Returns(new OperatingSystem(PlatformID.Win32NT, new Version(6, 3, 9600, 0)));
 
-            Subject.IsRequirementSatisfied(new PackageSource
+            Subject.IsRequirementSatisfied(new Installer
                                            {
                                                MaxWindowsVersion = new Version(6, 0)
                                            }).Success.Should().BeFalse();

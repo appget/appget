@@ -36,9 +36,9 @@ namespace AppGet.HostSystem
 
         public string GetInstallationPath(FlightPlan flightPlan)
         {
-            switch (flightPlan.Installer)
+            switch (flightPlan.InstallMethod)
             {
-                case InstallerType.Zip:
+                case InstallMethodType.Zip:
                     {
                         var appGetFolder = Path.Combine(ProgramData, "AppGet");
                         var folderName = string.Format("{0}-{1}", flightPlan.Id, flightPlan.Version);
@@ -46,7 +46,7 @@ namespace AppGet.HostSystem
                     }
                 default:
                     {
-                        throw new NotImplementedException(flightPlan.Installer + " is not supported yet.");
+                        throw new NotImplementedException(flightPlan.InstallMethod + " is not supported yet.");
                     }
             }
         }
