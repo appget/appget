@@ -32,13 +32,13 @@ namespace AppGet.Commands
                 throw new UnknownCommandException(arguments.CommandName);
             }
 
-            _logger.Debug("starting {0}", arguments.CommandName);
+            _logger.Debug("Starting {0}", arguments.CommandName);
 
             var stopwatch = Stopwatch.StartNew();
             commandHandler.Execute(arguments);
             stopwatch.Stop();
 
-            _logger.Info("completed {0}. took: {1:N}s", arguments.CommandName, stopwatch.Elapsed.TotalSeconds);
+            _logger.Info("Completed {0}. took: {1:N}s", arguments.CommandName, stopwatch.Elapsed.TotalSeconds);
         }
     }
 }

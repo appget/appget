@@ -22,7 +22,7 @@ namespace AppGet.Install
 
         public void Install(string installerLocation, FlightPlan flightPlan, InstallOptions installOptions)
         {
-            _logger.Info("Begignig installation of " + flightPlan.Id);
+            _logger.Info("Begining installation of " + flightPlan.Id);
             _zipInstaller.Install(installerLocation, flightPlan, installOptions);
         }
     }
