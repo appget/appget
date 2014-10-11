@@ -33,16 +33,8 @@ namespace AppGet.Processes
             [In, Out] RmProcessInfo[] rgAffectedApps,
             ref uint lpdwRebootReasons);
 
-        /// <summary>
-        ///     Find out what process(es) have a lock on the specified file.
-        /// </summary>
-        /// <param name="path">Path of the file.</param>
-        /// <returns>Processes locking the file</returns>
-        /// <remarks>
-        ///     See also:
-        ///     http://msdn.microsoft.com/en-us/library/windows/desktop/aa373661(v=vs.85).aspx
-        ///     http://wyupdate.googlecode.com/svn-history/r401/trunk/frmFilesInUse.cs (no copyright in code at time of viewing)
-        /// </remarks>
+        //http://msdn.microsoft.com/en-us/library/windows/desktop/aa373661(v=vs.85).aspx
+        //http://wyupdate.googlecode.com/svn-history/r401/trunk/frmFilesInUse.cs (New BSD License)
         public static IEnumerable<Process> GetLockers(params string[] files)
         {
             uint handle;
@@ -76,7 +68,7 @@ namespace AppGet.Processes
                 uint lpdwRebootReasons = RmRebootReasonNone;
 
                 var getListCode = RmGetList(handle, out pnProcInfoNeeded, ref pnProcInfo, null, ref lpdwRebootReasons);
-                
+
                 if (getListCode == ERROR_MORE_DATA)
                 {
                     return GetProcessList(pnProcInfoNeeded, handle, lpdwRebootReasons);
