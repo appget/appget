@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using AppGet.FlightPlans;
 using AppGet.Serialization;
 using NUnit.Framework;
@@ -18,7 +19,7 @@ namespace AppGet.Tests.FlightPlans
                 Exe = new[] { "LINQPad.exe" },
                 ProductUrl ="http://www.linqpad.net/",
                 InstallMethod = InstallMethodType.Zip,
-                Installers = new[]
+                Installers = new List<Installer>
                 {
                     new Installer
                     {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AppGet.FlightPlans
 {
@@ -11,7 +12,7 @@ namespace AppGet.FlightPlans
         public string[] Exe { get; set; }
         public InstallMethodType InstallMethod { get; set; }
 
-        public Installer[] Installers { get; set; }
+        public List<Installer> Installers { get; set; }
     }
 
 

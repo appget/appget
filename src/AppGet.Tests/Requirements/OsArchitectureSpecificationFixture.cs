@@ -16,7 +16,7 @@ namespace AppGet.Tests.Requirements
                   .SetupGet(s => s.Is64BitOperatingSystem)
                   .Returns(true);
 
-            Subject.IsRequirementSatisfied(new PackageSource
+            Subject.IsRequirementSatisfied(new Installer
             {
                 Architecture = ArchitectureType.Any
             }).Success.Should().BeTrue();

@@ -79,6 +79,7 @@
     <Compile Include="Download\HttpFileTransferClientFixture.cs" />
     <Compile Include="FlightPlans\FlightPlanFixture.cs" />
     <Compile Include="Options\OptionsServiceFixture.cs" />
+    <Compile Include="FlightPlans\FindInstallerFixture.cs" />
     <Compile Include="Processes\HandleFixture.cs" />
     <Compile Include="ProgressTracker\ProgressStateFixture.cs" />
     <Compile Include="Requirements\MaxOsVersionSpecificationFixture.cs" />

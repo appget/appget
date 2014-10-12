@@ -6,7 +6,6 @@ namespace AppGet.Tests
 {
     public abstract class TestBase<T> where T : class
     {
-
         protected AutoMoqer Mocker { get; private set; }
 
         private T _subject = null;

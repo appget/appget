@@ -97,6 +97,7 @@
     <Compile Include="PackageRepository\AppGetServerClient.cs" />
     <Compile Include="PackageRepository\IPackageRepository.cs" />
     <Compile Include="PackageRepository\PackageInfo.cs" />
+    <Compile Include="FlightPlans\FindInstaller.cs" />
     <Compile Include="Processes\FileInUse.cs" />
     <Compile Include="ProgressTracker\ConsoleProgressReporter.cs" />
     <Compile Include="ProgressTracker\IReportProgress.cs" />
