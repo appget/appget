@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using AppGet.Options;
@@ -33,12 +34,12 @@ namespace AppGet.Commands
             }
 
             _logger.Debug("Starting {0}", arguments.CommandName);
-
+            Console.WriteLine();
             var stopwatch = Stopwatch.StartNew();
             commandHandler.Execute(arguments);
             stopwatch.Stop();
-
-            _logger.Info("Completed {0}. took: {1:N}s", arguments.CommandName, stopwatch.Elapsed.TotalSeconds);
+            Console.WriteLine();
+            _logger.Info("Completed command [{0}]. duration: {1:N}s", arguments.CommandName, stopwatch.Elapsed.TotalSeconds);
         }
     }
 }

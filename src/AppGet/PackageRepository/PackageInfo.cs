@@ -1,6 +1,4 @@
-﻿using AppGet.Exceptions;
-
-namespace AppGet.PackageRepository
+﻿namespace AppGet.PackageRepository
 {
     public class PackageInfo
     {
@@ -8,16 +6,14 @@ namespace AppGet.PackageRepository
         public string Version { get; set; }
         public string FlightPlanUrl { get; set; }
         public string SourceUrl { get; set; }
-    }
 
-
-    public class PackageNotFoundException : AppGetException
-    {
-        public PackageNotFoundException(string packageName)
-            : base("Package [{0}] could not be found", packageName)
+        public override string ToString()
         {
+            if (string.IsNullOrEmpty(Version))
+            {
+                return Name;
+            }
+            return string.Format("{0} - v{1}", Name, Version);
         }
-
-
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using AppGet.Commands.Install;
+using AppGet.Commands.List;
 using AppGet.Commands.ShowFlightPlan;
 using CommandLine;
 using CommandLine.Text;
@@ -17,6 +18,9 @@ namespace AppGet.Options
 
         [VerbOption("install", HelpText = "Download and install a package")]
         public InstallOptions Install { get; set; }
+
+        [VerbOption("list", HelpText = "List installed packages")]
+        public ListOptions List { get; set; }
 
         [ValueList(typeof(List<string>), MaximumElements = -1)]
         public IList<string> UnknowArgs { get; set; }

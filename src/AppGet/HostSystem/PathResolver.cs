@@ -6,6 +6,7 @@ namespace AppGet.HostSystem
 {
     public interface IPathResolver
     {
+        string InstalledPackageList { get; }
         string GetInstallerTempPath(string fileName);
         string GetInstallationPath(FlightPlan flightPlan);
     }
@@ -26,6 +27,11 @@ namespace AppGet.HostSystem
             {
                 return Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
             }
+        }
+
+        public string InstalledPackageList
+        {
+            get { return Path.Combine(ProgramData, "packages.yaml"); }
         }
 
         public string GetInstallerTempPath(string fileName)

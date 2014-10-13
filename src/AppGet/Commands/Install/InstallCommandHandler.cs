@@ -4,6 +4,7 @@ using AppGet.FileTransfer;
 using AppGet.FlightPlans;
 using AppGet.HostSystem;
 using AppGet.Install;
+using AppGet.InstalledPackages;
 using AppGet.Options;
 using AppGet.PackageRepository;
 using AppGet.Packages;
@@ -19,10 +20,11 @@ namespace AppGet.Commands.Install
         private readonly IFlightPlanService _flightPlanService;
         private readonly IInstallService _installService;
         private readonly IFindInstaller _findInstaller;
+        private readonly IInventoryManager _inventoryManager;
         private readonly Logger _logger;
 
         public InstallCommandHandler(IPackageRepository packageRepository, IPathResolver pathResolver, IFileTransferService fileTransferService,
-            IFlightPlanService flightPlanService, IInstallService installService, IFindInstaller findInstaller, Logger logger)
+            IFlightPlanService flightPlanService, IInstallService installService, IFindInstaller findInstaller, IInventoryManager inventoryManager, Logger logger)
         {
             _packageRepository = packageRepository;
             _pathResolver = pathResolver;
@@ -30,6 +32,7 @@ namespace AppGet.Commands.Install
             _flightPlanService = flightPlanService;
             _installService = installService;
             _findInstaller = findInstaller;
+            _inventoryManager = inventoryManager;
             _logger = logger;
         }
 
@@ -58,6 +61,8 @@ namespace AppGet.Commands.Install
             _fileTransferService.TransferFile(installer.Location, installerTempLocation);
 
             _installService.Install(installerTempLocation, flightPlan, installOptions);
+
+            _inventoryManager.AddInstalledPackage(package);
 
         }
     }

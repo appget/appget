@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text.RegularExpressions;
+using AppGet.FileSystem;
 using AppGet.ProgressTracker;
 
 namespace AppGet.FileTransfer.Protocols
