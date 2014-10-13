@@ -4,7 +4,7 @@ using AppGet.FlightPlans;
 using AppGet.HostSystem;
 using NLog;
 
-namespace AppGet.Install
+namespace AppGet.Installers
 {
     public class ZipInstaller
     {

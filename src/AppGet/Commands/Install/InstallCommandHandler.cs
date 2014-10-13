@@ -1,10 +1,8 @@
-﻿using System;
-using System.Linq;
-using AppGet.FileTransfer;
+﻿using AppGet.FileTransfer;
 using AppGet.FlightPlans;
 using AppGet.HostSystem;
-using AppGet.Install;
 using AppGet.InstalledPackages;
+using AppGet.Installers;
 using AppGet.Options;
 using AppGet.PackageRepository;
 using AppGet.Packages;

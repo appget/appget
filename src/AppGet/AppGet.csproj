@@ -89,8 +89,9 @@
     <Compile Include="Http\HttpRequestBuilder.cs" />
     <Compile Include="Http\HttpResponse.cs" />
     <Compile Include="Http\UriExtensions.cs" />
-    <Compile Include="Install\InstallService.cs" />
-    <Compile Include="Install\ZipInstaller.cs" />
+    <Compile Include="Installers\InstallService.cs" />
+    <Compile Include="Installers\Msi\MsiController.cs" />
+    <Compile Include="Installers\ZipInstaller.cs" />
     <Compile Include="InstalledPackages\InventoryManager.cs" />
     <Compile Include="Options\CommandOptions.cs" />
     <Compile Include="Options\UnknownCommandException.cs" />

@@ -2,7 +2,7 @@
 using AppGet.FlightPlans;
 using NLog;
 
-namespace AppGet.Install
+namespace AppGet.Installers
 {
     public interface IInstallService
     {
