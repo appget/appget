@@ -2,6 +2,7 @@
 {
     public class PackageInfo
     {
+        public string Id { get; set; }
         public string Name { get; set; }
         public string Version { get; set; }
         public string FlightPlanUrl { get; set; }
@@ -11,9 +12,9 @@
         {
             if (string.IsNullOrEmpty(Version))
             {
-                return Name;
+                return Id;
             }
-            return string.Format("{0} - v{1}", Name, Version);
+            return string.Format("{0} - v{1}", Id, Version);
         }
     }
 }

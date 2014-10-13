@@ -24,7 +24,7 @@ namespace AppGet.FlightPlans
 
         public FlightPlan LoadFlightPlan(PackageInfo packageInfo)
         {
-            _logger.Info("Loading flighplan for " + packageInfo.Name);
+            _logger.Info("Loading flighplan for " + packageInfo);
             var text = _fileTransferService.ReadContent(packageInfo.FlightPlanUrl);
             return Yaml.Deserialize<FlightPlan>(text);
         }
