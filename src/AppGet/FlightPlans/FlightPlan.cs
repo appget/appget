@@ -42,9 +42,11 @@ namespace AppGet.FlightPlans
     {
         Exe,
         Font,
-        PsModule,
+        PowerShellModule,
         FirefoxExtention,
-        ChromeExtention
+        ChromeExtention,
+        Path,
+        EnvironmetVarible
     }
 
 
