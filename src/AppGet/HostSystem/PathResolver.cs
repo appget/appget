@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Security.AccessControl;
 using AppGet.FlightPlans;
 
 namespace AppGet.HostSystem
@@ -8,6 +9,7 @@ namespace AppGet.HostSystem
     {
         string InstalledPackageList { get; }
         string GetInstallerTempPath(string fileName);
+        string GetInstallerLogFile(FlightPlan flightPlan);
         string GetInstallationPath(FlightPlan flightPlan);
     }
 
@@ -42,6 +44,17 @@ namespace AppGet.HostSystem
         public string GetInstallerTempPath(string fileName)
         {
             return Path.Combine(TempFolder, fileName);
+        }
+
+        public string GetInstallerLogFile(FlightPlan flightPlan)
+        {
+            var installerLogDir = Path.Combine(AppGetWrokingDirectory, "Logs");
+
+            Directory.CreateDirectory(installerLogDir);
+
+            var fileName = string.Format("{0}_{1:yyyyMMdd_HHssmm}.log", flightPlan.Id, DateTime.Now);
+
+            return Path.Combine(installerLogDir, fileName);
         }
 
 

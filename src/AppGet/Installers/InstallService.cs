@@ -1,5 +1,8 @@
-﻿using AppGet.Commands.Install;
+﻿using System.Collections.Generic;
+using System.Linq;
+using AppGet.Commands.Install;
 using AppGet.FlightPlans;
+using AppGet.Installers.Msi;
 using NLog;
 
 namespace AppGet.Installers
@@ -12,18 +15,21 @@ namespace AppGet.Installers
     public class InstallService : IInstallService
     {
         private readonly Logger _logger;
-        private readonly ZipInstaller _zipInstaller;
+        private readonly List<IInstallerWhisperer> _installWhisperers;
 
-        public InstallService(Logger logger, ZipInstaller zipInstaller)
+        public InstallService(Logger logger, List<IInstallerWhisperer> installWhisperers)
         {
             _logger = logger;
-            _zipInstaller = zipInstaller;
+            _installWhisperers = installWhisperers;
         }
 
         public void Install(string installerLocation, FlightPlan flightPlan, InstallOptions installOptions)
         {
             _logger.Info("Begining installation of " + flightPlan.Id);
-            _zipInstaller.Install(installerLocation, flightPlan, installOptions);
+
+            var whisperer = _installWhisperers.Single(c => c.CanHandle(flightPlan.InstallMethod));
+
+            whisperer.Install(installerLocation, flightPlan, installOptions);
         }
     }
 }

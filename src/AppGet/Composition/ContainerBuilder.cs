@@ -4,6 +4,7 @@ using AppGet.Commands.List;
 using AppGet.Commands.ShowFlightPlan;
 using AppGet.FileTransfer;
 using AppGet.FileTransfer.Protocols;
+using AppGet.Installers.Msi;
 using NLog;
 using TinyIoC;
 
@@ -20,13 +21,12 @@ namespace AppGet.Composition
             container.AutoRegister(new[] { typeof(ContainerBuilder).Assembly });
             container.Register(logger);
 
-            RegisterDownloadClients(container);
-            RegisterCommandHandlersClients(container);
+            RegisterLists(container);
 
             return container;
         }
 
-        private static void RegisterCommandHandlersClients(TinyIoCContainer container)
+        private static void RegisterLists(TinyIoCContainer container)
         {
             container.RegisterMultiple<ICommandHandler>(new[]
             {
@@ -34,14 +34,17 @@ namespace AppGet.Composition
                 typeof(ListCommandHandler),
                 typeof(InstallCommandHandler)
             });
-        }
 
-        private static void RegisterDownloadClients(TinyIoCContainer container)
-        {
+            container.RegisterMultiple<IInstallerWhisperer>(new[]
+            {
+                typeof(MsiWhisperer),
+            });
+
             container.RegisterMultiple<IFileTransferClient>(new[]
             {
                 typeof(HttpFileTransferClient)
             });
         }
+      
     }
 }

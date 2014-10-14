@@ -41,6 +41,8 @@
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.3.1.0.0\lib\net35\NLog.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="SharpCompress.3.5">
       <HintPath>..\packages\sharpcompress.0.8.2\lib\net35\SharpCompress.3.5.dll</HintPath>
     </Reference>
@@ -50,6 +52,7 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
     <Reference Include="YamlDotNet">
       <HintPath>..\packages\YamlDotNet.3.3.0\lib\net35\YamlDotNet.dll</HintPath>
     </Reference>
@@ -90,8 +93,8 @@
     <Compile Include="Http\HttpResponse.cs" />
     <Compile Include="Http\UriExtensions.cs" />
     <Compile Include="Installers\InstallService.cs" />
-    <Compile Include="Installers\Msi\MsiController.cs" />
-    <Compile Include="Installers\ZipInstaller.cs" />
+    <Compile Include="Installers\Msi\MsiWhisperer.cs" />
+    <Compile Include="Installers\Zip\ZipWhisperer.cs" />
     <Compile Include="InstalledPackages\InventoryManager.cs" />
     <Compile Include="Options\CommandOptions.cs" />
     <Compile Include="Options\UnknownCommandException.cs" />
@@ -105,6 +108,7 @@
     <Compile Include="FlightPlans\FindInstaller.cs" />
     <Compile Include="PackageRepository\PackageNotFoundException.cs" />
     <Compile Include="Processes\FileInUse.cs" />
+    <Compile Include="Processes\ProcessController.cs" />
     <Compile Include="ProgressTracker\ConsoleProgressReporter.cs" />
     <Compile Include="ProgressTracker\IReportProgress.cs" />
     <Compile Include="ProgressTracker\ProgressState.cs" />
@@ -130,7 +134,9 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Installers\Msi\MSIHelp.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

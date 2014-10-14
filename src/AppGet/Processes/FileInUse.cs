@@ -5,14 +5,6 @@ using System.Runtime.InteropServices;
 
 namespace AppGet.Processes
 {
-    public class ProcessController
-    {
-        public void StartProccess(string path)
-        {
-            
-        }
-    }
-
     public static class FileInUse
     {
         private const int RmRebootReasonNone = 0;
