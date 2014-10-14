@@ -91,6 +91,7 @@ namespace AppGet.FlightPlans
         MSI,
         Inno,
         InstallShield,
+        ClickOnce,
         NSIS
     }
 }
