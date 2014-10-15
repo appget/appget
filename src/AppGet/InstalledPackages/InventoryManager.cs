@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using AppGet.FileSystem;
-using AppGet.FileTransfer;
-using AppGet.FileTransfer.Protocols;
 using AppGet.HostSystem;
 using AppGet.PackageRepository;
 using AppGet.Serialization;
@@ -13,6 +11,7 @@ namespace AppGet.InstalledPackages
         List<PackageInfo> GetInstalledPackages();
         void AddInstalledPackage(PackageInfo packageInfo);
     }
+
 
     public class InventoryManager : IInventoryManager
     {

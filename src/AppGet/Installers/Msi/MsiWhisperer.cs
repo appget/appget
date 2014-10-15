@@ -1,5 +1,4 @@
-﻿using System;
-using AppGet.Commands.Install;
+﻿using AppGet.Commands.Install;
 using AppGet.FlightPlans;
 using AppGet.HostSystem;
 using AppGet.Processes;
@@ -7,12 +6,6 @@ using NLog;
 
 namespace AppGet.Installers.Msi
 {
-    public interface IInstallerWhisperer
-    {
-        void Install(string installerLocation, FlightPlan flightPlan, InstallOptions installOptions);
-        bool CanHandle(InstallMethodType installMethod);
-    }
-
     public class MsiWhisperer : IInstallerWhisperer
     {
         private readonly IProcessController _processController;
@@ -25,9 +18,6 @@ namespace AppGet.Installers.Msi
             _pathResolver = pathResolver;
             _logger = logger;
         }
-
-
-
 
         public void Install(string installerLocation, FlightPlan flightPlan, InstallOptions installOptions)
         {
@@ -43,7 +33,6 @@ namespace AppGet.Installers.Msi
 
             _processController.WaitForExit(process);
         }
-
 
         private static string GetArgs(string msiPath, string logFile)
         {

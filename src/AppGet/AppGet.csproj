@@ -92,7 +92,9 @@
     <Compile Include="Http\HttpRequestBuilder.cs" />
     <Compile Include="Http\HttpResponse.cs" />
     <Compile Include="Http\UriExtensions.cs" />
+    <Compile Include="InstalledPackages\WindowsInstallerInventoryManager.cs" />
     <Compile Include="Installers\InstallService.cs" />
+    <Compile Include="Installers\IInstallerWhisperer.cs" />
     <Compile Include="Installers\Msi\MsiWhisperer.cs" />
     <Compile Include="Installers\Zip\ZipWhisperer.cs" />
     <Compile Include="InstalledPackages\InventoryManager.cs" />

@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="Download\HttpFileTransferClientFixture.cs" />
     <Compile Include="FlightPlans\FlightPlanFixture.cs" />
+    <Compile Include="InstalledPackages\WindowsInstallerInventoryManagerFixture.cs" />
     <Compile Include="Options\OptionsServiceFixture.cs" />
     <Compile Include="FlightPlans\FindInstallerFixture.cs" />
     <Compile Include="Processes\HandleFixture.cs" />

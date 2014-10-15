@@ -4,6 +4,7 @@ using AppGet.Commands.List;
 using AppGet.Commands.ShowFlightPlan;
 using AppGet.FileTransfer;
 using AppGet.FileTransfer.Protocols;
+using AppGet.Installers;
 using AppGet.Installers.Msi;
 using AppGet.Installers.Zip;
 using NLog;
