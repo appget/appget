@@ -8,7 +8,7 @@ namespace AppGet.Packages
     public interface IFindInstaller
     {
         Installer GetBestInstaller(List<Installer> installers);
-        List<InstallerDecision> ProcessRequirements(List<Installer> installers);
+        List<InstallerCompatibility> ProcessRequirements(List<Installer> installers);
     }
 
     public class FindInstaller : IFindInstaller
@@ -24,20 +24,20 @@ namespace AppGet.Packages
         public Installer GetBestInstaller(List<Installer> installers)
         {
             var decisions = ProcessRequirements(installers);
-            var approved = decisions.Where(d => d.Approved).ToList();
+            var compatible = decisions.Where(d => d.Compatible).ToList();
 
-            if (!approved.Any()) return null;
+            if (!compatible.Any()) return null;
 
-            return approved.OrderByDescending(d => d.Installer.Architecture).First().Installer;
+            return compatible.OrderByDescending(d => d.Installer.Architecture).First().Installer;
         }
 
-        public List<InstallerDecision> ProcessRequirements(List<Installer> installers)
+        public List<InstallerCompatibility> ProcessRequirements(List<Installer> installers)
         {
-            var decisions = new List<InstallerDecision>();
+            var decisions = new List<InstallerCompatibility>();
 
             foreach (var installer in installers)
             {
-                var decision = new InstallerDecision(installer);
+                var decision = new InstallerCompatibility(installer);
 
                 foreach (var requirement in _requirements)
                 {

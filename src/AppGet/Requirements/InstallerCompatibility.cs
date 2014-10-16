@@ -4,12 +4,12 @@ using AppGet.FlightPlans;
 
 namespace AppGet.Requirements
 {
-    public class InstallerDecision
+    public class InstallerCompatibility
     {
         public Installer Installer { get; set; }
         public List<EnforcementResult> Results { get; set; }
 
-        public bool Approved
+        public bool Compatible
         {
             get
             {
@@ -17,7 +17,7 @@ namespace AppGet.Requirements
             }
         }
 
-        public InstallerDecision(Installer installer)
+        public InstallerCompatibility(Installer installer)
         {
             Installer = installer;
             Results = new List<EnforcementResult>();
@@ -25,12 +25,12 @@ namespace AppGet.Requirements
 
         public override string ToString()
         {
-            if (Approved)
+            if (Compatible)
             {
                 return "[OK] " + Installer;
             }
 
-            return "[Rejected " + Results.Count(r => !r.Success) + "]" + Installer;
+            return "[Incompatible " + Results.Count(r => !r.Success) + "]" + Installer;
         }
     }
 }

@@ -28,6 +28,5 @@ namespace AppGet.Requirements
 
         public bool Success { get; private set; }
         public string Reason { get; private set; }
-
     }
 }
