@@ -9,7 +9,7 @@ namespace AppGet.Requirements
         public Installer Installer { get; set; }
         public List<EnforcementResult> Results { get; set; }
 
-        public bool Compatible
+        public bool IsCompatible
         {
             get
             {
@@ -25,7 +25,7 @@ namespace AppGet.Requirements
 
         public override string ToString()
         {
-            if (Compatible)
+            if (IsCompatible)
             {
                 return "[OK] " + Installer;
             }

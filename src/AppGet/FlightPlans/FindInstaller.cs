@@ -24,7 +24,7 @@ namespace AppGet.Packages
         public Installer GetBestInstaller(List<Installer> installers)
         {
             var decisions = ProcessRequirements(installers);
-            var compatible = decisions.Where(d => d.Compatible).ToList();
+            var compatible = decisions.Where(d => d.IsCompatible).ToList();
 
             if (!compatible.Any()) return null;
 
