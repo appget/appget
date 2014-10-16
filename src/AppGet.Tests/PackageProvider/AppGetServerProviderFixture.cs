@@ -11,7 +11,6 @@ namespace AppGet.Tests.PackageProvider
         [Test]
         public void should_get_flightplan()
         {
-
             Mocker.SetInstance<IHttpClient>(new HttpClient(logger));
             var c = Subject.FindPackage("linqpad");
 

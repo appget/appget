@@ -17,6 +17,7 @@ namespace AppGet.Tests
         {
             _subject = null;
             Mocker = new AutoMoqer();
+            Mocker.SetInstance(logger);
         }
 
         public T Subject
