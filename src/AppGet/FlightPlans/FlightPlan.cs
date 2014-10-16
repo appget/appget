@@ -6,6 +6,7 @@ namespace AppGet.FlightPlans
     public class FlightPlan
     {
         public string Id { get; set; }
+        public string Name { get; set; }
         public string Version { get; set; }
         public string ProductUrl { get; set; }
 
