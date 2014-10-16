@@ -52,7 +52,7 @@ namespace AppGet.Commands.Install
 
             var flightPlan = _flightPlanService.LoadFlightPlan(package);
 
-            var installer = _findInstaller.GetPackage(flightPlan.Installers);
+            var installer = _findInstaller.GetBestInstaller(flightPlan.Installers);
 
             var installerTempLocation = _pathResolver.GetInstallerTempPath(installer.FileName);
 

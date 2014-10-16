@@ -1,57 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using AppGet.FlightPlans;
-using AppGet.HostSystem;
-using NLog;
+using AppGet.Requirements;
 
 namespace AppGet.Packages
 {
     public interface IFindInstaller
     {
-        Installer GetPackage(List<Installer> packages);
+        Installer GetBestInstaller(List<Installer> installers);
+        List<InstallerDecision> ProcessRequirements(List<Installer> installers);
     }
 
     public class FindInstaller : IFindInstaller
     {
-        private readonly IEnvironmentProxy _environmentProxy;
+        private readonly IEnumerable<IEnforceRequirements> _requirements;
 
-        public FindInstaller(IEnvironmentProxy environmentProxy)
+        public FindInstaller(IEnumerable<IEnforceRequirements> requirements)
         {
-            _environmentProxy = environmentProxy;
+            _requirements = requirements;
         }
 
         //TODO: We should return the package the user specified, if they supplied one
-        public Installer GetPackage(List<Installer> packages)
+        public Installer GetBestInstaller(List<Installer> installers)
         {
-            //check if x64 and prefer x64, then
-            //TODO: what if there is more than one package based on architecture?
+            var decisions = ProcessRequirements(installers);
+            var approved = decisions.Where(d => d.Approved).ToList();
 
-            if (_environmentProxy.Is64BitOperatingSystem)
+            if (!approved.Any()) return null;
+
+            return approved.OrderByDescending(d => d.Installer.Architecture).First().Installer;
+        }
+
+        public List<InstallerDecision> ProcessRequirements(List<Installer> installers)
+        {
+            var decisions = new List<InstallerDecision>();
+
+            foreach (var installer in installers)
             {
-                var x64Package = packages.FirstOrDefault(p => p.Architecture == ArchitectureType.x64);
+                var decision = new InstallerDecision(installer);
 
-                if (x64Package != null)
+                foreach (var requirement in _requirements)
                 {
-                    return x64Package;
+                    decision.Results.Add(requirement.IsRequirementSatisfied(installer));
                 }
+
+                decisions.Add(decision);
             }
 
-            var x86Package = packages.FirstOrDefault(p => p.Architecture == ArchitectureType.x86);
-
-            if (x86Package != null)
-            {
-                return x86Package;
-            }
-
-            var anyPackage = packages.FirstOrDefault(p => p.Architecture == ArchitectureType.Any);
-
-            if (anyPackage != null)
-            {
-                return anyPackage;
-            }
-
-            throw new NotSupportedException("Unable to find an acceptable package");
+            return decisions;
         }
     }
 }

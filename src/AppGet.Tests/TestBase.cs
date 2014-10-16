@@ -15,6 +15,7 @@ namespace AppGet.Tests
         [SetUp]
         public void BaseSetup()
         {
+            _subject = null;
             Mocker = new AutoMoqer();
         }
 

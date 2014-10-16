@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using AppGet.FlightPlans;
-using AppGet.HostSystem;
 using AppGet.Packages;
+using AppGet.Requirements;
 using FluentAssertions;
+using Moq;
 using NUnit.Framework;
 
 namespace AppGet.Tests.Packages
@@ -11,85 +13,71 @@ namespace AppGet.Tests.Packages
     [TestFixture]
     public class FindInstallerFixture : TestBase<FindInstaller>
     {
-        private List<Installer> _packages;
-            
+        private Mock<IEnforceRequirements> _approved;
+        private Mock<IEnforceRequirements> _rejected;
+
+        private Installer _anyInstaller;
+        private Installer _x86Installer;
+        private Installer _x64Installer;
+        private List<Installer> _installers;
+
         [SetUp]
         public void Setup()
         {
-            _packages = new List<Installer>();
+            _approved = new Mock<IEnforceRequirements>();
+            _rejected = new Mock<IEnforceRequirements>();
 
-            Mocker.GetMock<IEnvironmentProxy>()
-                  .SetupGet(s => s.Is64BitOperatingSystem)
-                  .Returns(false);
+            _approved.Setup(s => s.IsRequirementSatisfied(It.IsAny<Installer>()))
+                     .Returns(EnforcementResult.Pass);
+
+            _rejected.Setup(s => s.IsRequirementSatisfied(It.IsAny<Installer>()))
+                     .Returns(EnforcementResult.Fail("Test failure"));
+
+            _anyInstaller = new Installer { Architecture = ArchitectureType.Any };
+            _x86Installer = new Installer { Architecture = ArchitectureType.x86 };
+            _x64Installer = new Installer { Architecture = ArchitectureType.x64 };
         }
 
-        private void GivenX64Package()
+        private void GivenApprovedOnly()
         {
-            _packages.Add(new Installer { Architecture = ArchitectureType.x64 });
+            Mocker.SetInstance((IEnumerable<IEnforceRequirements>)(new List<IEnforceRequirements> { _approved.Object }));           
         }
 
-        private void GivenX86Package()
+        private void GivenRejectedOnly()
         {
-            _packages.Add(new Installer { Architecture = ArchitectureType.x86 });
+            Mocker.SetInstance((IEnumerable<IEnforceRequirements>)(new List<IEnforceRequirements> { _rejected.Object }));
         }
 
-        private void GivenAnyPackage()
+        private void GivenInstallers(params Installer[] installers)
         {
-            _packages.Add(new Installer { Architecture = ArchitectureType.Any });
-        }
-
-        private void GivenX64OS()
-        {
-            Mocker.GetMock<IEnvironmentProxy>()
-                  .SetupGet(s => s.Is64BitOperatingSystem)
-                  .Returns(true);
-        }
-
-        [Test]
-        public void should_return_x64_package_when_os_is_x64_and_x64_package_is_available()
-        {
-            GivenX64OS();
-            GivenX64Package();
-
-            Subject.GetPackage(_packages).Architecture.Should().Be(ArchitectureType.x64);
+            _installers = new List<Installer>(installers);
         }
 
         [Test]
-        public void should_return_x86_package_when_os_is_x86_and_x86_package_is_available()
+        public void should_return_null_if_no_suitable_installer_is_found()
         {
-            GivenX86Package();
+            GivenRejectedOnly();
+            GivenInstallers(_anyInstaller);
 
-            Subject.GetPackage(_packages).Architecture.Should().Be(ArchitectureType.x86);
+            Subject.GetBestInstaller(_installers).Should().BeNull();
         }
 
         [Test]
-        public void should_return_x86_package_when_os_is_x64_and_x86_package_is_available()
+        public void should_prefer_x64_over_x86()
         {
-            GivenX86Package();
+            GivenApprovedOnly();
+            GivenInstallers(_x86Installer, _x64Installer);
 
-            Subject.GetPackage(_packages).Architecture.Should().Be(ArchitectureType.x86);
+            Subject.GetBestInstaller(_installers).Should().Be(_x64Installer);
         }
 
         [Test]
-        public void should_return_any_package_when_os_is_x64_and_any_package_is_available()
+        public void should_prefer_x86_over_any()
         {
-            GivenAnyPackage();
+            GivenApprovedOnly();
+            GivenInstallers(_x86Installer, _anyInstaller);
 
-            Subject.GetPackage(_packages).Architecture.Should().Be(ArchitectureType.Any);
-        }
-
-        [Test]
-        public void should_return_any_package_when_os_is_x86_and_any_package_is_available()
-        {
-            GivenAnyPackage();
-
-            Subject.GetPackage(_packages).Architecture.Should().Be(ArchitectureType.Any);
-        }
-
-        [Test]
-        public void should_throw_when_acceptable_package_is_not_available()
-        {
-            Assert.Throws<NotSupportedException>(() => Subject.GetPackage(_packages));
+            Subject.GetBestInstaller(_installers).Should().Be(_x86Installer);
         }
     }
 }
