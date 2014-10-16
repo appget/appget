@@ -60,6 +60,8 @@
   <ItemGroup>
     <Compile Include="Commands\CommandExecutor.cs" />
     <Compile Include="Commands\ICommandExecutor.cs" />
+    <Compile Include="Commands\Uninstall\InstallCommandHandler.cs" />
+    <Compile Include="Commands\Uninstall\InstallOptions.cs" />
     <Compile Include="Commands\Install\InstallCommandHandler.cs" />
     <Compile Include="Commands\Install\InstallOptions.cs" />
     <Compile Include="Commands\List\ListCommandHandler.cs" />
@@ -96,6 +98,7 @@
     <Compile Include="Installers\InstallService.cs" />
     <Compile Include="Installers\IInstallerWhisperer.cs" />
     <Compile Include="Installers\Msi\MsiWhisperer.cs" />
+    <Compile Include="Installers\UninstallService.cs" />
     <Compile Include="Installers\Zip\ZipWhisperer.cs" />
     <Compile Include="InstalledPackages\InventoryManager.cs" />
     <Compile Include="Options\CommandOptions.cs" />

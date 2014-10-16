@@ -2,6 +2,7 @@
 using AppGet.Commands.Install;
 using AppGet.Commands.List;
 using AppGet.Commands.ShowFlightPlan;
+using AppGet.Commands.Uninstall;
 using AppGet.FileTransfer;
 using AppGet.FileTransfer.Protocols;
 using AppGet.Installers;
@@ -34,7 +35,8 @@ namespace AppGet.Composition
             {
                 typeof(ShowFlightPlanCommandHandler),
                 typeof(ListCommandHandler),
-                typeof(InstallCommandHandler)
+                typeof(InstallCommandHandler),
+                typeof(UninstallCommandHandler)
             });
 
             container.RegisterMultiple<IInstallerWhisperer>(new[]
@@ -48,6 +50,6 @@ namespace AppGet.Composition
                 typeof(HttpFileTransferClient)
             });
         }
-      
+
     }
 }

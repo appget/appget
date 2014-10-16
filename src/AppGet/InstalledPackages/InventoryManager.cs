@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using AppGet.FileSystem;
 using AppGet.HostSystem;
 using AppGet.PackageRepository;
@@ -10,6 +11,7 @@ namespace AppGet.InstalledPackages
     {
         List<PackageInfo> GetInstalledPackages();
         void AddInstalledPackage(PackageInfo packageInfo);
+        void RemoveInstalledPackage(PackageInfo packageInfo);
     }
 
 
@@ -39,14 +41,23 @@ namespace AppGet.InstalledPackages
 
         public void AddInstalledPackage(PackageInfo packageInfo)
         {
-            var yamlpackageListPath = _pathResolver.InstalledPackageList;
-
             var currentPackages = GetInstalledPackages();
-
             currentPackages.Add(packageInfo);
+            WritePackageList(currentPackages);
+        }
 
-            var yaml = Yaml.Serialize(currentPackages);
+        public void RemoveInstalledPackage(PackageInfo packageInfo)
+        {
+            var currentPackages = GetInstalledPackages();
+            var updatedList = currentPackages.Where(c => !(c.Id != packageInfo.Id && c.Version != packageInfo.Version));
+            WritePackageList(updatedList);
+        }
 
+
+        private void WritePackageList(IEnumerable<PackageInfo> packages)
+        {
+            var yamlpackageListPath = _pathResolver.InstalledPackageList;
+            var yaml = Yaml.Serialize(packages);
             _fileSystem.WriteAllText(yamlpackageListPath, yaml);
         }
     }

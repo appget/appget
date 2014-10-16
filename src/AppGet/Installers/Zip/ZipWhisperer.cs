@@ -1,8 +1,8 @@
 ﻿using AppGet.Commands.Install;
+using AppGet.Commands.Uninstall;
 using AppGet.Compression;
 using AppGet.FlightPlans;
 using AppGet.HostSystem;
-using AppGet.Installers.Msi;
 using NLog;
 
 namespace AppGet.Installers.Zip
@@ -24,6 +24,11 @@ namespace AppGet.Installers.Zip
         {
             var target = _pathResolver.GetInstallationPath(flightPlan);
             _compressionService.Decompress(installerLocation, target);
+        }
+
+        public void Unnstall(FlightPlan flightPlan, UninstallOptions installOptions)
+        {
+            throw new System.NotImplementedException();
         }
 
         public bool CanHandle(InstallMethodType installMethod)

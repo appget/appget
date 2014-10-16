@@ -1,4 +1,5 @@
 ﻿using AppGet.Commands.Install;
+using AppGet.Commands.Uninstall;
 using AppGet.FlightPlans;
 using AppGet.HostSystem;
 using AppGet.Processes;
@@ -32,6 +33,11 @@ namespace AppGet.Installers.Msi
 
 
             _processController.WaitForExit(process);
+        }
+
+        public void Unnstall(FlightPlan flightPlan, UninstallOptions installOptions)
+        {
+            throw new System.NotImplementedException();
         }
 
         private static string GetArgs(string msiPath, string logFile)
