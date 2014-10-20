@@ -9,6 +9,8 @@ namespace AppGet.PackageRepository
         private readonly IHttpClient _httpClient;
         private readonly Logger _logger;
 
+        private const string API_ROOT = "http://appget.net/api/v1/";
+
         public AppGetServerClient(IHttpClient httpClient, Logger logger)
         {
             _httpClient = httpClient;
@@ -19,7 +21,7 @@ namespace AppGet.PackageRepository
         public PackageInfo FindPackage(string name)
         {
             _logger.Info("Finding package " + name);
-            var requestBuilder = new HttpRequestBuilder("http://appget.azurewebsites.net/api/v1/");
+            var requestBuilder = new HttpRequestBuilder(API_ROOT);
 
             var request = requestBuilder.Build("packages/{package}/latest");
             request.AddSegment("package", name);
