@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Reflection;
 using AppGet.Commands;
-using AppGet.Composition;
 using AppGet.Exceptions;
+using AppGet.Infrastructure.Composition;
+using AppGet.Infrastructure.Logging;
 using AppGet.Options;
 using NLog;
-using NLog.Config;
-using NLog.Layouts;
-using NLog.Targets;
 
 namespace AppGet
 {
@@ -35,12 +32,17 @@ namespace AppGet
                 }
 
 
-                ConfigureLogger();
+                LogConfigurator.ConfigureLogger();
 
                 var container = ContainerBuilder.Build();
 
                 var optionsService = container.Resolve<IParesOptions>();
                 var options = optionsService.Parse(args);
+
+                if (options.Verbose)
+                {
+                    LogConfigurator.EnableVerboseLogging();
+                }
 
                 var commandProcessor = container.Resolve<CommandExecutor>();
                 commandProcessor.ExecuteCommand(options);
@@ -75,19 +77,6 @@ namespace AppGet
             return input.Split(' ');
         }
 
-        private static void ConfigureLogger()
-        {
-            LogManager.Configuration = new LoggingConfiguration();
 
-            var consoleTarget = new ColoredConsoleTarget
-            {
-                Layout = new SimpleLayout("> ${message}")
-            };
-            var rule = new LoggingRule("*", LogLevel.Trace, consoleTarget);
-            LogManager.Configuration.AddTarget("console", consoleTarget);
-            LogManager.Configuration.LoggingRules.Add(rule);
-
-            LogManager.ReconfigExistingLoggers();
-        }
     }
 }

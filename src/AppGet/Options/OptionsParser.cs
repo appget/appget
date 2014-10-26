@@ -29,9 +29,10 @@ namespace AppGet.Options
                     throw new UnknownCommandException(commandName);
                 }
 
+                appGetOption.RootOptions = rootOptions;
                 appGetOption.ProcessArgs();
 
-         
+
                 appGetOption.CommandName = commandName;
             });
 
@@ -45,6 +46,6 @@ namespace AppGet.Options
             settings.ParsingCulture = CultureInfo.InvariantCulture;
         }
 
-       
+
     }
 }

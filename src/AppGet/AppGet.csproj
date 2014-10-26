@@ -69,7 +69,7 @@
     <Compile Include="Commands\List\ListCommandHandler.cs" />
     <Compile Include="Commands\List\ListOptions.cs" />
     <Compile Include="Commands\ShowFlightPlan\ShowFlightPlanCommandHandler.cs" />
-    <Compile Include="Composition\ContainerBuilder.cs" />
+    <Compile Include="Infrastructure\Composition\ContainerBuilder.cs" />
     <Compile Include="Compression\CompressionService.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="Extentions\StringExtentions.cs" />
@@ -96,6 +96,7 @@
     <Compile Include="Http\HttpRequestBuilder.cs" />
     <Compile Include="Http\HttpResponse.cs" />
     <Compile Include="Http\UriExtensions.cs" />
+    <Compile Include="Infrastructure\Logging\LogConfigurator.cs" />
     <Compile Include="InstalledPackages\WindowsInstallerInventoryManager.cs" />
     <Compile Include="Installers\InstallService.cs" />
     <Compile Include="Installers\IInstallerWhisperer.cs" />
@@ -137,7 +138,7 @@
     <Compile Include="Serialization\Json.cs" />
     <Compile Include="Serialization\VersionConverter.cs" />
     <Compile Include="Serialization\Yaml.cs" />
-    <Compile Include="Composition\TinyIoC.cs" />
+    <Compile Include="Infrastructure\Composition\TinyIoC.cs" />
     <Compile Include="Requirements\IEnforceRequirements.cs" />
     <Compile Include="Requirements\Specifications\MaxOsVersionSpecification.cs" />
     <Compile Include="Requirements\Specifications\MinOsVersionSpecification.cs" />

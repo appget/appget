@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using AppGet.Commands.Install;
 using AppGet.Commands.List;
@@ -10,11 +9,8 @@ using CommandLine.Text;
 
 namespace AppGet.Options
 {
-    public class RootOptions 
+    public class RootOptions
     {
-        [Option('v', null, HelpText = "Display more detailed execution information about")]
-        bool Verbose { get; set; }
-
         [VerbOption("install", HelpText = "Download and install a package")]
         public InstallOptions Install { get; set; }
 

@@ -11,7 +11,7 @@ using AppGet.Installers.Zip;
 using NLog;
 using TinyIoC;
 
-namespace AppGet.Composition
+namespace AppGet.Infrastructure.Composition
 {
     public static class ContainerBuilder
     {

@@ -1,4 +1,5 @@
 ﻿using System;
+using AppGet.Commands.List;
 using AppGet.Commands.ShowFlightPlan;
 using AppGet.Options;
 using FluentAssertions;
@@ -6,11 +7,10 @@ using NUnit.Framework;
 
 namespace AppGet.Tests.Options
 {
-    [TestFixture]
-    public class OptionsServiceFixture : TestBase<OptionsParser>
+    public class OptionsParserFixture : TestBase<OptionsParser>
     {
-        [TestCase("showflightplan", typeof(ShowFlightPlanOptions))]
-        [TestCase("ShowFlightPlan", typeof(ShowFlightPlanOptions))]
+        [TestCase("list", typeof(ListOptions))]
+        [TestCase("LIST", typeof(ListOptions))]
         public void should_parse_verb(string arg, Type optionType)
         {
             var option = Parse(arg);
@@ -41,6 +41,16 @@ namespace AppGet.Tests.Options
             Assert.Throws<UnknownCommandException>(() => Parse(verb));
         }
 
+        [TestCase("list", false)]
+        [TestCase("list -v", true)]
+        [TestCase("list -V", true)]
+        [TestCase("list --v", true)]
+        [TestCase("list --V", true)]
+        public void should_parse_common_args_from_root(string arg, bool verbose)
+        {
+            var option = Parse(arg);
+            option.Verbose.Should().Be(verbose);
+        }
 
 
         private AppGetOption Parse(string args)
