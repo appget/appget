@@ -8,9 +8,6 @@ namespace AppGet.Serialization
 {
     public static class Yaml
     {
-
-
-
         public static string Serialize(object obj)
         {
             using (var textWriter = new StringWriter(CultureInfo.InvariantCulture))

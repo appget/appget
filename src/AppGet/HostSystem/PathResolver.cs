@@ -31,14 +31,14 @@ namespace AppGet.HostSystem
             }
         }
 
-        private string AppGetWrokingDirectory
+        private string AppGetWorkingDirectory
         {
             get { return Path.Combine(ProgramData, "AppGet"); }
         }
 
         public string InstalledPackageList
         {
-            get { return Path.Combine(AppGetWrokingDirectory, "packages.yaml"); }
+            get { return Path.Combine(AppGetWorkingDirectory, "packages.yaml"); }
         }
 
         public string GetInstallerTempPath(string fileName)
@@ -48,7 +48,7 @@ namespace AppGet.HostSystem
 
         public string GetInstallerLogFile(FlightPlan flightPlan)
         {
-            var installerLogDir = Path.Combine(AppGetWrokingDirectory, "Logs");
+            var installerLogDir = Path.Combine(AppGetWorkingDirectory, "Logs");
 
             Directory.CreateDirectory(installerLogDir);
 
@@ -65,7 +65,7 @@ namespace AppGet.HostSystem
                 case InstallMethodType.Zip:
                     {
                         var folderName = string.Format("{0}-{1}", flightPlan.Id, flightPlan.Version);
-                        return Path.Combine(AppGetWrokingDirectory, folderName);
+                        return Path.Combine(AppGetWorkingDirectory, folderName);
                     }
                 default:
                     {

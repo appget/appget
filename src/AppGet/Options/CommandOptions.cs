@@ -7,7 +7,6 @@ namespace AppGet.Options
 {
     public abstract class CommandOptions
     {
-
         private static readonly Regex PackageNameRegex = new Regex("^\\w+", RegexOptions.Compiled);
 
         public string CommandName { get; set; }
@@ -16,11 +15,11 @@ namespace AppGet.Options
         public IList<string> LeftOvers { get; set; }
 
         public string PackageName { get; private set; }
-        public List<string> UnknowArgs { get; private set; }
+        public List<string> UnknownArgs { get; private set; }
 
-        public void ProcessUnknowArgs()
+        public void ProcessUnknownArgs()
         {
-            UnknowArgs = new List<string>();
+            UnknownArgs = new List<string>();
 
             for (int i = 0; i < LeftOvers.Count; i++)
             {
@@ -32,7 +31,7 @@ namespace AppGet.Options
                 }
                 else
                 {
-                    UnknowArgs.Add(leftOver);
+                    UnknownArgs.Add(leftOver);
                 }
             }
         }

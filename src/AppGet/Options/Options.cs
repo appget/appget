@@ -13,7 +13,7 @@ namespace AppGet.Options
         [Option('v', null, HelpText = "Display more detailed execution information about")]
         public bool Verbose { get; set; }
 
-        [VerbOption("showflightplan", HelpText = "Disaply the FlightPlan for a specific package")]
+        [VerbOption("showflightplan", HelpText = "Display the FlightPlan for a specific package")]
         public ShowFlightPlanOptions ShowFlightPlan { get; set; }
 
         [VerbOption("install", HelpText = "Download and install a package")]
@@ -23,7 +23,7 @@ namespace AppGet.Options
         public ListOptions List { get; set; }
 
         [ValueList(typeof(List<string>), MaximumElements = -1)]
-        public IList<string> UnknowArgs { get; set; }
+        public IList<string> UnknownArgs { get; set; }
 
         [HelpOption]
         public string GetUsage()

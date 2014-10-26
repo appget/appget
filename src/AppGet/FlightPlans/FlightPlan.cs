@@ -47,7 +47,7 @@ namespace AppGet.FlightPlans
         FirefoxExtention,
         ChromeExtention,
         Path,
-        EnvironmetVarible
+        EnvironmetVariable
     }
 
 

@@ -148,7 +148,6 @@ namespace AppGet.Http
                         break;
                     case "Range":
                         throw new NotImplementedException();
-                        break;
                     case "Referer":
                         webRequest.Referer = header.Value.ToString();
                         break;
@@ -159,7 +158,6 @@ namespace AppGet.Http
                         throw new NotSupportedException("User-Agent other than NzbDrone not allowed.");
                     case "Proxy-Connection":
                         throw new NotImplementedException();
-                        break;
                     default:
                         webRequest.Headers.Add(header.Key, header.Value.ToString());
                         break;

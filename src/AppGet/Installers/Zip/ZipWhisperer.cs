@@ -26,7 +26,7 @@ namespace AppGet.Installers.Zip
             _compressionService.Decompress(installerLocation, target);
         }
 
-        public void Unnstall(FlightPlan flightPlan, UninstallOptions installOptions)
+        public void Uninstall(FlightPlan flightPlan, UninstallOptions installOptions)
         {
             throw new System.NotImplementedException();
         }

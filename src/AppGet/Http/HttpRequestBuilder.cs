@@ -6,7 +6,7 @@ namespace AppGet.Http
     public class HttpRequestBuilder
     {
         public Uri BaseUri { get; private set; }
-        public bool SupressHttpError { get; set; }
+        public bool SuppressHttpError { get; set; }
         public NetworkCredential NetworkCredential { get; set; }
 
         public Action<HttpRequest> PostProcess { get; set; }
@@ -25,7 +25,7 @@ namespace AppGet.Http
 
             var request = new HttpRequest(BaseUri + path)
             {
-                SuppressHttpError = SupressHttpError,
+                SuppressHttpError = SuppressHttpError,
                 NetworkCredential = NetworkCredential
             };
 

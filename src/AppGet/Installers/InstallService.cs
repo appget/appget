@@ -25,7 +25,7 @@ namespace AppGet.Installers
 
         public void Install(string installerLocation, FlightPlan flightPlan, InstallOptions installOptions)
         {
-            _logger.Info("Begining installation of " + flightPlan.Id);
+            _logger.Info("Beginning installation of " + flightPlan.Id);
 
             var whisperer = _installWhisperers.Single(c => c.CanHandle(flightPlan.InstallMethod));
 

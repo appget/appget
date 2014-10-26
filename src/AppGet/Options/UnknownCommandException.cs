@@ -13,12 +13,12 @@ namespace AppGet.Options
 
     public class UnknownOptionException : OptionException
     {
-        public IList<string> UnknowOptions { get; private set; }
+        public IList<string> UnknownOptions { get; private set; }
 
-        public UnknownOptionException(IList<string> unknowOptions)
-            : base("unknow options")
+        public UnknownOptionException(IList<string> unknownOptions)
+            : base("unknown options")
         {
-            UnknowOptions = unknowOptions;
+            UnknownOptions = unknownOptions;
         }
     }
 }

@@ -35,7 +35,7 @@ namespace AppGet.Installers.Msi
             _processController.WaitForExit(process);
         }
 
-        public void Unnstall(FlightPlan flightPlan, UninstallOptions installOptions)
+        public void Uninstall(FlightPlan flightPlan, UninstallOptions installOptions)
         {
             throw new System.NotImplementedException();
         }

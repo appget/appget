@@ -25,11 +25,11 @@ namespace AppGet.Installers
 
         public void Uninstall(FlightPlan flightPlan, UninstallOptions installOptions)
         {
-            _logger.Info("Begining uninstallation of " + flightPlan.Id);
+            _logger.Info("Beginning uninstallation of " + flightPlan.Id);
 
             var whisperer = _installWhisperers.Single(c => c.CanHandle(flightPlan.InstallMethod));
 
-            whisperer.Unnstall(flightPlan, installOptions);
+            whisperer.Uninstall(flightPlan, installOptions);
         }
     }
 }
