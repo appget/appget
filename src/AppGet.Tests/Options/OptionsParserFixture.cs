@@ -18,23 +18,23 @@ namespace AppGet.Tests.Options
             option.Should().BeOfType(optionType);
         }
 
-        [TestCase("ViewFlightPlan firefox")]
+        [TestCase("view firefox")]
         public void should_parse_verb_with_package_name(string arg)
         {
             var option = (ViewFlightPlanOptions)Parse(arg);
-            option.CommandName.Should().Be("ViewFlightPlan");
+            option.CommandName.Should().Be("view");
             option.PackageName.Should().Be("firefox");
         }
 
-        [TestCase("showflightplan /invalid")]
-        [TestCase("showflightplan firefox secondpackage")]
+        [TestCase("view /invalid")]
+        [TestCase("view firefox secondpackage")]
         public void should_throw_with_unknow_params(string args)
         {
             Assert.Throws<UnknownOptionException>(() => Parse(args));
         }
 
         [TestCase("invalid command")]
-        [TestCase("-showflightplan")]
+        [TestCase("-view")]
         [TestCase("")]
         public void should_throw_on_unknown_verb(string verb)
         {
