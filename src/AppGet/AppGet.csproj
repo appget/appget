@@ -68,7 +68,7 @@
     <Compile Include="Commands\Install\InstallOptions.cs" />
     <Compile Include="Commands\List\ListCommandHandler.cs" />
     <Compile Include="Commands\List\ListOptions.cs" />
-    <Compile Include="Commands\ShowFlightPlan\ShowFlightPlanCommandHandler.cs" />
+    <Compile Include="Commands\ShowFlightPlan\ViewFlightPlanCommandHandler.cs" />
     <Compile Include="Infrastructure\Composition\ContainerBuilder.cs" />
     <Compile Include="Compression\CompressionService.cs" />
     <Compile Include="Application.cs" />
@@ -111,7 +111,7 @@
     <Compile Include="Options\OptionException.cs" />
     <Compile Include="Options\Options.cs" />
     <Compile Include="Options\OptionsParser.cs" />
-    <Compile Include="Commands\ShowFlightPlan\ShowFlightPlanOptions.cs" />
+    <Compile Include="Commands\ShowFlightPlan\ViewFlightPlanOptions.cs" />
     <Compile Include="Options\UnknownOptionException.cs" />
     <Compile Include="PackageRepository\AppGetServerClient.cs" />
     <Compile Include="PackageRepository\IPackageRepository.cs" />

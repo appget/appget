@@ -33,7 +33,7 @@ namespace AppGet.Infrastructure.Composition
         {
             container.RegisterMultiple<ICommandHandler>(new[]
             {
-                typeof(ShowFlightPlanCommandHandler),
+                typeof(ViewFlightPlanCommandHandler),
                 typeof(ListCommandHandler),
                 typeof(InstallCommandHandler),
                 typeof(UninstallCommandHandler)

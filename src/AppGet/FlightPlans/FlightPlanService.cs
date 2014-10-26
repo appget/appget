@@ -8,6 +8,7 @@ namespace AppGet.FlightPlans
     public interface IFlightPlanService
     {
         FlightPlan LoadFlightPlan(PackageInfo packageInfo);
+        string ReadFlightPlan(PackageInfo packageInfo);
     }
 
     public class FlightPlanService : IFlightPlanService
@@ -24,9 +25,15 @@ namespace AppGet.FlightPlans
 
         public FlightPlan LoadFlightPlan(PackageInfo packageInfo)
         {
+            var text = ReadFlightPlan(packageInfo);
+            return Yaml.Deserialize<FlightPlan>(text);
+        }
+
+        public string ReadFlightPlan(PackageInfo packageInfo)
+        {
             _logger.Info("Loading flighplan for " + packageInfo);
             var text = _fileTransferService.ReadContent(packageInfo.FlightPlanUrl);
-            return Yaml.Deserialize<FlightPlan>(text);
+            return text;
         }
     }
 }

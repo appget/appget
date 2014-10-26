@@ -18,11 +18,11 @@ namespace AppGet.Tests.Options
             option.Should().BeOfType(optionType);
         }
 
-        [TestCase("ShowFlightPlan firefox")]
+        [TestCase("ViewFlightPlan firefox")]
         public void should_parse_verb_with_package_name(string arg)
         {
-            var option = (ShowFlightPlanOptions)Parse(arg);
-            option.CommandName.Should().Be("ShowFlightPlan");
+            var option = (ViewFlightPlanOptions)Parse(arg);
+            option.CommandName.Should().Be("ViewFlightPlan");
             option.PackageName.Should().Be("firefox");
         }
 

@@ -17,8 +17,8 @@ namespace AppGet.Options
         [VerbOption("list", HelpText = "List installed packages")]
         public ListOptions List { get; set; }
 
-        [VerbOption("showflightplan", HelpText = "Display the FlightPlan for a specific package")]
-        public ShowFlightPlanOptions ShowFlightPlan { get; set; }
+        [VerbOption("view", HelpText = "Display the FlightPlan for a specific package")]
+        public ViewFlightPlanOptions ViewFlightPlan { get; set; }
 
         [ValueList(typeof(List<string>), MaximumElements = -1)]
         public IList<string> UnknownArgs { get; set; }
