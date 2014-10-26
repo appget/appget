@@ -34,17 +34,17 @@ namespace AppGet.Commands.Install
             _logger = logger;
         }
 
-        public bool CanExecute(CommandOptions commandOptions)
+        public bool CanExecute(AppGetOption packageCommandOptions)
         {
-            return commandOptions is InstallOptions;
+            return packageCommandOptions is InstallOptions;
         }
 
-        public void Execute(CommandOptions commandOptions)
+        public void Execute(AppGetOption packageCommandOptions)
         {
 
-            var installOptions = (InstallOptions)commandOptions;
+            var installOptions = (InstallOptions)packageCommandOptions;
 
-            var package = _packageRepository.FindPackage(commandOptions.PackageName);
+            var package = _packageRepository.FindPackage(installOptions.PackageName);
             if (package == null)
             {
                 throw new PackageNotFoundException(installOptions.PackageName);

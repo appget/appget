@@ -22,16 +22,16 @@ namespace AppGet.Commands.Uninstall
             _inventoryManager = inventoryManager;
         }
 
-        public bool CanExecute(CommandOptions commandOptions)
+        public bool CanExecute(AppGetOption packageCommandOptions)
         {
-            return commandOptions is UninstallOptions;
+            return packageCommandOptions is UninstallOptions;
         }
 
-        public void Execute(CommandOptions commandOptions)
+        public void Execute(AppGetOption packageCommandOptions)
         {
-            var uninstallOptions = (UninstallOptions)commandOptions;
+            var uninstallOptions = (UninstallOptions)packageCommandOptions;
 
-            var package = _packageRepository.FindPackage(commandOptions.PackageName);
+            var package = _packageRepository.FindPackage(uninstallOptions.PackageName);
             if (package == null)
             {
                 throw new PackageNotFoundException(uninstallOptions.PackageName);

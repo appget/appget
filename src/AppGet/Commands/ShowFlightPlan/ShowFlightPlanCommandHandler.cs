@@ -14,14 +14,14 @@ namespace AppGet.Commands.ShowFlightPlan
             _logger = logger;
         }
 
-        public bool CanExecute(CommandOptions commandOptions)
+        public bool CanExecute(AppGetOption packageCommandOptions)
         {
-            return commandOptions is ShowFlightPlanOptions;
+            return packageCommandOptions is ShowFlightPlanOptions;
         }
 
-        public void Execute(CommandOptions commandOptions)
+        public void Execute(AppGetOption packageCommandOptions)
         {
-            var options = (ShowFlightPlanOptions)commandOptions;
+            var options = (ShowFlightPlanOptions)packageCommandOptions;
 
             _logger.Info("bluup! " + options.PackageName);
         }

@@ -39,13 +39,21 @@ namespace AppGet
 
                 var container = ContainerBuilder.Build();
 
-                var optionsService = container.Resolve<IOptionsService>();
+                var optionsService = container.Resolve<IParesOptions>();
                 var options = optionsService.Parse(args);
 
                 var commandProcessor = container.Resolve<CommandExecutor>();
                 commandProcessor.ExecuteCommand(options);
 
 
+                return 0;
+            }
+            catch (UnknownCommandException)
+            {
+                var helpGenerator = new HelpGenerator();
+                var helpText = helpGenerator.GenerateHelp();
+
+                Console.WriteLine(helpText);
                 return 0;
             }
             catch (AppGetException ex)

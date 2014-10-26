@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace AppGet.Tests.Options
 {
     [TestFixture]
-    public class OptionsServiceFixture : TestBase<OptionsService>
+    public class OptionsServiceFixture : TestBase<OptionsParser>
     {
         [TestCase("showflightplan", typeof(ShowFlightPlanOptions))]
         [TestCase("ShowFlightPlan", typeof(ShowFlightPlanOptions))]
@@ -21,7 +21,7 @@ namespace AppGet.Tests.Options
         [TestCase("ShowFlightPlan firefox")]
         public void should_parse_verb_with_package_name(string arg)
         {
-            var option = Parse(arg);
+            var option = (ShowFlightPlanOptions)Parse(arg);
             option.CommandName.Should().Be("ShowFlightPlan");
             option.PackageName.Should().Be("firefox");
         }
@@ -43,7 +43,7 @@ namespace AppGet.Tests.Options
 
 
 
-        private CommandOptions Parse(string args)
+        private AppGetOption Parse(string args)
         {
             return Subject.Parse(args.Split(' '));
         }

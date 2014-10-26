@@ -4,7 +4,7 @@ using CommandLine.Text;
 
 namespace AppGet.Commands.Install
 {
-    public class InstallOptions : CommandOptions
+    public class InstallOptions : PackageCommandOptions
     {
         [HelpOption]
         public string GetUsage()

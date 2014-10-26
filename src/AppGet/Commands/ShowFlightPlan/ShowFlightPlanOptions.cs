@@ -6,7 +6,7 @@ using CommandLine.Text;
 
 namespace AppGet.Commands.ShowFlightPlan
 {
-    public class ShowFlightPlanOptions : CommandOptions
+    public class ShowFlightPlanOptions : PackageCommandOptions
     {
         [HelpOption]
         public string GetUsage()

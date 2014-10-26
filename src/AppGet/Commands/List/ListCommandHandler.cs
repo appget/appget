@@ -17,12 +17,12 @@ namespace AppGet.Commands.List
             _logger = logger;
         }
 
-        public bool CanExecute(CommandOptions commandOptions)
+        public bool CanExecute(AppGetOption packageCommandOptions)
         {
-            return commandOptions is ListOptions;
+            return packageCommandOptions is ListOptions;
         }
 
-        public void Execute(CommandOptions commandOptions)
+        public void Execute(AppGetOption packageCommandOptions)
         {
             var packages = _inventoryManager.GetInstalledPackages();
 

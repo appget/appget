@@ -9,7 +9,7 @@ namespace AppGet.Commands
 {
     public interface ICommandExecutor
     {
-        void ExecuteCommand(CommandOptions options);
+        void ExecuteCommand(AppGetOption options);
     }
 
     public class CommandExecutor : ICommandExecutor
@@ -24,7 +24,7 @@ namespace AppGet.Commands
             _consoleCommands = consoleCommands.ToList();
         }
 
-        public void ExecuteCommand(CommandOptions arguments)
+        public void ExecuteCommand(AppGetOption arguments)
         {
             var commandHandler = _consoleCommands.FirstOrDefault(c => c.CanExecute(arguments));
 

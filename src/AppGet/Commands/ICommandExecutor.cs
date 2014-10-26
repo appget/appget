@@ -4,8 +4,8 @@ namespace AppGet.Commands
 {
     public interface ICommandHandler
     {
-        bool CanExecute(CommandOptions commandOptions);
+        bool CanExecute(AppGetOption packageCommandOptions);
 
-        void Execute(CommandOptions commandOptions);
+        void Execute(AppGetOption packageCommandOptions);
     }
 }
