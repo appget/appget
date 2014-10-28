@@ -7,6 +7,7 @@ namespace AppGet.FileSystem
         string ReadAllText(string source);
         bool FileExists(string source);
         void WriteAllText(string path, string content);
+        void DeleteDirectory(string path);
     }
 
 
@@ -20,6 +21,11 @@ namespace AppGet.FileSystem
         public void WriteAllText(string path, string content)
         {
             File.WriteAllText(path, content);
+        }
+
+        public void DeleteDirectory(string path)
+        {
+            Directory.Delete(path, true);
         }
 
         public bool FileExists(string path)

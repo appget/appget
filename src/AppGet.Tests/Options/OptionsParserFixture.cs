@@ -23,7 +23,7 @@ namespace AppGet.Tests.Options
         {
             var option = (ViewFlightPlanOptions)Parse(arg);
             option.CommandName.Should().Be("view");
-            option.PackageName.Should().Be("firefox");
+            option.PackageId.Should().Be("firefox");
         }
 
         [TestCase("view /invalid")]

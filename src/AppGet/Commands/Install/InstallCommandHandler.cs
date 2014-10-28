@@ -44,10 +44,10 @@ namespace AppGet.Commands.Install
 
             var installOptions = (InstallOptions)packageCommandOptions;
 
-            var package = _packageRepository.FindPackage(installOptions.PackageName);
+            var package = _packageRepository.FindPackage(installOptions.PackageId);
             if (package == null)
             {
-                throw new PackageNotFoundException(installOptions.PackageName);
+                throw new PackageNotFoundException(installOptions.PackageId);
             }
 
             var flightPlan = _flightPlanService.LoadFlightPlan(package);

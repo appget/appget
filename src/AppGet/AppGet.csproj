@@ -69,6 +69,7 @@
     <Compile Include="Commands\List\ListCommandHandler.cs" />
     <Compile Include="Commands\List\ListOptions.cs" />
     <Compile Include="Commands\ShowFlightPlan\ViewFlightPlanCommandHandler.cs" />
+    <Compile Include="Commands\Uninstall\PackageNotInstalledException.cs" />
     <Compile Include="Infrastructure\Composition\ContainerBuilder.cs" />
     <Compile Include="Compression\CompressionService.cs" />
     <Compile Include="Application.cs" />

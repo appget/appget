@@ -8,7 +8,5 @@ namespace AppGet.PackageRepository
             : base("Package [{0}] could not be found", packageName)
         {
         }
-
-
     }
 }

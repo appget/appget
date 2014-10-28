@@ -47,10 +47,10 @@ namespace AppGet.Commands.ShowFlightPlan
 
             var viewOptions = (ViewFlightPlanOptions)packageCommandOptions;
 
-            var package = _packageRepository.FindPackage(viewOptions.PackageName);
+            var package = _packageRepository.FindPackage(viewOptions.PackageId);
             if (package == null)
             {
-                throw new PackageNotFoundException(viewOptions.PackageName);
+                throw new PackageNotFoundException(viewOptions.PackageId);
             }
 
             var flightPlan = _flightPlanService.ReadFlightPlan(package);

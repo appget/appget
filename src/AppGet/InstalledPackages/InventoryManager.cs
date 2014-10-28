@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AppGet.FileSystem;
 using AppGet.HostSystem;
@@ -12,6 +13,7 @@ namespace AppGet.InstalledPackages
         List<PackageInfo> GetInstalledPackages();
         void AddInstalledPackage(PackageInfo packageInfo);
         void RemoveInstalledPackage(PackageInfo packageInfo);
+        bool IsInstalled(string id);
     }
 
 
@@ -49,8 +51,13 @@ namespace AppGet.InstalledPackages
         public void RemoveInstalledPackage(PackageInfo packageInfo)
         {
             var currentPackages = GetInstalledPackages();
-            var updatedList = currentPackages.Where(c => !(c.Id != packageInfo.Id && c.Version != packageInfo.Version));
+            var updatedList = currentPackages.Where(c => !(c.Id == packageInfo.Id && c.Version == packageInfo.Version));
             WritePackageList(updatedList);
+        }
+
+        public bool IsInstalled(string id)
+        {
+            return GetInstalledPackages().Any(c => String.Equals(c.Id, id, StringComparison.InvariantCultureIgnoreCase));
         }
 
 

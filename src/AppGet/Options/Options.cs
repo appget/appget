@@ -4,6 +4,7 @@ using System.Text;
 using AppGet.Commands.Install;
 using AppGet.Commands.List;
 using AppGet.Commands.ShowFlightPlan;
+using AppGet.Commands.Uninstall;
 using CommandLine;
 using CommandLine.Text;
 
@@ -13,6 +14,9 @@ namespace AppGet.Options
     {
         [VerbOption("install", HelpText = "Download and install a package")]
         public InstallOptions Install { get; set; }
+
+        [VerbOption("uninstall", HelpText = "Uninstall a previously installed package")]
+        public UninstallOptions Uninstall { get; set; }
 
         [VerbOption("list", HelpText = "List installed packages")]
         public ListOptions List { get; set; }

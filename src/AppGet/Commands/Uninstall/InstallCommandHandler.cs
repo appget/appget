@@ -1,4 +1,5 @@
-﻿using AppGet.FlightPlans;
+﻿using System;
+using AppGet.FlightPlans;
 using AppGet.InstalledPackages;
 using AppGet.Installers;
 using AppGet.Options;
@@ -31,18 +32,23 @@ namespace AppGet.Commands.Uninstall
         {
             var uninstallOptions = (UninstallOptions)packageCommandOptions;
 
-            var package = _packageRepository.FindPackage(uninstallOptions.PackageName);
+            if (!_inventoryManager.IsInstalled(uninstallOptions.PackageId))
+            {
+                throw new PackageNotInstalledException(uninstallOptions.PackageId);
+            }
+
+            var package = _packageRepository.FindPackage(uninstallOptions.PackageId);
             if (package == null)
             {
-                throw new PackageNotFoundException(uninstallOptions.PackageName);
+                throw new PackageNotFoundException(uninstallOptions.PackageId);
             }
+
 
             var flightPlan = _flightPlanService.LoadFlightPlan(package);
 
             _uninstallService.Uninstall(flightPlan, uninstallOptions);
 
             _inventoryManager.RemoveInstalledPackage(package);
-
         }
     }
 }

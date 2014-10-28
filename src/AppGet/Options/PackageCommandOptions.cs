@@ -34,9 +34,9 @@ namespace AppGet.Options
 
     public abstract class PackageCommandOptions : AppGetOption
     {
-        private static readonly Regex PackageNameRegex = new Regex("^\\w+", RegexOptions.Compiled);
+        private static readonly Regex PackageIdRegex = new Regex("^\\w+", RegexOptions.Compiled);
 
-        public string PackageName { get; private set; }
+        public string PackageId { get; private set; }
 
         public override void ProcessArgs()
         {
@@ -46,9 +46,9 @@ namespace AppGet.Options
             {
                 var leftOver = LeftOvers[i];
 
-                if (i == 0 && PackageNameRegex.IsMatch(leftOver))
+                if (i == 0 && PackageIdRegex.IsMatch(leftOver))
                 {
-                    PackageName = leftOver;
+                    PackageId = leftOver;
                 }
                 else
                 {
@@ -61,7 +61,7 @@ namespace AppGet.Options
                 throw new UnknownOptionException(unknownArgs);
             }
 
-            if (PackageName.IsNullOrWhiteSpace())
+            if (PackageId.IsNullOrWhiteSpace())
             {
                 throw new PackageNameMissingException();
             }
