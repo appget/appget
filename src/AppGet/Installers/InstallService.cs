@@ -2,7 +2,6 @@
 using System.Linq;
 using AppGet.Commands.Install;
 using AppGet.FlightPlans;
-using AppGet.Installers.Msi;
 using NLog;
 
 namespace AppGet.Installers

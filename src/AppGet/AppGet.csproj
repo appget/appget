@@ -103,10 +103,12 @@
     <Compile Include="Http\UriExtensions.cs" />
     <Compile Include="Infrastructure\Logging\LogConfigurator.cs" />
     <Compile Include="InstalledPackages\WindowsInstallerInventoryManager.cs" />
+    <Compile Include="Installers\Inno\InnoWhisperer.cs" />
     <Compile Include="Installers\InstallService.cs" />
     <Compile Include="Installers\IInstallerWhisperer.cs" />
     <Compile Include="Installers\Msi\MsiWhisperer.cs" />
     <Compile Include="Installers\UninstallService.cs" />
+    <Compile Include="Installers\InstallerWhispererBase.cs" />
     <Compile Include="Installers\Zip\ZipWhisperer.cs" />
     <Compile Include="InstalledPackages\InventoryManager.cs" />
     <Compile Include="Options\AppGetOption.cs" />

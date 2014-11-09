@@ -1,5 +1,4 @@
-﻿using System;
-using AppGet.FlightPlans;
+﻿using AppGet.FlightPlans;
 using AppGet.InstalledPackages;
 using AppGet.Installers;
 using AppGet.Options;
