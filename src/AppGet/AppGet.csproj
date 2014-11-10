@@ -62,6 +62,8 @@
   <ItemGroup>
     <Compile Include="Commands\CommandExecutor.cs" />
     <Compile Include="Commands\ICommandExecutor.cs" />
+    <Compile Include="Commands\Search\SearchCommandHandler.cs" />
+    <Compile Include="Commands\Search\SearchOptions.cs" />
     <Compile Include="Commands\Uninstall\InstallCommandHandler.cs" />
     <Compile Include="Commands\Uninstall\InstallOptions.cs" />
     <Compile Include="Commands\Install\InstallCommandHandler.cs" />
@@ -105,6 +107,7 @@
     <Compile Include="Installers\UninstallService.cs" />
     <Compile Include="Installers\Zip\ZipWhisperer.cs" />
     <Compile Include="InstalledPackages\InventoryManager.cs" />
+    <Compile Include="Options\AppGetOption.cs" />
     <Compile Include="Options\PackageCommandOptions.cs" />
     <Compile Include="Options\HelpGenerator.cs" />
     <Compile Include="Options\PackageNameMissingException.cs" />
@@ -119,6 +122,7 @@
     <Compile Include="PackageRepository\PackageInfo.cs" />
     <Compile Include="FlightPlans\FindInstaller.cs" />
     <Compile Include="PackageRepository\PackageNotFoundException.cs" />
+    <Compile Include="PackageSearch\PackageSearchService.cs" />
     <Compile Include="Processes\FileInUse.cs" />
     <Compile Include="Processes\ProcessController.cs" />
     <Compile Include="ProgressTracker\ConsoleProgressReporter.cs" />

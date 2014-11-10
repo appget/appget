@@ -6,6 +6,6 @@ namespace AppGet.Commands
     {
         bool CanExecute(AppGetOption packageCommandOptions);
 
-        void Execute(AppGetOption packageCommandOptions);
+        void Execute(AppGetOption searchCommandOptions);
     }
 }

@@ -42,10 +42,10 @@ namespace AppGet.Commands.ShowFlightPlan
             return packageCommandOptions is ViewFlightPlanOptions;
         }
 
-        public void Execute(AppGetOption packageCommandOptions)
+        public void Execute(AppGetOption searchCommandOptions)
         {
 
-            var viewOptions = (ViewFlightPlanOptions)packageCommandOptions;
+            var viewOptions = (ViewFlightPlanOptions)searchCommandOptions;
 
             var package = _packageRepository.GetLatest(viewOptions.PackageId);
             if (package == null)

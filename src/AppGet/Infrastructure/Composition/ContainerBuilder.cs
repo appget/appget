@@ -1,6 +1,7 @@
 ﻿using AppGet.Commands;
 using AppGet.Commands.Install;
 using AppGet.Commands.List;
+using AppGet.Commands.Search;
 using AppGet.Commands.ShowFlightPlan;
 using AppGet.Commands.Uninstall;
 using AppGet.FileTransfer;
@@ -34,6 +35,7 @@ namespace AppGet.Infrastructure.Composition
             container.RegisterMultiple<ICommandHandler>(new[]
             {
                 typeof(ViewFlightPlanCommandHandler),
+                typeof(SearchCommandHandler),
                 typeof(ListCommandHandler),
                 typeof(InstallCommandHandler),
                 typeof(UninstallCommandHandler)

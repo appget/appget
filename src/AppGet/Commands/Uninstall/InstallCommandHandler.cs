@@ -28,9 +28,9 @@ namespace AppGet.Commands.Uninstall
             return packageCommandOptions is UninstallOptions;
         }
 
-        public void Execute(AppGetOption packageCommandOptions)
+        public void Execute(AppGetOption searchCommandOptions)
         {
-            var uninstallOptions = (UninstallOptions)packageCommandOptions;
+            var uninstallOptions = (UninstallOptions)searchCommandOptions;
 
             if (!_inventoryManager.IsInstalled(uninstallOptions.PackageId))
             {

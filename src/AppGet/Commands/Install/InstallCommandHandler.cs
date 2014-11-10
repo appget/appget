@@ -39,10 +39,10 @@ namespace AppGet.Commands.Install
             return packageCommandOptions is InstallOptions;
         }
 
-        public void Execute(AppGetOption packageCommandOptions)
+        public void Execute(AppGetOption searchCommandOptions)
         {
 
-            var installOptions = (InstallOptions)packageCommandOptions;
+            var installOptions = (InstallOptions)searchCommandOptions;
 
             var package = _packageRepository.GetLatest(installOptions.PackageId);
             if (package == null)

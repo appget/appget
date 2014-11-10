@@ -68,6 +68,14 @@ namespace AppGet
                 Logger.Fatal(ex);
                 return 1;
             }
+            finally
+            {
+                if (Debugger.IsAttached)
+                {
+                    Console.WriteLine("Press anykey to exit...");
+                    Console.ReadLine();
+                }
+            }
         }
 
         private static string[] TakeArgsFromInput()

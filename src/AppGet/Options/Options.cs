@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using AppGet.Commands.Install;
 using AppGet.Commands.List;
+using AppGet.Commands.Search;
 using AppGet.Commands.ShowFlightPlan;
 using AppGet.Commands.Uninstall;
 using CommandLine;
@@ -20,6 +21,9 @@ namespace AppGet.Options
 
         [VerbOption("list", HelpText = "List installed packages")]
         public ListOptions List { get; set; }
+
+        [VerbOption("search", HelpText = "Search package repository")]
+        public SearchOptions Search { get; set; }
 
         [VerbOption("view", HelpText = "Display the FlightPlan for a specific package")]
         public ViewFlightPlanOptions ViewFlightPlan { get; set; }
