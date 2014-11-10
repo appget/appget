@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -67,12 +68,15 @@ namespace AppGet.FileTransfer.Protocols
 
         }
 
-        public void TransferFile(string source, string destination)
+        public string TransferFile(string source, string destinationDirectory)
         {
+
+            var filePath = Path.Combine(destinationDirectory, GetFileName(source));
+
             var webClient = new WebClient();
             webClient.DownloadProgressChanged += TransferProgressCallback;
             webClient.DownloadFileCompleted += TransferCompletedCallback;
-            webClient.DownloadFileAsync(new Uri(source), destination);
+            webClient.DownloadFileAsync(new Uri(source), filePath);
 
             _inTransit = true;
             _progress = new ProgressState();
@@ -86,6 +90,8 @@ namespace AppGet.FileTransfer.Protocols
             {
                 throw _error;
             }
+
+            return filePath;
         }
 
         public string ReadString(string source)

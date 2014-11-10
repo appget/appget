@@ -15,18 +15,20 @@ namespace AppGet.FileTransfer.Protocols
             return WindowsPathRegex.IsMatch(source);
         }
 
-        public void TransferFile(string source, string destination)
+        public string TransferFile(string source, string destinationDirectory)
         {
             var progress = new ProgressState
                         {
                             Total = 1
                         };
 
+            var filePath = Path.Combine(destinationDirectory, GetFileName(source));
+
             //TODO: move this to a Copy using streams/that way we can provide progress
-            File.Copy(source, destination);
+            File.Copy(source, destinationDirectory);
 
             progress.Completed = 1;
-            
+
             if (OnStatusUpdated != null)
             {
                 OnStatusUpdated(progress);
@@ -36,6 +38,8 @@ namespace AppGet.FileTransfer.Protocols
             {
                 OnCompleted(progress);
             }
+
+            return filePath;
         }
 
         public string ReadString(string source)

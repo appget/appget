@@ -8,21 +8,21 @@ namespace AppGet.HostSystem
     public interface IPathResolver
     {
         string InstalledPackageList { get; }
-        string GetInstallerTempPath(string fileName);
+        string TempFolder { get; }
         string GetInstallerLogFile(FlightPlan flightPlan);
         string GetInstallationPath(FlightPlan flightPlan);
     }
 
     public class PathResolver : IPathResolver
     {
-        private string TempFolder
+        public string TempFolder
         {
             get
             {
                 return Path.GetTempPath();
             }
         }
-
+        
         private string ProgramData
         {
             get
@@ -41,10 +41,6 @@ namespace AppGet.HostSystem
             get { return Path.Combine(AppGetWorkingDirectory, "packages.yaml"); }
         }
 
-        public string GetInstallerTempPath(string fileName)
-        {
-            return Path.Combine(TempFolder, fileName);
-        }
 
         public string GetInstallerLogFile(FlightPlan flightPlan)
         {

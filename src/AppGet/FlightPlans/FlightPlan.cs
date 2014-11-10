@@ -26,7 +26,6 @@ namespace AppGet.FlightPlans
     public class Installer
     {
         public string Location { get; set; }
-        public string FileName { get; set; }
         public string Sha1 { get; set; }
         public string Sha256 { get; set; }
         public string Md5 { get; set; }

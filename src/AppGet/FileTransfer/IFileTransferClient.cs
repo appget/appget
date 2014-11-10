@@ -5,7 +5,7 @@ namespace AppGet.FileTransfer
     public interface IFileTransferClient : IReportProgress
     {
         bool CanHandleProtocol(string source);
-        void TransferFile(string source, string destination);
+        string TransferFile(string source, string destinationDirectory);
         string ReadString(string source);
         string GetFileName(string source);
     }

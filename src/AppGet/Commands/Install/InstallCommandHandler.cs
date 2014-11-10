@@ -61,11 +61,10 @@ namespace AppGet.Commands.Install
 
             var installer = _findInstaller.GetBestInstaller(flightPlan.Installers);
 
-            var installerTempLocation = _pathResolver.GetInstallerTempPath(installer.FileName);
 
-            _fileTransferService.TransferFile(installer.Location, installerTempLocation);
+            var installerPath = _fileTransferService.TransferFile(installer.Location, _pathResolver.TempFolder);
 
-            _installService.Install(installerTempLocation, flightPlan, installOptions);
+            _installService.Install(installerPath, flightPlan, installOptions);
 
             _inventoryManager.AddInstalledPackage(package);
 

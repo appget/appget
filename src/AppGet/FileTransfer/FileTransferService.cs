@@ -7,7 +7,7 @@ namespace AppGet.FileTransfer
 {
     public interface IFileTransferService
     {
-        void TransferFile(string source, string destination);
+        string TransferFile(string source, string destinationFolder);
         string ReadContent(string source);
     }
 
@@ -37,7 +37,7 @@ namespace AppGet.FileTransfer
             return client;
         }
 
-        public void TransferFile(string source, string destination)
+        public string TransferFile(string source, string destinationFolder)
         {
             var client = GetClient(source);
 
@@ -45,8 +45,10 @@ namespace AppGet.FileTransfer
             client.OnCompleted = ConsoleProgressReporter.HandleCompleted;
 
             _logger.Info("Downloading installer from " + source);
-            client.TransferFile(source, destination);
-            _logger.Info("InstallMethod downloaded to " + destination);
+            var transferedFilePath = client.TransferFile(source, destinationFolder);
+            _logger.Info("Installer downloaded to " + transferedFilePath);
+
+            return transferedFilePath;
         }
 
         public string ReadContent(string source)
