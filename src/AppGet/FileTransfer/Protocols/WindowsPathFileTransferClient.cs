@@ -43,6 +43,11 @@ namespace AppGet.FileTransfer.Protocols
             return File.ReadAllText(source);
         }
 
+        public string GetFileName(string source)
+        {
+            return new FileInfo(source).Name;
+        }
+
         public Action<ProgressState> OnStatusUpdated { get; set; }
         public Action<ProgressState> OnCompleted { get; set; }
     }

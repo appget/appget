@@ -80,6 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Download\HttpFileTransferClientFixture.cs" />
+    <Compile Include="FileTransfer\Protocols\WindowsPathFileTransferClientFixture.cs" />
     <Compile Include="FlightPlans\FlightPlanFixture.cs" />
     <Compile Include="InstalledPackages\WindowsInstallerInventoryManagerFixture.cs" />
     <Compile Include="Options\OptionsParserFixture.cs" />

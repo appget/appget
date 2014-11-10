@@ -7,5 +7,6 @@ namespace AppGet.FileTransfer
         bool CanHandleProtocol(string source);
         void TransferFile(string source, string destination);
         string ReadString(string source);
+        string GetFileName(string source);
     }
 }

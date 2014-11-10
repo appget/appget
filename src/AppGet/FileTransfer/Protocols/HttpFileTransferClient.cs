@@ -1,8 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading;
+using AppGet.Exceptions;
 using AppGet.Http;
 using AppGet.ProgressTracker;
 
@@ -12,6 +14,8 @@ namespace AppGet.FileTransfer.Protocols
     {
         private readonly IHttpClient _httpClient;
         private static readonly Regex HttpRegex = new Regex(@"^https?\:\/\/", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex FileNameRegex = new Regex(@"\w\.(zip|msi|exe|7zip|rar)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex ContentDepositionRegex = new Regex(@"filename=\W*(?<fileName>.+\.\w{2,4})", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private bool _inTransit;
 
         private ProgressState _progress;
@@ -26,6 +30,41 @@ namespace AppGet.FileTransfer.Protocols
         public bool CanHandleProtocol(String source)
         {
             return HttpRegex.IsMatch(source);
+        }
+
+
+        public string GetFileName(string source)
+        {
+            var url = new Uri(source);
+
+            var fileName = url.LocalPath.Split('/').Last();
+
+            if (FileNameRegex.IsMatch(fileName))
+            {
+                return fileName;
+            }
+
+            var respo = _httpClient.Head(new HttpRequest(source) { AllowAutoRedirect = false });
+
+            if (respo.Headers.ContainsKey("Location"))
+            {
+                return GetFileName(respo.Headers["Location"].ToString());
+            }
+
+            if (respo.Headers.ContainsKey("Content-Disposition"))
+            {
+                var contentDeposition = respo.Headers["Content-Disposition"].ToString();
+
+                var match = ContentDepositionRegex.Match(contentDeposition);
+
+                if (match.Success && match.Groups["fileName"] != null)
+                {
+                    return match.Groups["fileName"].Value;
+                }
+            }
+
+            throw new AppGetException("Couldn't get file name from " + source);
+
         }
 
         public void TransferFile(string source, string destination)
