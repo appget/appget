@@ -1,4 +1,5 @@
-﻿using AppGet.FileTransfer;
+﻿using System;
+using AppGet.FileTransfer;
 using AppGet.FlightPlans;
 using AppGet.HostSystem;
 using AppGet.InstalledPackages;
@@ -43,6 +44,12 @@ namespace AppGet.Commands.Install
         {
 
             var installOptions = (InstallOptions)searchCommandOptions;
+
+            if (_inventoryManager.IsInstalled(installOptions.PackageId))
+            {
+                throw new PackageAlreadyInstalledException(installOptions.PackageId);
+            }
+
 
             var package = _packageRepository.GetLatest(installOptions.PackageId);
             if (package == null)

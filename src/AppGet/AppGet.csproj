@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Commands\CommandExecutor.cs" />
     <Compile Include="Commands\ICommandExecutor.cs" />
+    <Compile Include="Commands\Install\PackageAlreadyInstalledException.cs" />
     <Compile Include="Commands\Search\SearchCommandHandler.cs" />
     <Compile Include="Commands\Search\SearchOptions.cs" />
     <Compile Include="Commands\Uninstall\InstallCommandHandler.cs" />
