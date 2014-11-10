@@ -1,7 +1,10 @@
-﻿namespace AppGet.PackageRepository
+﻿using System.Collections.Generic;
+
+namespace AppGet.PackageRepository
 {
     public interface IPackageRepository
     {
-        PackageInfo FindPackage(string name);
+        PackageInfo GetLatest(string name);
+        List<PackageInfo> Search(string term);
     }
 }

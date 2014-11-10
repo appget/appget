@@ -12,7 +12,7 @@ namespace AppGet.Tests.PackageProvider
         public void should_get_flightplan()
         {
             Mocker.SetInstance<IHttpClient>(new HttpClient(logger));
-            var c = Subject.FindPackage("linqpad");
+            var c = Subject.GetLatest("linqpad");
 
             c.Should().NotBeNull();
         }

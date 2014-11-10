@@ -37,7 +37,7 @@ namespace AppGet.Commands.Uninstall
                 throw new PackageNotInstalledException(uninstallOptions.PackageId);
             }
 
-            var package = _packageRepository.FindPackage(uninstallOptions.PackageId);
+            var package = _packageRepository.GetLatest(uninstallOptions.PackageId);
             if (package == null)
             {
                 throw new PackageNotFoundException(uninstallOptions.PackageId);

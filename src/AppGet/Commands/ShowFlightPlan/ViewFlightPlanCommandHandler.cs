@@ -47,7 +47,7 @@ namespace AppGet.Commands.ShowFlightPlan
 
             var viewOptions = (ViewFlightPlanOptions)packageCommandOptions;
 
-            var package = _packageRepository.FindPackage(viewOptions.PackageId);
+            var package = _packageRepository.GetLatest(viewOptions.PackageId);
             if (package == null)
             {
                 throw new PackageNotFoundException(viewOptions.PackageId);

@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using AppGet.Http;
 using NLog;
 
@@ -8,6 +9,7 @@ namespace AppGet.PackageRepository
     {
         private readonly IHttpClient _httpClient;
         private readonly Logger _logger;
+        private HttpRequestBuilder requestBuilder;
 
         private const string API_ROOT = "https://appget.net/api/v1/";
 
@@ -15,13 +17,14 @@ namespace AppGet.PackageRepository
         {
             _httpClient = httpClient;
             _logger = logger;
+
+            requestBuilder = new HttpRequestBuilder(API_ROOT);
         }
 
 
-        public PackageInfo FindPackage(string name)
+        public PackageInfo GetLatest(string name)
         {
-            _logger.Info("Finding package " + name);
-            var requestBuilder = new HttpRequestBuilder(API_ROOT);
+            _logger.Info("Getting package " + name);
 
             var request = requestBuilder.Build("packages/{package}/latest");
             request.AddSegment("package", name);
@@ -39,6 +42,18 @@ namespace AppGet.PackageRepository
                 }
                 throw;
             }
+        }
+
+        public List<PackageInfo> Search(string term)
+        {
+            _logger.Info("Searching for " + term);
+
+            var request = requestBuilder.Build("packages");
+
+            request.UriBuilder.SetQueryParam("q", term.Trim());
+
+            var package = _httpClient.Get<List<PackageInfo>>(request);
+            return package.Resource;
         }
     }
 }

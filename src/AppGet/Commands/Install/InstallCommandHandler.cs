@@ -44,7 +44,7 @@ namespace AppGet.Commands.Install
 
             var installOptions = (InstallOptions)packageCommandOptions;
 
-            var package = _packageRepository.FindPackage(installOptions.PackageId);
+            var package = _packageRepository.GetLatest(installOptions.PackageId);
             if (package == null)
             {
                 throw new PackageNotFoundException(installOptions.PackageId);

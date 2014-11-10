@@ -1,4 +1,5 @@
-﻿using AutoMoq;
+﻿using AppGet.Http;
+using AutoMoq;
 using NLog;
 using NUnit.Framework;
 
@@ -31,6 +32,13 @@ namespace AppGet.Tests
 
                 return _subject;
             }
+        }
+
+
+
+        protected void WithRealHttp()
+        {
+            Mocker.SetInstance<IHttpClient>(new HttpClient(logger));
         }
 
     }
