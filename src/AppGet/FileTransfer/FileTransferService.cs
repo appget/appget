@@ -41,7 +41,7 @@ namespace AppGet.FileTransfer
         {
             var client = GetClient(source);
 
-            client.OnStatusUpdates = ConsoleProgressReporter.HandleProgress;
+            client.OnStatusUpdated = ConsoleProgressReporter.HandleProgress;
             client.OnCompleted = ConsoleProgressReporter.HandleCompleted;
 
             _logger.Info("Downloading installer from " + source);

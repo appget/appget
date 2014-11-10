@@ -40,9 +40,9 @@ namespace AppGet.Compression
 
                 progress.Completed++;
 
-                if (OnStatusUpdates != null)
+                if (OnStatusUpdated != null)
                 {
-                    OnStatusUpdates(progress);
+                    OnStatusUpdated(progress);
                 }
                 if (OnCompleted != null)
                 {
@@ -51,7 +51,7 @@ namespace AppGet.Compression
             }
         }
 
-        public Action<ProgressState> OnStatusUpdates { get; set; }
+        public Action<ProgressState> OnStatusUpdated { get; set; }
         public Action<ProgressState> OnCompleted { get; set; }
     }
 }

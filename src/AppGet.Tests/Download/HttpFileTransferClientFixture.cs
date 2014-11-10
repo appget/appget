@@ -13,7 +13,7 @@ namespace AppGet.Tests.Download
         public void should_download_file_using_correct_name()
         {
             var temp = Path.GetTempPath();
-            Subject.OnStatusUpdates = state => Console.WriteLine(state.ToString());
+            Subject.OnStatusUpdated = state => Console.WriteLine(state.ToString());
             Subject.TransferFile("http://www.linqpad.net/GetFile.aspx?LINQPad4-AnyCPU.zip", Path.Combine(temp, "LINQPad4.zip"));
             Directory.GetFiles(temp, "LINQPad4.zip").Should().NotBeEmpty();
         }

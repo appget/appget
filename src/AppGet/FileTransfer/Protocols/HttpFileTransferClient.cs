@@ -62,9 +62,9 @@ namespace AppGet.FileTransfer.Protocols
             _progress.Completed = e.BytesReceived;
             _progress.Total = e.TotalBytesToReceive;
 
-            if (OnStatusUpdates != null)
+            if (OnStatusUpdated != null)
             {
-                OnStatusUpdates(_progress);
+                OnStatusUpdated(_progress);
             }
         }
 
@@ -79,7 +79,7 @@ namespace AppGet.FileTransfer.Protocols
             }
         }
 
-        public Action<ProgressState> OnStatusUpdates { get; set; }
+        public Action<ProgressState> OnStatusUpdated { get; set; }
         public Action<ProgressState> OnCompleted { get; set; }
     }
 }

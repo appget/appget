@@ -27,9 +27,9 @@ namespace AppGet.FileTransfer.Protocols
 
             progress.Completed = 1;
             
-            if (OnStatusUpdates != null)
+            if (OnStatusUpdated != null)
             {
-                OnStatusUpdates(progress);
+                OnStatusUpdated(progress);
             }
 
             if (OnCompleted != null)
@@ -43,7 +43,7 @@ namespace AppGet.FileTransfer.Protocols
             return File.ReadAllText(source);
         }
 
-        public Action<ProgressState> OnStatusUpdates { get; set; }
+        public Action<ProgressState> OnStatusUpdated { get; set; }
         public Action<ProgressState> OnCompleted { get; set; }
     }
 }
