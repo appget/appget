@@ -62,7 +62,8 @@ namespace AppGet.FlightPlans
         Seven,
         SevenSp1,
         Eight,
-        EightOne
+        EightOne,
+        Ten
     }
 
     public enum DotNetVersion
@@ -74,7 +75,8 @@ namespace AppGet.FlightPlans
         Net35 = 351,
         Net40Client = 400,
         Net40 = 401,
-        Net45 = 450
+        Net45 = 450,
+        Net451 = 451,
     }
 
     public enum ArchitectureType
