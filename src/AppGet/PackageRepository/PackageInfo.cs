@@ -15,7 +15,15 @@
             {
                 return Id;
             }
-            return string.Format("{0} - v{1}", Id, Version);
+
+            var result = string.Format("[{0}] {1}", Id, Name);
+
+            if (!string.IsNullOrEmpty(Version))
+            {
+                result += " (" + Version + ")";
+            }
+
+            return result;
         }
     }
 }

@@ -28,13 +28,11 @@ namespace AppGet.Commands.List
 
             if (packages.Any())
             {
+                _logger.Info("Installed packages:");
                 foreach (var packageInfo in packages)
                 {
                     _logger.Info(packageInfo);
                 }
-                
-                Console.WriteLine();
-                _logger.Info("{0} package(s) are installed.", packages.Count);
             }
             else
             {

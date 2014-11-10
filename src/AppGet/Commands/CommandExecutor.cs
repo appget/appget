@@ -34,12 +34,11 @@ namespace AppGet.Commands
             }
 
             _logger.Debug("Starting {0}", arguments.CommandName);
-            Console.WriteLine();
             var stopwatch = Stopwatch.StartNew();
             commandHandler.Execute(arguments);
             stopwatch.Stop();
             Console.WriteLine();
-            _logger.Info("Completed command [{0}]. duration: {1:N}s", arguments.CommandName, stopwatch.Elapsed.TotalSeconds);
+            _logger.Debug("Completed command [{0}]. duration: {1:N}s", arguments.CommandName, stopwatch.Elapsed.TotalSeconds);
         }
     }
 }
