@@ -63,6 +63,11 @@ namespace AppGet
                 Logger.Error(ex.Message);
                 return 1;
             }
+            catch (NotImplementedException ex)
+            {
+                Logger.Error(ex.Message);
+                return 1;
+            }
             catch (Exception ex)
             {
                 Logger.Fatal(ex);

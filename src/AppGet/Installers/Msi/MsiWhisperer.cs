@@ -1,4 +1,5 @@
-﻿using AppGet.Commands.Install;
+﻿using System;
+using AppGet.Commands.Install;
 using AppGet.Commands.Uninstall;
 using AppGet.FlightPlans;
 using AppGet.HostSystem;
@@ -30,14 +31,12 @@ namespace AppGet.Installers.Msi
 
             var process = _processController.Start("msiexec", args, OnOutputDataReceived, OnErrorDataReceived);
 
-
-
             _processController.WaitForExit(process);
         }
 
         public void Uninstall(FlightPlan flightPlan, UninstallOptions installOptions)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException("MSI Uninstall is not currently supported.");
         }
 
         private static string GetArgs(string msiPath, string logFile)
