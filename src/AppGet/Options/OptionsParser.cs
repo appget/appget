@@ -1,16 +1,14 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
+﻿using System.Globalization;
 using CommandLine;
 
 namespace AppGet.Options
 {
-    public interface IParesOptions
+    public interface IParseOptions
     {
         AppGetOption Parse(params string[] args);
     }
 
-    public class OptionsParser : IParesOptions
+    public class OptionsParser : IParseOptions
     {
         public AppGetOption Parse(params string[] args)
         {

@@ -1,12 +1,12 @@
 using System;
 using System.IO;
-using System.Security.AccessControl;
 using AppGet.FlightPlans;
 
 namespace AppGet.HostSystem
 {
     public interface IPathResolver
     {
+        string AppDataDirectory { get; }
         string InstalledPackageList { get; }
         string TempFolder { get; }
         string GetInstallerLogFile(FlightPlan flightPlan);
@@ -31,20 +31,19 @@ namespace AppGet.HostSystem
             }
         }
 
-        private string AppGetWorkingDirectory
+        public string AppDataDirectory
         {
             get { return Path.Combine(ProgramData, "AppGet"); }
         }
 
         public string InstalledPackageList
         {
-            get { return Path.Combine(AppGetWorkingDirectory, "packages.yaml"); }
+            get { return Path.Combine(AppDataDirectory, "packages.yaml"); }
         }
-
 
         public string GetInstallerLogFile(FlightPlan flightPlan)
         {
-            var installerLogDir = Path.Combine(AppGetWorkingDirectory, "Logs");
+            var installerLogDir = Path.Combine(AppDataDirectory, "Logs");
 
             Directory.CreateDirectory(installerLogDir);
 
@@ -61,7 +60,7 @@ namespace AppGet.HostSystem
                 case InstallMethodType.Zip:
                     {
                         var folderName = string.Format("{0}-{1}", flightPlan.Id, flightPlan.Version);
-                        return Path.Combine(AppGetWorkingDirectory, folderName);
+                        return Path.Combine(AppDataDirectory, folderName);
                     }
                 default:
                     {

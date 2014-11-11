@@ -6,14 +6,14 @@ using AppGet.HostSystem;
 using AppGet.Processes;
 using NLog;
 
-namespace AppGet.Installers.InstallShield
+namespace AppGet.Installers.Nsis
 {
-    public class InstallShieldWhisperer : InstallerWhispererBase
+    public class NsisWhisperer : InstallerWhispererBase
     {
         private readonly IPathResolver _pathResolver;
         private readonly Logger _logger;
 
-        public InstallShieldWhisperer(IProcessController processController, IPathResolver pathResolver, Logger logger)
+        public NsisWhisperer(IProcessController processController, IPathResolver pathResolver, Logger logger)
             : base(processController, logger)
         {
             _pathResolver = pathResolver;
@@ -22,12 +22,7 @@ namespace AppGet.Installers.InstallShield
 
         public override void Install(string installerLocation, FlightPlan flightPlan, InstallOptions installOptions)
         {
-            var logFile = _pathResolver.GetInstallerLogFile(flightPlan);
-            var args = GetArgs(logFile);
-
-            _logger.Debug("Writing log files to {0}", logFile);
-
-            Execute(installerLocation, args);
+            Execute(installerLocation, "/S");
         }
 
         public override void Uninstall(FlightPlan flightPlan, UninstallOptions installOptions)
@@ -37,12 +32,7 @@ namespace AppGet.Installers.InstallShield
 
         public override bool CanHandle(InstallMethodType installMethod)
         {
-            return installMethod == InstallMethodType.InstallShield;
-        }
-
-        private static string GetArgs(string logFile)
-        {
-            return String.Format("/s /v\"/quiet /norestart /Liwemoar! {0}\"", logFile);
+            return installMethod == InstallMethodType.NSIS;
         }
     }
 }

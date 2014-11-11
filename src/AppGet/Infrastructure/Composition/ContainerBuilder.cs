@@ -7,7 +7,10 @@ using AppGet.Commands.Uninstall;
 using AppGet.FileTransfer;
 using AppGet.FileTransfer.Protocols;
 using AppGet.Installers;
+using AppGet.Installers.Inno;
+using AppGet.Installers.InstallShield;
 using AppGet.Installers.Msi;
+using AppGet.Installers.Nsis;
 using AppGet.Installers.Zip;
 using NLog;
 using TinyIoC;
@@ -43,8 +46,11 @@ namespace AppGet.Infrastructure.Composition
 
             container.RegisterMultiple<IInstallerWhisperer>(new[]
             {
+                typeof(InnoWhisperer),
+                typeof(InstallShieldWhisperer),
                 typeof(MsiWhisperer),
-                typeof(ZipWhisperer),
+                typeof(NsisWhisperer),   
+                typeof(ZipWhisperer)
             });
 
             container.RegisterMultiple<IFileTransferClient>(new[]

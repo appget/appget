@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using AppGet.AppData;
 using AppGet.Commands;
 using AppGet.Exceptions;
 using AppGet.Infrastructure.Composition;
@@ -31,12 +32,11 @@ namespace AppGet
                     args = TakeArgsFromInput();
                 }
 
-
                 LogConfigurator.ConfigureLogger();
 
                 var container = ContainerBuilder.Build();
 
-                var optionsService = container.Resolve<IParesOptions>();
+                var optionsService = container.Resolve<IParseOptions>();
                 var options = optionsService.Parse(args);
 
                 if (options.Verbose)
@@ -44,9 +44,10 @@ namespace AppGet
                     LogConfigurator.EnableVerboseLogging();
                 }
 
+                container.Resolve<IAppDataService>().EnsureAppDataDirectoryExists();
+
                 var commandProcessor = container.Resolve<CommandExecutor>();
                 commandProcessor.ExecuteCommand(options);
-
 
                 return 0;
             }
@@ -89,7 +90,5 @@ namespace AppGet
             var input = Console.ReadLine();
             return input.Split(' ');
         }
-
-
     }
 }

@@ -60,7 +60,6 @@ namespace AppGet.InstalledPackages
             return GetInstalledPackages().Any(c => String.Equals(c.Id, id, StringComparison.InvariantCultureIgnoreCase));
         }
 
-
         private void WritePackageList(IEnumerable<PackageInfo> packages)
         {
             var yamlpackageListPath = _pathResolver.InstalledPackageList;

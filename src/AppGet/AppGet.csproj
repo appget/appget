@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppData\AppDataService.cs" />
     <Compile Include="Commands\CommandExecutor.cs" />
     <Compile Include="Commands\ICommandExecutor.cs" />
     <Compile Include="Commands\Install\PackageAlreadyInstalledException.cs" />
@@ -78,7 +79,7 @@
     <Compile Include="Compression\CompressionService.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="Extentions\StringExtentions.cs" />
-    <Compile Include="FileSystem\IReadFileContent.cs" />
+    <Compile Include="FileSystem\FileSystem.cs" />
     <Compile Include="FileTransfer\Protocols\WindowsPathFileTransferClient.cs" />
     <Compile Include="FileTransfer\ProtocolNotSupportedException.cs" />
     <Compile Include="FileTransfer\FileTransferService.cs" />
@@ -109,6 +110,7 @@
     <Compile Include="Installers\IInstallerWhisperer.cs" />
     <Compile Include="Installers\InstallShield\InstallShieldWhisper.cs" />
     <Compile Include="Installers\Msi\MsiWhisperer.cs" />
+    <Compile Include="Installers\Nsis\NsisWhisperer.cs" />
     <Compile Include="Installers\UninstallService.cs" />
     <Compile Include="Installers\InstallerWhispererBase.cs" />
     <Compile Include="Installers\Zip\ZipWhisperer.cs" />
@@ -160,6 +162,7 @@
   <ItemGroup>
     <Content Include="Installers\Msi\MSIHelp.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
