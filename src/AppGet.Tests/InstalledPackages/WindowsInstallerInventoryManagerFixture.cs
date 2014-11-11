@@ -10,7 +10,7 @@ namespace AppGet.Tests.InstalledPackages
     public class WindowsInstallerInventoryManagerFixture : TestBase<WindowsInstallerInventoryManager>
     {
         [Test]
-        public void should_get_uninstall_recoreds()
+        public void should_get_uninstall_records()
         {
             var records = Subject.GetInstalledApplication();
 
