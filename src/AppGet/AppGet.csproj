@@ -106,6 +106,7 @@
     <Compile Include="Installers\Inno\InnoWhisperer.cs" />
     <Compile Include="Installers\InstallService.cs" />
     <Compile Include="Installers\IInstallerWhisperer.cs" />
+    <Compile Include="Installers\InstallShield\InstallShieldWhisper.cs" />
     <Compile Include="Installers\Msi\MsiWhisperer.cs" />
     <Compile Include="Installers\UninstallService.cs" />
     <Compile Include="Installers\InstallerWhispererBase.cs" />
