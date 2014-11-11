@@ -102,6 +102,7 @@
     <Compile Include="Http\HttpResponse.cs" />
     <Compile Include="Http\UriExtensions.cs" />
     <Compile Include="Infrastructure\Logging\LogConfigurator.cs" />
+    <Compile Include="InstalledPackages\UninstallRecord.cs" />
     <Compile Include="InstalledPackages\WindowsInstallerInventoryManager.cs" />
     <Compile Include="Installers\Inno\InnoWhisperer.cs" />
     <Compile Include="Installers\InstallService.cs" />

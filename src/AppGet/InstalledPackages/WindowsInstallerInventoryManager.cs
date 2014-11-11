@@ -6,31 +6,19 @@ using Microsoft.Win32;
 
 namespace AppGet.InstalledPackages
 {
-    public class UnInstallRecord
-    {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public string Version { get; set; }
-        public string UninstallCommand { get; set; }
-        public string InstallLocation { get; set; }
-        public string Publisher { get; set; }
-        public InstallMethodType InstallMethod { get; set; }
-    }
-
     public class WindowsInstallerInventoryManager
     {
 
 
-        public List<UnInstallRecord> GetInstalledApplication()
+        public List<UninstallRecord> GetInstalledApplication()
         {
             const string registryKey = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
             const string registryKey64 = @"SOFTWARE\WOW6432node\Microsoft\Windows\CurrentVersion\Uninstall";
 
-            return GetUnInstallRecords(registryKey).Concat(GetUnInstallRecords(registryKey64)).ToList();
-
+            return GetUninstallRecords(registryKey).Concat(GetUninstallRecords(registryKey64)).ToList();
         }
 
-        public IEnumerable<UnInstallRecord> GetUnInstallRecords(string path)
+        public IEnumerable<UninstallRecord> GetUninstallRecords(string path)
         {
             using (var key = Registry.LocalMachine.OpenSubKey(path, false))
             {
@@ -40,7 +28,7 @@ namespace AppGet.InstalledPackages
 
                     if (subKey != null && subKey.GetValue("DisplayName") != null)
                     {
-                        var record = new UnInstallRecord
+                        var record = new UninstallRecord
                         {
                             Id = subkeyName,
                             Name = subKey.GetValue("DisplayName").ToString(),
