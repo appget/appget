@@ -21,7 +21,7 @@ namespace AppGet.Tests.Download
             var temp = Path.GetTempPath();
             Subject.OnStatusUpdated = state => Console.WriteLine(state.ToString());
             Subject.TransferFile("http://www.linqpad.net/GetFile.aspx?LINQPad4-AnyCPU.zip", temp);
-            Directory.GetFiles(temp, "LINQPad4.zip").Should().NotBeEmpty();
+            Directory.GetFiles(temp, "LINQPad4-AnyCPU.zip").Should().NotBeEmpty();
         }
 
         [TestCase("http://server.com/dir/dir2/somefile.zip", "somefile.zip")]
