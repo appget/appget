@@ -36,6 +36,7 @@ CompressionThreads=2
 Compression=lzma2/normal
 AppContact={#SupportURL}
 VersionInfoVersion={#BuildNumber}
+UninstallDisplayName={#AppName}
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
