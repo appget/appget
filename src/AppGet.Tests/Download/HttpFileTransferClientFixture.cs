@@ -9,12 +9,18 @@ namespace AppGet.Tests.Download
     [TestFixture]
     public class HttpFileTransferClientFixture : TestBase<HttpFileTransferClient>
     {
+        [SetUp]
+        public void Setup()
+        {
+            WithRealHttp();
+        }
+
         [Test]
         public void should_download_file_using_correct_name()
         {
             var temp = Path.GetTempPath();
             Subject.OnStatusUpdated = state => Console.WriteLine(state.ToString());
-            Subject.TransferFile("http://www.linqpad.net/GetFile.aspx?LINQPad4-AnyCPU.zip", Path.Combine(temp, "LINQPad4.zip"));
+            Subject.TransferFile("http://www.linqpad.net/GetFile.aspx?LINQPad4-AnyCPU.zip", temp);
             Directory.GetFiles(temp, "LINQPad4.zip").Should().NotBeEmpty();
         }
 
@@ -27,7 +33,6 @@ namespace AppGet.Tests.Download
         [TestCase("http://www.jtricks.com/download-text", "content.txt")]
         public void should_get_file_name_from_nameless_url(string url, string fileName)
         {
-            WithRealHttp();
             Subject.GetFileName(url).Should().Be(fileName);
         }
     }
