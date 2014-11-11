@@ -15,7 +15,7 @@
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={d9fda649-7b07-4197-a96b-5dc01ea10035}
+AppId={{d9fda649-7b07-4197-a96b-5dc01ea10035}
 AppName={#AppName}
 AppVersion={#BuildNumber}
 AppPublisher={#AppPublisher}
@@ -30,7 +30,7 @@ OutputBaseFilename={#AppName}.{#BranchName}.{#BuildNumber}
 SolidCompression=yes
 AppCopyright={#CopyRight}
 AllowUNCPath=False
-#UninstallDisplayIcon={app}\appget.exe
+;UninstallDisplayIcon={app}\appget.exe
 DisableReadyPage=True
 CompressionThreads=2
 Compression=lzma2/normal
@@ -43,3 +43,25 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 [Files]
 Source: "..\src\AppGet\bin\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
+
+[Registry]
+Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment";ValueType: expandsz;ValueName: "Path";ValueData: "{olddata};{app}";Check: NeedsAddPath('{app}')
+
+[Code]
+function NeedsAddPath(Param: string): boolean;
+var
+  OrigPath: string;
+begin
+  if not RegQueryStringValue(HKEY_LOCAL_MACHINE,
+    'SYSTEM\CurrentControlSet\Control\Session Manager\Environment',
+    'Path', OrigPath)
+  then begin
+    Result := True;
+    exit;
+  end;
+  // look for the path with leading and trailing semicolon
+  // Pos() returns 0 if not found
+  Result := Pos(';' + UpperCase(Param) + ';', ';' + UpperCase(OrigPath) + ';') = 0;  
+  if Result = True then
+     Result := Pos(';' + UpperCase(Param) + '\;', ';' + UpperCase(OrigPath) + ';') = 0; 
+end;
