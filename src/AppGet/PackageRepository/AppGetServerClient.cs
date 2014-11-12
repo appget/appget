@@ -9,7 +9,7 @@ namespace AppGet.PackageRepository
     {
         private readonly IHttpClient _httpClient;
         private readonly Logger _logger;
-        private HttpRequestBuilder requestBuilder;
+        private readonly HttpRequestBuilder _requestBuilder;
 
         private const string API_ROOT = "https://appget.net/api/v1/";
 
@@ -18,7 +18,7 @@ namespace AppGet.PackageRepository
             _httpClient = httpClient;
             _logger = logger;
 
-            requestBuilder = new HttpRequestBuilder(API_ROOT);
+            _requestBuilder = new HttpRequestBuilder(API_ROOT);
         }
 
 
@@ -26,7 +26,7 @@ namespace AppGet.PackageRepository
         {
             _logger.Info("Getting package " + name);
 
-            var request = requestBuilder.Build("packages/{package}/latest");
+            var request = _requestBuilder.Build("packages/{package}/latest");
             request.AddSegment("package", name);
 
             try
@@ -48,7 +48,7 @@ namespace AppGet.PackageRepository
         {
             _logger.Info("Searching for " + term);
 
-            var request = requestBuilder.Build("packages");
+            var request = _requestBuilder.Build("packages");
 
             request.UriBuilder.SetQueryParam("q", term.Trim());
 
