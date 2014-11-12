@@ -24,11 +24,13 @@ namespace AppGet.Installers
 
         public void Install(string installerLocation, FlightPlan flightPlan, InstallOptions installOptions)
         {
-            _logger.Info("Beginning installation of " + flightPlan.Id);
+            _logger.Info("Beginning installation of [{0}] {1}", flightPlan.Id, flightPlan.Name);
 
             var whisperer = _installWhisperers.Single(c => c.CanHandle(flightPlan.InstallMethod));
 
             whisperer.Install(installerLocation, flightPlan, installOptions);
+
+            _logger.Info("Installation completed for [{0}] {1}", flightPlan.Id, flightPlan.Name);
         }
     }
 }
