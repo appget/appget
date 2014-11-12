@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using AppGet.FlightPlans;
+﻿using AppGet.FlightPlans;
 
 namespace AppGet.InstalledPackages
 {
@@ -15,5 +11,22 @@ namespace AppGet.InstalledPackages
         public string InstallLocation { get; set; }
         public string Publisher { get; set; }
         public InstallMethodType InstallMethod { get; set; }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            var other = obj as UninstallRecord;
+
+            if (other == null)
+            {
+                return false;
+            }
+
+            return other.Id == Id;
+        }
     }
 }

@@ -1,14 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using AppGet.FlightPlans;
 using Microsoft.Win32;
 
 namespace AppGet.InstalledPackages
 {
-    public class WindowsInstallerInventoryManager
+    public interface IWindowsInstallerInventoryManager
     {
-        public List<UninstallRecord> GetInstalledApplication()
+        List<UninstallRecord> GetInstalledApplications();
+    }
+
+    public class WindowsInstallerInventoryManager : IWindowsInstallerInventoryManager
+    {
+        public List<UninstallRecord> GetInstalledApplications()
         {
             const string registryKey = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
             const string registryKey64 = @"SOFTWARE\WOW6432node\Microsoft\Windows\CurrentVersion\Uninstall";
