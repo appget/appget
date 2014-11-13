@@ -37,6 +37,13 @@ namespace AppGet.Manifests
         public Version MinWindowsVersion { get; set; }
         public Version MaxWindowsVersion { get; set; }
         public DotNetVersion MinDotNet { get; set; }
+
+        public List<string> ProductIds { get; set; }
+
+        public Installer()
+        {
+            ProductIds = new List<string>();
+        }
     }
 
     public enum ArtifactTypes

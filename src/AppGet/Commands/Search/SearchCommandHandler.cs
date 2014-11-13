@@ -18,9 +18,9 @@ namespace AppGet.Commands.Search
             return packageCommandOptions is SearchOptions;
         }
 
-        public void Execute(AppGetOption searchCommandOptions)
+        public void Execute(AppGetOption commandOptions)
         {
-            var viewOptions = (SearchOptions)searchCommandOptions;
+            var viewOptions = (SearchOptions)commandOptions;
             _packageSearchService.DisplayResults(viewOptions.PackageId);
         }
     }

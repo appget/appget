@@ -22,7 +22,7 @@ namespace AppGet.Commands.List
             return packageCommandOptions is ListOptions;
         }
 
-        public void Execute(AppGetOption searchCommandOptions)
+        public void Execute(AppGetOption commandOptions)
         {
             var packages = _inventoryManager.GetInstalledPackages();
 

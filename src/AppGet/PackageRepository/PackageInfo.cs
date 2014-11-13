@@ -1,4 +1,6 @@
-﻿namespace AppGet.PackageRepository
+﻿using System;
+
+namespace AppGet.PackageRepository
 {
     public class PackageInfo
     {
@@ -11,19 +13,14 @@
 
         public override string ToString()
         {
-            if (string.IsNullOrEmpty(Version))
+            var formatted = String.Format("[{0}] {1}", Id, Name);
+
+            if (!String.IsNullOrEmpty(Version))
             {
-                return Id;
+                formatted += String.Format(" ({0})", Version);
             }
 
-            var result = string.Format("[{0}] {1}", Id, Name);
-
-            if (!string.IsNullOrEmpty(Version))
-            {
-                result += " (" + Version + ")";
-            }
-
-            return result;
+            return formatted;
         }
     }
 }

@@ -67,7 +67,7 @@
     <Compile Include="Commands\Install\PackageAlreadyInstalledException.cs" />
     <Compile Include="Commands\Search\SearchCommandHandler.cs" />
     <Compile Include="Commands\Search\SearchOptions.cs" />
-    <Compile Include="Commands\Uninstall\InstallCommandHandler.cs" />
+    <Compile Include="Commands\Uninstall\UninstallCommandHandler.cs" />
     <Compile Include="Commands\Uninstall\InstallOptions.cs" />
     <Compile Include="Commands\Install\InstallCommandHandler.cs" />
     <Compile Include="Commands\Install\InstallOptions.cs" />
@@ -103,6 +103,8 @@
     <Compile Include="Http\HttpResponse.cs" />
     <Compile Include="Http\UriExtensions.cs" />
     <Compile Include="Infrastructure\Logging\LogConfigurator.cs" />
+    <Compile Include="InstalledPackages\InstalledPackage.cs" />
+    <Compile Include="InstalledPackages\InstallTracker.cs" />
     <Compile Include="InstalledPackages\UninstallRecord.cs" />
     <Compile Include="InstalledPackages\WindowsInstallerInventoryManager.cs" />
     <Compile Include="Installers\Inno\InnoWhisperer.cs" />
