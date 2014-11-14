@@ -29,6 +29,7 @@ namespace AppGet.Manifests
         public string Sha1 { get; set; }
         public string Sha256 { get; set; }
         public string Md5 { get; set; }
+        public string ZipSubDir { get; set; }
 
         public ArchitectureType Architecture { get; set; }
 
