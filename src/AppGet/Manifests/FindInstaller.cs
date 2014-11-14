@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using AppGet.FlightPlans;
 using AppGet.Requirements;
 
-namespace AppGet.Packages
+namespace AppGet.Manifests
 {
     public interface IFindInstaller
     {

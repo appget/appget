@@ -1,6 +1,6 @@
 ﻿using System.Linq;
-using AppGet.FlightPlans;
 using AppGet.InstalledPackages;
+using AppGet.Manifests;
 using FluentAssertions;
 using NUnit.Framework;
 

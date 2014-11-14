@@ -1,8 +1,8 @@
 ﻿using System;
 using AppGet.Commands.Install;
 using AppGet.Commands.Uninstall;
-using AppGet.FlightPlans;
 using AppGet.HostSystem;
+using AppGet.Manifests;
 using AppGet.Processes;
 using NLog;
 
@@ -20,12 +20,12 @@ namespace AppGet.Installers.Nsis
             _logger = logger;
         }
 
-        public override void Install(string installerLocation, FlightPlan flightPlan, InstallOptions installOptions)
+        public override void Install(string installerLocation, PackageManifest packageManifest, InstallOptions installOptions)
         {
             Execute(installerLocation, "/S");
         }
 
-        public override void Uninstall(FlightPlan flightPlan, UninstallOptions installOptions)
+        public override void Uninstall(PackageManifest packageManifest, UninstallOptions installOptions)
         {
             throw new NotImplementedException();
         }

@@ -1,6 +1,6 @@
-﻿using AppGet.FlightPlans;
-using AppGet.InstalledPackages;
+﻿using AppGet.InstalledPackages;
 using AppGet.Installers;
+using AppGet.Manifests;
 using AppGet.Options;
 using AppGet.PackageRepository;
 
@@ -9,15 +9,15 @@ namespace AppGet.Commands.Uninstall
     public class UninstallCommandHandler : ICommandHandler
     {
         private readonly IPackageRepository _packageRepository;
-        private readonly IFlightPlanService _flightPlanService;
+        private readonly IPackageManifestService _packageManifestService;
         private readonly IUninstallService _uninstallService;
         private readonly IInventoryManager _inventoryManager;
 
         public UninstallCommandHandler(IPackageRepository packageRepository,
-            IFlightPlanService flightPlanService, IUninstallService uninstallService, IInventoryManager inventoryManager)
+            IPackageManifestService packageManifestService, IUninstallService uninstallService, IInventoryManager inventoryManager)
         {
             _packageRepository = packageRepository;
-            _flightPlanService = flightPlanService;
+            _packageManifestService = packageManifestService;
             _uninstallService = uninstallService;
             _inventoryManager = inventoryManager;
         }
@@ -43,9 +43,9 @@ namespace AppGet.Commands.Uninstall
             }
 
 
-            var flightPlan = _flightPlanService.LoadFlightPlan(package);
+            var manifest = _packageManifestService.LoadManifest(package);
 
-            _uninstallService.Uninstall(flightPlan, uninstallOptions);
+            _uninstallService.Uninstall(manifest, uninstallOptions);
 
             _inventoryManager.RemoveInstalledPackage(package);
         }

@@ -73,7 +73,7 @@
     <Compile Include="Commands\Install\InstallOptions.cs" />
     <Compile Include="Commands\List\ListCommandHandler.cs" />
     <Compile Include="Commands\List\ListOptions.cs" />
-    <Compile Include="Commands\ShowFlightPlan\ViewFlightPlanCommandHandler.cs" />
+    <Compile Include="Commands\ShowManifest\ViewManifestCommandHandler.cs" />
     <Compile Include="Commands\Uninstall\PackageNotInstalledException.cs" />
     <Compile Include="Infrastructure\Composition\ContainerBuilder.cs" />
     <Compile Include="Compression\CompressionService.cs" />
@@ -85,10 +85,10 @@
     <Compile Include="FileTransfer\FileTransferService.cs" />
     <Compile Include="FileTransfer\Protocols\HttpFileTransferClient.cs" />
     <Compile Include="FileTransfer\IFileTransferClient.cs" />
-    <Compile Include="FlightPlans\FlightPlanService.cs" />
+    <Compile Include="Manifests\PackageManifestService.cs" />
     <Compile Include="HostSystem\EnvironmentProxy.cs" />
     <Compile Include="Exceptions\AppGetException.cs" />
-    <Compile Include="FlightPlans\FlightPlan.cs" />
+    <Compile Include="Manifests\PackageManifest.cs" />
     <Compile Include="HostSystem\PathResolver.cs" />
     <Compile Include="Http\GZipWebClient.cs">
       <SubType>Component</SubType>
@@ -123,12 +123,12 @@
     <Compile Include="Options\OptionException.cs" />
     <Compile Include="Options\Options.cs" />
     <Compile Include="Options\OptionsParser.cs" />
-    <Compile Include="Commands\ShowFlightPlan\ViewFlightPlanOptions.cs" />
+    <Compile Include="Commands\ShowManifest\ViewManifestOptions.cs" />
     <Compile Include="Options\UnknownOptionException.cs" />
     <Compile Include="PackageRepository\AppGetServerClient.cs" />
     <Compile Include="PackageRepository\IPackageRepository.cs" />
     <Compile Include="PackageRepository\PackageInfo.cs" />
-    <Compile Include="FlightPlans\FindInstaller.cs" />
+    <Compile Include="Manifests\FindInstaller.cs" />
     <Compile Include="PackageRepository\PackageNotFoundException.cs" />
     <Compile Include="PackageSearch\PackageSearchService.cs" />
     <Compile Include="Processes\FileInUse.cs" />

@@ -81,10 +81,10 @@
   <ItemGroup>
     <Compile Include="Download\HttpFileTransferClientFixture.cs" />
     <Compile Include="FileTransfer\Protocols\WindowsPathFileTransferClientFixture.cs" />
-    <Compile Include="FlightPlans\FlightPlanFixture.cs" />
+    <Compile Include="Manifests\PackageManifestFixture.cs" />
     <Compile Include="InstalledPackages\WindowsInstallerInventoryManagerFixture.cs" />
     <Compile Include="Options\OptionsParserFixture.cs" />
-    <Compile Include="FlightPlans\FindInstallerFixture.cs" />
+    <Compile Include="Manifests\FindInstallerFixture.cs" />
     <Compile Include="PackageRepository\AppGetServerClientFixture.cs" />
     <Compile Include="Processes\HandleFixture.cs" />
     <Compile Include="ProgressTracker\ProgressStateFixture.cs" />
@@ -106,7 +106,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="FlightPlans\SampleFlightPlans\" />
+    <Folder Include="Manifests\SampleManifests\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

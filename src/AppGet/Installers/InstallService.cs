@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using AppGet.Commands.Install;
-using AppGet.FlightPlans;
+using AppGet.Manifests;
 using NLog;
 
 namespace AppGet.Installers
 {
     public interface IInstallService
     {
-        void Install(string installerLocation, FlightPlan flightPlan, InstallOptions installOptions);
+        void Install(string installerLocation, PackageManifest packageManifest, InstallOptions installOptions);
     }
 
     public class InstallService : IInstallService
@@ -22,15 +22,15 @@ namespace AppGet.Installers
             _installWhisperers = installWhisperers;
         }
 
-        public void Install(string installerLocation, FlightPlan flightPlan, InstallOptions installOptions)
+        public void Install(string installerLocation, PackageManifest packageManifest, InstallOptions installOptions)
         {
-            _logger.Info("Beginning installation of [{0}] {1}", flightPlan.Id, flightPlan.Name);
+            _logger.Info("Beginning installation of [{0}] {1}", packageManifest.Id, packageManifest.Name);
 
-            var whisperer = _installWhisperers.Single(c => c.CanHandle(flightPlan.InstallMethod));
+            var whisperer = _installWhisperers.Single(c => c.CanHandle(packageManifest.InstallMethod));
 
-            whisperer.Install(installerLocation, flightPlan, installOptions);
+            whisperer.Install(installerLocation, packageManifest, installOptions);
 
-            _logger.Info("Installation completed for [{0}] {1}", flightPlan.Id, flightPlan.Name);
+            _logger.Info("Installation completed for [{0}] {1}", packageManifest.Id, packageManifest.Name);
         }
     }
 }

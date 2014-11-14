@@ -18,9 +18,9 @@ namespace AppGet.Tests.PackageRepository
             var latest = Subject.GetLatest(package);
 
             latest.Should().NotBeNull();
-            latest.FlightPlanUrl.Should().StartWith("https://raw.githubusercontent.com/appget/appget.flightplans/master/flightplans/");
+            latest.ManifestUrl.Should().StartWith("https://raw.githubusercontent.com/AppGet/AppGet.Packages/master/manifests/");
             latest.Id.Should().Be(package);
-            latest.SourceUrl.Should().StartWith("https://github.com/appget/appget.flightplans/blob/master/flightplans");
+            latest.SourceUrl.Should().StartWith("https://github.com/AppGet/AppGet.Packages/blob/master/manifests/");
             latest.MajorVersion.Should().HaveLength(1);
         }
 
@@ -35,9 +35,9 @@ namespace AppGet.Tests.PackageRepository
             var found = Subject.Search(term).Single();
 
             found.Should().NotBeNull();
-            found.FlightPlanUrl.Should().StartWith("https://raw.githubusercontent.com/appget/appget.flightplans/master/flightplans/");
+            found.ManifestUrl.Should().StartWith("https://raw.githubusercontent.com/AppGet/AppGet.Packages/master/manifests/");
             found.Id.Should().Contain(term);
-            found.SourceUrl.Should().StartWith("https://github.com/appget/appget.flightplans/blob/master/flightplans");
+            found.SourceUrl.Should().StartWith("https://github.com/AppGet/AppGet.Packages/blob/master/manifests/");
             found.MajorVersion.Should().HaveLength(1);
         }
     }

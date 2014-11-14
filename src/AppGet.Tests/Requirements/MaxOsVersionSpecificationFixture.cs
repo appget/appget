@@ -1,6 +1,6 @@
 ﻿using System;
-using AppGet.FlightPlans;
 using AppGet.HostSystem;
+using AppGet.Manifests;
 using AppGet.Requirements.Specifications;
 using FluentAssertions;
 using NUnit.Framework;

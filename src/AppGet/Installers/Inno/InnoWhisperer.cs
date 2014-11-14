@@ -1,8 +1,8 @@
 ﻿using System;
 using AppGet.Commands.Install;
 using AppGet.Commands.Uninstall;
-using AppGet.FlightPlans;
 using AppGet.HostSystem;
+using AppGet.Manifests;
 using AppGet.Processes;
 using NLog;
 
@@ -20,11 +20,11 @@ namespace AppGet.Installers.Inno
             _logger = logger;
         }
 
-        public override void Install(string installerLocation, FlightPlan flightPlan, InstallOptions installOptions)
+        public override void Install(string installerLocation, PackageManifest packageManifest, InstallOptions installOptions)
         {
             //Command line args: http://www.jrsoftware.org/ishelp/index.php?topic=setupcmdline
 
-            var logFile = _pathResolver.GetInstallerLogFile(flightPlan);
+            var logFile = _pathResolver.GetInstallerLogFile(packageManifest);
             var args = GetArgs(logFile);
 
             _logger.Debug("Writing Inno log files to {0}", logFile);
@@ -32,7 +32,7 @@ namespace AppGet.Installers.Inno
             Execute(installerLocation, args);
         }
 
-        public override void Uninstall(FlightPlan flightPlan, UninstallOptions installOptions)
+        public override void Uninstall(PackageManifest packageManifest, UninstallOptions installOptions)
         {
             //Command line args: http://www.jrsoftware.org/ishelp/index.php?topic=uninstcmdline
 

@@ -1,6 +1,6 @@
 ﻿using System;
 using AppGet.Commands.List;
-using AppGet.Commands.ShowFlightPlan;
+using AppGet.Commands.ShowManifest;
 using AppGet.Options;
 using FluentAssertions;
 using NUnit.Framework;
@@ -21,7 +21,7 @@ namespace AppGet.Tests.Options
         [TestCase("view firefox")]
         public void should_parse_verb_with_package_name(string arg)
         {
-            var option = (ViewFlightPlanOptions)Parse(arg);
+            var option = (ViewManifestOptions)Parse(arg);
             option.CommandName.Should().Be("view");
             option.PackageId.Should().Be("firefox");
         }

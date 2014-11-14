@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using AppGet.FlightPlans;
-using AppGet.Packages;
+﻿using System.Collections.Generic;
+using AppGet.Manifests;
 using AppGet.Requirements;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;
 
-namespace AppGet.Tests.Packages
+namespace AppGet.Tests.Manifests
 {
     [TestFixture]
     public class FindInstallerFixture : TestBase<FindInstaller>

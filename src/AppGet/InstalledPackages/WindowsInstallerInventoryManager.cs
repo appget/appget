@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using AppGet.FlightPlans;
+using AppGet.Manifests;
 using Microsoft.Win32;
 
 namespace AppGet.InstalledPackages

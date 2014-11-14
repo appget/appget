@@ -1,4 +1,4 @@
-﻿using AppGet.FlightPlans;
+﻿using AppGet.Manifests;
 
 namespace AppGet.InstalledPackages
 {

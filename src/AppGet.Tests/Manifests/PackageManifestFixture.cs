@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using AppGet.FlightPlans;
+using AppGet.Manifests;
 using AppGet.Serialization;
 using NUnit.Framework;
 
-namespace AppGet.Tests.FlightPlans
+namespace AppGet.Tests.Manifests
 {
     [TestFixture]
-    public class FlightPlanFixture
+    public class PackageManifestFixture
     {
         [Test]
-        public void print_sample_flight_plan()
+        public void print_sample_manifest()
         {
-            var flightPlan = new FlightPlan
+            var manifest = new PackageManifest
             {
                 Id = "linqpad",
                 Version = "4.51.03",
@@ -30,7 +30,7 @@ namespace AppGet.Tests.FlightPlans
             };
 
 
-            Console.WriteLine(Yaml.Serialize(flightPlan));
+            Console.WriteLine(Yaml.Serialize(manifest));
         }
     }
 }

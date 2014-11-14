@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AppGet.FlightPlans
+namespace AppGet.Manifests
 {
-    public class FlightPlan
+    public class PackageManifest
     {
         public string Id { get; set; }
         public string Name { get; set; }

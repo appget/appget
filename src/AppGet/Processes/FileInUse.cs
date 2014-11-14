@@ -107,6 +107,9 @@ namespace AppGet.Processes
                     var process = Process.GetProcessById(processId);
                     processList.Add(process);
                 }
+                catch (AccessViolationException)
+                {
+                }
                 catch (ArgumentException)
                 {
                 }

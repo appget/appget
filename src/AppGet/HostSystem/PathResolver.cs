@@ -1,6 +1,6 @@
 using System;
 using System.IO;
-using AppGet.FlightPlans;
+using AppGet.Manifests;
 
 namespace AppGet.HostSystem
 {
@@ -9,8 +9,8 @@ namespace AppGet.HostSystem
         string AppDataDirectory { get; }
         string InstalledPackageList { get; }
         string TempFolder { get; }
-        string GetInstallerLogFile(FlightPlan flightPlan);
-        string GetInstallationPath(FlightPlan flightPlan);
+        string GetInstallerLogFile(PackageManifest packageManifest);
+        string GetInstallationPath(PackageManifest packageManifest);
     }
 
     public class PathResolver : IPathResolver
@@ -41,30 +41,30 @@ namespace AppGet.HostSystem
             get { return Path.Combine(AppDataDirectory, "packages.yaml"); }
         }
 
-        public string GetInstallerLogFile(FlightPlan flightPlan)
+        public string GetInstallerLogFile(PackageManifest packageManifest)
         {
             var installerLogDir = Path.Combine(AppDataDirectory, "Logs");
 
             Directory.CreateDirectory(installerLogDir);
 
-            var fileName = string.Format("{0}_{1:yyyyMMdd_HHssmm}.log", flightPlan.Id, DateTime.Now);
+            var fileName = string.Format("{0}_{1:yyyyMMdd_HHssmm}.log", packageManifest.Id, DateTime.Now);
 
             return Path.Combine(installerLogDir, fileName);
         }
 
 
-        public string GetInstallationPath(FlightPlan flightPlan)
+        public string GetInstallationPath(PackageManifest packageManifest)
         {
-            switch (flightPlan.InstallMethod)
+            switch (packageManifest.InstallMethod)
             {
                 case InstallMethodType.Zip:
                     {
-                        var folderName = string.Format("{0}-{1}", flightPlan.Id, flightPlan.Version);
+                        var folderName = string.Format("{0}-{1}", packageManifest.Id, packageManifest.Version);
                         return Path.Combine(AppDataDirectory, folderName);
                     }
                 default:
                     {
-                        throw new NotImplementedException(flightPlan.InstallMethod + " is not supported yet.");
+                        throw new NotImplementedException(packageManifest.InstallMethod + " is not supported yet.");
                     }
             }
         }

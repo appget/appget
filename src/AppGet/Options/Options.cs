@@ -4,7 +4,7 @@ using System.Text;
 using AppGet.Commands.Install;
 using AppGet.Commands.List;
 using AppGet.Commands.Search;
-using AppGet.Commands.ShowFlightPlan;
+using AppGet.Commands.ShowManifest;
 using AppGet.Commands.Uninstall;
 using CommandLine;
 using CommandLine.Text;
@@ -25,8 +25,8 @@ namespace AppGet.Options
         [VerbOption("search", HelpText = "Search package repository")]
         public SearchOptions Search { get; set; }
 
-        [VerbOption("view", HelpText = "Display the FlightPlan for a specific package")]
-        public ViewFlightPlanOptions ViewFlightPlan { get; set; }
+        [VerbOption("view", HelpText = "Display the manifest for a specific package")]
+        public ViewManifestOptions ViewManifest { get; set; }
 
         [ValueList(typeof(List<string>), MaximumElements = -1)]
         public IList<string> UnknownArgs { get; set; }

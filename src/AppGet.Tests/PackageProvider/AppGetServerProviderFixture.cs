@@ -9,7 +9,7 @@ namespace AppGet.Tests.PackageProvider
     public class AppGetServerProviderFixture : TestBase<AppGetServerClient>
     {
         [Test]
-        public void should_get_flightplan()
+        public void should_get_manifest()
         {
             Mocker.SetInstance<IHttpClient>(new HttpClient(logger));
             var c = Subject.GetLatest("linqpad");

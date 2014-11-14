@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using AppGet.FlightPlans;
+using AppGet.Manifests;
 
 namespace AppGet.Requirements
 {

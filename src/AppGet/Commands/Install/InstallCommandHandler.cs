@@ -1,12 +1,11 @@
 ﻿using System;
 using AppGet.FileTransfer;
-using AppGet.FlightPlans;
 using AppGet.HostSystem;
 using AppGet.InstalledPackages;
 using AppGet.Installers;
+using AppGet.Manifests;
 using AppGet.Options;
 using AppGet.PackageRepository;
-using AppGet.Packages;
 using NLog;
 
 namespace AppGet.Commands.Install
@@ -16,19 +15,19 @@ namespace AppGet.Commands.Install
         private readonly IPackageRepository _packageRepository;
         private readonly IPathResolver _pathResolver;
         private readonly IFileTransferService _fileTransferService;
-        private readonly IFlightPlanService _flightPlanService;
+        private readonly IPackageManifestService _packageManifestService;
         private readonly IInstallService _installService;
         private readonly IFindInstaller _findInstaller;
         private readonly IInventoryManager _inventoryManager;
         private readonly Logger _logger;
 
         public InstallCommandHandler(IPackageRepository packageRepository, IPathResolver pathResolver, IFileTransferService fileTransferService,
-            IFlightPlanService flightPlanService, IInstallService installService, IFindInstaller findInstaller, IInventoryManager inventoryManager, Logger logger)
+            IPackageManifestService packageManifestService, IInstallService installService, IFindInstaller findInstaller, IInventoryManager inventoryManager, Logger logger)
         {
             _packageRepository = packageRepository;
             _pathResolver = pathResolver;
             _fileTransferService = fileTransferService;
-            _flightPlanService = flightPlanService;
+            _packageManifestService = packageManifestService;
             _installService = installService;
             _findInstaller = findInstaller;
             _inventoryManager = inventoryManager;
@@ -57,14 +56,14 @@ namespace AppGet.Commands.Install
                 throw new PackageNotFoundException(installOptions.PackageId);
             }
 
-            var flightPlan = _flightPlanService.LoadFlightPlan(package);
+            var manifest = _packageManifestService.LoadManifest(package);
 
-            var installer = _findInstaller.GetBestInstaller(flightPlan.Installers);
+            var installer = _findInstaller.GetBestInstaller(manifest.Installers);
 
 
             var installerPath = _fileTransferService.TransferFile(installer.Location, _pathResolver.TempFolder);
 
-            _installService.Install(installerPath, flightPlan, installOptions);
+            _installService.Install(installerPath, manifest, installOptions);
 
             _inventoryManager.AddInstalledPackage(package);
 

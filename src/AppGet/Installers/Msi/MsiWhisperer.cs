@@ -1,8 +1,8 @@
 ﻿using System;
 using AppGet.Commands.Install;
 using AppGet.Commands.Uninstall;
-using AppGet.FlightPlans;
 using AppGet.HostSystem;
+using AppGet.Manifests;
 using AppGet.Processes;
 using NLog;
 
@@ -20,9 +20,9 @@ namespace AppGet.Installers.Msi
             _logger = logger;
         }
 
-        public override void Install(string installerLocation, FlightPlan flightPlan, InstallOptions installOptions)
+        public override void Install(string installerLocation, PackageManifest packageManifest, InstallOptions installOptions)
         {
-            var logFile = _pathResolver.GetInstallerLogFile(flightPlan);
+            var logFile = _pathResolver.GetInstallerLogFile(packageManifest);
             var args = GetArgs(installerLocation, logFile);
 
             _logger.Debug("Writing MSI log files to {0}", logFile);
@@ -30,7 +30,7 @@ namespace AppGet.Installers.Msi
             Execute("msiexec", args);
         }
 
-        public override void Uninstall(FlightPlan flightPlan, UninstallOptions installOptions)
+        public override void Uninstall(PackageManifest packageManifest, UninstallOptions installOptions)
         {
             throw new NotImplementedException("MSI Uninstall is not currently supported.");
         }

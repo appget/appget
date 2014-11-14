@@ -3,8 +3,8 @@ using AppGet.Commands.Install;
 using AppGet.Commands.Uninstall;
 using AppGet.Compression;
 using AppGet.FileSystem;
-using AppGet.FlightPlans;
 using AppGet.HostSystem;
+using AppGet.Manifests;
 using NLog;
 
 namespace AppGet.Installers.Zip
@@ -24,15 +24,15 @@ namespace AppGet.Installers.Zip
             _fileSystem = fileSystem;
         }
 
-        public void Install(string installerLocation, FlightPlan flightPlan, InstallOptions installOptions)
+        public void Install(string installerLocation, PackageManifest packageManifest, InstallOptions installOptions)
         {
-            var target = _pathResolver.GetInstallationPath(flightPlan);
+            var target = _pathResolver.GetInstallationPath(packageManifest);
             _compressionService.Decompress(installerLocation, target);
         }
 
-        public void Uninstall(FlightPlan flightPlan, UninstallOptions installOptions)
+        public void Uninstall(PackageManifest packageManifest, UninstallOptions installOptions)
         {
-            var target = _pathResolver.GetInstallationPath(flightPlan);
+            var target = _pathResolver.GetInstallationPath(packageManifest);
             _logger.Info("Deleting {0}", target);
 
             try

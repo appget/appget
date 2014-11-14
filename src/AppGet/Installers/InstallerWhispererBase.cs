@@ -1,6 +1,6 @@
 ﻿using AppGet.Commands.Install;
 using AppGet.Commands.Uninstall;
-using AppGet.FlightPlans;
+using AppGet.Manifests;
 using AppGet.Processes;
 using NLog;
 
@@ -17,8 +17,8 @@ namespace AppGet.Installers
             _logger = logger;
         }
 
-        public abstract void Install(string installerLocation, FlightPlan flightPlan, InstallOptions installOptions);
-        public abstract void Uninstall(FlightPlan flightPlan, UninstallOptions installOptions);
+        public abstract void Install(string installerLocation, PackageManifest packageManifest, InstallOptions installOptions);
+        public abstract void Uninstall(PackageManifest packageManifest, UninstallOptions installOptions);
         public abstract bool CanHandle(InstallMethodType installMethod);
 
         protected virtual int Execute(string exectuable, string args)
