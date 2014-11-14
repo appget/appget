@@ -8,17 +8,6 @@ namespace AppGet.Tests.Processes
     [TestFixture]
     public class HandleFixture
     {
-        [TestCase]
-        public void should_get_locking_process()
-        {
-            var tempFile1 = Path.GetTempFileName();
-            var tempFile2 = Path.GetTempFileName();
-            File.OpenWrite(tempFile1);
-            File.OpenWrite(tempFile2);
-            var processes = FileInUse.GetLockers(tempFile1, tempFile2);
-            processes.Should().NotBeNull();
-            processes.Should().NotBeEmpty();
-            processes.Should().HaveCount(1);
-        }
+        
     }
 }

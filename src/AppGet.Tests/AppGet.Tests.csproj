@@ -86,6 +86,7 @@
     <Compile Include="Options\OptionsParserFixture.cs" />
     <Compile Include="Manifests\FindInstallerFixture.cs" />
     <Compile Include="PackageRepository\AppGetServerClientFixture.cs" />
+    <Compile Include="Processes\FileInUseFixture.cs" />
     <Compile Include="Processes\HandleFixture.cs" />
     <Compile Include="ProgressTracker\ProgressStateFixture.cs" />
     <Compile Include="Requirements\MaxOsVersionSpecificationFixture.cs" />
