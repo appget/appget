@@ -85,6 +85,7 @@
     <Compile Include="FileTransfer\FileTransferService.cs" />
     <Compile Include="FileTransfer\Protocols\HttpFileTransferClient.cs" />
     <Compile Include="FileTransfer\IFileTransferClient.cs" />
+    <Compile Include="Manifests\Os.cs" />
     <Compile Include="Manifests\PackageManifestService.cs" />
     <Compile Include="HostSystem\EnvironmentProxy.cs" />
     <Compile Include="Exceptions\AppGetException.cs" />
