@@ -12,16 +12,7 @@ namespace AppGet
 {
     public static class Application
     {
-        private static readonly Stopwatch Stopwatch = Stopwatch.StartNew();
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
-        public static TimeSpan ApplicationLifetime
-        {
-            get
-            {
-                return Stopwatch.Elapsed;
-            }
-        }
 
         public static int Main(string[] args)
         {

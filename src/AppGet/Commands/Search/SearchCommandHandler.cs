@@ -13,9 +13,9 @@ namespace AppGet.Commands.Search
             _packageSearchService = packageSearchService;
         }
 
-        public bool CanExecute(AppGetOption packageCommandOptions)
+        public bool CanExecute(AppGetOption commandOptions)
         {
-            return packageCommandOptions is SearchOptions;
+            return commandOptions is SearchOptions;
         }
 
         public void Execute(AppGetOption commandOptions)

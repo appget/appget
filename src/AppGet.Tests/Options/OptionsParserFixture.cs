@@ -1,6 +1,6 @@
 ﻿using System;
 using AppGet.Commands.List;
-using AppGet.Commands.ShowManifest;
+using AppGet.Commands.ViewManifest;
 using AppGet.Options;
 using FluentAssertions;
 using NUnit.Framework;

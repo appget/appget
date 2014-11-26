@@ -26,9 +26,9 @@ namespace AppGet.Commands.Uninstall
             _inventoryManager = inventoryManager;
         }
 
-        public bool CanExecute(AppGetOption packageCommandOptions)
+        public bool CanExecute(AppGetOption commandOptions)
         {
-            return packageCommandOptions is UninstallOptions;
+            return commandOptions is UninstallOptions;
         }
 
         public void Execute(AppGetOption commandOptions)

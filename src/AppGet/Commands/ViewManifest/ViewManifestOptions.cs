@@ -1,6 +1,6 @@
 using AppGet.Options;
 
-namespace AppGet.Commands.ShowManifest
+namespace AppGet.Commands.ViewManifest
 {
     public class ViewManifestOptions : PackageCommandOptions
     {

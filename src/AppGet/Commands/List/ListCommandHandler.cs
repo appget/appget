@@ -17,9 +17,9 @@ namespace AppGet.Commands.List
             _logger = logger;
         }
 
-        public bool CanExecute(AppGetOption packageCommandOptions)
+        public bool CanExecute(AppGetOption commandOptions)
         {
-            return packageCommandOptions is ListOptions;
+            return commandOptions is ListOptions;
         }
 
         public void Execute(AppGetOption commandOptions)

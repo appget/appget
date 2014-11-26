@@ -4,7 +4,7 @@ using AppGet.Manifests;
 using AppGet.Options;
 using AppGet.PackageRepository;
 
-namespace AppGet.Commands.ShowManifest
+namespace AppGet.Commands.ViewManifest
 {
     public class ViewManifestCommandHandler : ICommandHandler
     {
@@ -18,9 +18,9 @@ namespace AppGet.Commands.ShowManifest
             _packageManifestService = packageManifestService;
         }
 
-        public bool CanExecute(AppGetOption packageCommandOptions)
+        public bool CanExecute(AppGetOption commandOptions)
         {
-            return packageCommandOptions is ViewManifestOptions;
+            return commandOptions is ViewManifestOptions;
         }
 
         public void Execute(AppGetOption searchCommandOptions)

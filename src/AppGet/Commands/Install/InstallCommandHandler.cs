@@ -44,9 +44,9 @@ namespace AppGet.Commands.Install
             _logger = logger;
         }
 
-        public bool CanExecute(AppGetOption packageCommandOptions)
+        public bool CanExecute(AppGetOption commandOptions)
         {
-            return packageCommandOptions is InstallOptions;
+            return commandOptions is InstallOptions;
         }
 
         public void Execute(AppGetOption commandOptions)
