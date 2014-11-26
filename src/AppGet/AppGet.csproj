@@ -73,6 +73,8 @@
     <Compile Include="Commands\Install\InstallOptions.cs" />
     <Compile Include="Commands\List\ListCommandHandler.cs" />
     <Compile Include="Commands\List\ListOptions.cs" />
+    <Compile Include="Commands\WindowsInstallerSearch\WindowsInstallerSearchCommandHandler.cs" />
+    <Compile Include="Commands\WindowsInstallerSearch\WindowsInstallerSearchOptions.cs" />
     <Compile Include="Commands\ViewManifest\ViewManifestCommandHandler.cs" />
     <Compile Include="Commands\Uninstall\PackageNotInstalledException.cs" />
     <Compile Include="Infrastructure\Composition\ContainerBuilder.cs" />

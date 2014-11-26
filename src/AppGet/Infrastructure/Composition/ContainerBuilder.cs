@@ -2,8 +2,9 @@
 using AppGet.Commands.Install;
 using AppGet.Commands.List;
 using AppGet.Commands.Search;
-using AppGet.Commands.ShowManifest;
 using AppGet.Commands.Uninstall;
+using AppGet.Commands.ViewManifest;
+using AppGet.Commands.WindowsInstallerSearch;
 using AppGet.FileTransfer;
 using AppGet.FileTransfer.Protocols;
 using AppGet.Installers;
@@ -23,7 +24,7 @@ namespace AppGet.Infrastructure.Composition
         {
             var container = new TinyIoCContainer();
 
-            Logger logger = LogManager.GetLogger("appget");
+            var logger = LogManager.GetLogger("appget");
 
             container.AutoRegister(new[] { typeof(ContainerBuilder).Assembly });
             container.Register(logger);
@@ -41,6 +42,7 @@ namespace AppGet.Infrastructure.Composition
                 typeof(SearchCommandHandler),
                 typeof(ListCommandHandler),
                 typeof(InstallCommandHandler),
+                typeof(WindowsInstallerSearchCommandHandler),
                 typeof(UninstallCommandHandler)
             });
 
