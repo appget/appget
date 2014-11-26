@@ -33,9 +33,8 @@ namespace AppGet.Manifests
 
         public ArchitectureType Architecture { get; set; }
 
-        //http://en.wikipedia.org/wiki/List_of_Microsoft_Windows_versions
-        public Version MinWindowsVersion { get; set; }
-        public Version MaxWindowsVersion { get; set; }
+        public WindowsVersion MinWindowsVersion { get; set; }
+        public WindowsVersion MaxWindowsVersion { get; set; }
         public DotNetVersion MinDotNet { get; set; }
 
         public List<string> ProductIds { get; set; }
@@ -57,21 +56,6 @@ namespace AppGet.Manifests
         EnvironmetVariable
     }
 
-
-    public enum WindowsVersion
-    {
-        Xp,
-        XpSp1,
-        XpSp2,
-        Vista,
-        VistaSp1,
-        VistaSp2,
-        Seven,
-        SevenSp1,
-        Eight,
-        EightOne,
-        Ten
-    }
 
     public enum DotNetVersion
     {

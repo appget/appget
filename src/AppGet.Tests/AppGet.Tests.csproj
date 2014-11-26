@@ -83,6 +83,7 @@
     <Compile Include="FileTransfer\Protocols\WindowsPathFileTransferClientFixture.cs" />
     <Compile Include="Manifests\PackageManifestFixture.cs" />
     <Compile Include="InstalledPackages\WindowsInstallerInventoryManagerFixture.cs" />
+    <Compile Include="Manifests\WindowsVersionFixture.cs" />
     <Compile Include="Options\OptionsParserFixture.cs" />
     <Compile Include="Manifests\FindInstallerFixture.cs" />
     <Compile Include="PackageRepository\AppGetServerClientFixture.cs" />
@@ -98,6 +99,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Manifests\SampleManifests\mongodb.yaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -106,9 +110,7 @@
       <Name>AppGet</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Manifests\SampleManifests\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -85,7 +85,7 @@
     <Compile Include="FileTransfer\FileTransferService.cs" />
     <Compile Include="FileTransfer\Protocols\HttpFileTransferClient.cs" />
     <Compile Include="FileTransfer\IFileTransferClient.cs" />
-    <Compile Include="Manifests\Os.cs" />
+    <Compile Include="Manifests\WindowsVersion.cs" />
     <Compile Include="Manifests\PackageManifestService.cs" />
     <Compile Include="HostSystem\EnvironmentProxy.cs" />
     <Compile Include="Exceptions\AppGetException.cs" />
@@ -118,6 +118,7 @@
     <Compile Include="Installers\InstallerWhispererBase.cs" />
     <Compile Include="Installers\Zip\ZipWhisperer.cs" />
     <Compile Include="InstalledPackages\InventoryManager.cs" />
+    <Compile Include="Manifests\WindowsVersionParseException.cs" />
     <Compile Include="Options\AppGetOption.cs" />
     <Compile Include="Options\PackageCommandOptions.cs" />
     <Compile Include="Options\HelpGenerator.cs" />

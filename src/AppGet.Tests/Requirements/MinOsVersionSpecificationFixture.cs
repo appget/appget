@@ -15,7 +15,7 @@ namespace AppGet.Tests.Requirements
         {
             Mocker.GetMock<IEnvironmentProxy>()
                   .SetupGet(s => s.WindowsVersion)
-                  .Returns(new OperatingSystem(PlatformID.Win32NT, new Version(6, 3, 9600, 0)));
+                  .Returns(WindowsVersion.Eight);
 
             Subject.IsRequirementSatisfied(new Installer()).Success.Should().BeTrue();
         }
@@ -25,11 +25,11 @@ namespace AppGet.Tests.Requirements
         {
             Mocker.GetMock<IEnvironmentProxy>()
                   .SetupGet(s => s.WindowsVersion)
-                  .Returns(new OperatingSystem(PlatformID.Win32NT, new Version(6, 3, 9600, 0)));
+                  .Returns(WindowsVersion.Eight);
 
             Subject.IsRequirementSatisfied(new Installer
                                            {
-                                               MinWindowsVersion = new Version(5, 1)
+                                               MinWindowsVersion = WindowsVersion.Seven
                                            }).Success.Should().BeTrue();
         }
 
@@ -38,11 +38,11 @@ namespace AppGet.Tests.Requirements
         {
             Mocker.GetMock<IEnvironmentProxy>()
                   .SetupGet(s => s.WindowsVersion)
-                  .Returns(new OperatingSystem(PlatformID.Win32NT, new Version(6, 3, 9600, 0)));
+                  .Returns(WindowsVersion.Seven);
 
             Subject.IsRequirementSatisfied(new Installer
                                            {
-                                               MinWindowsVersion = new Version(6, 4)
+                                               MinWindowsVersion = WindowsVersion.Eight
                                            }).Success.Should().BeFalse();
         }
     }

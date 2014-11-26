@@ -1,18 +1,25 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using AppGet.Manifests;
 
 namespace AppGet.HostSystem
 {
     public interface IEnvironmentProxy
     {
-        OperatingSystem WindowsVersion { get; }
+        WindowsVersion WindowsVersion { get; }
         bool Is64BitOperatingSystem { get; }
     }
 
     public class EnvironmentProxy : IEnvironmentProxy
     {
-        public OperatingSystem WindowsVersion { get { return System.Environment.OSVersion; } }
+        public WindowsVersion WindowsVersion
+        {
+            get
+            {
+                return WindowsVersion.FromOperatingSystem(Environment.OSVersion);
+            }
+        }
         public bool Is64BitOperatingSystem { get { return OsBitness.IsOs64Bit(); } }
 
         private static class OsBitness

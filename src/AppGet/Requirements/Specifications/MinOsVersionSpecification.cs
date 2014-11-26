@@ -17,7 +17,7 @@ namespace AppGet.Requirements.Specifications
         {
             if (installer.MinWindowsVersion == null) return EnforcementResult.Pass();
 
-            if (_environmentProxy.WindowsVersion.Version >= installer.MinWindowsVersion)
+            if (_environmentProxy.WindowsVersion >= installer.MinWindowsVersion)
             {
                 return EnforcementResult.Pass();
             }

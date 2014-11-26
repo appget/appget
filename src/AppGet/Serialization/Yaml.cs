@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.IO;
 using YamlDotNet.Core;
 using YamlDotNet.Serialization;
@@ -13,7 +14,7 @@ namespace AppGet.Serialization
             using (var textWriter = new StringWriter(CultureInfo.InvariantCulture))
             {
                 var serializer = new Serializer(SerializationOptions.EmitDefaults | SerializationOptions.DisableAliases, new CamelCaseNamingConvention());
-                serializer.RegisterTypeConverter(new VersionConverter());
+                RegisterTypeConverter(serializer.RegisterTypeConverter);
 
                 serializer.Serialize(textWriter, obj);
                 return textWriter.ToString();
@@ -23,10 +24,16 @@ namespace AppGet.Serialization
         public static T Deserialize<T>(string text)
         {
             var deserializer = new Deserializer(namingConvention: new CamelCaseNamingConvention());
-            deserializer.RegisterTypeConverter(new VersionConverter());
+           RegisterTypeConverter(deserializer.RegisterTypeConverter);
 
             var reader = new EventReader(new Parser(new StringReader(text)));
             return deserializer.Deserialize<T>(reader);
+        }
+
+        private static void RegisterTypeConverter(Action<IYamlTypeConverter> registerConverter)
+        {
+            registerConverter(new VersionConverter());
+            registerConverter(new WindowsVersionConverter());
         }
     }
 }

@@ -16,7 +16,7 @@ namespace AppGet.Requirements.Specifications
         {
             if (installer.MaxWindowsVersion == null) return EnforcementResult.Pass();
 
-            if (_environmentProxy.WindowsVersion.Version <= installer.MaxWindowsVersion)
+            if (_environmentProxy.WindowsVersion <= installer.MaxWindowsVersion)
             {
                 return EnforcementResult.Pass();
             }
