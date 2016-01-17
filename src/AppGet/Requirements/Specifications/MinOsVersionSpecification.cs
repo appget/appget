@@ -1,5 +1,4 @@
-﻿using System;
-using AppGet.HostSystem;
+﻿using AppGet.HostSystem;
 using AppGet.Manifests;
 
 namespace AppGet.Requirements.Specifications

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using AppGet.FileTransfer;
 using AppGet.HostSystem;
 using AppGet.InstalledPackages;

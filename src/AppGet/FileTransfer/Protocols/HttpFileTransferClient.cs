@@ -107,10 +107,7 @@ namespace AppGet.FileTransfer.Protocols
             _progress.Completed = e.BytesReceived;
             _progress.Total = e.TotalBytesToReceive;
 
-            if (OnStatusUpdated != null)
-            {
-                OnStatusUpdated(_progress);
-            }
+            OnStatusUpdated?.Invoke(_progress);
         }
 
         private void TransferCompletedCallback(object sender, AsyncCompletedEventArgs e)
@@ -118,10 +115,7 @@ namespace AppGet.FileTransfer.Protocols
             _error = e.Error;
             _inTransit = false;
 
-            if (OnCompleted != null)
-            {
-                OnCompleted(_progress);
-            }
+            OnCompleted?.Invoke(_progress);
         }
 
         public Action<ProgressState> OnStatusUpdated { get; set; }

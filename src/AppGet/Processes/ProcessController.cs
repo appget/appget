@@ -10,8 +10,8 @@ namespace AppGet.Processes
 {
     public class ProcessOutput
     {
-        public List<String> Standard { get; set; }
-        public List<String> Error { get; set; }
+        public List<string> Standard { get; }
+        public List<string> Error { get; }
 
         public ProcessOutput()
         {
@@ -28,7 +28,7 @@ namespace AppGet.Processes
 
         public override string ToString()
         {
-            return string.Format("{0}:{1} [{2}]", Id, Name ?? "Unknown", StartPath ?? "Unknown");
+            return $"{Id}:{Name ?? "Unknown"} [{StartPath ?? "Unknown"}]";
         }
     }
     public interface IProcessController
@@ -136,10 +136,7 @@ namespace AppGet.Processes
 
                 logger.Debug(eventArgs.Data);
 
-                if (onOutputDataReceived != null)
-                {
-                    onOutputDataReceived(eventArgs.Data);
-                }
+                onOutputDataReceived?.Invoke(eventArgs.Data);
             };
 
             process.ErrorDataReceived += (sender, eventArgs) =>
@@ -148,10 +145,7 @@ namespace AppGet.Processes
 
                 logger.Error(eventArgs.Data);
 
-                if (onErrorDataReceived != null)
-                {
-                    onErrorDataReceived(eventArgs.Data);
-                }
+                onErrorDataReceived?.Invoke(eventArgs.Data);
             };
 
             process.Start();

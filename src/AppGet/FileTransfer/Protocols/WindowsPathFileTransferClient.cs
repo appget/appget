@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Text.RegularExpressions;
-using AppGet.FileSystem;
 using AppGet.ProgressTracker;
 
 namespace AppGet.FileTransfer.Protocols
@@ -29,15 +28,9 @@ namespace AppGet.FileTransfer.Protocols
 
             progress.Completed = 1;
 
-            if (OnStatusUpdated != null)
-            {
-                OnStatusUpdated(progress);
-            }
+            OnStatusUpdated?.Invoke(progress);
 
-            if (OnCompleted != null)
-            {
-                OnCompleted(progress);
-            }
+            OnCompleted?.Invoke(progress);
 
             return filePath;
         }

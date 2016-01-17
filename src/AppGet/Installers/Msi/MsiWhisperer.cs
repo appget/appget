@@ -42,7 +42,7 @@ namespace AppGet.Installers.Msi
 
         private static string GetArgs(string msiPath, string logFile)
         {
-            return String.Format("/i {0} /quiet /norestart /Liwemoar! {1} ", msiPath, logFile);
+            return $"/i {msiPath} /quiet /norestart /Liwemoar! {logFile} ";
         }
     }
 }

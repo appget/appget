@@ -48,7 +48,7 @@ namespace AppGet.Installers.Inno
         {
             //Sets the exit code to 3010 when a restart is required (same as Windows Installer)
             //Can also use: /CLOSEAPPLICATIONS /RESTARTAPPLICATIONS to stop then restart applications
-            return String.Format("/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /RESTARTEXITCODE=3010 /LOG=\"{0}\"", logFile);
+            return $"/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /RESTARTEXITCODE=3010 /LOG=\"{logFile}\"";
         }
     }
 }

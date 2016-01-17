@@ -1,4 +1,3 @@
-using System;
 using AppGet.Exceptions;
 
 namespace AppGet.Http

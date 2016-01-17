@@ -13,11 +13,11 @@ namespace AppGet.PackageRepository
 
         public override string ToString()
         {
-            var formatted = String.Format("[{0}] {1}", Id, Name);
+            var formatted = $"[{Id}] {Name}";
 
             if (!String.IsNullOrEmpty(Version))
             {
-                formatted += String.Format(" ({0})", Version);
+                formatted += $" ({Version})";
             }
 
             return formatted;

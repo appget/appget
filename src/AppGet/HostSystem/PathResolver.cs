@@ -47,7 +47,7 @@ namespace AppGet.HostSystem
 
             Directory.CreateDirectory(installerLogDir);
 
-            var fileName = string.Format("{0}_{1:yyyyMMdd_HHssmm}.log", packageManifest.Id, DateTime.Now);
+            var fileName = $"{packageManifest.Id}_{DateTime.Now:yyyyMMdd_HHssmm}.log";
 
             return Path.Combine(installerLogDir, fileName);
         }
@@ -59,7 +59,7 @@ namespace AppGet.HostSystem
             {
                 case InstallMethodType.Zip:
                     {
-                        var folderName = string.Format("{0}-{1}", packageManifest.Id, packageManifest.Version);
+                        var folderName = $"{packageManifest.Id}-{packageManifest.Version}";
                         return Path.Combine(AppDataDirectory, folderName);
                     }
                 default:

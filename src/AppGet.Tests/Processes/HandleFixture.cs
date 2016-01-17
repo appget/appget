@@ -1,7 +1,4 @@
-﻿using System.IO;
-using AppGet.Processes;
-using FluentAssertions;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace AppGet.Tests.Processes
 {

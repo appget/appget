@@ -1,10 +1,7 @@
 using System;
 using System.Linq;
-using AppGet.HostSystem;
 using AppGet.InstalledPackages;
-using AppGet.Manifests;
 using AppGet.Options;
-using AppGet.PackageRepository;
 using AppGet.Serialization;
 
 namespace AppGet.Commands.WindowsInstallerSearch

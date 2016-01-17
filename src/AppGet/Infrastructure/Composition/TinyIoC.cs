@@ -1286,7 +1286,7 @@ namespace TinyIoC
 //#else
                 if (!registrationType.IsAssignableFrom(type))
 //#endif
-					throw new ArgumentException(String.Format("types: The type {0} is not assignable from {1}", registrationType.FullName, type.FullName));
+					throw new ArgumentException($"types: The type {registrationType.FullName} is not assignable from {type.FullName}");
 
             if (implementationTypes.Count() != implementationTypes.Distinct().Count())
                 throw new ArgumentException("types: The same implementation type cannot be specificed multiple times");
@@ -2849,8 +2849,8 @@ namespace TinyIoC
         {
             private int _hashCode;
 
-            public Type Type { get; private set; }
-            public string Name { get; private set; }
+            public Type Type { get; }
+            public string Name { get; }
 
             public TypeRegistration(Type type)
                 : this(type, string.Empty)

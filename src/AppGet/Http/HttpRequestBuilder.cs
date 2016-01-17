@@ -5,7 +5,7 @@ namespace AppGet.Http
 {
     public class HttpRequestBuilder
     {
-        public Uri BaseUri { get; private set; }
+        public Uri BaseUri { get; }
         public bool SuppressHttpError { get; set; }
         public NetworkCredential NetworkCredential { get; set; }
 
@@ -29,10 +29,7 @@ namespace AppGet.Http
                 NetworkCredential = NetworkCredential
             };
 
-            if (PostProcess != null)
-            {
-                PostProcess(request);
-            }
+            PostProcess?.Invoke(request);
 
             return request;
         }

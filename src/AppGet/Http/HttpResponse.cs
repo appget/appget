@@ -14,9 +14,9 @@ namespace AppGet.Http
             StatusCode = statusCode;
         }
 
-        public HttpRequest Request { get; private set; }
-        public HttpHeader Headers { get; private set; }
-        public HttpStatusCode StatusCode { get; private set; }
+        public HttpRequest Request { get; }
+        public HttpHeader Headers { get; }
+        public HttpStatusCode StatusCode { get; }
 
 
         public String Content { get; set; }
@@ -32,7 +32,7 @@ namespace AppGet.Http
 
         public override string ToString()
         {
-            var result = string.Format("Res: [{0}] {1} : {2}.{3}", Request.Method, Request.Url, (int)StatusCode, StatusCode);
+            var result = $"Res: [{Request.Method}] {Request.Url} : {(int) StatusCode}.{StatusCode}";
             return result;
         }
     }

@@ -40,14 +40,8 @@ namespace AppGet.Compression
 
                 progress.Completed++;
 
-                if (OnStatusUpdated != null)
-                {
-                    OnStatusUpdated(progress);
-                }
-                if (OnCompleted != null)
-                {
-                    OnCompleted(progress);
-                }
+                OnStatusUpdated?.Invoke(progress);
+                OnCompleted?.Invoke(progress);
             }
         }
 

@@ -8,9 +8,9 @@ namespace AppGet.Manifests
 {
     public class WindowsVersion
     {
-        public string Name { get; private set; }
-        public Version Version { get; private set; }
-        public int ServicePack { get; private set; }
+        public string Name { get; }
+        public Version Version { get; }
+        public int ServicePack { get; }
 
         private WindowsVersion(string name, Version version, int servicePack = 0)
         {
@@ -25,11 +25,11 @@ namespace AppGet.Manifests
 
         public override string ToString()
         {
-            var result = String.Format("Windows {0}", Name);
+            var result = $"Windows {Name}";
 
             if (ServicePack > 0)
             {
-                result += String.Format(" SP{0}", ServicePack);
+                result += $" SP{ServicePack}";
             }
 
             return result;

@@ -42,7 +42,7 @@ namespace AppGet.Installers.InstallShield
 
         private static string GetArgs(string logFile)
         {
-            return String.Format("/s /v\"/quiet /norestart /Liwemoar! {0}\"", logFile);
+            return $"/s /v\"/quiet /norestart /Liwemoar! {logFile}\"";
         }
     }
 }
