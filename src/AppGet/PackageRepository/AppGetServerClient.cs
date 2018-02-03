@@ -11,7 +11,7 @@ namespace AppGet.PackageRepository
         private readonly Logger _logger;
         private readonly HttpRequestBuilder _requestBuilder;
 
-        private const string API_ROOT = "https://appget.net/api/v1/";
+        private const string API_ROOT = "https://appget.azurewebsites.net/v1/";
 
         public AppGetServerClient(IHttpClient httpClient, Logger logger)
         {
