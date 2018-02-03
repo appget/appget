@@ -128,13 +128,14 @@ namespace AppGet.Manifests
 
 
         //XP/2003
-        public static WindowsVersion Xp { get { return new WindowsVersion("XP", new Version(5, 1)); } }
-        public static WindowsVersion XpSp1 { get { return new WindowsVersion("XP", new Version(5, 1), 1); } }
-        public static WindowsVersion XpSp2 { get { return new WindowsVersion("XP", new Version(5, 1), 2); } }
-        public static WindowsVersion XpSp3 { get { return new WindowsVersion("XP", new Version(5, 1), 3); } }
+        public static WindowsVersion Xp => new WindowsVersion("XP", new Version(5, 1));
+
+        public static WindowsVersion XpSp1 => new WindowsVersion("XP", new Version(5, 1), 1);
+        public static WindowsVersion XpSp2 => new WindowsVersion("XP", new Version(5, 1), 2);
+        public static WindowsVersion XpSp3 => new WindowsVersion("XP", new Version(5, 1), 3);
 
         //TODO: What service packs are available?
-        public static WindowsVersion Xp64 { get { return new WindowsVersion("XP 64-bit Edition", new Version(5, 2)); } }
+        public static WindowsVersion Xp64 => new WindowsVersion("XP 64-bit Edition", new Version(5, 2));
         //public static WindowsVersion Server2003 { get { return new WindowsVersion("Server 2003", new Version(5, 2)); } }
         //public static WindowsVersion Server2003Sp1 { get { return new WindowsVersion("Server 2003", new Version(5, 2), 1); } }
         //public static WindowsVersion Server2003Sp2 { get { return new WindowsVersion("Server 2003", new Version(5, 2), 2); } }
@@ -142,55 +143,57 @@ namespace AppGet.Manifests
 
 
         //Vista/2008
-        public static WindowsVersion Vista { get { return new WindowsVersion("Vista", new Version(6, 0)); } }
-        public static WindowsVersion VistaSp1 { get { return new WindowsVersion("Vista", new Version(6, 0), 1); } }
-        public static WindowsVersion VistaSp2 { get { return new WindowsVersion("Vista", new Version(6, 0), 2); } }
+        public static WindowsVersion Vista => new WindowsVersion("Vista", new Version(6, 0));
+
+        public static WindowsVersion VistaSp1 => new WindowsVersion("Vista", new Version(6, 0), 1);
+
+        public static WindowsVersion VistaSp2 => new WindowsVersion("Vista", new Version(6, 0), 2);
         //public static WindowsVersion Server2008 { get { return new WindowsVersion("Server 2008", new Version(6, 0)); } }
 
 
         //7/2008 R2
-        public static WindowsVersion Seven { get { return new WindowsVersion("7", new Version(6, 1)); } }
-        public static WindowsVersion SevenSp1 { get { return new WindowsVersion("7", new Version(6, 1), 1); } }
+        public static WindowsVersion Seven => new WindowsVersion("7", new Version(6, 1));
+
+        public static WindowsVersion SevenSp1 => new WindowsVersion("7", new Version(6, 1), 1);
         //public static WindowsVersion Server2008R2 { get { return new WindowsVersion("Server 2008 R2", new Version(6, 1)); } }
 
 
         //8/2012
-        public static WindowsVersion Eight { get { return new WindowsVersion("8", new Version(6, 2)); } }
+        public static WindowsVersion Eight => new WindowsVersion("8", new Version(6, 2));
         //public static WindowsVersion Server2012 { get { return new WindowsVersion("Server 2012", new Version(6, 2)); } }
 
 
         //8.1/2012 R2
-        public static WindowsVersion EightOne { get { return new WindowsVersion("8.1", new Version(6, 3)); } }
+        public static WindowsVersion EightOne => new WindowsVersion("8.1", new Version(6, 3));
         //public static WindowsVersion Server2012R2 { get { return new WindowsVersion("Server 2012 R2", new Version(6, 3)); } }
 
-        private static List<WindowsVersion> All
+        //10
+        public static WindowsVersion Ten => new WindowsVersion("10", new Version(10,0));
+
+
+        private static List<WindowsVersion> All => new List<WindowsVersion>
         {
-            get
-            {
-                return new List<WindowsVersion>
-                       {
-                           Xp,
-                           XpSp1,
-                           XpSp2,
-                           XpSp3,
-                           Xp64,
-                           //Server2003,
-                           //Server2003Sp1,
-                           //Server2003Sp2,
-                           //Server2003R2,
-                           Vista,
-                           VistaSp1,
-                           VistaSp2,
-                           //Server2008,
-                           Seven,
-                           SevenSp1,
-                           //Server2008R2,
-                           Eight,
-                           //Server2012,
-                           EightOne,
-                           //Server2012R2
-                       };
-            }
-        }
+            Xp,
+            XpSp1,
+            XpSp2,
+            XpSp3,
+            Xp64,
+            //Server2003,
+            //Server2003Sp1,
+            //Server2003Sp2,
+            //Server2003R2,
+            Vista,
+            VistaSp1,
+            VistaSp2,
+            //Server2008,
+            Seven,
+            SevenSp1,
+            //Server2008R2,
+            Eight,
+            //Server2012,
+            EightOne,
+            //Server2012R2,
+            Ten
+        };
     }
 }
