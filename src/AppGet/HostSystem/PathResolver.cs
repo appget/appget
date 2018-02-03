@@ -15,31 +15,13 @@ namespace AppGet.HostSystem
 
     public class PathResolver : IPathResolver
     {
-        public string TempFolder
-        {
-            get
-            {
-                return Path.GetTempPath();
-            }
-        }
-        
-        private string ProgramData
-        {
-            get
-            {
-                return Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-            }
-        }
+        public string TempFolder => Path.GetTempPath();
 
-        public string AppDataDirectory
-        {
-            get { return Path.Combine(ProgramData, "AppGet"); }
-        }
+        private string ProgramData => Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
 
-        public string InstalledPackageList
-        {
-            get { return Path.Combine(AppDataDirectory, "packages.yaml"); }
-        }
+        public string AppDataDirectory => Path.Combine(ProgramData, "AppGet");
+
+        public string InstalledPackageList => Path.Combine(AppDataDirectory, "packages.yaml");
 
         public string GetInstallerLogFile(PackageManifest packageManifest)
         {

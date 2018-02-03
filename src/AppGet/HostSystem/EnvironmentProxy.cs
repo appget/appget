@@ -13,14 +13,8 @@ namespace AppGet.HostSystem
 
     public class EnvironmentProxy : IEnvironmentProxy
     {
-        public WindowsVersion WindowsVersion
-        {
-            get
-            {
-                return WindowsVersion.FromOperatingSystem(Environment.OSVersion);
-            }
-        }
-        public bool Is64BitOperatingSystem { get { return OsBitness.IsOs64Bit(); } }
+        public WindowsVersion WindowsVersion => WindowsVersion.FromOperatingSystem(Environment.OSVersion);
+        public bool Is64BitOperatingSystem => OsBitness.IsOs64Bit();
 
         private static class OsBitness
         {

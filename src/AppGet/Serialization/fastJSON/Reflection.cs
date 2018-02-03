@@ -76,7 +76,7 @@ namespace AppGet.Serialization.fastJSON
         private Reflection()
         {
         }
-        public static Reflection Instance { get { return instance; } }
+        public static Reflection Instance => instance;
 
         internal delegate object GenericSetter(object target, object value);
         internal delegate object GenericGetter(object obj);

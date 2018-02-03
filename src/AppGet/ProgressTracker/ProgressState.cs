@@ -6,13 +6,7 @@ namespace AppGet.ProgressTracker
         public long Total { get; set; }
         public long Completed { get; set; }
 
-        public decimal PercentCompleted
-        {
-            get
-            {
-                return Completed / (decimal)Total * (decimal)100.0;
-            }
-        }
+        public decimal PercentCompleted => Completed / (decimal)Total * (decimal)100.0;
 
         public override string ToString()
         {

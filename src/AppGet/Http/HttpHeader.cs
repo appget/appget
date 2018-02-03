@@ -30,10 +30,7 @@ namespace AppGet.Http
                 }
                 return Convert.ToInt64(this["Content-Length"]);
             }
-            set
-            {
-                this["Content-Length"] = value;
-            }
+            set => this["Content-Length"] = value;
         }
 
         public string ContentType
@@ -46,10 +43,7 @@ namespace AppGet.Http
                 }
                 return this["Content-Type"].ToString();
             }
-            set
-            {
-                this["Content-Type"] = value;
-            }
+            set => this["Content-Type"] = value;
         }
 
         public string CacheControl  
@@ -62,10 +56,7 @@ namespace AppGet.Http
                 }
                 return this["Cache-Control"].ToString();
             }
-            set
-            {
-                this["Cache-Control"] = value;
-            }
+            set => this["Cache-Control"] = value;
         }
 
         public string Accept
@@ -78,10 +69,7 @@ namespace AppGet.Http
                 }
                 return this["Accept"].ToString();
             }
-            set
-            {
-                this["Accept"] = value;
-            }
+            set => this["Accept"] = value;
         }
     }
 }

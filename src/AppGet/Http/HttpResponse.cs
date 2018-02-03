@@ -22,13 +22,7 @@ namespace AppGet.Http
         public String Content { get; set; }
 
 
-        public bool HasHttpError
-        {
-            get
-            {
-                return (int)StatusCode >= 400;
-            }
-        }
+        public bool HasHttpError => (int)StatusCode >= 400;
 
         public override string ToString()
         {
