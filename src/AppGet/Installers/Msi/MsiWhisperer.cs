@@ -42,7 +42,8 @@ namespace AppGet.Installers.Msi
 
         private static string GetArgs(string msiPath, string logFile)
         {
-            return $"/i {msiPath} /quiet /norestart /Liwemoar! {logFile} ";
+            // https://msdn.microsoft.com/en-us/library/windows/desktop/aa367988(v=vs.85).aspx
+            return $"/i \"{msiPath}\" /qb /norestart /Liwemoar! \"{logFile}\"";
         }
     }
 }
