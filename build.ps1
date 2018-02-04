@@ -1,4 +1,4 @@
-$msBuild = 'C:\Windows\Microsoft.NET\Framework64\v4.0.30319\msbuild.exe'
+$msBuild = 'C:\Program Files\MSBuild\14.0\Bin\v4.0.30319\msbuild.exe'
 
 Function Build()
 {
@@ -6,7 +6,7 @@ Function Build()
 
     $clean = $msbuild + " src\AppGet.sln /t:Clean /m"
     $build = $msbuild + " src\AppGet.sln /p:Configuration=Release /t:Build /m"
-       
+
     Invoke-Expression $clean
     CheckExitCode
 
@@ -14,7 +14,7 @@ Function Build()
     CheckExitCode
 
 
-    Write-Host "##teamcity[progressFinish 'Build']"    
+    Write-Host "##teamcity[progressFinish 'Build']"
 }
 
 
