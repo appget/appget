@@ -2,8 +2,9 @@
 using System.Linq;
 using AppGet.ProgressTracker;
 using NLog;
-using SharpCompress.Archive;
+using SharpCompress.Archives;
 using SharpCompress.Common;
+using SharpCompress.Readers;
 
 namespace AppGet.Compression
 {
@@ -35,7 +36,7 @@ namespace AppGet.Compression
             {
                 if (!entry.IsDirectory)
                 {
-                    entry.WriteToDirectory(destination, ExtractOptions.ExtractFullPath | ExtractOptions.Overwrite);
+                    entry.WriteToDirectory(destination, new ExtractionOptions { ExtractFullPath = true, Overwrite = true, PreserveFileTime = true });
                 }
 
                 progress.Completed++;

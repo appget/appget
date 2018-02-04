@@ -23,11 +23,14 @@ namespace AppGet.Serialization
 
         public static T Deserialize<T>(string text)
         {
-            var deserializer = new Deserializer(namingConvention: new CamelCaseNamingConvention());
-           RegisterTypeConverter(deserializer.RegisterTypeConverter);
+            var deserializer = new DeserializerBuilder()
+                .WithNamingConvention(new CamelCaseNamingConvention())
+                .IgnoreUnmatchedProperties()
+                .WithTypeConverter(new VersionConverter())
+                .WithTypeConverter(new WindowsVersionConverter())
+                .Build();
 
-            var reader = new EventReader(new Parser(new StringReader(text)));
-            return deserializer.Deserialize<T>(reader);
+            return deserializer.Deserialize<T>(text);
         }
 
         private static void RegisterTypeConverter(Action<IYamlTypeConverter> registerConverter)

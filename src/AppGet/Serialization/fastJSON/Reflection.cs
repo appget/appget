@@ -67,7 +67,6 @@ namespace AppGet.Serialization.fastJSON
     internal sealed class Reflection
     {
         // Sinlgeton pattern 4 from : http://csharpindepth.com/articles/general/singleton.aspx
-        private static readonly Reflection instance = new Reflection();
         // Explicit static constructor to tell C# compiler
         // not to mark type as beforefieldinit
         static Reflection()
@@ -76,7 +75,7 @@ namespace AppGet.Serialization.fastJSON
         private Reflection()
         {
         }
-        public static Reflection Instance => instance;
+        public static Reflection Instance { get; } = new Reflection();
 
         internal delegate object GenericSetter(object target, object value);
         internal delegate object GenericGetter(object obj);
