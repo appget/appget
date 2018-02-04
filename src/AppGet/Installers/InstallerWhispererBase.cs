@@ -1,5 +1,7 @@
-﻿using AppGet.Commands.Install;
+﻿using System.ComponentModel;
+using AppGet.Commands.Install;
 using AppGet.Commands.Uninstall;
+using AppGet.Exceptions;
 using AppGet.Manifests;
 using AppGet.Processes;
 using NLog;
@@ -21,13 +23,23 @@ namespace AppGet.Installers
         public abstract void Uninstall(PackageManifest packageManifest, UninstallOptions installOptions);
         public abstract bool CanHandle(InstallMethodType installMethod);
 
-        protected virtual int Execute(string exectuable, string args)
+        protected virtual void Execute(string executable, string args)
         {
-            var process = _processController.Start(exectuable, args, OnOutputDataReceived, OnErrorDataReceived);
+            try
+            {
+                var process = _processController.Start(executable, args, OnOutputDataReceived, OnErrorDataReceived);
+                _processController.WaitForExit(process);
 
-            _processController.WaitForExit(process);
-
-            return process.ExitCode;
+                if (process.ExitCode != 0)
+                {
+                    throw new AppGetException($"Installer '{process.ProcessName}' returned with a non-zero exit code. code: {process.ExitCode}");
+                }
+            }
+            catch (Win32Exception e)
+            {
+                _logger.Error($"{e.Message}, try running AppGet as an administartor");
+                throw;
+            }
         }
 
         protected virtual void OnOutputDataReceived(string message)
