@@ -16,6 +16,19 @@ namespace AppGet
 
         public static int Main(string[] args)
         {
+            var result = Run(args);
+
+            while (Debugger.IsAttached)
+            {
+                Run(args);
+            }
+
+            return result;
+        }
+
+
+        private static int Run(string[] args)
+        {
             try
             {
                 if (Debugger.IsAttached)
@@ -64,14 +77,6 @@ namespace AppGet
             {
                 Logger.Fatal(ex);
                 return 1;
-            }
-            finally
-            {
-                if (Debugger.IsAttached)
-                {
-                    Console.WriteLine("Press anykey to exit...");
-                    Console.ReadLine();
-                }
             }
         }
 
