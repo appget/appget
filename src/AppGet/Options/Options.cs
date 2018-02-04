@@ -29,7 +29,7 @@ namespace AppGet.Options
         [VerbOption("view", HelpText = "Display the manifest for a specific package")]
         public ViewManifestOptions ViewManifest { get; set; }
 
-        [VerbOption("search-windows-installer", HelpText = "Search Windows installer registery for installed applications")]
+        [VerbOption("search-windows-installer", HelpText = "Search Windows installer registry for installed applications")]
         public WindowsInstallerSearchOptions WindowsInstallerSearch { get; set; }
 
         [ValueList(typeof(List<string>), MaximumElements = -1)]

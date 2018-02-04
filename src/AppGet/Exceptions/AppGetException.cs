@@ -9,11 +9,5 @@ namespace AppGet.Exceptions
         {
 
         }
-
-        public AppGetException(string message, params object[] args)
-            : base(String.Format(message, args))
-        {
-
-        }
     }
 }

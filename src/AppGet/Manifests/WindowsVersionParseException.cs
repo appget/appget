@@ -5,7 +5,7 @@ namespace AppGet.Manifests
     public class WindowsVersionParseException : AppGetException
     {
         public WindowsVersionParseException(string input)
-            : base("Unbale to parse [{0}] into a valid Windows versions", input)
+            : base($"Unable to parse [{input}] into a valid Windows versions")
         {
         }
     }

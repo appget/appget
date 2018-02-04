@@ -76,6 +76,13 @@
     <Compile Include="Commands\WindowsInstallerSearch\WindowsInstallerSearchOptions.cs" />
     <Compile Include="Commands\ViewManifest\ViewManifestCommandHandler.cs" />
     <Compile Include="Commands\Uninstall\PackageNotInstalledException.cs" />
+    <Compile Include="Crypto\Hash\CheckSumBase.cs" />
+    <Compile Include="Crypto\Hash\ChecksumVerificationException.cs" />
+    <Compile Include="Crypto\Hash\ChecksumService.cs" />
+    <Compile Include="Crypto\Hash\ICheckSum.cs" />
+    <Compile Include="Crypto\Hash\Algorithms\Sha1Hash.cs" />
+    <Compile Include="Crypto\Hash\Algorithms\Md5Hash.cs" />
+    <Compile Include="Crypto\Hash\Algorithms\Sha256Hash.cs" />
     <Compile Include="FileTransfer\TransferCacheService.cs" />
     <Compile Include="Infrastructure\Composition\ContainerBuilder.cs" />
     <Compile Include="Compression\CompressionService.cs" />

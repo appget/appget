@@ -5,7 +5,7 @@ namespace AppGet.PackageRepository
     public class PackageNotFoundException : AppGetException
     {
         public PackageNotFoundException(string packageName)
-            : base("Package [{0}] could not be found", packageName)
+            : base($"Package [{packageName}] could not be found")
         {
         }
     }
