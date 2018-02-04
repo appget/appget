@@ -11,7 +11,7 @@ namespace AppGet.Serialization
 
         public static T Deserialize<T>(string text)
         {
-            return FastJson.ToObject<T>(text, new JSONParameters { IgnoreCaseOnDeserialize = true });
+            return FastJson.ToObject<T>(text);
         }
     }
 }

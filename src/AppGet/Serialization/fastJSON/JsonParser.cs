@@ -5,6 +5,7 @@ using System.Text;
 
 namespace AppGet.Serialization.fastJSON
 {
+
     /// <summary>
     /// This class encodes and decodes JSON strings.
     /// Spec. details, see http://www.json.org/
@@ -28,16 +29,13 @@ namespace AppGet.Serialization.fastJSON
         }
 
         readonly string json;
-        readonly StringBuilder s = new StringBuilder();
+        readonly StringBuilder s = new StringBuilder(); // used for inner string parsing " \"\r\n\u1234\'\t " 
         Token lookAheadToken = Token.None;
         int index;
-        bool _ignorecase = false;
 
-
-        internal JsonParser(string json, bool ignorecase)
+        internal JsonParser(string json)
         {
-            this.json = json;//.ToCharArray();
-            _ignorecase = ignorecase;
+            this.json = json;
         }
 
         public object Decode()
@@ -68,8 +66,6 @@ namespace AppGet.Serialization.fastJSON
                         {
                             // name
                             string name = ParseString();
-                            if (_ignorecase)
-                                name = name.ToLower();
 
                             // :
                             if (NextToken() != Token.Colon)
@@ -150,86 +146,90 @@ namespace AppGet.Serialization.fastJSON
             s.Length = 0;
 
             int runIndex = -1;
-
-            while (index < json.Length)
+            int l = json.Length;
+            //fixed (char* p = json)
+            string p = json;
             {
-                var c = json[index++];
-
-                if (c == '"')
+                while (index < l)
                 {
+                    var c = p[index++];
+
+                    if (c == '"')
+                    {
+                        if (runIndex != -1)
+                        {
+                            if (s.Length == 0)
+                                return json.Substring(runIndex, index - runIndex - 1);
+
+                            s.Append(json, runIndex, index - runIndex - 1);
+                        }
+                        return s.ToString();
+                    }
+
+                    if (c != '\\')
+                    {
+                        if (runIndex == -1)
+                            runIndex = index - 1;
+
+                        continue;
+                    }
+
+                    if (index == l) break;
+
                     if (runIndex != -1)
                     {
-                        if (s.Length == 0)
-                            return json.Substring(runIndex, index - runIndex - 1);
-
                         s.Append(json, runIndex, index - runIndex - 1);
+                        runIndex = -1;
                     }
-                    return s.ToString();
-                }
 
-                if (c != '\\')
-                {
-                    if (runIndex == -1)
-                        runIndex = index - 1;
+                    switch (p[index++])
+                    {
+                        case '"':
+                            s.Append('"');
+                            break;
 
-                    continue;
-                }
+                        case '\\':
+                            s.Append('\\');
+                            break;
 
-                if (index == json.Length) break;
+                        case '/':
+                            s.Append('/');
+                            break;
 
-                if (runIndex != -1)
-                {
-                    s.Append(json, runIndex, index - runIndex - 1);
-                    runIndex = -1;
-                }
+                        case 'b':
+                            s.Append('\b');
+                            break;
 
-                switch (json[index++])
-                {
-                    case '"':
-                        s.Append('"');
-                        break;
+                        case 'f':
+                            s.Append('\f');
+                            break;
 
-                    case '\\':
-                        s.Append('\\');
-                        break;
+                        case 'n':
+                            s.Append('\n');
+                            break;
 
-                    case '/':
-                        s.Append('/');
-                        break;
+                        case 'r':
+                            s.Append('\r');
+                            break;
 
-                    case 'b':
-                        s.Append('\b');
-                        break;
+                        case 't':
+                            s.Append('\t');
+                            break;
 
-                    case 'f':
-                        s.Append('\f');
-                        break;
+                        case 'u':
+                            {
+                                int remainingLength = l - index;
+                                if (remainingLength < 4) break;
 
-                    case 'n':
-                        s.Append('\n');
-                        break;
+                                // parse the 32 bit hex into an integer codepoint
+                                uint codePoint = ParseUnicode(p[index], p[index + 1], p[index + 2], p[index + 3]);
+                                s.Append((char)codePoint);
 
-                    case 'r':
-                        s.Append('\r');
-                        break;
-
-                    case 't':
-                        s.Append('\t');
-                        break;
-
-                    case 'u':
-                        {
-                            int remainingLength = json.Length - index;
-                            if (remainingLength < 4) break;
-
-                            // parse the 32 bit hex into an integer codepoint
-                            uint codePoint = ParseUnicode(json[index], json[index + 1], json[index + 2], json[index + 3]);
-                            s.Append((char)codePoint);
-
-                            // skip 4 chars
-                            index += 4;
-                        }
-                        break;
+                                // skip 4 chars
+                                index += 4;
+                            }
+                            break;
+                    }
                 }
             }
 
@@ -302,13 +302,19 @@ namespace AppGet.Serialization.fastJSON
                 break;
             } while (true);
 
-			if (dec)
-			{
-				string s = json.Substring(startIndex, index - startIndex);
-				return double.Parse(s, NumberFormatInfo.InvariantInfo);
-			}
-			long num;
-			return FastJson.CreateLong(out num, json, startIndex, index - startIndex);
+            if (dec)
+            {
+                string s = json.Substring(startIndex, index - startIndex);
+                return double.Parse(s, NumberFormatInfo.InvariantInfo);
+            }
+            if (index - startIndex < 20 && json[startIndex] != '-')
+                return FastJson.CreateLong(json, startIndex, index - startIndex);
+            else
+            {
+                string s = json.Substring(startIndex, index - startIndex);
+                //return s;
+                return decimal.Parse(s, NumberFormatInfo.InvariantInfo);
+            }
         }
 
         private Token LookAhead()
@@ -341,6 +347,17 @@ namespace AppGet.Serialization.fastJSON
             {
                 c = json[index];
 
+                if (c == '/' && json[index + 1] == '/') // c++ style single line comments
+                {
+                    index++;
+                    index++;
+                    do
+                    {
+                        c = json[index];
+                        if (c == '\r' || c == '\n') break; // read till end of line
+                    }
+                    while (++index < json.Length);
+                }
                 if (c > ' ') break;
                 if (c != ' ' && c != '\t' && c != '\n' && c != '\r') break;
 

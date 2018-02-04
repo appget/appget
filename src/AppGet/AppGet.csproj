@@ -144,9 +144,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requirements\EnforcementResult.cs" />
     <Compile Include="Infrastructure\Composition\TinyIoC.cs" />
-    <None Include="Serialization\fastJSON\License.text" />
     <Compile Include="Requirements\InstallerCompatibility.cs" />
     <Compile Include="Requirements\Specifications\OsArchitectureSpecification.cs" />
+    <Compile Include="Serialization\fastJSON\dynamic.cs" />
     <Compile Include="Serialization\fastJSON\Formatter.cs" />
     <Compile Include="Serialization\fastJSON\Getters.cs" />
     <Compile Include="Serialization\fastJSON\FastJson.cs" />
