@@ -17,7 +17,7 @@ namespace AppGet.Infrastructure.Logging
             {
                 Layout = new SimpleLayout("> ${message}")
             };
-            _rule = new LoggingRule("*", LogLevel.Info, consoleTarget);
+            _rule = new LoggingRule("*", LogLevel.Trace, consoleTarget);
             LogManager.Configuration.AddTarget("console", consoleTarget);
             LogManager.Configuration.LoggingRules.Add(_rule);
 

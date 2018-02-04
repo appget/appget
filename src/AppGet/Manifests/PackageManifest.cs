@@ -25,10 +25,11 @@ namespace AppGet.Manifests
     public class Installer
     {
         public string Location { get; set; }
+        public string ZipSubDir { get; set; }
+
         public string Sha1 { get; set; }
         public string Sha256 { get; set; }
         public string Md5 { get; set; }
-        public string ZipSubDir { get; set; }
 
         public ArchitectureType Architecture { get; set; }
 
@@ -38,10 +39,43 @@ namespace AppGet.Manifests
 
         public List<string> ProductIds { get; set; }
 
+        public FileHash GetFileHash()
+        {
+            if (!string.IsNullOrEmpty(Sha256))
+            {
+                return new FileHash { HashType = HashType.Sha256, Value = Sha256 };
+            }
+            if (!string.IsNullOrEmpty(Sha256))
+            {
+                return new FileHash { HashType = HashType.Sha1, Value = Sha1 };
+            }
+            if (!string.IsNullOrEmpty(Sha256))
+            {
+                return new FileHash { HashType = HashType.Md5, Value = Md5 };
+            }
+
+            return null;
+        }
+
         public Installer()
         {
             ProductIds = new List<string>();
         }
+    }
+
+    public class FileHash
+    {
+        public HashType HashType { get; set; }
+        public string Value { get; set; }
+    }
+
+
+    public enum HashType
+    {
+        Crc,
+        Md5,
+        Sha1,
+        Sha256,
     }
 
     public enum ArtifactTypes

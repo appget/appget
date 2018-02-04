@@ -14,7 +14,7 @@ namespace AppGet.Installers.Msi
         private readonly Logger _logger;
 
         public MsiWhisperer(IProcessController processController, IPathResolver pathResolver, Logger logger)
-            : base (processController, logger)
+            : base(processController, logger)
         {
             _pathResolver = pathResolver;
             _logger = logger;

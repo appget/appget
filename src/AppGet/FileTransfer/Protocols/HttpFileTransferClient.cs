@@ -45,16 +45,16 @@ namespace AppGet.FileTransfer.Protocols
                 return fileName;
             }
 
-            var respo = _httpClient.Head(new HttpRequest(source) { AllowAutoRedirect = false });
+            var resp = _httpClient.Head(new HttpRequest(source) { AllowAutoRedirect = false });
 
-            if (respo.Headers.ContainsKey("Location"))
+            if (resp.Headers.ContainsKey("Location"))
             {
-                return GetFileName(respo.Headers["Location"].ToString());
+                return GetFileName(resp.Headers["Location"].ToString());
             }
 
-            if (respo.Headers.ContainsKey("Content-Disposition"))
+            if (resp.Headers.ContainsKey("Content-Disposition"))
             {
-                var contentDeposition = respo.Headers["Content-Disposition"].ToString();
+                var contentDeposition = resp.Headers["Content-Disposition"].ToString();
 
                 var match = ContentDepositionRegex.Match(contentDeposition);
 
@@ -68,15 +68,12 @@ namespace AppGet.FileTransfer.Protocols
 
         }
 
-        public string TransferFile(string source, string destinationDirectory)
+        public void TransferFile(string source, string destinationFile)
         {
-
-            var filePath = Path.Combine(destinationDirectory, GetFileName(source));
-
             var webClient = new WebClient();
             webClient.DownloadProgressChanged += TransferProgressCallback;
             webClient.DownloadFileCompleted += TransferCompletedCallback;
-            webClient.DownloadFileAsync(new Uri(source), filePath);
+            webClient.DownloadFileAsync(new Uri(source), destinationFile);
 
             _inTransit = true;
             _progress = new ProgressState();
@@ -90,8 +87,6 @@ namespace AppGet.FileTransfer.Protocols
             {
                 throw _error;
             }
-
-            return filePath;
         }
 
         public string ReadString(string source)

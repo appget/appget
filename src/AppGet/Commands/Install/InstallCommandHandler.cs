@@ -66,7 +66,7 @@ namespace AppGet.Commands.Install
 
             var manifest = _packageManifestService.LoadManifest(package);
             var installer = _findInstaller.GetBestInstaller(manifest.Installers);
-            var installerPath = _fileTransferService.TransferFile(installer.Location, _pathResolver.TempFolder);
+            var installerPath = _fileTransferService.TransferFile(installer.Location, _pathResolver.TempFolder, installer.GetFileHash() );
             
             _installTracker.TakeSnapshot();
             _installService.Install(installerPath, manifest, installOptions);
