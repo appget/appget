@@ -5,6 +5,8 @@ using AppGet.Commands.Search;
 using AppGet.Commands.Uninstall;
 using AppGet.Commands.ViewManifest;
 using AppGet.Commands.WindowsInstallerSearch;
+using AppGet.Crypto.Hash;
+using AppGet.Crypto.Hash.Algorithms;
 using AppGet.FileTransfer;
 using AppGet.FileTransfer.Protocols;
 using AppGet.Installers;
@@ -53,6 +55,13 @@ namespace AppGet.Infrastructure.Composition
                 typeof(MsiWhisperer),
                 typeof(NsisWhisperer),   
                 typeof(ZipWhisperer)
+            });
+
+            container.RegisterMultiple<ICheckSum>(new[]
+            {
+                typeof(Sha1Hash),
+                typeof(Sha256Hash),
+                typeof(Md5Hash),
             });
 
             container.RegisterMultiple<IFileTransferClient>(new[]

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using AppGet.Crypto.Hash;
 using AppGet.Manifests;
 using AppGet.ProgressTracker;
 using NLog;
@@ -17,12 +18,14 @@ namespace AppGet.FileTransfer
     {
         private readonly IEnumerable<IFileTransferClient> _transferClients;
         private readonly ITransferCacheService _transferCacheService;
+        private readonly IChecksumService _checksumService;
         private readonly Logger _logger;
 
-        public FileTransferService(IEnumerable<IFileTransferClient> transferClients, ITransferCacheService transferCacheService, Logger logger)
+        public FileTransferService(IEnumerable<IFileTransferClient> transferClients, ITransferCacheService transferCacheService, IChecksumService checksumService, Logger logger)
         {
             _transferClients = transferClients;
             _transferCacheService = transferCacheService;
+            _checksumService = checksumService;
             _transferCacheService = transferCacheService;
             _logger = logger;
         }
@@ -59,6 +62,15 @@ namespace AppGet.FileTransfer
                 _logger.Info($"Downloading installer from {source}");
                 client.TransferFile(source, destinationPath);
                 _logger.Info($"Installer downloaded to {destinationPath}");
+
+                if (fileHash == null)
+                {
+                    _logger.Info("No hash provided. skipping checksum validation");
+                }
+                else
+                {
+                    _checksumService.ValidateHash(destinationPath, fileHash);
+                }
             }
 
             return destinationPath;

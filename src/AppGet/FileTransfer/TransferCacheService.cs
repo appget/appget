@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using AppGet.Crypto.Hash;
 using AppGet.FileSystem;
 using AppGet.Manifests;
 using NLog;
@@ -17,22 +13,31 @@ namespace AppGet.FileTransfer
     public class TransferCacheService : ITransferCacheService
     {
         private readonly IFileSystem _fileSystem;
+        private readonly IChecksumService _checksumService;
         private readonly Logger _logger;
 
-        public TransferCacheService(IFileSystem fileSystem, Logger logger)
+        public TransferCacheService(IFileSystem fileSystem, IChecksumService checksumService, Logger logger)
         {
             _fileSystem = fileSystem;
+            _checksumService = checksumService;
             _logger = logger;
         }
 
         public bool IsValid(string path, FileHash hash)
         {
-            if (!_fileSystem.FileExists(path))
+            if (hash == null || !_fileSystem.FileExists(path))
             {
                 return false;
             }
 
-            // TODO: make sure hash matches too!
+            try
+            {
+                _checksumService.ValidateHash(path, hash);
+            }
+            catch (ChecksumVerificationException e)
+            {
+                _logger.Warn("Checksum verification failed. ignoring cache.");
+            }
 
             _logger.Debug($"Installer is already downloaded: {path}");
             return true;
