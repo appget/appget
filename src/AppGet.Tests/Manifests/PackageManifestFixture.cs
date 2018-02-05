@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace AppGet.Tests.Manifests
 {
     [TestFixture]
-    public class PackageManifestFixture
+    public class PackageManifestFixture : TestBase<Object>
     {
         [Test]
         public void print_sample_manifest()
@@ -18,7 +18,7 @@ namespace AppGet.Tests.Manifests
                 Id = "linqpad",
                 Version = "4.51.03",
                 Exe = new[] { "LINQPad.exe" },
-                ProductUrl ="http://www.linqpad.net/",
+                ProductUrl = "http://www.linqpad.net/",
                 InstallMethod = InstallMethodType.Zip,
                 Installers = new List<Installer>
                 {
@@ -45,8 +45,7 @@ namespace AppGet.Tests.Manifests
         [Test]
         public void read_sample_manifest()
         {
-            var text = File.ReadAllText("Manifests\\SampleManifests\\mongodb.yaml");
-
+            var text = ReadAllText("Manifests\\SampleManifests\\mongodb.yaml");
             Yaml.Deserialize<PackageManifest>(text);
         }
     }

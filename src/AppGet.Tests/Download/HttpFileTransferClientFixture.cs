@@ -18,10 +18,8 @@ namespace AppGet.Tests.Download
         [Test]
         public void should_download_file_using_correct_name()
         {
-            var temp = Path.GetTempPath();
-            Subject.OnStatusUpdated = state => Console.WriteLine(state.ToString());
-            Subject.TransferFile("http://www.linqpad.net/GetFile.aspx?LINQPad4-AnyCPU.zip", temp);
-            Directory.GetFiles(temp, "LINQPad4-AnyCPU.zip").Should().NotBeEmpty();
+            const string url = "http://www.linqpad.net/GetFile.aspx?LINQPad4-AnyCPU.zip";
+            Subject.GetFileName(url).Should().Be("LINQPad4-AnyCPU.zip");
         }
 
         [TestCase("http://server.com/dir/dir2/somefile.zip", "somefile.zip")]

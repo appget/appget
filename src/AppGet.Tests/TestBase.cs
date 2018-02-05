@@ -1,4 +1,5 @@
-﻿using AppGet.Http;
+﻿using System.IO;
+using AppGet.Http;
 using AutoMoq;
 using NLog;
 using NUnit.Framework;
@@ -39,6 +40,16 @@ namespace AppGet.Tests
         protected void WithRealHttp()
         {
             Mocker.SetInstance<IHttpClient>(new HttpClient(logger));
+        }
+
+        protected string GetTestPath(string path)
+        {
+            return Path.Combine(TestContext.CurrentContext.TestDirectory, Path.Combine(path.Split('/')));
+        }
+
+        protected string ReadAllText(string path)
+        {
+            return File.ReadAllText(GetTestPath(path));
         }
 
     }
