@@ -7,8 +7,10 @@
 #define SupportURL "https://github.com/appget/appget/issues"
 #define UpdatesURL "https://github.com/appget/appget/releases"
 #define AppExeName "appget.exe"
-#define BuildNumber GetEnv('BUILD_NUMBER')
-#define BranchName GetEnv('branch')
+; #define BuildNumber "{%APPVEYOR_BUILD_VERSION}"
+#define BuildNumber GetEnv("APPVEYOR_BUILD_VERSION")
+; #define BranchName "{%BRANCH}"
+; #define BranchName "local"
 #define CopyRight "Apache License, Version 2.0"
 
 [Setup]
@@ -26,7 +28,7 @@ DefaultDirName={commonappdata}\{#AppName}\bin
 DisableDirPage=yes
 DefaultGroupName={#AppName}
 DisableProgramGroupPage=yes
-OutputBaseFilename={#AppName}.{#BranchName}.{#BuildNumber}
+OutputBaseFilename={#AppName}.{#BuildNumber}
 SolidCompression=yes
 AppCopyright={#CopyRight}
 AllowUNCPath=False
@@ -62,7 +64,7 @@ begin
   end;
   // look for the path with leading and trailing semicolon
   // Pos() returns 0 if not found
-  Result := Pos(';' + UpperCase(Param) + ';', ';' + UpperCase(OrigPath) + ';') = 0;  
+  Result := Pos(';' + UpperCase(Param) + ';', ';' + UpperCase(OrigPath) + ';') = 0;
   if Result = True then
-     Result := Pos(';' + UpperCase(Param) + '\;', ';' + UpperCase(OrigPath) + ';') = 0; 
+     Result := Pos(';' + UpperCase(Param) + '\;', ';' + UpperCase(OrigPath) + ';') = 0;
 end;
