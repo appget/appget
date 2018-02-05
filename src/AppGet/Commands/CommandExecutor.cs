@@ -33,7 +33,7 @@ namespace AppGet.Commands
                 throw new UnknownCommandException(arguments.CommandName);
             }
 
-            _logger.Debug("Starting {0}", arguments.CommandName);
+            _logger.Debug("Starting command [{0}]", arguments.CommandName);
             var stopwatch = Stopwatch.StartNew();
             commandHandler.Execute(arguments);
             stopwatch.Stop();

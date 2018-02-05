@@ -1,5 +1,4 @@
 using System;
-using AppGet.HostSystem;
 using AppGet.Manifests;
 using AppGet.Options;
 using AppGet.PackageRepository;
@@ -11,8 +10,7 @@ namespace AppGet.Commands.ViewManifest
         private readonly IPackageRepository _packageRepository;
         private readonly IPackageManifestService _packageManifestService;
 
-        public ViewManifestCommandHandler(IPackageRepository packageRepository, IPathResolver pathResolver,
-            IPackageManifestService packageManifestService)
+        public ViewManifestCommandHandler(IPackageRepository packageRepository, IPackageManifestService packageManifestService)
         {
             _packageRepository = packageRepository;
             _packageManifestService = packageManifestService;
