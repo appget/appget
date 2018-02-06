@@ -20,8 +20,8 @@ namespace AppGet.Commands.Search
 
         public void Execute(AppGetOption commandOptions)
         {
-            var viewOptions = (SearchOptions)commandOptions;
-            _packageSearchService.DisplayResults(viewOptions.PackageId);
+            var searchOptions = (SearchOptions)commandOptions;
+            _packageSearchService.DisplayResults(searchOptions.Query);
         }
     }
 }

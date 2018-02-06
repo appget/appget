@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using AppGet.FileTransfer.Protocols;
+﻿using AppGet.FileTransfer.Protocols;
 using FluentAssertions;
 using NUnit.Framework;
 

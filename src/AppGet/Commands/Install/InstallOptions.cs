@@ -1,25 +1,17 @@
 using AppGet.Options;
 using CommandLine;
-using CommandLine.Text;
 
 namespace AppGet.Commands.Install
 {
+    [Verb("install", HelpText = "Install a package")]
     public class InstallOptions : PackageCommandOptions
     {
-        [HelpOption]
-        public string GetUsage()
+        [Value(0, MetaName = PACKAGE_META_NAME, HelpText = "ID of package to install", Required = true)]
+        public override string PackageId { get; set; }
+
+        public InstallOptions(string packageId)
         {
-            var help = new HelpText
-            {
-                Heading = new HeadingInfo("<<app title>>", "<<app version>>"),
-                Copyright = new CopyrightInfo("<<app author>>", 2014),
-                AdditionalNewLineAfterOption = true,
-                AddDashesToOption = true
-            };
-            help.AddPreOptionsLine("<<license details here.>>");
-            help.AddPreOptionsLine("Usage: app -p Someone");
-            help.AddOptions(this);
-            return help;
+            PackageId = packageId;
         }
     }
 }

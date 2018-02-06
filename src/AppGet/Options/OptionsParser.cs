@@ -1,4 +1,8 @@
-﻿using System.Globalization;
+﻿using AppGet.Commands.Install;
+using AppGet.Commands.List;
+using AppGet.Commands.Search;
+using AppGet.Commands.Uninstall;
+using AppGet.Commands.ViewManifest;
 using CommandLine;
 
 namespace AppGet.Options
@@ -12,38 +16,14 @@ namespace AppGet.Options
     {
         public AppGetOption Parse(params string[] args)
         {
-            var parser = new Parser(Configure);
-
-            var rootOptions = new RootOptions();
-
-            AppGetOption appGetOption = null;
-
-            var c = parser.ParseArguments(args, rootOptions, (commandName, parsedOption) =>
+            var result = Parser.Default.ParseArguments<InstallOptions, ListOptions, SearchOptions, UninstallOptions, ViewManifestOptions>(args);
+            if (result.Tag == ParserResultType.Parsed)
             {
-                appGetOption = (AppGetOption)parsedOption;
+                return (AppGetOption)((Parsed<object>)result).Value;
+            }
 
-                if (appGetOption == null)
-                {
-                    throw new UnknownCommandException(commandName);
-                }
-
-                appGetOption.RootOptions = rootOptions;
-                appGetOption.ProcessArgs();
-
-
-                appGetOption.CommandName = commandName;
-            });
-
-            return appGetOption;
+            return null;
         }
-
-        private void Configure(ParserSettings settings)
-        {
-            settings.CaseSensitive = false;
-            settings.IgnoreUnknownArguments = true;
-            settings.ParsingCulture = CultureInfo.InvariantCulture;
-        }
-
 
     }
 }

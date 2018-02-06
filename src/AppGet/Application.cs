@@ -43,6 +43,11 @@ namespace AppGet
                 var optionsService = container.Resolve<IParseOptions>();
                 var options = optionsService.Parse(args);
 
+                if (options == null)
+                {
+                    return 1;
+                }
+
                 if (options.Verbose)
                 {
                     LogConfigurator.EnableVerboseLogging();
@@ -55,14 +60,7 @@ namespace AppGet
 
                 return 0;
             }
-            catch (UnknownCommandException)
-            {
-                var helpGenerator = new HelpGenerator();
-                var helpText = helpGenerator.GenerateHelp();
 
-                Console.WriteLine(helpText);
-                return 0;
-            }
             catch (AppGetException ex)
             {
                 Logger.Error(ex.Message);

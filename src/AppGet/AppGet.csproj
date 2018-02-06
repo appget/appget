@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AppGet</RootNamespace>
     <AssemblyName>appget</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
@@ -36,9 +37,8 @@
     <StartupObject>AppGet.Application</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CommandLine, Version=1.9.72.0, Culture=neutral, PublicKeyToken=de6f01bd326f8c32, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CommandLineParser19.1.9.74\lib\net35\CommandLine.dll</HintPath>
+    <Reference Include="CommandLine, Version=2.2.1.0, Culture=neutral, PublicKeyToken=de6f01bd326f8c32, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommandLineParser.2.2.1\lib\net40\CommandLine.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.4.12\lib\net35\NLog.dll</HintPath>
@@ -50,6 +50,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -67,11 +68,12 @@
     <Compile Include="Commands\Search\SearchCommandHandler.cs" />
     <Compile Include="Commands\Search\SearchOptions.cs" />
     <Compile Include="Commands\Uninstall\UninstallCommandHandler.cs" />
-    <Compile Include="Commands\Uninstall\InstallOptions.cs" />
+    <Compile Include="Commands\Uninstall\UninstallOptions.cs" />
     <Compile Include="Commands\Install\InstallCommandHandler.cs" />
     <Compile Include="Commands\Install\InstallOptions.cs" />
     <Compile Include="Commands\List\ListCommandHandler.cs" />
     <Compile Include="Commands\List\ListOptions.cs" />
+    <Compile Include="Commands\UnknownCommandException.cs" />
     <Compile Include="Commands\WindowsInstallerSearch\WindowsInstallerSearchCommandHandler.cs" />
     <Compile Include="Commands\WindowsInstallerSearch\WindowsInstallerSearchOptions.cs" />
     <Compile Include="Commands\ViewManifest\ViewManifestCommandHandler.cs" />
@@ -130,11 +132,8 @@
     <Compile Include="Manifests\WindowsVersionParseException.cs" />
     <Compile Include="Options\AppGetOption.cs" />
     <Compile Include="Options\PackageCommandOptions.cs" />
-    <Compile Include="Options\HelpGenerator.cs" />
     <Compile Include="Options\PackageNameMissingException.cs" />
-    <Compile Include="Options\UnknownCommandException.cs" />
     <Compile Include="Options\OptionException.cs" />
-    <Compile Include="Options\Options.cs" />
     <Compile Include="Options\OptionsParser.cs" />
     <Compile Include="Commands\ViewManifest\ViewManifestOptions.cs" />
     <Compile Include="Options\UnknownOptionException.cs" />
@@ -170,6 +169,7 @@
     <Compile Include="Requirements\Specifications\MinOsVersionSpecification.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

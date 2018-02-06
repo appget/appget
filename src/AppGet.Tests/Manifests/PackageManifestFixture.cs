@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using AppGet.Manifests;
 using AppGet.Serialization;
 using NUnit.Framework;

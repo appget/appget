@@ -1,31 +1,19 @@
-using System.Collections.Generic;
-using System.Linq;
+using System;
 using CommandLine;
 
 namespace AppGet.Options
 {
     public abstract class AppGetOption
     {
-        public RootOptions RootOptions { get; set; }
-
-        public string CommandName { get; set; }
-
-        [Option('v', null, HelpText = "Display more detailed execution information about")]
+        [Option('v', "verbose", Required = false)]
         public bool Verbose { get; set; }
 
-        [ValueList(typeof(List<string>), MaximumElements = -1)]
-        public IList<string> LeftOvers { get; set; }
+        public string CommandName { get; }
 
-
-        public virtual void ProcessArgs()
+        protected AppGetOption()
         {
-            if (LeftOvers.Any())
-            {
-                throw new UnknownOptionException(LeftOvers);
-            }
+            var verbAttr = (VerbAttribute)Attribute.GetCustomAttribute(GetType(), typeof(VerbAttribute));
+            CommandName = verbAttr.Name;
         }
-
-        public abstract string GetUsage();
-
     }
 }
