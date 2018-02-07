@@ -52,7 +52,7 @@ namespace AppGet.Commands.Install
         {
             var installOptions = (InstallOptions)commandOptions;
 
-            if (_inventoryManager.IsInstalled(installOptions.PackageId))
+            if (!installOptions.Force && _inventoryManager.IsInstalled(installOptions.PackageId))
             {
                 throw new PackageAlreadyInstalledException(installOptions.PackageId);
             }

@@ -9,9 +9,7 @@ namespace AppGet.Commands.Install
         [Value(0, MetaName = PACKAGE_META_NAME, HelpText = "ID of package to install", Required = true)]
         public override string PackageId { get; set; }
 
-        public InstallOptions(string packageId)
-        {
-            PackageId = packageId;
-        }
+        [Option('f', "force", HelpText = "Force the operation")]
+        public bool Force { get; set; }
     }
 }

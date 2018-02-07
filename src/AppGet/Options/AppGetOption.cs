@@ -5,7 +5,7 @@ namespace AppGet.Options
 {
     public abstract class AppGetOption
     {
-        [Option('v', "verbose", Required = false)]
+        [Option('v', "verbose", HelpText = "Generate more verbose output", Required = false)]
         public bool Verbose { get; set; }
 
         public string CommandName { get; }
