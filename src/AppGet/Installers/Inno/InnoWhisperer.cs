@@ -8,34 +8,15 @@ using NLog;
 
 namespace AppGet.Installers.Inno
 {
-    class InnoWhisperer : InstallerWhispererBase
+    public class InnoWhisperer : InstallerWhispererBase
     {
-        private readonly IPathResolver _pathResolver;
-        private readonly Logger _logger;
-
         public InnoWhisperer(IProcessController processController, IPathResolver pathResolver, Logger logger)
-            : base(processController, logger)
+            : base(processController, pathResolver, logger)
         {
-            _pathResolver = pathResolver;
-            _logger = logger;
-        }
-
-        public override void Install(string installerLocation, PackageManifest packageManifest, InstallOptions installOptions)
-        {
-            //Command line args: http://www.jrsoftware.org/ishelp/index.php?topic=setupcmdline
-
-            var logFile = _pathResolver.GetInstallerLogFile(packageManifest);
-            var args = GetArgs(logFile);
-
-            _logger.Debug("Writing Inno log files to {0}", logFile);
-
-            Execute(installerLocation, args);
         }
 
         public override void Uninstall(PackageManifest packageManifest, UninstallOptions installOptions)
         {
-            //Command line args: http://www.jrsoftware.org/ishelp/index.php?topic=uninstcmdline
-
             throw new NotImplementedException();
         }
 
@@ -44,11 +25,11 @@ namespace AppGet.Installers.Inno
             return installMethod == InstallMethodType.Inno;
         }
 
-        private static string GetArgs(string logFile)
-        {
-            //Sets the exit code to 3010 when a restart is required (same as Windows Installer)
-            //Can also use: /CLOSEAPPLICATIONS /RESTARTAPPLICATIONS to stop then restart applications
-            return $"/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /RESTARTEXITCODE=3010 /LOG=\"{logFile}\"";
-        }
+        //Command line args: http://www.jrsoftware.org/ishelp/index.php?topic=setupcmdline
+        protected override string InteractiveArgs => "/SILENT /SUPPRESSMSGBOXES /NORESTART /RESTARTEXITCODE=3010";
+        protected override string UnattendedArgs => "/SILENT /SUPPRESSMSGBOXES /NORESTART /RESTARTEXITCODE=3010";
+        protected override string SilentArgs => "/SILENT /SUPPRESSMSGBOXES /NORESTART /RESTARTEXITCODE=3010";
+        protected override string LoggingArgs => "/LOG=file.txt";
+
     }
 }
