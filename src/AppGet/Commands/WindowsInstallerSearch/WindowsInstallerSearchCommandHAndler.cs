@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using AppGet.InstalledPackages;
-using AppGet.Options;
 using AppGet.Serialization;
 
 namespace AppGet.Commands.WindowsInstallerSearch

@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using AppGet.InstalledPackages;
-using AppGet.Manifests;
+﻿using AppGet.InstalledPackages;
 using FluentAssertions;
 using NUnit.Framework;
 

@@ -130,13 +130,11 @@
     <Compile Include="Installers\Zip\ZipWhisperer.cs" />
     <Compile Include="InstalledPackages\InventoryManager.cs" />
     <Compile Include="Manifests\WindowsVersionParseException.cs" />
-    <Compile Include="Options\AppGetOption.cs" />
-    <Compile Include="Options\PackageCommandOptions.cs" />
-    <Compile Include="Options\PackageNameMissingException.cs" />
-    <Compile Include="Options\OptionException.cs" />
-    <Compile Include="Options\OptionsParser.cs" />
+    <Compile Include="Commands\AppGetOption.cs" />
+    <Compile Include="Commands\PackageCommandOptions.cs" />
+    <Compile Include="Commands\OptionException.cs" />
+    <Compile Include="Commands\OptionsParser.cs" />
     <Compile Include="Commands\ViewManifest\ViewManifestOptions.cs" />
-    <Compile Include="Options\UnknownOptionException.cs" />
     <Compile Include="PackageRepository\AppGetServerClient.cs" />
     <Compile Include="PackageRepository\IPackageRepository.cs" />
     <Compile Include="PackageRepository\PackageInfo.cs" />

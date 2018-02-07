@@ -1,6 +1,6 @@
 using AppGet.Exceptions;
 
-namespace AppGet.Options
+namespace AppGet.Commands
 {
     public abstract class OptionException : AppGetException
     {

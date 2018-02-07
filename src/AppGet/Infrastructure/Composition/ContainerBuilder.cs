@@ -53,7 +53,7 @@ namespace AppGet.Infrastructure.Composition
                 typeof(InnoWhisperer),
                 typeof(InstallShieldWhisperer),
                 typeof(MsiWhisperer),
-                typeof(NsisWhisperer),   
+                typeof(NsisWhisperer),
                 typeof(ZipWhisperer)
             });
 

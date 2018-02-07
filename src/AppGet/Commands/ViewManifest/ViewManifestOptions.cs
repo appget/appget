@@ -1,4 +1,3 @@
-using AppGet.Options;
 using CommandLine;
 
 namespace AppGet.Commands.ViewManifest

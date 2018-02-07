@@ -1,5 +1,4 @@
 ﻿using AppGet.Exceptions;
-using AppGet.Options;
 
 namespace AppGet.Commands
 {

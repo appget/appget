@@ -1,9 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using AppGet.InstalledPackages;
 using AppGet.Installers;
 using AppGet.Manifests;
-using AppGet.Options;
 using AppGet.PackageRepository;
 using NLog;
 

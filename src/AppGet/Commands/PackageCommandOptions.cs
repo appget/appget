@@ -1,4 +1,4 @@
-namespace AppGet.Options
+namespace AppGet.Commands
 {
     public abstract class PackageCommandOptions : AppGetOption
     {

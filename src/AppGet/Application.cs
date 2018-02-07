@@ -5,7 +5,6 @@ using AppGet.Commands;
 using AppGet.Exceptions;
 using AppGet.Infrastructure.Composition;
 using AppGet.Infrastructure.Logging;
-using AppGet.Options;
 using NLog;
 
 namespace AppGet
@@ -55,8 +54,8 @@ namespace AppGet
 
                 container.Resolve<IAppDataService>().EnsureAppDataDirectoryExists();
 
-                var commandProcessor = container.Resolve<CommandExecutor>();
-                commandProcessor.ExecuteCommand(options);
+                var commandExecutor = container.Resolve<ICommandExecutor>();
+                commandExecutor.ExecuteCommand(options);
 
                 return 0;
             }

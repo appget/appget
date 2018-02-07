@@ -1,4 +1,3 @@
-using AppGet.Options;
 using AppGet.PackageSearch;
 
 namespace AppGet.Commands.Search

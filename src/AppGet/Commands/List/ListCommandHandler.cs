@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using AppGet.InstalledPackages;
-using AppGet.Options;
 using NLog;
 
 namespace AppGet.Commands.List

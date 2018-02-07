@@ -1,6 +1,4 @@
-﻿using AppGet.Options;
-
-namespace AppGet.Commands
+﻿namespace AppGet.Commands
 {
     public interface ICommandHandler
     {

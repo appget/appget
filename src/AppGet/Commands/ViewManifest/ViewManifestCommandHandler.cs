@@ -1,6 +1,5 @@
 using System;
 using AppGet.Manifests;
-using AppGet.Options;
 using AppGet.PackageRepository;
 
 namespace AppGet.Commands.ViewManifest

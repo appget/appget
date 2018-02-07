@@ -1,7 +1,7 @@
 using System;
 using CommandLine;
 
-namespace AppGet.Options
+namespace AppGet.Commands
 {
     public abstract class AppGetOption
     {

@@ -5,7 +5,7 @@ using AppGet.Commands.Uninstall;
 using AppGet.Commands.ViewManifest;
 using CommandLine;
 
-namespace AppGet.Options
+namespace AppGet.Commands
 {
     public interface IParseOptions
     {
@@ -16,7 +16,14 @@ namespace AppGet.Options
     {
         public AppGetOption Parse(params string[] args)
         {
-            var result = Parser.Default.ParseArguments<InstallOptions, ListOptions, SearchOptions, UninstallOptions, ViewManifestOptions>(args);
+            var result = Parser.Default.ParseArguments<
+                InstallOptions,
+                ListOptions,
+                SearchOptions,
+                UninstallOptions,
+                ViewManifestOptions>
+                (args);
+
             if (result.Tag == ParserResultType.Parsed)
             {
                 return (AppGetOption)((Parsed<object>)result).Value;
