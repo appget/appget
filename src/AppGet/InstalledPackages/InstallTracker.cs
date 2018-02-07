@@ -15,7 +15,7 @@ namespace AppGet.InstalledPackages
         private readonly IWindowsInstallerInventoryManager _windowsInstallerInventoryManager;
         private readonly Logger _logger;
 
-        private List<UninstallRecord> _snapshottedUninstallRecords; 
+        private List<WindowsInstallRecord> _installedSnapshot; 
 
         public InstallTracker(IWindowsInstallerInventoryManager windowsInstallerInventoryManager, Logger logger)
         {
@@ -25,7 +25,7 @@ namespace AppGet.InstalledPackages
 
         public void TakeSnapshot()
         {
-            _snapshottedUninstallRecords = _windowsInstallerInventoryManager.GetInstalledApplications();
+            _installedSnapshot = _windowsInstallerInventoryManager.GetInstalledApplications();
         }
 
         public string GetInstalledProductId()
@@ -49,7 +49,7 @@ namespace AppGet.InstalledPackages
 
         private List<string> GetInstalledProductIds()
         {
-            if (_snapshottedUninstallRecords == null)
+            if (_installedSnapshot == null)
             {
                 //Should this throw instead?
                 return new List<string>(0);
@@ -57,7 +57,7 @@ namespace AppGet.InstalledPackages
 
             var records = _windowsInstallerInventoryManager.GetInstalledApplications();
 
-            return records.Except(_snapshottedUninstallRecords).Select(r => r.Id).ToList();
+            return records.Except(_installedSnapshot).Select(r => r.Id).ToList();
         }
     }
 }

@@ -117,7 +117,7 @@
     <Compile Include="Infrastructure\Logging\LogConfigurator.cs" />
     <Compile Include="InstalledPackages\InstalledPackage.cs" />
     <Compile Include="InstalledPackages\InstallTracker.cs" />
-    <Compile Include="InstalledPackages\UninstallRecord.cs" />
+    <Compile Include="InstalledPackages\WindowsInstallRecord.cs" />
     <Compile Include="InstalledPackages\WindowsInstallerInventoryManager.cs" />
     <Compile Include="Installers\Inno\InnoWhisperer.cs" />
     <Compile Include="Installers\InstallService.cs" />

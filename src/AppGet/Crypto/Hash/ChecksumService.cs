@@ -24,7 +24,7 @@ namespace AppGet.Crypto.Hash
 
         public void ValidateHash(string path, FileHash fileHash)
         {
-            _logger.Info("Starting checksum verification");
+            _logger.Trace("Starting checksum verification");
 
             var hashAlg = _checkSums.Single(c => c.HashType == fileHash.HashType);
 
@@ -36,7 +36,7 @@ namespace AppGet.Crypto.Hash
                 throw new ChecksumVerificationException($"${fileHash.HashType.ToString().ToUpperInvariant()} Checksum verification failed for {path}.");
             }
 
-            _logger.Info("Starting checksum verification PASSED");
+            _logger.Info("Checksum verification PASSED");
 
         }
     }

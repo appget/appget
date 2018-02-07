@@ -7,12 +7,12 @@ namespace AppGet.InstalledPackages
 {
     public interface IWindowsInstallerInventoryManager
     {
-        List<UninstallRecord> GetInstalledApplications();
+        List<WindowsInstallRecord> GetInstalledApplications();
     }
 
     public class WindowsInstallerInventoryManager : IWindowsInstallerInventoryManager
     {
-        public List<UninstallRecord> GetInstalledApplications()
+        public List<WindowsInstallRecord> GetInstalledApplications()
         {
             const string registryKey = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
             const string registryKey64 = @"SOFTWARE\WOW6432node\Microsoft\Windows\CurrentVersion\Uninstall";
@@ -24,60 +24,72 @@ namespace AppGet.InstalledPackages
                     .ToList();
         }
 
-        private List<UninstallRecord> GetUninstallRecordsForLocalMachine(string path)
+        private List<WindowsInstallRecord> GetUninstallRecordsForLocalMachine(string path)
         {
             using (var key = Registry.LocalMachine.OpenSubKey(path, false))
             {
                 if (key != null)
                 {
-                    return GetUninstallRecords(key).ToList();
+                    return GetRecords(key).ToList();
                 }
             }
 
-            return new List<UninstallRecord>(0);
+            return new List<WindowsInstallRecord>(0);
         }
 
-        private List<UninstallRecord> GetUninstallRecordsForCurrentUser(string path)
+        private List<WindowsInstallRecord> GetUninstallRecordsForCurrentUser(string registeryPath)
         {
-            using (var key = Registry.CurrentUser.OpenSubKey(path, false))
+            using (var key = Registry.CurrentUser.OpenSubKey(registeryPath, false))
             {
                 if (key != null)
                 {
-                    return GetUninstallRecords(key).ToList();
+                    return GetRecords(key).ToList();
                 }
             }
 
-            return new List<UninstallRecord>(0);
+            return new List<WindowsInstallRecord>(0);
         }
 
-        private IEnumerable<UninstallRecord> GetUninstallRecords(RegistryKey key)
+        private IEnumerable<WindowsInstallRecord> GetRecords(RegistryKey registryKey)
         {
-            foreach (var subKeyName in key.GetSubKeyNames())
+            foreach (var subKeyName in registryKey.GetSubKeyNames())
             {
-                var subKey = key.OpenSubKey(subKeyName);
+                var subKey = registryKey.OpenSubKey(subKeyName);
 
                 if (subKey != null && subKey.GetValue("DisplayName") != null)
                 {
-                    var record = GetUninstallRecord(subKey, subKeyName);
+                    var record = GetRecords(subKey, subKeyName);
 
                     yield return record;
                 }
             }
         }
 
-        private UninstallRecord GetUninstallRecord(RegistryKey key, string name)
+        private static WindowsInstallRecord GetRecords(RegistryKey registryKey, string name)
         {
-            var record = new UninstallRecord
+
+            string GetValue(string key)
+            {
+                return registryKey.GetValue(key)?.ToString();
+            }
+
+            var record = new WindowsInstallRecord
             {
                 Id = name,
-                Name = key.GetValue("DisplayName").ToString(),
-                InstallLocation = key.GetValue("InstallLocation") != null ? key.GetValue("InstallLocation").ToString() : null,
-                UninstallCommand = key.GetValue("UninstallString") != null ? key.GetValue("UninstallString").ToString() : null,
+                Name = GetValue("DisplayName"),
+                Version = GetValue("DisplayVersion"),
+                InstallDate = GetValue("InstallDate"),
+                Publisher = GetValue("Publisher"),
+                InstallLocation = GetValue("InstallLocation"),
+                UninstallCommand = GetValue("UninstallString"),
+                QuietUninstallCommand = GetValue("QuietUninstallString"),
+                InstallSource = GetValue("InstallSource")
+
             };
 
-            if (key.GetValue("QuietUninstallString") != null)
+            if (registryKey.GetValue("QuietUninstallString") != null)
             {
-                record.UninstallCommand = key.GetValue("QuietUninstallString").ToString();
+                record.UninstallCommand = registryKey.GetValue("QuietUninstallString").ToString();
                 record.InstallMethod = InstallMethodType.Inno;
             }
 
@@ -87,12 +99,12 @@ namespace AppGet.InstalledPackages
             }*/
 
             if (record.UninstallCommand != null &&
-                record.UninstallCommand.Contains("rundll32.exe dfshim.dll,ShArpMaintain"))
+                record.UninstallCommand.ToLowerInvariant().Contains("rundll32.exe dfshim.dll,sharpmaintain"))
             {
                 record.InstallMethod = InstallMethodType.ClickOnce;
             }
 
-            if (record.UninstallCommand != null && record.UninstallCommand.Contains("MsiExec.exe"))
+            if (record.UninstallCommand != null && record.UninstallCommand.ToLowerInvariant().Contains("msiexec.exe"))
             {
                 record.InstallMethod = InstallMethodType.MSI;
             }

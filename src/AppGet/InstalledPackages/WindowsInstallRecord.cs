@@ -2,7 +2,7 @@
 
 namespace AppGet.InstalledPackages
 {
-    public class UninstallRecord
+    public class WindowsInstallRecord
     {
         public string Id { get; set; }
         public string Name { get; set; }
@@ -11,6 +11,9 @@ namespace AppGet.InstalledPackages
         public string InstallLocation { get; set; }
         public string Publisher { get; set; }
         public InstallMethodType InstallMethod { get; set; }
+        public string QuietUninstallCommand { get; set; }
+        public string InstallDate { get; set; }
+        public string InstallSource { get; set; }
 
         public override int GetHashCode()
         {
@@ -19,9 +22,7 @@ namespace AppGet.InstalledPackages
 
         public override bool Equals(object obj)
         {
-            var other = obj as UninstallRecord;
-
-            if (other == null)
+            if (!(obj is WindowsInstallRecord other))
             {
                 return false;
             }
