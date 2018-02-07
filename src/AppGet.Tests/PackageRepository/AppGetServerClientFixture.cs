@@ -18,9 +18,9 @@ namespace AppGet.Tests.PackageRepository
             var latest = Subject.GetLatest(package);
 
             latest.Should().NotBeNull();
-            latest.ManifestUrl.Should().StartWith("https://raw.githubusercontent.com/AppGet/AppGet.Packages/master/manifests/");
+            latest.ManifestUrl.Should().StartWith("https://raw.githubusercontent.com/appget/packages/master/manifests/");
             latest.Id.Should().Be(package);
-            latest.SourceUrl.Should().StartWith("https://github.com/AppGet/AppGet.Packages/blob/master/manifests/");
+            latest.SourceUrl.Should().StartWith("https://github.com/appget/packages/blob/master/manifests/");
             latest.MajorVersion.Should().HaveLength(1);
         }
 
@@ -35,9 +35,9 @@ namespace AppGet.Tests.PackageRepository
             var found = Subject.Search(term).Single();
 
             found.Should().NotBeNull();
-            found.ManifestUrl.Should().StartWith("https://raw.githubusercontent.com/AppGet/AppGet.Packages/master/manifests/");
+            found.ManifestUrl.Should().StartWith("https://raw.githubusercontent.com/appget/packages/master/manifests/");
             found.Id.Should().Contain(term);
-            found.SourceUrl.Should().StartWith("https://github.com/AppGet/AppGet.Packages/blob/master/manifests/");
+            found.SourceUrl.Should().StartWith("https://github.com/appget/packages/blob/master/manifests/");
             found.MajorVersion.Should().HaveLength(1);
         }
     }
