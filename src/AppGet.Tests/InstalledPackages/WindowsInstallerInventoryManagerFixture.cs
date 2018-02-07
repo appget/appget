@@ -13,10 +13,15 @@ namespace AppGet.Tests.InstalledPackages
         public void should_get_uninstall_records()
         {
             var records = Subject.GetInstalledApplications();
-
             records.Should().NotBeEmpty();
+        }
 
-            var nonMsi = records.Where(c => c.InstallMethod == InstallMethodType.Zip).ToList();
+        [TestCase("Node JS")]
+        [TestCase("VLC Media Player")]
+        [TestCase("VLC-Media-Player")]
+        public void should_find_install_record(string name)
+        {
+            Subject.GetInstalledApplications(name).Should().HaveCount(1);
         }
     }
 }

@@ -119,6 +119,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Download\HttpFileTransferClientFixture.cs" />
+    <Compile Include="Extensions\StringExtensionsFixture.cs" />
     <Compile Include="FileTransfer\Protocols\WindowsPathFileTransferClientFixture.cs" />
     <Compile Include="FileTransfer\TransferCacheServiceFixture.cs" />
     <Compile Include="Manifests\PackageManifestFixture.cs" />

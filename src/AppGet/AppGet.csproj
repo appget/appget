@@ -89,7 +89,7 @@
     <Compile Include="Infrastructure\Composition\ContainerBuilder.cs" />
     <Compile Include="Compression\CompressionService.cs" />
     <Compile Include="Application.cs" />
-    <Compile Include="Extentions\StringExtentions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="FileSystem\FileSystem.cs" />
     <Compile Include="FileTransfer\Protocols\WindowsPathFileTransferClient.cs" />
     <Compile Include="FileTransfer\ProtocolNotSupportedException.cs" />

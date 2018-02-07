@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using AppGet.Extensions;
 using AppGet.Manifests;
 using Microsoft.Win32;
 
@@ -8,6 +9,7 @@ namespace AppGet.InstalledPackages
     public interface IWindowsInstallerInventoryManager
     {
         List<WindowsInstallRecord> GetInstalledApplications();
+        IEnumerable<WindowsInstallRecord> GetInstalledApplications(string name);
     }
 
     public class WindowsInstallerInventoryManager : IWindowsInstallerInventoryManager
@@ -17,14 +19,23 @@ namespace AppGet.InstalledPackages
             const string registryKey = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
             const string registryKey64 = @"SOFTWARE\WOW6432node\Microsoft\Windows\CurrentVersion\Uninstall";
 
-            return GetUninstallRecordsForLocalMachine(registryKey)
-                    .Concat(GetUninstallRecordsForLocalMachine(registryKey64))
-                    .Concat(GetUninstallRecordsForCurrentUser(registryKey))
-                    .Concat(GetUninstallRecordsForCurrentUser(registryKey64))
+            return GetInstallRecordsForLocalMachine(registryKey)
+                    .Concat(GetInstallRecordsForLocalMachine(registryKey64))
+                    .Concat(GetInstallRecordsForCurrentUser(registryKey))
+                    .Concat(GetInstallRecordsForCurrentUser(registryKey64))
                     .ToList();
         }
 
-        private List<WindowsInstallRecord> GetUninstallRecordsForLocalMachine(string path)
+
+        public IEnumerable<WindowsInstallRecord> GetInstalledApplications(string name)
+        {
+            var packages = GetInstalledApplications();
+            var targetName = name.ToAlphaNumeric();
+            return packages.Where(c => c.Name.ToAlphaNumeric() == targetName);
+        }
+
+
+        private List<WindowsInstallRecord> GetInstallRecordsForLocalMachine(string path)
         {
             using (var key = Registry.LocalMachine.OpenSubKey(path, false))
             {
@@ -37,7 +48,7 @@ namespace AppGet.InstalledPackages
             return new List<WindowsInstallRecord>(0);
         }
 
-        private List<WindowsInstallRecord> GetUninstallRecordsForCurrentUser(string registeryPath)
+        private List<WindowsInstallRecord> GetInstallRecordsForCurrentUser(string registeryPath)
         {
             using (var key = Registry.CurrentUser.OpenSubKey(registeryPath, false))
             {
