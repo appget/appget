@@ -6,7 +6,6 @@ using NUnit.Framework;
 
 namespace AppGet.Tests.InstalledPackages
 {
-    [TestFixture]
     public class WindowsInstallerInventoryManagerFixture : TestBase<WindowsInstallerInventoryManager>
     {
         [Test]
@@ -16,9 +15,9 @@ namespace AppGet.Tests.InstalledPackages
             records.Should().NotBeEmpty();
         }
 
-        [TestCase("Node JS")]
-        [TestCase("VLC Media Player")]
-        [TestCase("VLC-Media-Player")]
+        [TestCase("Node JS", Category = "Local")]
+        [TestCase("VLC Media Player", Category = "Local")]
+        [TestCase("VLC-Media-Player", Category = "Local")]
         public void should_find_install_record(string name)
         {
             Subject.GetInstalledApplications(name).Should().HaveCount(1);
