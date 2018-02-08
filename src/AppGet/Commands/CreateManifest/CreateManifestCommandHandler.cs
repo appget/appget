@@ -30,9 +30,8 @@ namespace AppGet.Commands.CreateManifest
             manifest.Installers = new List<Installer>();
 
 
+
             var installer = _xRayService.Scan(createOptions.DownloadUrl);
-
-
             manifest.Installers.Add(installer);
 
             foreach (var populater in _populaters)

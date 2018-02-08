@@ -62,7 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppData\AppDataService.cs" />
-    <Compile Include="CommandLine\Prompt.cs" />
+    <Compile Include="CommandLine\Prompts\Prompt.cs" />
     <Compile Include="Commands\CommandExecutor.cs" />
     <Compile Include="Commands\ICommandExecutor.cs" />
     <Compile Include="Commands\Install\PackageAlreadyInstalledException.cs" />

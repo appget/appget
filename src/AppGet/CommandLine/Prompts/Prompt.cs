@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AppGet.CommandLine
+namespace AppGet.CommandLine.Prompts
 {
     public interface IPrompt
     {
@@ -11,10 +11,13 @@ namespace AppGet.CommandLine
     {
         public string Request(string message, string defaultValue)
         {
+            //            while (true)
+            //            {
             if (defaultValue != null)
             {
                 message = $"{message} (default: '{defaultValue}')";
             }
+
             Console.WriteLine(message);
             var input = Console.ReadLine();
 
@@ -24,6 +27,15 @@ namespace AppGet.CommandLine
             }
 
             return input?.Trim();
+
+
+            //                if (validator == null || validator(input))
+            //                {
+            //                    return input?.Trim();
+            //                }
+
+            //                Console.WriteLine("Invalid input");
+            //            }
         }
     }
 }

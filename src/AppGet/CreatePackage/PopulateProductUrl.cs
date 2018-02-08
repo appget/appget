@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using AppGet.CommandLine;
+using AppGet.CommandLine.Prompts;
 using AppGet.CreatePackage.Utils;
 using AppGet.Manifests;
 
