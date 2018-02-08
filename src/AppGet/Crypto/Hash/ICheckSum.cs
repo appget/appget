@@ -5,6 +5,6 @@ namespace AppGet.Crypto.Hash
     public interface ICheckSum
     {
         HashType HashType { get; }
-        string GetChecksum(string file);
+        string CalculateHash(string file);
     }
 }

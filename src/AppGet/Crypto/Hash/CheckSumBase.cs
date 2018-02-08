@@ -11,15 +11,13 @@ namespace AppGet.Crypto.Hash
 
         protected abstract HashAlgorithm GetHashAlgorithm();
 
-        public string GetChecksum(string file)
+        public string CalculateHash(string file)
         {
             using (var stream = File.OpenRead(file))
+            using (var algorithm = GetHashAlgorithm())
             {
-                using (var algorithm = GetHashAlgorithm())
-                {
-                    var checksum = algorithm.ComputeHash(stream);
-                    return BitConverter.ToString(checksum).Replace("-", string.Empty);
-                }
+                var checksum = algorithm.ComputeHash(stream);
+                return BitConverter.ToString(checksum).ToLowerInvariant().Replace("-", string.Empty);
             }
         }
     }

@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using AppGet.CommandLine.Prompts;
 using AppGet.CreatePackage;
 using AppGet.Manifests;
 using FluentAssertions;
+using Moq;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace AppGet.Tests.CreatePackage
 {
@@ -13,6 +14,10 @@ namespace AppGet.Tests.CreatePackage
         [Test]
         public void get_non_github_hostname_as_url()
         {
+            Mocker.GetMock<IPrompt>()
+                .Setup(c => c.Request(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns<string, string>((message, defaultValue) => defaultValue);
+
             var installer = new Installer { Location = "https://microsoft.com/office" };
             var man = new PackageManifest
             {

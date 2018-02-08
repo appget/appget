@@ -28,7 +28,7 @@ namespace AppGet.Crypto.Hash
 
             var hashAlg = _checkSums.Single(c => c.HashType == fileHash.HashType);
 
-            var hash = hashAlg.GetChecksum(path);
+            var hash = hashAlg.CalculateHash(path);
 
             if (!string.Equals(hash, fileHash.Value, StringComparison.OrdinalIgnoreCase))
             {

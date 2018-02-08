@@ -33,7 +33,7 @@ namespace AppGet.CreatePackage
 
             var uri = new Uri(url, UriKind.Absolute);
             var filePath = _fileTransferService.TransferFile(uri.ToString(), _pathResolver.TempFolder, null);
-            var sha256 = _sha256.GetChecksum(filePath);
+            var sha256 = _sha256.CalculateHash(filePath);
 
             installer.Location = uri.ToString();
             installer.Sha256 = sha256;
@@ -44,7 +44,7 @@ namespace AppGet.CreatePackage
                 var httpsUri = new Uri(uri.ToString().Replace("http://", "https://"));
 
                 filePath = _fileTransferService.TransferFile(httpsUri.ToString(), _pathResolver.TempFolder, null);
-                var httpsSha256 = _sha256.GetChecksum(filePath);
+                var httpsSha256 = _sha256.CalculateHash(filePath);
 
                 if (httpsSha256 == sha256)
                 {

@@ -120,6 +120,9 @@
   <ItemGroup>
     <Compile Include="CreatePackage\PopulateProductUrlFixture.cs" />
     <Compile Include="CreatePackage\Utils\GithubUrlFixture.cs" />
+    <Compile Include="Crypto\Hash\Algorithms\Md5HashFixture.cs" />
+    <Compile Include="Crypto\Hash\Algorithms\Sha1HashFixture.cs" />
+    <Compile Include="Crypto\Hash\Algorithms\Sha256HashFixture.cs" />
     <Compile Include="Download\HttpFileTransferClientFixture.cs" />
     <Compile Include="Extensions\StringExtensionsFixture.cs" />
     <Compile Include="FileTransfer\Protocols\WindowsPathFileTransferClientFixture.cs" />
