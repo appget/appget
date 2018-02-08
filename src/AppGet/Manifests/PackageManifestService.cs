@@ -1,4 +1,5 @@
-﻿using AppGet.FileTransfer;
+﻿using System;
+using AppGet.FileTransfer;
 using AppGet.PackageRepository;
 using AppGet.Serialization;
 using NLog;
@@ -8,7 +9,7 @@ namespace AppGet.Manifests
     public interface IPackageManifestService
     {
         PackageManifest LoadManifest(PackageInfo packageInfo);
-        string ReadManifest(PackageInfo packageInfo);
+        void PrintManifest(PackageManifest manifest);
     }
 
     public class PackageManifestService : IPackageManifestService
@@ -29,7 +30,18 @@ namespace AppGet.Manifests
             return Yaml.Deserialize<PackageManifest>(text);
         }
 
-        public string ReadManifest(PackageInfo packageInfo)
+        public void PrintManifest(PackageManifest manifest)
+        {
+            var text = Yaml.Serialize(manifest);
+
+            Console.WriteLine("===============================================");
+            Console.WriteLine();
+            Console.WriteLine(text);
+            Console.WriteLine();
+            Console.WriteLine("===============================================");
+        }
+
+        private string ReadManifest(PackageInfo packageInfo)
         {
             _logger.Info("Loading manifest for " + packageInfo);
             var text = _fileTransferService.ReadContent(packageInfo.ManifestUrl);

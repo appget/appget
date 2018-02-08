@@ -1,4 +1,5 @@
-﻿using AppGet.Commands.Install;
+﻿using AppGet.Commands.CreateManifest;
+using AppGet.Commands.Install;
 using AppGet.Commands.List;
 using AppGet.Commands.Search;
 using AppGet.Commands.Uninstall;
@@ -21,6 +22,7 @@ namespace AppGet.Commands
                 ListOptions,
                 SearchOptions,
                 UninstallOptions,
+                CreateManifestOptions,
                 ViewManifestOptions>
                 (args);
 

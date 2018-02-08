@@ -118,6 +118,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CreatePackage\PopulateProductUrlFixture.cs" />
+    <Compile Include="CreatePackage\Utils\GithubUrlFixture.cs" />
     <Compile Include="Download\HttpFileTransferClientFixture.cs" />
     <Compile Include="Extensions\StringExtensionsFixture.cs" />
     <Compile Include="FileTransfer\Protocols\WindowsPathFileTransferClientFixture.cs" />

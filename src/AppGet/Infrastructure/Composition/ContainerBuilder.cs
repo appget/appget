@@ -1,10 +1,12 @@
 ﻿using AppGet.Commands;
+using AppGet.Commands.CreateManifest;
 using AppGet.Commands.Install;
 using AppGet.Commands.List;
 using AppGet.Commands.Search;
 using AppGet.Commands.Uninstall;
 using AppGet.Commands.ViewManifest;
 using AppGet.Commands.WindowsInstallerSearch;
+using AppGet.CreatePackage;
 using AppGet.Crypto.Hash;
 using AppGet.Crypto.Hash.Algorithms;
 using AppGet.FileTransfer;
@@ -45,7 +47,8 @@ namespace AppGet.Infrastructure.Composition
                 typeof(ListCommandHandler),
                 typeof(InstallCommandHandler),
                 typeof(WindowsInstallerSearchCommandHandler),
-                typeof(UninstallCommandHandler)
+                typeof(UninstallCommandHandler),
+                typeof(CreateManifestCommandHandler)
             });
 
             container.RegisterMultiple<IInstallerWhisperer>(new[]
@@ -62,6 +65,11 @@ namespace AppGet.Infrastructure.Composition
                 typeof(Sha1Hash),
                 typeof(Sha256Hash),
                 typeof(Md5Hash),
+            });
+
+            container.RegisterMultiple<IPopulateManifest>(new[]
+            {
+                typeof(PopulateProductUrl)
             });
 
             container.RegisterMultiple<IFileTransferClient>(new[]

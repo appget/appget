@@ -12,8 +12,12 @@ namespace AppGet.Serialization
         {
             using (var textWriter = new StringWriter(CultureInfo.InvariantCulture))
             {
-                var serializer = new Serializer(SerializationOptions.EmitDefaults | SerializationOptions.DisableAliases, new CamelCaseNamingConvention());
-                RegisterTypeConverter(serializer.RegisterTypeConverter);
+                var serializer = new SerializerBuilder()
+                    .WithNamingConvention(new CamelCaseNamingConvention())
+                    .WithTypeConverter(new VersionConverter())
+                    .WithTypeConverter(new WindowsVersionConverter())
+                    .DisableAliases()
+                    .Build();
 
                 serializer.Serialize(textWriter, obj);
                 return textWriter.ToString();
@@ -24,18 +28,13 @@ namespace AppGet.Serialization
         {
             var deserializer = new DeserializerBuilder()
                 .WithNamingConvention(new CamelCaseNamingConvention())
-                .IgnoreUnmatchedProperties()
                 .WithTypeConverter(new VersionConverter())
                 .WithTypeConverter(new WindowsVersionConverter())
+                .IgnoreUnmatchedProperties()
                 .Build();
 
             return deserializer.Deserialize<T>(text);
         }
 
-        private static void RegisterTypeConverter(Action<IYamlTypeConverter> registerConverter)
-        {
-            registerConverter(new VersionConverter());
-            registerConverter(new WindowsVersionConverter());
-        }
     }
 }

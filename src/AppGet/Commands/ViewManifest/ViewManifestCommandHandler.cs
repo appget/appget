@@ -31,14 +31,8 @@ namespace AppGet.Commands.ViewManifest
                 throw new PackageNotFoundException(viewOptions.PackageId);
             }
 
-            var manifest = _packageManifestService.ReadManifest(package);
-            Console.WriteLine("===============================================");
-            Console.WriteLine();
-            Console.WriteLine(manifest);
-            Console.WriteLine();
-            Console.WriteLine("===============================================");
-
-
+            var manifest = _packageManifestService.LoadManifest(package);
+            _packageManifestService.PrintManifest(manifest);
         }
     }
 }

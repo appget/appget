@@ -21,7 +21,7 @@
 //        [TestCase("view firefox")]
 //        public void should_parse_verb_with_package_name(string arg)
 //        {
-//            var option = (ViewManifestOptions)Parse(arg);
+//            var option = (CreateManifestOptions)Parse(arg);
 //            option.CommandName.Should().Be("view");
 //            option.PackageId.Should().Be("firefox");
 //        }

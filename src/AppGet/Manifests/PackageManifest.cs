@@ -56,11 +56,6 @@ namespace AppGet.Manifests
 
             return null;
         }
-
-        public Installer()
-        {
-            ProductIds = new List<string>();
-        }
     }
 
     public class FileHash
@@ -83,10 +78,10 @@ namespace AppGet.Manifests
         Exe,
         Font,
         PowerShellModule,
-        FirefoxExtention,
-        ChromeExtention,
+        FirefoxExtension,
+        ChromeExtension,
         Path,
-        EnvironmetVariable
+        EnvironmentVariable
     }
 
 
@@ -101,6 +96,13 @@ namespace AppGet.Manifests
         Net40 = 401,
         Net45 = 450,
         Net451 = 451,
+        Net452 = 452,
+        Net460 = 460,
+        Net461 = 461,
+        Net470 = 470,
+        Net471 = 471,
+        Core100 = 1000,
+        Core200 = 2000
     }
 
     public enum ArchitectureType
@@ -119,6 +121,7 @@ namespace AppGet.Manifests
         Inno,
         InstallShield,
         ClickOnce,
-        NSIS
+        NSIS,
+        Electron
     }
 }

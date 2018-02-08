@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppData\AppDataService.cs" />
+    <Compile Include="CommandLine\Prompt.cs" />
     <Compile Include="Commands\CommandExecutor.cs" />
     <Compile Include="Commands\ICommandExecutor.cs" />
     <Compile Include="Commands\Install\PackageAlreadyInstalledException.cs" />
@@ -74,10 +75,14 @@
     <Compile Include="Commands\List\ListCommandHandler.cs" />
     <Compile Include="Commands\List\ListOptions.cs" />
     <Compile Include="Commands\UnknownCommandException.cs" />
+    <Compile Include="Commands\CreateManifest\CreateManifestCommandHandler.cs" />
+    <Compile Include="Commands\CreateManifest\CreateManifestOptions.cs" />
     <Compile Include="Commands\WindowsInstallerSearch\WindowsInstallerSearchCommandHandler.cs" />
     <Compile Include="Commands\WindowsInstallerSearch\WindowsInstallerSearchOptions.cs" />
     <Compile Include="Commands\ViewManifest\ViewManifestCommandHandler.cs" />
     <Compile Include="Commands\Uninstall\PackageNotInstalledException.cs" />
+    <Compile Include="CreatePackage\Utils\GithubUrl.cs" />
+    <Compile Include="CreatePackage\PopulateProductUrl.cs" />
     <Compile Include="Crypto\Hash\CheckSumBase.cs" />
     <Compile Include="Crypto\Hash\ChecksumVerificationException.cs" />
     <Compile Include="Crypto\Hash\ChecksumService.cs" />
@@ -165,6 +170,7 @@
     <Compile Include="Requirements\IEnforceRequirements.cs" />
     <Compile Include="Requirements\Specifications\MaxOsVersionSpecification.cs" />
     <Compile Include="Requirements\Specifications\MinOsVersionSpecification.cs" />
+    <Compile Include="CreatePackage\XRayService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

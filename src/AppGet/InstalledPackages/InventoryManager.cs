@@ -61,14 +61,14 @@ namespace AppGet.InstalledPackages
 
         public bool IsInstalled(string id)
         {
-            return GetInstalledPackages().Any(c => String.Equals(c.Id, id, StringComparison.InvariantCultureIgnoreCase));
+            return GetInstalledPackages().Any(c => string.Equals(c.Id, id, StringComparison.InvariantCultureIgnoreCase));
         }
 
         private void WritePackageList(IEnumerable<InstalledPackage> packages)
         {
-            var yamlpackageListPath = _pathResolver.InstalledPackageList;
+            var yamlPackageListPath = _pathResolver.InstalledPackageList;
             var yaml = Yaml.Serialize(packages);
-            _fileSystem.WriteAllText(yamlpackageListPath, yaml);
+            _fileSystem.WriteAllText(yamlPackageListPath, yaml);
         }
     }
 }
