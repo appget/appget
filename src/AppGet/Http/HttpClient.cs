@@ -22,7 +22,7 @@ namespace AppGet.Http
         public HttpClient(Logger logger)
         {
             _logger = logger;
-            _userAgent = String.Format("AppGet Client");
+            _userAgent = string.Format("AppGet Client");
             ServicePointManager.DefaultConnectionLimit = 12;
         }
 
@@ -51,7 +51,7 @@ namespace AppGet.Http
                 AddRequestHeaders(webRequest, request.Headers);
             }
 
-            if (!String.IsNullOrEmpty(request.Body))
+            if (!string.IsNullOrEmpty(request.Body))
             {
                 var bytes = new byte[request.Body.Length * sizeof(char)];
                 Buffer.BlockCopy(request.Body.ToCharArray(), 0, bytes, 0, bytes.Length);

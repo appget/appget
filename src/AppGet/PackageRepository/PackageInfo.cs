@@ -15,7 +15,7 @@ namespace AppGet.PackageRepository
         {
             var formatted = $"[{Id}] {Name}";
 
-            if (!String.IsNullOrEmpty(Version))
+            if (!string.IsNullOrEmpty(Version))
             {
                 formatted += $" ({Version})";
             }

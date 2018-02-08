@@ -9,7 +9,7 @@ namespace AppGet.FileTransfer.Protocols
     {
         private static readonly Regex WindowsPathRegex = new Regex(@"^\\\\|^[a-z]:\\", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-        public bool CanHandleProtocol(String source)
+        public bool CanHandleProtocol(string source)
         {
             return WindowsPathRegex.IsMatch(source);
         }

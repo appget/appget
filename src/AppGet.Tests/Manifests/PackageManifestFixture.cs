@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace AppGet.Tests.Manifests
 {
     [TestFixture]
-    public class PackageManifestFixture : TestBase<Object>
+    public class PackageManifestFixture : TestBase<object>
     {
         [Test]
         public void print_sample_manifest()

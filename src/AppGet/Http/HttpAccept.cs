@@ -8,9 +8,9 @@ namespace AppGet.Http
         public static readonly HttpAccept Json = new HttpAccept("application/json");
         public static readonly HttpAccept Html = new HttpAccept("text/html");
         
-        public String Value { get; }
+        public string Value { get; }
 
-        public HttpAccept(String accept)
+        public HttpAccept(string accept)
         {
             Value = accept;
         }

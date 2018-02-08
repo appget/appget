@@ -27,7 +27,7 @@ namespace AppGet.FileTransfer.Protocols
             _httpClient = httpClient;
         }
 
-        public bool CanHandleProtocol(String source)
+        public bool CanHandleProtocol(string source)
         {
             return HttpRegex.IsMatch(source);
         }

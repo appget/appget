@@ -6,7 +6,7 @@ namespace AppGet.Http
 {
     public class HttpResponse
     {
-        public HttpResponse(HttpRequest request, HttpHeader headers, String content, HttpStatusCode statusCode = HttpStatusCode.OK)
+        public HttpResponse(HttpRequest request, HttpHeader headers, string content, HttpStatusCode statusCode = HttpStatusCode.OK)
         {
             Request = request;
             Headers = headers;
@@ -19,7 +19,7 @@ namespace AppGet.Http
         public HttpStatusCode StatusCode { get; }
 
 
-        public String Content { get; set; }
+        public string Content { get; set; }
 
 
         public bool HasHttpError => (int)StatusCode >= 400;

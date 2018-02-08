@@ -40,8 +40,8 @@ namespace AppGet.Processes
         void WaitForExit(Process process);
         void KillAll(string processName);
         void Kill(int processId);
-        Boolean Exists(int processId);
-        Boolean Exists(string processName);
+        bool Exists(int processId);
+        bool Exists(string processName);
         Process Start(string path, string args = null, Action<string> onOutputDataReceived = null, Action<string> onErrorDataReceived = null);
         Process SpawnNewProcess(string path, string args = null);
         ProcessOutput StartAndCapture(string path, string args = null);

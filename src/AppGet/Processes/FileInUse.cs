@@ -13,11 +13,11 @@ namespace AppGet.Processes
 
         [DllImport("rstrtmgr.dll", CharSet = CharSet.Unicode)]
         private static extern int RmRegisterResources(uint pSessionHandle,
-            UInt32 nFiles,
+            uint nFiles,
             string[] rgsFilenames,
-            UInt32 nApplications,
+            uint nApplications,
             [In] RM_UNIQUE_PROCESS[] rgApplications,
-            UInt32 nServices,
+            uint nServices,
             string[] rgsServiceNames);
 
         [DllImport("rstrtmgr.dll", CharSet = CharSet.Auto)]

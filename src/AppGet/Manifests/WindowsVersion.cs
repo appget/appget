@@ -45,7 +45,7 @@ namespace AppGet.Manifests
             {
                 var lastPart = osVersion.ServicePack.Split(' ').Last();
 
-                servicePack = Int32.Parse(lastPart);
+                servicePack = int.Parse(lastPart);
             }
 
             return All.Single(c => c.Version == version && c.ServicePack == servicePack);
