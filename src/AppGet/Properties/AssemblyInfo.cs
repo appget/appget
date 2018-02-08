@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AppGet.Core")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("AppGet")]
+[assembly: AssemblyDescription("Open Package Manager for Windows")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("AppGet.Core")]
+[assembly: AssemblyCompany("AppGet")]
+[assembly: AssemblyProduct("AppGet")]
 [assembly: AssemblyCopyright("Copyright © 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
