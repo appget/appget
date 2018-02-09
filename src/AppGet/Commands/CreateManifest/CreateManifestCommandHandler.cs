@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using AppGet.CreatePackage;
 using AppGet.CreatePackage.Populators;
 using AppGet.Manifests;
@@ -29,15 +30,18 @@ namespace AppGet.Commands.CreateManifest
 
             var manifest = new PackageManifest { Installers = new List<Installer>() };
 
-            var installer = _xRayService.Scan(createOptions.DownloadUrl);
+            var installer = _xRayService.Scan(createOptions.DownloadUrl, out var fileVersionInfo);
             manifest.Installers.Add(installer);
 
             foreach (var populater in _populaters)
             {
-                populater.Populate(manifest);
+                populater.Populate(manifest, fileVersionInfo);
             }
 
             _packageManifestService.PrintManifest(manifest);
+
+
+            _packageManifestService.WriteManifest(manifest, "C:\\git\\AppGet.Packages\\manifests");
         }
     }
 }

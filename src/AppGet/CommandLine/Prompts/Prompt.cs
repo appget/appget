@@ -16,6 +16,7 @@ namespace AppGet.CommandLine.Prompts
 
             if (defaultValue != null)
             {
+                defaultValue = defaultValue.Trim();
                 Console.Write($"{message} (default: {defaultValue}): ");
             }
             else
@@ -28,7 +29,7 @@ namespace AppGet.CommandLine.Prompts
 
             if (string.IsNullOrWhiteSpace(input))
             {
-                input = defaultValue?.ToString();
+                input = defaultValue;
             }
 
 

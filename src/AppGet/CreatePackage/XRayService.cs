@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using AppGet.Crypto.Hash;
 using AppGet.Crypto.Hash.Algorithms;
 using AppGet.FileTransfer;
@@ -6,15 +7,19 @@ using AppGet.HostSystem;
 using AppGet.Manifests;
 using NLog;
 
+
 namespace AppGet.CreatePackage
 {
     public interface IXRayService
     {
-        Installer Scan(string url);
+        Installer Scan(string url, out FileVersionInfo fileVersionInfo);
     }
+
 
     public class XRayService : IXRayService
     {
+       
+
         private readonly IFileTransferService _fileTransferService;
         private readonly IPathResolver _pathResolver;
         private readonly Logger _logger;
@@ -27,7 +32,7 @@ namespace AppGet.CreatePackage
             _logger = logger;
         }
 
-        public Installer Scan(string url)
+        public Installer Scan(string url, out FileVersionInfo fileVersionInfo)
         {
             var installer = new Installer();
 
@@ -43,15 +48,25 @@ namespace AppGet.CreatePackage
                 _logger.Warn("Download link is using HTTP protocol. Will now check if same file is available using HTTPS.");
                 var httpsUri = new Uri(uri.ToString().Replace("http://", "https://"));
 
-                filePath = _fileTransferService.TransferFile(httpsUri.ToString(), _pathResolver.TempFolder, null);
-                var httpsSha256 = _sha256.CalculateHash(filePath);
-
-                if (httpsSha256 == sha256)
+                try
                 {
-                    _logger.Info("File downloaded using HTTPS has same hash as HTTP, using the HTTPS url instead.");
-                    installer.Location = httpsUri.ToString();
+                    _fileTransferService.TransferFile(httpsUri.ToString(), _pathResolver.TempFolder, null);
+                    var httpsSha256 = _sha256.CalculateHash(filePath);
+
+                    if (httpsSha256 == sha256)
+                    {
+                        _logger.Info("File downloaded using HTTPS has same hash as HTTP, using the HTTPS url instead.");
+                        installer.Location = httpsUri.ToString();
+                    }
+                }
+                catch (Exception e)
+                {
+                    _logger.Warn(e, "HTTPS switch over failed.");
                 }
             }
+
+            fileVersionInfo = FileVersionInfo.GetVersionInfo(filePath);
+
 
             return installer;
         }

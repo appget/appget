@@ -83,7 +83,7 @@ namespace AppGet.Processes
             }
             else
             {
-                _logger.Debug("Found process {0}", processInfo.ToString());
+                _logger.Debug("Found process {0}", processInfo);
             }
 
             return processInfo;

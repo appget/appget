@@ -25,7 +25,7 @@ namespace AppGet.Tests.CreatePackage
                 Installers = new List<Installer> { installer }
             };
 
-            Subject.Populate(man);
+            Subject.Populate(man, null);
 
             man.ProductUrl.Should().Be("https://microsoft.com");
         }

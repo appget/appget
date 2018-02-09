@@ -72,7 +72,9 @@ namespace AppGet.Infrastructure.Composition
             {
                 typeof(PopulateProductUrl),
                 typeof(PopulateProductName),
-                typeof(PopulatePackageId)
+                typeof(PopulatePackageId),
+                typeof(PopulateVersion),
+                typeof(PopulateMajorVersion)
             });
 
             container.RegisterMultiple<IFileTransferClient>(new[]

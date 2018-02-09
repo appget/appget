@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 using AppGet.CommandLine.Prompts;
@@ -16,11 +17,11 @@ namespace AppGet.CreatePackage.Populators
             _prompt = prompt;
         }
 
-        public void Populate(PackageManifest manifest)
+        public void Populate(PackageManifest manifest, FileVersionInfo fileVersionInfo)
         {
+            string defaultValue;
             var url = manifest.Installers.First().Location;
 
-            string defaultValue;
 
             var githubUrl = new GithubUrl(url);
             if (githubUrl.IsValid)

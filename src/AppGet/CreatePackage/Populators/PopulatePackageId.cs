@@ -1,3 +1,5 @@
+using System.Diagnostics;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using AppGet.CommandLine.Prompts;
 using AppGet.CreatePackage.Utils;
@@ -10,16 +12,15 @@ namespace AppGet.CreatePackage.Populators
         private readonly IPrompt _prompt;
         private readonly Regex _idRegex = new Regex("\\W+");
 
-
         public PopulatePackageId(IPrompt prompt)
         {
             _prompt = prompt;
         }
 
-        public void Populate(PackageManifest manifest)
+        public void Populate(PackageManifest manifest, FileVersionInfo fileVersionInfo)
         {
-            var defaultValue = _idRegex.Replace(manifest.Name, "_").ToLowerInvariant().Trim('-');
-            manifest.Id = _prompt.Request("Package ID", defaultValue).ToLowerInvariant();
+            var defaultValue = _idRegex.Replace(manifest.Name, "-").ToLowerInvariant().Trim('-');
+            manifest.Id = _prompt.Request("Package ID", defaultValue.ToLowerInvariant());
         }
     }
 }

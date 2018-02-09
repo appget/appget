@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using YamlDotNet.Serialization;
 
 namespace AppGet.Manifests
 {
@@ -7,6 +8,9 @@ namespace AppGet.Manifests
         public string Id { get; set; }
         public string Name { get; set; }
         public string Version { get; set; }
+
+        [YamlIgnore]
+        public string MajorVersion { get; set; }
         public string ProductUrl { get; set; }
 
         public string[] Exe { get; set; }
