@@ -40,7 +40,7 @@ namespace AppGet.CreatePackage
 
             if (uri.Scheme == "http")
             {
-                _logger.Info("Download link is using HTTP protocol, check if same file is avilanble using HTTPS");
+                _logger.Warn("Download link is using HTTP protocol. Will now check if same file is available using HTTPS.");
                 var httpsUri = new Uri(uri.ToString().Replace("http://", "https://"));
 
                 filePath = _fileTransferService.TransferFile(httpsUri.ToString(), _pathResolver.TempFolder, null);

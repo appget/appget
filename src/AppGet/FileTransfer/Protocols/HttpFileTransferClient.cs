@@ -106,8 +106,10 @@ namespace AppGet.FileTransfer.Protocols
 
         private void TransferCompletedCallback(object sender, AsyncCompletedEventArgs e)
         {
-            _error = e.Error;
+            var webClient = (WebClient)sender;
+            webClient.DownloadProgressChanged -= TransferProgressCallback;
             _inTransit = false;
+            _error = e.Error;
 
             OnCompleted?.Invoke(_progress);
         }

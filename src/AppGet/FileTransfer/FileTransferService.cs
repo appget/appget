@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using AppGet.Crypto.Hash;
@@ -52,20 +53,21 @@ namespace AppGet.FileTransfer
 
             if (_transferCacheService.IsValid(destinationPath, fileHash))
             {
-                _logger.Info("Skipping download");
+                _logger.Info("Skipping download. Using already downloaded file.");
             }
             else
             {
                 client.OnStatusUpdated = ConsoleProgressReporter.HandleProgress;
                 client.OnCompleted = ConsoleProgressReporter.HandleCompleted;
 
+                Console.WriteLine();
                 _logger.Info($"Downloading installer from {source}");
                 client.TransferFile(source, destinationPath);
-                _logger.Info($"Installer downloaded to {destinationPath}");
+                _logger.Debug($"Installer downloaded to {destinationPath}");
 
                 if (fileHash == null)
                 {
-                    _logger.Info("No hash provided. skipping checksum validation");
+                    _logger.Debug("No hash provided. skipping checksum validation");
                 }
                 else
                 {

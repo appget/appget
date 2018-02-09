@@ -16,7 +16,7 @@ namespace AppGet.Infrastructure.Logging
 
             var consoleTarget = new ColoredConsoleTarget
             {
-                Layout = new SimpleLayout("  ${message}")
+                Layout = new SimpleLayout("  ${message}"),
             };
 
 
@@ -26,6 +26,8 @@ namespace AppGet.Infrastructure.Logging
                 CompileRegex = true,
                 ForegroundColor = ConsoleOutputColor.Blue
             });
+
+            consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Info", ConsoleOutputColor.NoChange, ConsoleOutputColor.NoChange));
 
             _rule = new LoggingRule("*", LogLevel.Info, consoleTarget);
             LogManager.Configuration.AddTarget("console", consoleTarget);

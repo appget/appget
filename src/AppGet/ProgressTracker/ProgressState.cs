@@ -10,7 +10,7 @@ namespace AppGet.ProgressTracker
 
         public override string ToString()
         {
-            return $"{PercentCompleted:00}%: {Completed:N0} / {Total:N0}";
+            return $"   [....................] {PercentCompleted:00}%: {Completed:N0} / {Total:N0}";
         }
     }
 }
