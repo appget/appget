@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using AppGet.CreatePackage;
+using AppGet.CreatePackage.Populators;
 using AppGet.Manifests;
 
 namespace AppGet.Commands.CreateManifest
@@ -26,10 +27,7 @@ namespace AppGet.Commands.CreateManifest
         {
             var createOptions = (CreateManifestOptions)appGetOption;
 
-            var manifest = new PackageManifest();
-            manifest.Installers = new List<Installer>();
-
-
+            var manifest = new PackageManifest { Installers = new List<Installer>() };
 
             var installer = _xRayService.Scan(createOptions.DownloadUrl);
             manifest.Installers.Add(installer);
@@ -38,7 +36,6 @@ namespace AppGet.Commands.CreateManifest
             {
                 populater.Populate(manifest);
             }
-
 
             _packageManifestService.PrintManifest(manifest);
         }

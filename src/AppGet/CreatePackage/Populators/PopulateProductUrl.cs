@@ -1,22 +1,17 @@
 ﻿using System;
 using System.Linq;
-using AppGet.CommandLine;
+using System.Text.RegularExpressions;
 using AppGet.CommandLine.Prompts;
 using AppGet.CreatePackage.Utils;
 using AppGet.Manifests;
 
-namespace AppGet.CreatePackage
+namespace AppGet.CreatePackage.Populators
 {
-    public interface IPopulateManifest
-    {
-        void Populate(PackageManifest manifest);
-    }
-
     public class PopulateProductUrl : IPopulateManifest
     {
-        private readonly IPrompt _prompt;
+        private readonly IUrlPrompt _prompt;
 
-        public PopulateProductUrl(IPrompt prompt)
+        public PopulateProductUrl(IUrlPrompt prompt)
         {
             _prompt = prompt;
         }
@@ -35,12 +30,12 @@ namespace AppGet.CreatePackage
             else
             {
                 var uri = new Uri(url);
-                defaultValue = $"{uri.Scheme}://{uri.Host}";
+                defaultValue = $"{uri.Scheme}://{uri.Host.Replace("download.", "")}";
             }
 
             defaultValue = defaultValue.Trim().ToLowerInvariant();
 
-            manifest.ProductUrl = _prompt.Request("Please enter the product URL", defaultValue).ToLowerInvariant();
+            manifest.ProductUrl = _prompt.Request("Product homepage", defaultValue).ToLowerInvariant();
         }
     }
 }

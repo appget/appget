@@ -7,6 +7,7 @@ using AppGet.Commands.Uninstall;
 using AppGet.Commands.ViewManifest;
 using AppGet.Commands.WindowsInstallerSearch;
 using AppGet.CreatePackage;
+using AppGet.CreatePackage.Populators;
 using AppGet.Crypto.Hash;
 using AppGet.Crypto.Hash.Algorithms;
 using AppGet.FileTransfer;
@@ -69,7 +70,9 @@ namespace AppGet.Infrastructure.Composition
 
             container.RegisterMultiple<IPopulateManifest>(new[]
             {
-                typeof(PopulateProductUrl)
+                typeof(PopulateProductUrl),
+                typeof(PopulateProductName),
+                typeof(PopulatePackageId)
             });
 
             container.RegisterMultiple<IFileTransferClient>(new[]

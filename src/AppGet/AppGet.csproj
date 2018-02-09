@@ -79,8 +79,11 @@
     <Compile Include="Commands\WindowsInstallerSearch\WindowsInstallerSearchOptions.cs" />
     <Compile Include="Commands\ViewManifest\ViewManifestCommandHandler.cs" />
     <Compile Include="Commands\Uninstall\PackageNotInstalledException.cs" />
+    <Compile Include="CreatePackage\Populators\IPopulateManifest.cs" />
+    <Compile Include="CreatePackage\Populators\PopulatePackageId.cs" />
+    <Compile Include="CreatePackage\Populators\PopulateProductName.cs" />
     <Compile Include="CreatePackage\Utils\GithubUrl.cs" />
-    <Compile Include="CreatePackage\PopulateProductUrl.cs" />
+    <Compile Include="CreatePackage\Populators\PopulateProductUrl.cs" />
     <Compile Include="Crypto\Hash\CheckSumBase.cs" />
     <Compile Include="Crypto\Hash\ChecksumVerificationException.cs" />
     <Compile Include="Crypto\Hash\ChecksumService.cs" />

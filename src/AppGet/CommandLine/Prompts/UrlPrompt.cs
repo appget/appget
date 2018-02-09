@@ -2,7 +2,7 @@
 
 namespace AppGet.CommandLine.Prompts
 {
-    public interface IUrlPrompt
+    public interface IUrlPrompt : IPrompt
     {
     }
 

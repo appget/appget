@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using AppGet.CommandLine.Prompts;
 using AppGet.CreatePackage;
+using AppGet.CreatePackage.Populators;
 using AppGet.Manifests;
 using FluentAssertions;
 using Moq;
