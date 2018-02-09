@@ -18,7 +18,7 @@ namespace AppGet.Tests.Requirements
 
             Subject.IsRequirementSatisfied(new Installer
             {
-                Architecture = ArchitectureType.Any
+                Architecture = ArchitectureTypes.Any
             }).Success.Should().BeTrue();
 
         }
@@ -32,7 +32,7 @@ namespace AppGet.Tests.Requirements
 
             Subject.IsRequirementSatisfied(new Installer
                                            {
-                                               Architecture = ArchitectureType.x86
+                                               Architecture = ArchitectureTypes.x86
                                            }).Success.Should().BeTrue();
 
         }
@@ -46,7 +46,7 @@ namespace AppGet.Tests.Requirements
 
             Subject.IsRequirementSatisfied(new Installer
                                            {
-                                               Architecture = ArchitectureType.x64
+                                               Architecture = ArchitectureTypes.x64
                                            }).Success.Should().BeTrue();
         }
 
@@ -59,7 +59,7 @@ namespace AppGet.Tests.Requirements
 
             Subject.IsRequirementSatisfied(new Installer
                                            {
-                                               Architecture = ArchitectureType.x64
+                                               Architecture = ArchitectureTypes.x64
                                            }).Success.Should().BeFalse();
         }
 
@@ -68,7 +68,7 @@ namespace AppGet.Tests.Requirements
         {
             Subject.IsRequirementSatisfied(new Installer
             {
-                Architecture = ArchitectureType.Itanium
+                Architecture = ArchitectureTypes.Itanium
             }).Success.Should().BeFalse();
         }
 
@@ -77,7 +77,7 @@ namespace AppGet.Tests.Requirements
         {
             Subject.IsRequirementSatisfied(new Installer
             {
-                Architecture = ArchitectureType.ARM
+                Architecture = ArchitectureTypes.ARM
             }).Success.Should().BeFalse();
         }
     }

@@ -31,7 +31,7 @@ namespace AppGet.Manifests
         public string Sha256 { get; set; }
         public string Md5 { get; set; }
 
-        public ArchitectureType Architecture { get; set; }
+        public ArchitectureTypes Architecture { get; set; }
 
         public WindowsVersion MinWindowsVersion { get; set; }
         public WindowsVersion MaxWindowsVersion { get; set; }
@@ -87,6 +87,8 @@ namespace AppGet.Manifests
 
     public enum DotNetVersion
     {
+        Unknown = -1,
+        None = 0,
         Net10 = 100,
         Net20 = 200,
         Net30 = 300,
@@ -105,8 +107,9 @@ namespace AppGet.Manifests
         Core200 = 2000
     }
 
-    public enum ArchitectureType
+    public enum ArchitectureTypes
     {
+        Unknown,
         Any,
         x86,
         x64,
@@ -116,6 +119,7 @@ namespace AppGet.Manifests
 
     public enum InstallMethodType
     {
+        Unknown = -1,
         Zip,
         MSI,
         Inno,

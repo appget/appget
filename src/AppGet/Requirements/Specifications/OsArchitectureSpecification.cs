@@ -16,15 +16,15 @@ namespace AppGet.Requirements.Specifications
         {
             switch (installer.Architecture)
             {
-                case ArchitectureType.Any:
+                case ArchitectureTypes.Any:
                     {
                         return EnforcementResult.Pass();
                     }
-                case ArchitectureType.x86:
+                case ArchitectureTypes.x86:
                     {
                         return EnforcementResult.Pass();
                     }
-                case ArchitectureType.x64:
+                case ArchitectureTypes.x64:
                     {
                         if (_environmentProxy.Is64BitOperatingSystem)
                         {
@@ -32,11 +32,11 @@ namespace AppGet.Requirements.Specifications
                         }
                         return EnforcementResult.Fail("x64 OS required for installation");
                     }
-                case ArchitectureType.ARM:
+                case ArchitectureTypes.ARM:
                     {
                         return EnforcementResult.Fail("ARM is not supported at this time");
                     }
-                case ArchitectureType.Itanium:
+                case ArchitectureTypes.Itanium:
                     {
                         return EnforcementResult.Fail("Itanium is not supported at this time");
                     }

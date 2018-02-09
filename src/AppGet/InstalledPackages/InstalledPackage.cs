@@ -9,7 +9,7 @@ namespace AppGet.InstalledPackages
         public string Name { get; set; }
         public string Version { get; set; }
         public InstallMethodType InstallMethod { get; set; }
-        public ArchitectureType Architecture { get; set; }
+        public ArchitectureTypes Architecture { get; set; }
         public List<string> ProductIds { get; set; }
 
         public InstalledPackage()

@@ -30,9 +30,9 @@ namespace AppGet.Tests.Manifests
             _rejected.Setup(s => s.IsRequirementSatisfied(It.IsAny<Installer>()))
                      .Returns(EnforcementResult.Fail("Test failure"));
 
-            _anyInstaller = new Installer { Architecture = ArchitectureType.Any };
-            _x86Installer = new Installer { Architecture = ArchitectureType.x86 };
-            _x64Installer = new Installer { Architecture = ArchitectureType.x64 };
+            _anyInstaller = new Installer { Architecture = ArchitectureTypes.Any };
+            _x86Installer = new Installer { Architecture = ArchitectureTypes.x86 };
+            _x64Installer = new Installer { Architecture = ArchitectureTypes.x64 };
         }
 
         private void GivenApprovedOnly()
