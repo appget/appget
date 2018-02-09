@@ -9,37 +9,37 @@ using NLog;
 
 namespace AppGet.Installers
 {
-//    public class ArgumentBuilder
-//    {
-//        private readonly char _anchorChar;
-//        private readonly char _valueAssignment;
-//
-//        private string result = "";
-//
-//        public ArgumentBuilder(char anchorChar = '/', char valueAssignment = '=')
-//        {
-//            _anchorChar = anchorChar;
-//            _valueAssignment = valueAssignment;
-//        }
-//
-//        public void AddFlag(string value)
-//        {
-//            result = result.Trim();
-//            result += $" {_anchorChar}{value.Trim()} ";
-//        }
-//
-//        public void AddValue(string key, string value)
-//        {
-//            result = result.Trim();
-//            result += $" {_anchorChar}{key.Trim()}{_valueAssignment}{value.Trim()} ";
-//        }
-//
-//        public string Build()
-//        {
-//            return result.Trim();
-//        }
-//
-//    }
+    //    public class ArgumentBuilder
+    //    {
+    //        private readonly char _anchorChar;
+    //        private readonly char _valueAssignment;
+    //
+    //        private string result = "";
+    //
+    //        public ArgumentBuilder(char anchorChar = '/', char valueAssignment = '=')
+    //        {
+    //            _anchorChar = anchorChar;
+    //            _valueAssignment = valueAssignment;
+    //        }
+    //
+    //        public void AddFlag(string value)
+    //        {
+    //            result = result.Trim();
+    //            result += $" {_anchorChar}{value.Trim()} ";
+    //        }
+    //
+    //        public void AddValue(string key, string value)
+    //        {
+    //            result = result.Trim();
+    //            result += $" {_anchorChar}{key.Trim()}{_valueAssignment}{value.Trim()} ";
+    //        }
+    //
+    //        public string Build()
+    //        {
+    //            return result.Trim();
+    //        }
+    //
+    //    }
 
     public abstract class InstallerWhispererBase : IInstallerWhisperer
     {
@@ -109,7 +109,7 @@ namespace AppGet.Installers
             }
             catch (Win32Exception e)
             {
-                _logger.Error($"{e.Message}, try running AppGet as an administartor");
+                _logger.Error(e, "try running AppGet as an administartor");
                 throw;
             }
         }

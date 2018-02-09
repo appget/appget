@@ -16,7 +16,7 @@ namespace AppGet.Infrastructure.Logging
 
             var consoleTarget = new ColoredConsoleTarget
             {
-                Layout = new SimpleLayout("  ${message}"),
+                Layout = new SimpleLayout("  ${message} ${exception:format=message}"),
             };
 
 
