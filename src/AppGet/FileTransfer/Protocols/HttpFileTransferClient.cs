@@ -14,7 +14,7 @@ namespace AppGet.FileTransfer.Protocols
     {
         private readonly IHttpClient _httpClient;
         private static readonly Regex HttpRegex = new Regex(@"^https?\:\/\/", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        private static readonly Regex FileNameRegex = new Regex(@"\w\.(zip|msi|exe|7zip|rar)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex FileNameRegex = new Regex(@"\w\.(zip|7zip|rar|msi|exe)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static readonly Regex ContentDepositionRegex = new Regex(@"filename=\W*(?<fileName>.+\.\w{2,4})", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private bool _inTransit;
 
@@ -37,7 +37,7 @@ namespace AppGet.FileTransfer.Protocols
         {
             var url = new Uri(source);
 
-            var fileName = url.LocalPath.Split('/').Last();
+            var fileName = url.Segments.Last();
 
             if (FileNameRegex.IsMatch(fileName))
             {
@@ -63,7 +63,7 @@ namespace AppGet.FileTransfer.Protocols
                 }
             }
 
-            throw new AppGetException("Couldn't get file name from " + source);
+            throw new InvalidDownloadLinkException(source);
 
         }
 

@@ -79,15 +79,15 @@
     <Compile Include="Commands\WindowsInstallerSearch\WindowsInstallerSearchOptions.cs" />
     <Compile Include="Commands\ViewManifest\ViewManifestCommandHandler.cs" />
     <Compile Include="Commands\Uninstall\PackageNotInstalledException.cs" />
-    <Compile Include="Crypto\CreatePackage\ManifestPopulators\IPopulateManifest.cs" />
-    <Compile Include="Crypto\CreatePackage\ManifestPopulators\PopulateVersionTag.cs" />
-    <Compile Include="Crypto\CreatePackage\ManifestPopulators\PopulatePackageId.cs" />
-    <Compile Include="Crypto\CreatePackage\ManifestPopulators\PopulateProductName.cs" />
-    <Compile Include="Crypto\CreatePackage\ManifestPopulators\PopulateVersion.cs" />
-    <Compile Include="Crypto\CreatePackage\Parsers\VersionParser.cs" />
-    <Compile Include="Crypto\CreatePackage\Parsers\ArchitectureParser.cs" />
-    <Compile Include="Crypto\CreatePackage\Parsers\GithubUrl.cs" />
-    <Compile Include="Crypto\CreatePackage\ManifestPopulators\PopulateProductUrl.cs" />
+    <Compile Include="CreatePackage\ManifestPopulators\IPopulateManifest.cs" />
+    <Compile Include="CreatePackage\ManifestPopulators\PopulateVersionTag.cs" />
+    <Compile Include="CreatePackage\ManifestPopulators\PopulatePackageId.cs" />
+    <Compile Include="CreatePackage\ManifestPopulators\PopulateProductName.cs" />
+    <Compile Include="CreatePackage\ManifestPopulators\PopulateVersion.cs" />
+    <Compile Include="CreatePackage\Parsers\VersionParser.cs" />
+    <Compile Include="CreatePackage\Parsers\ArchitectureParser.cs" />
+    <Compile Include="CreatePackage\Parsers\GithubUrl.cs" />
+    <Compile Include="CreatePackage\ManifestPopulators\PopulateProductUrl.cs" />
     <Compile Include="Crypto\Hash\CheckSumBase.cs" />
     <Compile Include="Crypto\Hash\ChecksumVerificationException.cs" />
     <Compile Include="Crypto\Hash\ChecksumService.cs" />
@@ -96,6 +96,7 @@
     <Compile Include="Crypto\Hash\Algorithms\Md5Hash.cs" />
     <Compile Include="Crypto\Hash\Algorithms\Sha256Hash.cs" />
     <Compile Include="Extensions\UriExtensions.cs" />
+    <Compile Include="FileTransfer\InvalidDownloadLinkException.cs" />
     <Compile Include="FileTransfer\TransferCacheService.cs" />
     <Compile Include="Infrastructure\Composition\ContainerBuilder.cs" />
     <Compile Include="Compression\CompressionService.cs" />
@@ -176,7 +177,7 @@
     <Compile Include="Requirements\IEnforceRequirements.cs" />
     <Compile Include="Requirements\Specifications\MaxOsVersionSpecification.cs" />
     <Compile Include="Requirements\Specifications\MinOsVersionSpecification.cs" />
-    <Compile Include="Crypto\CreatePackage\XRayService.cs" />
+    <Compile Include="CreatePackage\XRayService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

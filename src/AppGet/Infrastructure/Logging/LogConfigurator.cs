@@ -16,13 +16,13 @@ namespace AppGet.Infrastructure.Logging
 
             var consoleTarget = new ColoredConsoleTarget
             {
-                Layout = new SimpleLayout("  ${message} ${exception:format=message}"),
+                Layout = new SimpleLayout("${message} ${exception:format=message}"),
             };
 
 
             consoleTarget.WordHighlightingRules.Add(new ConsoleWordHighlightingRule
             {
-                Regex = "http(s)?://([\\w-]+.)+[\\w-]+(/[\\w- ./?%&=])?",
+                Regex = "https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,4}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)",
                 CompileRegex = true,
                 ForegroundColor = ConsoleOutputColor.Blue
             });
