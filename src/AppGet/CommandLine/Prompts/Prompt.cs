@@ -17,7 +17,7 @@ namespace AppGet.CommandLine.Prompts
             if (defaultValue != null)
             {
                 defaultValue = defaultValue.Trim();
-                Console.Write($"{message} (default: {defaultValue}): ");
+                Console.Write($"{message} (guess: {defaultValue}): ");
             }
             else
             {
