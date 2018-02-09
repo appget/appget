@@ -37,7 +37,7 @@ namespace AppGet.Manifests
 
         public string WriteManifest(PackageManifest manifest, string manifestRoot)
         {
-            var manifestName = $"{manifest.Id}-{manifest.VersionTag}".Trim('-');
+            var manifestName = $"{manifest.Id}.{manifest.VersionTag}".Trim('.');
             var fileName = $"{manifestName}.yaml";
             var applicationManifestDir = Path.Combine(manifestRoot, manifest.Id);
             var manifestPath = Path.Combine(applicationManifestDir, fileName);
