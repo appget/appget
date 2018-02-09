@@ -1,7 +1,7 @@
-﻿using AppGet.CreatePackage.Utils;
+﻿using AppGet.CreatePackage.Parsers;
 using NUnit.Framework;
 
-namespace AppGet.Tests.CreatePackage.Utils
+namespace AppGet.Tests.CreatePackage.Parsers
 {
 
     [TestFixture]

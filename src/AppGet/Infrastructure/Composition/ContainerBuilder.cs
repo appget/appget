@@ -7,7 +7,7 @@ using AppGet.Commands.Uninstall;
 using AppGet.Commands.ViewManifest;
 using AppGet.Commands.WindowsInstallerSearch;
 using AppGet.CreatePackage;
-using AppGet.CreatePackage.Populators;
+using AppGet.CreatePackage.ManifestPopulators;
 using AppGet.Crypto.Hash;
 using AppGet.Crypto.Hash.Algorithms;
 using AppGet.FileTransfer;
@@ -19,7 +19,6 @@ using AppGet.Installers.Msi;
 using AppGet.Installers.Nsis;
 using AppGet.Installers.Zip;
 using NLog;
-using TinyIoC;
 
 namespace AppGet.Infrastructure.Composition
 {
@@ -74,7 +73,7 @@ namespace AppGet.Infrastructure.Composition
                 typeof(PopulateProductName),
                 typeof(PopulatePackageId),
                 typeof(PopulateVersion),
-                typeof(PopulateMajorVersion)
+                typeof(PopulateVersionTag)
             });
 
             container.RegisterMultiple<IFileTransferClient>(new[]

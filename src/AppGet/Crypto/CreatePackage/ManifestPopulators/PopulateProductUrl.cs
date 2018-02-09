@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Text.RegularExpressions;
 using AppGet.CommandLine.Prompts;
-using AppGet.CreatePackage.Utils;
+using AppGet.CreatePackage.Parsers;
 using AppGet.Manifests;
 
-namespace AppGet.CreatePackage.Populators
+namespace AppGet.CreatePackage.ManifestPopulators
 {
     public class PopulateProductUrl : IPopulateManifest
     {

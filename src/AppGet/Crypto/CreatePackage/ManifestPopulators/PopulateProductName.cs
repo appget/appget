@@ -3,10 +3,10 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using AppGet.CommandLine.Prompts;
-using AppGet.CreatePackage.Utils;
+using AppGet.CreatePackage.Parsers;
 using AppGet.Manifests;
 
-namespace AppGet.CreatePackage.Populators
+namespace AppGet.CreatePackage.ManifestPopulators
 {
     public class PopulateProductName : IPopulateManifest
     {

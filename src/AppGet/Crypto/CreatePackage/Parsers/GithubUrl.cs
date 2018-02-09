@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AppGet.CreatePackage.Utils
+namespace AppGet.CreatePackage.Parsers
 {
     public class GithubUrl
     {

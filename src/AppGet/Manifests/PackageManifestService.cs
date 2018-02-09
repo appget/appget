@@ -37,7 +37,8 @@ namespace AppGet.Manifests
 
         public string WriteManifest(PackageManifest manifest, string manifestRoot)
         {
-            var fileName = $"{manifest.Id}-{manifest.MajorVersion}.yaml";
+            var manifestName = $"{manifest.Id}-{manifest.VersionTag}".Trim('-');
+            var fileName = $"{manifestName}.yaml";
             var applicationManifestDir = Path.Combine(manifestRoot, manifest.Id);
             var manifestPath = Path.Combine(applicationManifestDir, fileName);
             _fileSystem.CreateDirectory(applicationManifestDir);
@@ -46,7 +47,6 @@ namespace AppGet.Manifests
 
             _logger.Info($"Package manifest was saved to {manifestPath}");
             return manifestPath;
-
         }
 
         public void PrintManifest(PackageManifest manifest)

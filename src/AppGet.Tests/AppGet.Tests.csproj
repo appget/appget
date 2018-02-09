@@ -118,13 +118,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CreatePackage\Parsers\ArchitectureParserFixture.cs" />
+    <Compile Include="CreatePackage\Parsers\VersionParserFixture.cs" />
     <Compile Include="CreatePackage\PopulateProductUrlFixture.cs" />
-    <Compile Include="CreatePackage\Utils\GithubUrlFixture.cs" />
+    <Compile Include="CreatePackage\Parsers\GithubUrlFixture.cs" />
     <Compile Include="Crypto\Hash\Algorithms\Md5HashFixture.cs" />
     <Compile Include="Crypto\Hash\Algorithms\Sha1HashFixture.cs" />
     <Compile Include="Crypto\Hash\Algorithms\Sha256HashFixture.cs" />
     <Compile Include="Download\HttpFileTransferClientFixture.cs" />
     <Compile Include="Extensions\StringExtensionsFixture.cs" />
+    <Compile Include="Extensions\UriExtensionsFixture.cs" />
     <Compile Include="FileTransfer\Protocols\WindowsPathFileTransferClientFixture.cs" />
     <Compile Include="FileTransfer\TransferCacheServiceFixture.cs" />
     <Compile Include="Manifests\PackageManifestFixture.cs" />

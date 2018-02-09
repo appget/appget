@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
-using AppGet.Crypto.Hash;
 using AppGet.Crypto.Hash.Algorithms;
+using AppGet.Extensions;
 using AppGet.FileTransfer;
 using AppGet.HostSystem;
 using AppGet.Manifests;
@@ -18,8 +18,6 @@ namespace AppGet.CreatePackage
 
     public class XRayService : IXRayService
     {
-       
-
         private readonly IFileTransferService _fileTransferService;
         private readonly IPathResolver _pathResolver;
         private readonly Logger _logger;
@@ -37,27 +35,17 @@ namespace AppGet.CreatePackage
             var installer = new Installer();
 
             var uri = new Uri(url, UriKind.Absolute);
-            var filePath = _fileTransferService.TransferFile(uri.ToString(), _pathResolver.TempFolder, null);
-            var sha256 = _sha256.CalculateHash(filePath);
 
-            installer.Location = uri.ToString();
-            installer.Sha256 = sha256;
+            string filePath = null;
 
-            if (uri.Scheme == "http")
+            if (uri.Scheme == Uri.UriSchemeHttp)
             {
-                _logger.Warn("Download link is using HTTP protocol. Will now check if same file is available using HTTPS.");
-                var httpsUri = new Uri(uri.ToString().Replace("http://", "https://"));
+                _logger.Warn("Download link is using HTTP protocol. Will now check if file is available using HTTPS.");
 
                 try
                 {
-                    _fileTransferService.TransferFile(httpsUri.ToString(), _pathResolver.TempFolder, null);
-                    var httpsSha256 = _sha256.CalculateHash(filePath);
-
-                    if (httpsSha256 == sha256)
-                    {
-                        _logger.Info("File downloaded using HTTPS has same hash as HTTP, using the HTTPS url instead.");
-                        installer.Location = httpsUri.ToString();
-                    }
+                    filePath = DownloadInstaller(uri.ToHttps(), installer);
+                    _logger.Info("Installer aprears to be avilable using HTTPS. Using HTTPS instead.");
                 }
                 catch (Exception e)
                 {
@@ -65,10 +53,22 @@ namespace AppGet.CreatePackage
                 }
             }
 
+            if (filePath == null)
+            {
+                filePath = DownloadInstaller(uri, installer);
+            }
+
             fileVersionInfo = FileVersionInfo.GetVersionInfo(filePath);
 
-
             return installer;
+        }
+
+        private string DownloadInstaller(Uri uri, Installer installer)
+        {
+            var filePath = _fileTransferService.TransferFile(uri.ToString(), _pathResolver.TempFolder, null);
+            installer.Sha256 = _sha256.CalculateHash(filePath);
+            installer.Location = uri.ToString();
+            return filePath;
         }
 
     }

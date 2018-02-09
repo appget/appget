@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using AppGet.Manifests;
 
-namespace AppGet.CreatePackage.Populators
+namespace AppGet.CreatePackage.ManifestPopulators
 {
     public interface IPopulateManifest
     {

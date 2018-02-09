@@ -30,7 +30,7 @@ namespace AppGet.Tests.Manifests
             _rejected.Setup(s => s.IsRequirementSatisfied(It.IsAny<Installer>()))
                      .Returns(EnforcementResult.Fail("Test failure"));
 
-            _anyInstaller = new Installer { Architecture = ArchitectureTypes.Any };
+            _anyInstaller = new Installer { Architecture = ArchitectureTypes.Unknown};
             _x86Installer = new Installer { Architecture = ArchitectureTypes.x86 };
             _x64Installer = new Installer { Architecture = ArchitectureTypes.x64 };
         }

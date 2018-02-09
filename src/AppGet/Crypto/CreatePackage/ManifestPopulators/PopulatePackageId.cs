@@ -1,11 +1,9 @@
 using System.Diagnostics;
-using System.Globalization;
 using System.Text.RegularExpressions;
 using AppGet.CommandLine.Prompts;
-using AppGet.CreatePackage.Utils;
 using AppGet.Manifests;
 
-namespace AppGet.CreatePackage.Populators
+namespace AppGet.CreatePackage.ManifestPopulators
 {
     public class PopulatePackageId : IPopulateManifest
     {

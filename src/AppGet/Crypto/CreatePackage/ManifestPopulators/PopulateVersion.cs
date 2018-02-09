@@ -1,17 +1,16 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 using AppGet.CommandLine.Prompts;
-using AppGet.Extensions;
+using AppGet.CreatePackage.Parsers;
 using AppGet.Manifests;
 
-namespace AppGet.CreatePackage.Populators
+namespace AppGet.CreatePackage.ManifestPopulators
 {
     public class PopulateVersion : IPopulateManifest
     {
         private readonly IPrompt _prompt;
-        private readonly Regex versionRegex = new Regex("(\\d+\\.)?(\\d+\\.)?(\\*|\\d+)");
-
 
         public PopulateVersion(IPrompt prompt)
         {
@@ -22,19 +21,17 @@ namespace AppGet.CreatePackage.Populators
         {
             string defaultValue = null;
 
+            var urlVersion = VersionParser.Parse(new Uri(manifest.Installers.First().Location));
+
             if (fileVersionInfo != null)
             {
                 defaultValue = new[] { fileVersionInfo.ProductVersion, fileVersionInfo.FileVersion }
                     .FirstOrDefault(c => !string.IsNullOrWhiteSpace(c));
             }
 
-            if (string.IsNullOrWhiteSpace(defaultValue) || defaultValue == "1.0.0")
+            if (urlVersion?.Length > defaultValue?.Length)
             {
-                var matched = versionRegex.Matches(manifest.Installers.First().Location);
-
-                var bestMatch = matched.Cast<Match>().OrderByDescending(c => c.Length).FirstOrDefault();
-
-                defaultValue = bestMatch?.Value;
+                defaultValue = urlVersion;
             }
 
             manifest.Version = _prompt.Request("Application Version", defaultValue).ToLowerInvariant();

@@ -18,7 +18,7 @@ namespace AppGet.Tests.Requirements
 
             Subject.IsRequirementSatisfied(new Installer
             {
-                Architecture = ArchitectureTypes.Any
+                Architecture = ArchitectureTypes.Unknown
             }).Success.Should().BeTrue();
 
         }
@@ -31,9 +31,9 @@ namespace AppGet.Tests.Requirements
                   .Returns(true);
 
             Subject.IsRequirementSatisfied(new Installer
-                                           {
-                                               Architecture = ArchitectureTypes.x86
-                                           }).Success.Should().BeTrue();
+            {
+                Architecture = ArchitectureTypes.x86
+            }).Success.Should().BeTrue();
 
         }
 
@@ -45,9 +45,9 @@ namespace AppGet.Tests.Requirements
                   .Returns(true);
 
             Subject.IsRequirementSatisfied(new Installer
-                                           {
-                                               Architecture = ArchitectureTypes.x64
-                                           }).Success.Should().BeTrue();
+            {
+                Architecture = ArchitectureTypes.x64
+            }).Success.Should().BeTrue();
         }
 
         [Test]
@@ -58,27 +58,10 @@ namespace AppGet.Tests.Requirements
                   .Returns(false);
 
             Subject.IsRequirementSatisfied(new Installer
-                                           {
-                                               Architecture = ArchitectureTypes.x64
-                                           }).Success.Should().BeFalse();
-        }
-
-        [Test]
-        public void should_be_false_when_itanium()
-        {
-            Subject.IsRequirementSatisfied(new Installer
             {
-                Architecture = ArchitectureTypes.Itanium
+                Architecture = ArchitectureTypes.x64
             }).Success.Should().BeFalse();
         }
 
-        [Test]
-        public void should_be_false_when_arm()
-        {
-            Subject.IsRequirementSatisfied(new Installer
-            {
-                Architecture = ArchitectureTypes.ARM
-            }).Success.Should().BeFalse();
-        }
     }
 }

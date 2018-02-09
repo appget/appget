@@ -10,7 +10,7 @@ namespace AppGet.Manifests
         public string Version { get; set; }
 
         [YamlIgnore]
-        public string MajorVersion { get; set; }
+        public string VersionTag { get; set; }
         public string ProductUrl { get; set; }
 
         public string[] Exe { get; set; }
@@ -22,7 +22,6 @@ namespace AppGet.Manifests
 
     public class Artifact
     {
-        public ArtifactTypes Type { get; set; }
         public string Path { get; set; }
     }
 
@@ -71,23 +70,10 @@ namespace AppGet.Manifests
 
     public enum HashType
     {
-        Crc,
         Md5,
         Sha1,
         Sha256,
     }
-
-    public enum ArtifactTypes
-    {
-        Exe,
-        Font,
-        PowerShellModule,
-        FirefoxExtension,
-        ChromeExtension,
-        Path,
-        EnvironmentVariable
-    }
-
 
     public enum DotNetVersion
     {
@@ -114,11 +100,8 @@ namespace AppGet.Manifests
     public enum ArchitectureTypes
     {
         Unknown,
-        Any,
         x86,
-        x64,
-        Itanium,
-        ARM
+        x64
     }
 
     public enum InstallMethodType
