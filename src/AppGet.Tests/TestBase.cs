@@ -10,7 +10,7 @@ namespace AppGet.Tests
     {
         protected AutoMoqer Mocker { get; private set; }
 
-        private T _subject = null;
+        private T _subject;
 
         protected Logger logger = LogManager.GetLogger("logger");
 

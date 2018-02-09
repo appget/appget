@@ -120,12 +120,12 @@
   <ItemGroup>
     <Compile Include="CreatePackage\Parsers\ArchitectureParserFixture.cs" />
     <Compile Include="CreatePackage\Parsers\VersionParserFixture.cs" />
-    <Compile Include="CreatePackage\PopulateProductUrlFixture.cs" />
+    <Compile Include="CreatePackage\ManifestPopulators\PopulateProductUrlFixture.cs" />
     <Compile Include="CreatePackage\Parsers\GithubUrlFixture.cs" />
     <Compile Include="Crypto\Hash\Algorithms\Md5HashFixture.cs" />
     <Compile Include="Crypto\Hash\Algorithms\Sha1HashFixture.cs" />
     <Compile Include="Crypto\Hash\Algorithms\Sha256HashFixture.cs" />
-    <Compile Include="Download\HttpFileTransferClientFixture.cs" />
+    <Compile Include="FileTransfer\Protocols\HttpFileTransferClientFixture.cs" />
     <Compile Include="Extensions\StringExtensionsFixture.cs" />
     <Compile Include="Extensions\UriExtensionsFixture.cs" />
     <Compile Include="FileTransfer\Protocols\WindowsPathFileTransferClientFixture.cs" />
@@ -139,10 +139,9 @@
     <Compile Include="Processes\FileInUseFixture.cs" />
     <Compile Include="Processes\HandleFixture.cs" />
     <Compile Include="ProgressTracker\ProgressStateFixture.cs" />
-    <Compile Include="Requirements\MaxOsVersionSpecificationFixture.cs" />
-    <Compile Include="PackageProvider\AppGetServerProviderFixture.cs" />
-    <Compile Include="Requirements\MinOsVersionSpecificationFixture.cs" />
-    <Compile Include="Requirements\OsArchitectureSpecificationFixture.cs" />
+    <Compile Include="Requirements\Specifications\MaxOsVersionSpecificationFixture.cs" />
+    <Compile Include="Requirements\Specifications\MinOsVersionSpecificationFixture.cs" />
+    <Compile Include="Requirements\Specifications\OsArchitectureSpecificationFixture.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

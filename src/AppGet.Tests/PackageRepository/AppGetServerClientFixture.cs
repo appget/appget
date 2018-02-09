@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using AppGet.Http;
 using AppGet.PackageRepository;
 using FluentAssertions;
 using NUnit.Framework;
@@ -39,6 +40,15 @@ namespace AppGet.Tests.PackageRepository
             found.Id.Should().Contain(term);
             found.SourceUrl.Should().StartWith("https://github.com/appget/packages/blob/master/manifests/");
             found.MajorVersion.Should().HaveLength(1);
+        }
+
+        [Test]
+        public void should_get_manifest()
+        {
+            Mocker.SetInstance<IHttpClient>(new HttpClient(logger));
+            var c = Subject.GetLatest("linqpad");
+
+            c.Should().NotBeNull();
         }
     }
 }

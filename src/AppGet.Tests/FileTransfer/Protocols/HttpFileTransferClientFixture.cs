@@ -2,7 +2,7 @@
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace AppGet.Tests.Download
+namespace AppGet.Tests.FileTransfer.Protocols
 {
     [TestFixture]
     public class HttpFileTransferClientFixture : TestBase<HttpFileTransferClient>

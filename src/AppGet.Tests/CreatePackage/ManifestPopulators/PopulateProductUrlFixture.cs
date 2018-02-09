@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using AppGet.CommandLine.Prompts;
-using AppGet.CreatePackage;
 using AppGet.CreatePackage.ManifestPopulators;
 using AppGet.Manifests;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;
 
-namespace AppGet.Tests.CreatePackage
+namespace AppGet.Tests.CreatePackage.ManifestPopulators
 {
     [TestFixture]
     public class PopulateProductUrlFixture : TestBase<PopulateProductUrl>
@@ -15,7 +14,7 @@ namespace AppGet.Tests.CreatePackage
         [Test]
         public void get_non_github_hostname_as_url()
         {
-            Mocker.GetMock<IPrompt>()
+            Mocker.GetMock<IUrlPrompt>()
                 .Setup(c => c.Request(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns<string, string>((message, defaultValue) => defaultValue);
 

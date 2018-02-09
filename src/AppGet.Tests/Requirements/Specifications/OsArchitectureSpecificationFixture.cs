@@ -4,7 +4,7 @@ using AppGet.Requirements.Specifications;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace AppGet.Tests.Requirements
+namespace AppGet.Tests.Requirements.Specifications
 {
     [TestFixture]
     public class OsArchitectureSpecificationFixture : TestBase<OsArchitectureSpecification>
