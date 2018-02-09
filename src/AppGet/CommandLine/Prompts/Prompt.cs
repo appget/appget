@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace AppGet.CommandLine.Prompts
 {
@@ -11,31 +12,43 @@ namespace AppGet.CommandLine.Prompts
     {
         public string Request(string message, string defaultValue)
         {
-            //            while (true)
-            //            {
+            Console.WriteLine();
+
             if (defaultValue != null)
             {
-                message = $"{message} (default: '{defaultValue}')";
+                Console.Write($"{message} (default: {defaultValue}): ");
+            }
+            else
+            {
+                Console.Write($"{message}: ");
             }
 
-            Console.WriteLine(message);
-            var input = Console.ReadLine();
+
+            var input = Console.ReadLine()?.Trim();
 
             if (string.IsNullOrWhiteSpace(input))
             {
-                input = defaultValue;
+                input = defaultValue?.ToString();
+            }
+
+
+            if (!IsValid(input))
+            {
+                input = Request(message, defaultValue);
             }
 
             return input?.Trim();
+        }
 
 
-            //                if (validator == null || validator(input))
-            //                {
-            //                    return input?.Trim();
-            //                }
+        protected virtual object AutoFix<T>(string value)
+        {
+            return value;
+        }
 
-            //                Console.WriteLine("Invalid input");
-            //            }
+        protected virtual bool IsValid(string value)
+        {
+            return true;
         }
     }
 }
