@@ -24,7 +24,7 @@ namespace AppGet.CommandLine.Prompts
         }
 
 
-        public T? Request(string message, T defaultValue)
+        public T Request(string message, T defaultValue)
         {
             Console.WriteLine();
 

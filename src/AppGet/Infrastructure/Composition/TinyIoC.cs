@@ -1235,13 +1235,13 @@ namespace AppGet.Infrastructure.Composition
             public static RegisterOptions ToCustomLifetimeManager(RegisterOptions instance, ITinyIoCObjectLifetimeProvider lifetimeProvider, string errorString)
             {
                 if (instance == null)
-                    throw new ArgumentNullException("instance", "instance is null.");
+                    throw new ArgumentNullException(nameof(instance), "instance is null.");
 
                 if (lifetimeProvider == null)
-                    throw new ArgumentNullException("lifetimeProvider", "lifetimeProvider is null.");
+                    throw new ArgumentNullException(nameof(lifetimeProvider), "lifetimeProvider is null.");
 
                 if (string.IsNullOrEmpty(errorString))
-                    throw new ArgumentException("errorString is null or empty.", "errorString");
+                    throw new ArgumentException("errorString is null or empty.", nameof(errorString));
 
                 var currentFactory = instance._Container.GetCurrentFactory(instance._Registration);
 
@@ -1305,13 +1305,13 @@ namespace AppGet.Infrastructure.Composition
                 string errorString)
             {
                 if (instance == null)
-                    throw new ArgumentNullException("instance", "instance is null.");
+                    throw new ArgumentNullException(nameof(instance), "instance is null.");
 
                 if (lifetimeProvider == null)
-                    throw new ArgumentNullException("lifetimeProvider", "lifetimeProvider is null.");
+                    throw new ArgumentNullException(nameof(lifetimeProvider), "lifetimeProvider is null.");
 
                 if (string.IsNullOrEmpty(errorString))
-                    throw new ArgumentException("errorString is null or empty.", "errorString");
+                    throw new ArgumentException("errorString is null or empty.", nameof(errorString));
 
                 instance._RegisterOptions = instance.ExecuteOnAllRegisterOptions(ro => RegisterOptions.ToCustomLifetimeManager(ro, lifetimeProvider, errorString));
 
@@ -1684,7 +1684,7 @@ namespace AppGet.Infrastructure.Composition
         {
             if (factory == null)
             {
-                throw new ArgumentNullException("factory");
+                throw new ArgumentNullException(nameof(factory));
             }
 
             return this.Register(typeof(RegisterType), (c, o) => factory(c, o));
@@ -1702,7 +1702,7 @@ namespace AppGet.Infrastructure.Composition
         {
             if (factory == null)
             {
-                throw new ArgumentNullException("factory");
+                throw new ArgumentNullException(nameof(factory));
             }
 
             return this.Register(typeof(RegisterType), (c, o) => factory(c, o), name);
@@ -2912,7 +2912,7 @@ namespace AppGet.Infrastructure.Composition
             public DelegateFactory(Type registerType, Func<TinyIoCContainer, NamedParameterOverloads, object> factory)
             {
                 if (factory == null)
-                    throw new ArgumentNullException("factory");
+                    throw new ArgumentNullException(nameof(factory));
 
                 _factory = factory;
 
@@ -2975,7 +2975,7 @@ namespace AppGet.Infrastructure.Composition
             public WeakDelegateFactory(Type registerType, Func<TinyIoCContainer, NamedParameterOverloads, object> factory)
             {
                 if (factory == null)
-                    throw new ArgumentNullException("factory");
+                    throw new ArgumentNullException(nameof(factory));
 
                 _factory = new WeakReference(factory);
 
@@ -3252,7 +3252,7 @@ namespace AppGet.Infrastructure.Composition
             public CustomObjectLifetimeFactory(Type registerType, Type registerImplementation, ITinyIoCObjectLifetimeProvider lifetimeProvider, string errorMessage)
             {
                 if (lifetimeProvider == null)
-                    throw new ArgumentNullException("lifetimeProvider", "lifetimeProvider is null.");
+                    throw new ArgumentNullException(nameof(lifetimeProvider), "lifetimeProvider is null.");
 
                 if (!IsValidAssignment(registerType, registerImplementation))
                     throw new TinyIoCRegistrationTypeException(registerImplementation, "SingletonFactory");
@@ -3591,7 +3591,7 @@ namespace AppGet.Infrastructure.Composition
         private bool CanResolveInternal(TypeRegistration registration, NamedParameterOverloads parameters, ResolveOptions options)
         {
             if (parameters == null)
-                throw new ArgumentNullException("parameters");
+                throw new ArgumentNullException(nameof(parameters));
 
             Type checkType = registration.Type;
             string name = registration.Name;
@@ -3921,7 +3921,7 @@ namespace AppGet.Infrastructure.Composition
         private bool CanConstruct(ConstructorInfo ctor, NamedParameterOverloads parameters, ResolveOptions options)
         {
             if (parameters == null)
-                throw new ArgumentNullException("parameters");
+                throw new ArgumentNullException(nameof(parameters));
 
             foreach (var parameter in ctor.GetParameters())
             {
@@ -3947,7 +3947,7 @@ namespace AppGet.Infrastructure.Composition
         private ConstructorInfo GetBestConstructor(Type type, NamedParameterOverloads parameters, ResolveOptions options)
         {
             if (parameters == null)
-                throw new ArgumentNullException("parameters");
+                throw new ArgumentNullException(nameof(parameters));
 
             //#if NETFX_CORE
             //			if (type.GetTypeInfo().IsValueType)

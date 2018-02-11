@@ -22,8 +22,8 @@ namespace AppGet.Requirements.Specifications
             }
 
             return EnforcementResult.Fail("Min supported OS version: {0}. Current version: {1}",
-                                                        installer.MaxWindowsVersion,
-                                                        _environmentProxy.WindowsVersion.Version);
+                                                        installer.MinWindowsVersion,
+                                                        _environmentProxy.WindowsVersion);
         }
     }
 }

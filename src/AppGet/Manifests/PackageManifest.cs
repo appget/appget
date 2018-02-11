@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using YamlDotNet.Serialization;
 
 namespace AppGet.Manifests
@@ -36,8 +37,7 @@ namespace AppGet.Manifests
 
         public ArchitectureTypes Architecture { get; set; }
 
-        public WindowsVersion MinWindowsVersion { get; set; }
-        public WindowsVersion MaxWindowsVersion { get; set; }
+        public Version MinWindowsVersion { get; set; }
         public DotNetVersion MinDotNet { get; set; }
 
         public List<string> ProductIds { get; set; }

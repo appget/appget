@@ -79,6 +79,8 @@
     <Compile Include="Commands\WindowsInstallerSearch\WindowsInstallerSearchOptions.cs" />
     <Compile Include="Commands\ViewManifest\ViewManifestCommandHandler.cs" />
     <Compile Include="Commands\Uninstall\PackageNotInstalledException.cs" />
+    <Compile Include="CreatePackage\InstallerPopulators\ArchitecturePopulater.cs" />
+    <Compile Include="CreatePackage\InstallerPopulators\IPopulateManifest.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\IPopulateManifest.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\PopulateVersionTag.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\PopulatePackageId.cs" />
@@ -175,7 +177,6 @@
     <Compile Include="Serialization\VersionConverter.cs" />
     <Compile Include="Serialization\Yaml.cs" />
     <Compile Include="Requirements\IEnforceRequirements.cs" />
-    <Compile Include="Requirements\Specifications\MaxOsVersionSpecification.cs" />
     <Compile Include="Requirements\Specifications\MinOsVersionSpecification.cs" />
     <Compile Include="CreatePackage\XRayService.cs" />
   </ItemGroup>

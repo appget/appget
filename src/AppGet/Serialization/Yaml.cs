@@ -15,7 +15,6 @@ namespace AppGet.Serialization
                 var serializer = new SerializerBuilder()
                     .WithNamingConvention(new CamelCaseNamingConvention())
                     .WithTypeConverter(new VersionConverter())
-                    .WithTypeConverter(new WindowsVersionConverter())
                     .DisableAliases()
                     .Build();
 
@@ -29,7 +28,6 @@ namespace AppGet.Serialization
             var deserializer = new DeserializerBuilder()
                 .WithNamingConvention(new CamelCaseNamingConvention())
                 .WithTypeConverter(new VersionConverter())
-                .WithTypeConverter(new WindowsVersionConverter())
                 .IgnoreUnmatchedProperties()
                 .Build();
 

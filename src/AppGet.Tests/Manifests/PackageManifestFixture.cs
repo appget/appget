@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AppGet.Manifests;
 using AppGet.Serialization;
 using NUnit.Framework;
@@ -30,8 +31,7 @@ namespace AppGet.Tests.Manifests
                     {
                         Location = "http://www.linqpad.net/GetFile.aspx?LINQPad4-AnyCPU.zip",
                         Architecture = ArchitectureTypes.Unknown,
-                        MinWindowsVersion = WindowsVersion.VistaSp2,
-                        MaxWindowsVersion = WindowsVersion.Eight
+                        MinWindowsVersion = WindowsVersion.KnownVersions.First(),
                     }
                 }
             };

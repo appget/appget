@@ -132,14 +132,12 @@
     <Compile Include="FileTransfer\TransferCacheServiceFixture.cs" />
     <Compile Include="Manifests\PackageManifestFixture.cs" />
     <Compile Include="InstalledPackages\WindowsInstallerInventoryManagerFixture.cs" />
-    <Compile Include="Manifests\WindowsVersionFixture.cs" />
     <Compile Include="Options\OptionsParserFixture.cs" />
     <Compile Include="Manifests\FindInstallerFixture.cs" />
     <Compile Include="PackageRepository\AppGetServerClientFixture.cs" />
     <Compile Include="Processes\FileInUseFixture.cs" />
     <Compile Include="Processes\HandleFixture.cs" />
     <Compile Include="ProgressTracker\ProgressStateFixture.cs" />
-    <Compile Include="Requirements\Specifications\MaxOsVersionSpecificationFixture.cs" />
     <Compile Include="Requirements\Specifications\MinOsVersionSpecificationFixture.cs" />
     <Compile Include="Requirements\Specifications\OsArchitectureSpecificationFixture.cs" />
     <Compile Include="TestBase.cs" />
