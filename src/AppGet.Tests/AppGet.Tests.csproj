@@ -109,6 +109,7 @@
     <Compile Include="Requirements\Specifications\OsArchitectureSpecificationFixture.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Update\GitHubReleaseClientFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

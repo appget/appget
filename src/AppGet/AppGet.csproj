@@ -182,6 +182,8 @@
     <Compile Include="Requirements\IEnforceRequirements.cs" />
     <Compile Include="Requirements\Specifications\MinOsVersionSpecification.cs" />
     <Compile Include="CreatePackage\XRayService.cs" />
+    <Compile Include="Update\GithubRelease.cs" />
+    <Compile Include="Update\GitHubReleaseClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
