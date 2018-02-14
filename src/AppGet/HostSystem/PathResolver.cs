@@ -9,7 +9,7 @@ namespace AppGet.HostSystem
         string AppDataDirectory { get; }
         string InstalledPackageList { get; }
         string TempFolder { get; }
-        string GetInstallerLogFile(PackageManifest packageManifest);
+        string GetInstallerLogFile(string packageId);
         string GetInstallationPath(PackageManifest packageManifest);
     }
 
@@ -23,13 +23,13 @@ namespace AppGet.HostSystem
 
         public string InstalledPackageList => Path.Combine(AppDataDirectory, "packages.yaml");
 
-        public string GetInstallerLogFile(PackageManifest packageManifest)
+        public string GetInstallerLogFile(string packageId)
         {
             var installerLogDir = Path.Combine(AppDataDirectory, "Logs");
 
             Directory.CreateDirectory(installerLogDir);
 
-            var fileName = $"{packageManifest.Id}_{DateTime.Now:yyyyMMdd_HHssmm}.log";
+            var fileName = $"{packageId}_{DateTime.Now:yyyyMMdd_HHssmm}.log".ToLowerInvariant();
 
             return Path.Combine(installerLogDir, fileName);
         }

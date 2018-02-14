@@ -34,7 +34,7 @@ namespace AppGet.Http
 
             // Deflate is not a standard and could break depending on implementation.
             // we should just stick with the more compatible Gzip
-            //http://stackoverflow.com/questions/8490718/how-to-decompress-stream-deflated-with-java-util-zip-deflater-in-net
+            //https://stackoverflow.com/questions/8490718/how-to-decompress-stream-deflated-with-java-util-zip-deflater-in-net
             webRequest.AutomaticDecompression = DecompressionMethods.GZip;
 
             webRequest.Credentials = request.NetworkCredential;
@@ -154,8 +154,6 @@ namespace AppGet.Http
                     case "Transfer-Encoding":
                         webRequest.TransferEncoding = header.Value.ToString();
                         break;
-                    case "User-Agent":
-                        throw new NotSupportedException("User-Agent other than NzbDrone not allowed.");
                     case "Proxy-Connection":
                         throw new NotImplementedException();
                     default:

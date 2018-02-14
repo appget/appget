@@ -6,7 +6,7 @@ using AppGet.Manifests;
 
 namespace AppGet.CreatePackage.InstallerPopulators
 {
-    public class ArchitecturePopulater : IPopulateInstaller
+    public class MinWindowsVersionPopulater : IPopulateInstaller
     {
         public void Populate(Installer installer, PackageManifest manifest, FileVersionInfo fileVersionInfo)
         {
@@ -14,7 +14,7 @@ namespace AppGet.CreatePackage.InstallerPopulators
 
             var defaultArch = ArchitectureParser.Parse(new Uri(installer.Location));
 
-            installer.Architecture = prompt.Request("Target architecture", defaultArch);
+//            installer.Architecture = prompt.Request("Minimum Windows Version");
         }
     }
 }

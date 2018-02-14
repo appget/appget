@@ -40,7 +40,7 @@ namespace AppGet.CreatePackage
 
             if (uri.Scheme == Uri.UriSchemeHttp)
             {
-                _logger.Warn("Download link is using HTTP protocol. Will now check if file is available using HTTPS.");
+                _logger.Warn("Download link is using HTTP protocol. Checking HTTPS availability.");
 
                 try
                 {

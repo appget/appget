@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 using AppGet.CreatePackage;
 using AppGet.CreatePackage.ManifestPopulators;
 using AppGet.Manifests;

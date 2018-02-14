@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.Diagnostics;
 using AppGet.Commands.Install;
 using AppGet.Commands.Uninstall;
 using AppGet.Exceptions;
@@ -56,12 +58,18 @@ namespace AppGet.Installers
 
         public virtual void Install(string installerLocation, PackageManifest packageManifest, InstallOptions installOptions)
         {
-            //Command line args: http://www.jrsoftware.org/ishelp/index.php?topic=setupcmdline
+            var process = StartProcess(installerLocation, GetInstallArguments(installOptions));
+            _processController.WaitForExit(process);
 
-            var logFile = _pathResolver.GetInstallerLogFile(packageManifest);
+            if (process.ExitCode != 0)
+            {
+                throw new AppGetException($"Installer '{process.ProcessName}' returned with a non-zero exit code. code: {process.ExitCode}");
+            }
+        }
 
-            _logger.Debug($"Writing installer log files to {logFile}");
-            Execute(installerLocation, GetInstallArguments(installOptions));
+        protected virtual Process StartProcess(string installerLocation, string args)
+        {
+            return _processController.Start(installerLocation, args, OnOutputDataReceived, OnErrorDataReceived);
         }
 
 
@@ -82,42 +90,30 @@ namespace AppGet.Installers
             }
             else
             {
-                args = UnattendedArgs;
+                args = PassiveArgs;
             }
 
-            var loggingArgs = LoggingArgs;
+            var logFile = _pathResolver.GetInstallerLogFile(installOptions.PackageId);
+            var loggingArgs = GetLoggingArgs(logFile);
+
 
             if (!string.IsNullOrWhiteSpace(loggingArgs))
             {
+                _logger.Debug($"Writing installer log files to {logFile}");
                 args = $"{args.Trim()} {loggingArgs.Trim()}";
             }
 
             return args.Trim();
         }
 
-        protected void Execute(string executable, string args)
-        {
-            try
-            {
-                var process = _processController.Start(executable, args, OnOutputDataReceived, OnErrorDataReceived);
-                _processController.WaitForExit(process);
-
-                if (process.ExitCode != 0)
-                {
-                    throw new AppGetException($"Installer '{process.ProcessName}' returned with a non-zero exit code. code: {process.ExitCode}");
-                }
-            }
-            catch (Win32Exception e)
-            {
-                _logger.Error(e, "try running AppGet as an administartor");
-                throw;
-            }
-        }
-
         protected abstract string InteractiveArgs { get; }
-        protected abstract string UnattendedArgs { get; }
+        protected abstract string PassiveArgs { get; }
         protected abstract string SilentArgs { get; }
-        protected abstract string LoggingArgs { get; }
+
+        protected virtual string GetLoggingArgs(string path)
+        {
+            return null;
+        }
 
         private void OnOutputDataReceived(string message)
         {

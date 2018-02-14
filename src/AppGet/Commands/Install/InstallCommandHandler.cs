@@ -23,7 +23,7 @@ namespace AppGet.Commands.Install
 
         public InstallCommandHandler(IPackageRepository packageRepository,
                                      IPathResolver pathResolver,
-			                         IPackageManifestService packageManifestService,
+                                     IPackageManifestService packageManifestService,
                                      IFileTransferService fileTransferService,
                                      IInstallService installService,
                                      IFindInstaller findInstaller,
@@ -65,8 +65,8 @@ namespace AppGet.Commands.Install
 
             var manifest = _packageManifestService.LoadManifest(package);
             var installer = _findInstaller.GetBestInstaller(manifest.Installers);
-            var installerPath = _fileTransferService.TransferFile(installer.Location, _pathResolver.TempFolder, installer.GetFileHash() );
-            
+            var installerPath = _fileTransferService.TransferFile(installer.Location, _pathResolver.TempFolder, installer.GetFileHash());
+
             _installTracker.TakeSnapshot();
             _installService.Install(installerPath, manifest, installOptions);
 
@@ -78,20 +78,20 @@ namespace AppGet.Commands.Install
         private InstalledPackage GetInstalledPackage(PackageManifest flightPlan, Installer installer)
         {
             var installedPackage = new InstalledPackage
-                                   {
-                                       Id = flightPlan.Id,
-                                       Name = flightPlan.Name,
-                                       Version = flightPlan.Version,
-                                       InstallMethod = flightPlan.InstallMethod,
-                                       Architecture = installer.Architecture
-                                   };
+            {
+                Id = flightPlan.Id,
+                Name = flightPlan.Name,
+                Version = flightPlan.Version,
+                InstallMethod = flightPlan.InstallMethod,
+                Architecture = installer.Architecture
+            };
 
             if (flightPlan.InstallMethod == InstallMethodType.Zip)
             {
                 return installedPackage;
             }
 
-            if (installer.ProductIds.Any())
+            if (installer.ProductIds != null && installer.ProductIds.Any())
             {
                 installedPackage.ProductIds = installer.ProductIds;
 

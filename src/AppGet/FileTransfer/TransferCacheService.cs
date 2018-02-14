@@ -33,14 +33,15 @@ namespace AppGet.FileTransfer
             try
             {
                 _checksumService.ValidateHash(path, hash);
+                _logger.Debug($"Installer is already downloaded: {path}");
+                return true;
             }
             catch (ChecksumVerificationException e)
             {
                 _logger.Warn("Checksum verification failed. ignoring cache.");
             }
 
-            _logger.Debug($"Installer is already downloaded: {path}");
-            return true;
+            return false;
         }
     }
 }

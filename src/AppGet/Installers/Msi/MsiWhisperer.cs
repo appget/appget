@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using AppGet.Commands.Install;
 using AppGet.Commands.Uninstall;
 using AppGet.HostSystem;
 using AppGet.Manifests;
@@ -21,12 +23,21 @@ namespace AppGet.Installers.Msi
 
         public override bool CanHandle(InstallMethodType installMethod)
         {
-            return installMethod == InstallMethodType.InstallShield;
+            return installMethod == InstallMethodType.MSI;
         }
 
-        protected override string InteractiveArgs => "";
-        protected override string UnattendedArgs => "/s /v\"/quiet /norestart /Liwemoar!";
-        protected override string SilentArgs => "/s /v\"/quiet /norestart /Liwemoar!";
-        protected override string LoggingArgs => "";
+        protected override Process StartProcess(string installerLocation, string args)
+        {
+            return base.StartProcess("msiexec", $"/i \"{installerLocation}\" {args}");
+        }
+
+        protected override string InteractiveArgs => "/qf";
+        protected override string PassiveArgs => "/qb /norestart";
+        protected override string SilentArgs => "/qn /norestart";
+
+        protected override string GetLoggingArgs(string path)
+        {
+            return $"/L* \"{path}\"";
+        }
     }
 }

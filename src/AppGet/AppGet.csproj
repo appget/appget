@@ -81,6 +81,7 @@
     <Compile Include="Commands\Uninstall\PackageNotInstalledException.cs" />
     <Compile Include="CreatePackage\InstallerPopulators\ArchitecturePopulater.cs" />
     <Compile Include="CreatePackage\InstallerPopulators\IPopulateManifest.cs" />
+    <Compile Include="CreatePackage\InstallerPopulators\MinWindowsVersionPopulater.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\IPopulateManifest.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\PopulateVersionTag.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\PopulatePackageId.cs" />
