@@ -2,7 +2,6 @@
 using AppGet.CreatePackage.Parsers;
 using AppGet.Manifests;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace AppGet.Tests.CreatePackage.Parsers
 {

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AppGet.PackageRepository
+﻿namespace AppGet.PackageRepository
 {
     public class PackageInfo
     {

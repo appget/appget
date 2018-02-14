@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using NLog;
+﻿using NLog;
 using NLog.Config;
 using NLog.Layouts;
 using NLog.Targets;

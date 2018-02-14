@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Runtime.Serialization;
 
 // ReSharper disable once InconsistentNaming
 namespace AppGet.Update

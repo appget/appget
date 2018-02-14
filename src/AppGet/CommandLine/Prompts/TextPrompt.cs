@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace AppGet.CommandLine.Prompts
+﻿namespace AppGet.CommandLine.Prompts
 {
     public interface IPrompt<T>
     {

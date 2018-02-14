@@ -1,4 +1,3 @@
-using System;
 using AppGet.Manifests;
 using AppGet.PackageRepository;
 

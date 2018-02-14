@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Text.RegularExpressions;
 using AppGet.CommandLine.Prompts;
 using AppGet.CreatePackage.Parsers;
 using AppGet.Manifests;

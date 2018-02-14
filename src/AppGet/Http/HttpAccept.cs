@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AppGet.Http
+﻿namespace AppGet.Http
 {
     public sealed class HttpAccept
     {

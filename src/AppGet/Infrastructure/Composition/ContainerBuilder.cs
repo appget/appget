@@ -6,7 +6,6 @@ using AppGet.Commands.Search;
 using AppGet.Commands.Uninstall;
 using AppGet.Commands.ViewManifest;
 using AppGet.Commands.WindowsInstallerSearch;
-using AppGet.CreatePackage;
 using AppGet.CreatePackage.ManifestPopulators;
 using AppGet.Crypto.Hash;
 using AppGet.Crypto.Hash.Algorithms;

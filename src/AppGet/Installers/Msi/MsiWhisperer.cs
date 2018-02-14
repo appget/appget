@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using AppGet.Commands.Install;
 using AppGet.Commands.Uninstall;
 using AppGet.HostSystem;
 using AppGet.Manifests;

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AppGet.Requirements
+﻿namespace AppGet.Requirements
 {
     public class EnforcementResult
     {

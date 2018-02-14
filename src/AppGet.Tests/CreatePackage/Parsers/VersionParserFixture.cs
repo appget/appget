@@ -1,6 +1,5 @@
 ﻿using System;
 using AppGet.CreatePackage.Parsers;
-using AppGet.Manifests;
 using NUnit.Framework;
 
 namespace AppGet.Tests.CreatePackage.Parsers

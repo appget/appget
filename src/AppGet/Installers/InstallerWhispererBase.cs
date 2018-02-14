@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using AppGet.Commands.Install;
 using AppGet.Commands.Uninstall;
 using AppGet.Exceptions;

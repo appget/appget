@@ -36,7 +36,7 @@ namespace AppGet.FileTransfer
                 _logger.Debug($"Installer is already downloaded: {path}");
                 return true;
             }
-            catch (ChecksumVerificationException e)
+            catch (ChecksumVerificationException)
             {
                 _logger.Warn("Checksum verification failed. ignoring cache.");
             }
