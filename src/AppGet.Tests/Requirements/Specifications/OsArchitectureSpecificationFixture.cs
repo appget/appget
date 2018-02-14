@@ -10,20 +10,6 @@ namespace AppGet.Tests.Requirements.Specifications
     public class OsArchitectureSpecificationFixture : TestBase<OsArchitectureSpecification>
     {
         [Test]
-        public void should_be_true_when_type_is_any()
-        {
-            Mocker.GetMock<IEnvironmentProxy>()
-                  .SetupGet(s => s.Is64BitOperatingSystem)
-                  .Returns(true);
-
-            Subject.IsRequirementSatisfied(new Installer
-            {
-                Architecture = ArchitectureTypes.Unknown
-            }).Success.Should().BeTrue();
-
-        }
-
-        [Test]
         public void should_be_true_when_type_is_x86()
         {
             Mocker.GetMock<IEnvironmentProxy>()

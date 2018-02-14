@@ -10,11 +10,11 @@ namespace AppGet.CreatePackage.ManifestPopulators
 {
     public class PopulateProductName : IPopulateManifest
     {
-        private readonly IPrompt _prompt;
+        private readonly IPrompt<string> _prompt;
         readonly TextInfo _textInfo = new CultureInfo("en-US", false).TextInfo;
 
 
-        public PopulateProductName(IPrompt prompt)
+        public PopulateProductName(IPrompt<string> prompt)
         {
             _prompt = prompt;
         }

@@ -103,7 +103,7 @@ namespace AppGet.Installers
                 args = $"{args.Trim()} {loggingArgs.Trim()}";
             }
 
-            return args.Trim();
+            return args?.Trim();
         }
 
         protected abstract string InteractiveArgs { get; }

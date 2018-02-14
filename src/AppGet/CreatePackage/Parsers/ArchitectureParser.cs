@@ -18,18 +18,14 @@ namespace AppGet.CreatePackage.Parsers
             foreach (var regex in ArchRegexes)
             {
                 var match = regex.Match(source);
-                if (match.Success)
+                if (match.Success && match.Value.Contains("64"))
                 {
-                    if (match.Value.Contains("64"))
-                    {
-                        return ArchitectureTypes.x64;
-                    }
+                    return ArchitectureTypes.x64;
 
-                    return ArchitectureTypes.x86;
                 }
             }
 
-            return ArchitectureTypes.Unknown;
+            return ArchitectureTypes.x86;
         }
 
     }

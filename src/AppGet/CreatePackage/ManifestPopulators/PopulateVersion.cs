@@ -10,9 +10,9 @@ namespace AppGet.CreatePackage.ManifestPopulators
 {
     public class PopulateVersion : IPopulateManifest
     {
-        private readonly IPrompt _prompt;
+        private readonly IPrompt<string> _prompt;
 
-        public PopulateVersion(IPrompt prompt)
+        public PopulateVersion(IPrompt<string> prompt)
         {
             _prompt = prompt;
         }

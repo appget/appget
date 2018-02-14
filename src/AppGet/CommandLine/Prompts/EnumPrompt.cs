@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace AppGet.CommandLine.Prompts
 {
-    public class EnumPrompt<T> where T : struct
+    public class EnumPrompt<T> : PromptBase<T> where T : struct
     {
         private readonly List<T> _members;
 
@@ -13,7 +13,7 @@ namespace AppGet.CommandLine.Prompts
             _members = Enum.GetValues(typeof(T)).Cast<T>().ToList();
         }
 
-        private void PrintOptions()
+        protected override void PrintHints()
         {
             Console.WriteLine();
 
@@ -23,57 +23,28 @@ namespace AppGet.CommandLine.Prompts
             }
         }
 
-
-        public T Request(string message, T defaultValue)
+        protected override bool TryParse(string input, out T result)
         {
-            Console.WriteLine();
-
-            Console.Write($"{message} (default: {defaultValue}): ");
-
-            PrintOptions();
-
-            var result = defaultValue;
-            var input = Console.ReadLine()?.Trim();
-
-            if (string.IsNullOrWhiteSpace(input))
+            if (Int16.TryParse(input, out var index))
             {
-                result = defaultValue;
-            }
-            else
-            {
-                var parseResult = ParseEnum(input);
-                if (parseResult != null)
+                if (_members.Count >= index)
                 {
-                    return parseResult.Value;
-                }
-
-                Console.WriteLine("Invalid Selection. Please select from one of the options.");
-                return Request(message, defaultValue);
-            }
-
-            return result;
-        }
-
-
-        private T? ParseEnum(string value)
-        {
-            if (Int16.TryParse(value, out var index))
-            {
-                if (_members.Count > index)
-                {
-                    return _members[index - 1];
+                    result = _members[index - 1];
+                    return true;
                 }
             }
 
             foreach (var m in _members)
             {
-                if (string.Equals(m.ToString(), value, StringComparison.InvariantCultureIgnoreCase))
+                if (string.Equals(m.ToString(), input, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    return m;
+                    result = m;
+                    return true;
                 }
             }
 
-            return null;
+            result = default(T);
+            return false;
         }
     }
 }

@@ -99,7 +99,6 @@ namespace AppGet.Manifests
 
     public enum ArchitectureTypes
     {
-        Unknown,
         x86,
         x64
     }

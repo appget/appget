@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using AppGet.Extensions;
 
 namespace AppGet.Manifests
 {
-    public class WindowsVersion
+    public static class WindowsVersion
     {
         public static readonly IEnumerable<Version> KnownVersions = new[]
         {
@@ -17,7 +14,7 @@ namespace AppGet.Manifests
             new Version(10,0)
         };
 
-        public string ToServerName(Version version)
+        public static string ToServerName(Version version)
         {
             switch (version.ToString(2))
             {
@@ -48,7 +45,7 @@ namespace AppGet.Manifests
             }
         }
 
-        public string ToDesktopName(Version version)
+        public static string ToDesktopName(Version version)
         {
             switch (version.ToString(2))
             {

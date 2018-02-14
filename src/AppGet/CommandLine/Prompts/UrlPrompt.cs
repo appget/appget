@@ -2,23 +2,25 @@
 
 namespace AppGet.CommandLine.Prompts
 {
-    public interface IUrlPrompt : IPrompt
+    public interface IUrlPrompt : IPrompt<string>
     {
     }
 
-    public class UrlPrompt : Prompt, IUrlPrompt
+    public class UrlPrompt : TextPrompt, IUrlPrompt
     {
-
-        protected override bool IsValid(string value)
+        protected override bool TryParse(string input, out string result)
         {
-            var isValid = Uri.IsWellFormedUriString(value, UriKind.Absolute);
+            var isValid = Uri.IsWellFormedUriString(input, UriKind.Absolute);
 
             if (!isValid)
             {
-                Console.WriteLine($"'{value}' is not a valid URL.");
+                Console.WriteLine($"'{input}' is not a valid URL.");
             }
 
+            result = input.Trim();
+
             return isValid;
+
         }
     }
 }

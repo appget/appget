@@ -7,10 +7,10 @@ namespace AppGet.CreatePackage.ManifestPopulators
 {
     public class PopulatePackageId : IPopulateManifest
     {
-        private readonly IPrompt _prompt;
+        private readonly IPrompt<string> _prompt;
         private readonly Regex _idRegex = new Regex("\\W+");
 
-        public PopulatePackageId(IPrompt prompt)
+        public PopulatePackageId(IPrompt<string> prompt)
         {
             _prompt = prompt;
         }

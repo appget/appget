@@ -58,7 +58,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppData\AppDataService.cs" />
-    <Compile Include="CommandLine\Prompts\Prompt.cs" />
+    <Compile Include="CommandLine\Prompts\WindowsVersionPrompt.cs" />
+    <Compile Include="CommandLine\Prompts\PromptBase.cs" />
+    <Compile Include="CommandLine\Prompts\TextPrompt.cs" />
     <Compile Include="CommandLine\Prompts\EnumPrompt.cs" />
     <Compile Include="CommandLine\Prompts\UrlPrompt.cs" />
     <Compile Include="Commands\CommandExecutor.cs" />

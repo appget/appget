@@ -16,10 +16,6 @@ namespace AppGet.Requirements.Specifications
         {
             switch (installer.Architecture)
             {
-                case ArchitectureTypes.Unknown:
-                    {
-                        return EnforcementResult.Pass();
-                    }
                 case ArchitectureTypes.x86:
                     {
                         return EnforcementResult.Pass();

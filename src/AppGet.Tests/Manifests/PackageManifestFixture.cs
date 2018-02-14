@@ -25,12 +25,12 @@ namespace AppGet.Tests.Manifests
                     new Installer
                     {
                         Location = "http://www.linqpad.net/GetFile.aspx?LINQPad4-AnyCPU.zip",
-                        Architecture = ArchitectureTypes.Unknown
+                        Architecture = ArchitectureTypes.x86
                     },
                       new Installer
                     {
                         Location = "http://www.linqpad.net/GetFile.aspx?LINQPad4-AnyCPU.zip",
-                        Architecture = ArchitectureTypes.Unknown,
+                        Architecture = ArchitectureTypes.x86,
                         MinWindowsVersion = WindowsVersion.KnownVersions.First(),
                     }
                 }

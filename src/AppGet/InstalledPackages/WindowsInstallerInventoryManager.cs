@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AppGet.Extensions;
 using AppGet.Manifests;
@@ -83,6 +84,14 @@ namespace AppGet.InstalledPackages
             {
                 return registryKey.GetValue(key)?.ToString();
             }
+
+
+
+            var keys = registryKey.GetValueNames().OrderBy(c => c).ToArray();
+
+            Console.WriteLine(string.Join("|", keys));
+
+
 
             var record = new WindowsInstallRecord
             {
