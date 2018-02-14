@@ -13,7 +13,6 @@ namespace AppGet.Tests.Manifests
         private Mock<IEnforceRequirements> _approved;
         private Mock<IEnforceRequirements> _rejected;
 
-        private Installer _anyInstaller;
         private Installer _x86Installer;
         private Installer _x64Installer;
         private List<Installer> _installers;
@@ -36,7 +35,7 @@ namespace AppGet.Tests.Manifests
 
         private void GivenApprovedOnly()
         {
-            Mocker.SetInstance((IEnumerable<IEnforceRequirements>)(new List<IEnforceRequirements> { _approved.Object }));           
+            Mocker.SetInstance((IEnumerable<IEnforceRequirements>)(new List<IEnforceRequirements> { _approved.Object }));
         }
 
         private void GivenRejectedOnly()
@@ -53,7 +52,7 @@ namespace AppGet.Tests.Manifests
         public void should_return_null_if_no_suitable_installer_is_found()
         {
             GivenRejectedOnly();
-            GivenInstallers(_anyInstaller);
+            GivenInstallers(_x64Installer);
 
             Subject.GetBestInstaller(_installers).Should().BeNull();
         }
@@ -67,13 +66,5 @@ namespace AppGet.Tests.Manifests
             Subject.GetBestInstaller(_installers).Should().Be(_x64Installer);
         }
 
-        [Test]
-        public void should_prefer_x86_over_any()
-        {
-            GivenApprovedOnly();
-            GivenInstallers(_x86Installer, _anyInstaller);
-
-            Subject.GetBestInstaller(_installers).Should().Be(_x86Installer);
-        }
     }
 }
