@@ -8,7 +8,7 @@
 #define UpdatesURL "https://github.com/appget/appget/releases"
 #define AppExeName "appget.exe"
 ; #define BuildNumber "{%APPVEYOR_BUILD_VERSION}"
-#define BuildNumber GetEnv("APPVEYOR_BUILD_VERSION")
+#define BuildNumber "1.0.0"
 ; #define BranchName "{%BRANCH}"
 ; #define BranchName "local"
 #define CopyRight "Apache License, Version 2.0"
@@ -39,6 +39,7 @@ Compression=lzma2/normal
 AppContact={#SupportURL}
 VersionInfoVersion={#BuildNumber}
 UninstallDisplayName={#AppName}
+ChangesEnvironment=true
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
