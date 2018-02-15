@@ -7,7 +7,7 @@ namespace AppGet.CreatePackage.Parsers
     public static class VersionParser
     {
         private static readonly Regex[] VersionRegexes = {
-            new Regex("((\\d+)\\.){2,4}\\d+"),
+            new Regex("\\d+(\\.\\d+){1,3}"),
             new Regex("\\d{1,4}")
 
         };

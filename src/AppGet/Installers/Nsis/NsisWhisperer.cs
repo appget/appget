@@ -20,9 +20,9 @@ namespace AppGet.Installers.Nsis
             throw new NotImplementedException();
         }
 
-        public override bool CanHandle(InstallMethodType installMethod)
+        public override bool CanHandle(InstallMethodTypes installMethod)
         {
-            return installMethod == InstallMethodType.NSIS;
+            return installMethod == InstallMethodTypes.NSIS;
         }
 
         protected override string InteractiveArgs => "";

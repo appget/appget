@@ -5,7 +5,7 @@ namespace AppGet.Crypto.Hash.Algorithms
 {
     public class Sha256Hash : CheckSumBase
     {
-        public override HashType HashType => HashType.Sha256;
+        public override HashTypes HashType => HashTypes.Sha256;
 
         protected override HashAlgorithm GetHashAlgorithm()
         {

@@ -6,6 +6,11 @@ namespace AppGet.CommandLine.Prompts
 {
     public class WindowsVersionPrompt : PromptBase<Version>
     {
+        protected override string GetPromptText(string message, Version defaultValue)
+        {
+            return ($"{message} (default: none): ");
+        }
+
         protected override void PrintHints()
         {
             Console.WriteLine();
@@ -22,7 +27,13 @@ namespace AppGet.CommandLine.Prompts
         {
             var versions = WindowsVersion.KnownVersions.ToList();
 
-            if (Int16.TryParse(input, out var index))
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                result = null;
+                return true;
+            }
+
+            if (short.TryParse(input, out var index))
             {
                 if (versions.Count >= index)
                 {

@@ -15,7 +15,7 @@ namespace AppGet.Manifests
         public string ProductUrl { get; set; }
 
         public string[] Exe { get; set; }
-        public InstallMethodType InstallMethod { get; set; }
+        public InstallMethodTypes InstallMethod { get; set; }
 
         public List<Installer> Installers { get; set; }
     }
@@ -35,10 +35,13 @@ namespace AppGet.Manifests
         public string Sha256 { get; set; }
         public string Md5 { get; set; }
 
+        [YamlIgnore]
+        public string FilePath { get; set; }
+
         public ArchitectureTypes Architecture { get; set; }
 
         public Version MinWindowsVersion { get; set; }
-        public DotNetVersion MinDotNet { get; set; }
+        public DotNetVersions MinDotNet { get; set; }
 
         public List<string> ProductIds { get; set; }
 
@@ -46,15 +49,15 @@ namespace AppGet.Manifests
         {
             if (!string.IsNullOrEmpty(Sha256))
             {
-                return new FileHash { HashType = HashType.Sha256, Value = Sha256 };
+                return new FileHash { HashType = HashTypes.Sha256, Value = Sha256 };
             }
             if (!string.IsNullOrEmpty(Sha256))
             {
-                return new FileHash { HashType = HashType.Sha1, Value = Sha1 };
+                return new FileHash { HashType = HashTypes.Sha1, Value = Sha1 };
             }
             if (!string.IsNullOrEmpty(Sha256))
             {
-                return new FileHash { HashType = HashType.Md5, Value = Md5 };
+                return new FileHash { HashType = HashTypes.Md5, Value = Md5 };
             }
 
             return null;
@@ -63,19 +66,19 @@ namespace AppGet.Manifests
 
     public class FileHash
     {
-        public HashType HashType { get; set; }
+        public HashTypes HashType { get; set; }
         public string Value { get; set; }
     }
 
 
-    public enum HashType
+    public enum HashTypes
     {
         Md5,
         Sha1,
         Sha256,
     }
 
-    public enum DotNetVersion
+    public enum DotNetVersions
     {
         Unknown = -1,
         None = 0,
@@ -103,7 +106,7 @@ namespace AppGet.Manifests
         x64
     }
 
-    public enum InstallMethodType
+    public enum InstallMethodTypes
     {
         Unknown = -1,
         Zip,

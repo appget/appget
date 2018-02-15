@@ -1,5 +1,8 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using AppGet.CommandLine.Prompts;
+using AppGet.CreatePackage.ManifestPopulators;
 using AppGet.Crypto.Hash.Algorithms;
 using AppGet.Extensions;
 using AppGet.FileTransfer;
@@ -7,36 +10,45 @@ using AppGet.HostSystem;
 using AppGet.Manifests;
 using NLog;
 
-
-namespace AppGet.CreatePackage
+namespace AppGet.CreatePackage.InstallerPopulators
 {
-    public interface IXRayService
+    public interface IBuildInstaller
     {
-        Installer Scan(string url, out FileVersionInfo fileVersionInfo);
+        Installer Populate();
+        Installer Populate(string url);
     }
 
-
-    public class XRayService : IXRayService
+    public class BuildInstaller : IBuildInstaller
     {
         private readonly IFileTransferService _fileTransferService;
+        private readonly IEnumerable<IPopulateInstaller> _populaters;
         private readonly IPathResolver _pathResolver;
+        private readonly IUrlPrompt _urlPrompt;
         private readonly Logger _logger;
         private readonly Sha256Hash _sha256 = new Sha256Hash();
 
-        public XRayService(IFileTransferService fileTransferService, IPathResolver pathResolver, Logger logger)
+        public BuildInstaller(IFileTransferService fileTransferService, IEnumerable<IPopulateInstaller> populaters, IPathResolver pathResolver, IUrlPrompt urlPrompt, Logger logger)
         {
             _fileTransferService = fileTransferService;
+            _populaters = populaters;
             _pathResolver = pathResolver;
+            _urlPrompt = urlPrompt;
             _logger = logger;
         }
 
-        public Installer Scan(string url, out FileVersionInfo fileVersionInfo)
-        {
-            var installer = new Installer();
 
+        public Installer Populate()
+        {
+            var url = _urlPrompt.Request("Installer direct download URL:", null);
+            return Populate(url);
+        }
+
+        public Installer Populate(string url)
+        {
             var uri = new Uri(url, UriKind.Absolute);
 
-            string filePath = null;
+
+            Installer installer = null;
 
             if (uri.Scheme == Uri.UriSchemeHttp)
             {
@@ -44,8 +56,9 @@ namespace AppGet.CreatePackage
 
                 try
                 {
-                    filePath = DownloadInstaller(uri.ToHttps(), installer);
+                    installer = DownloadInstaller(uri.ToHttps());
                     _logger.Info("Installer aprears to be avilable using HTTPS. Using HTTPS instead.");
+
                 }
                 catch (Exception e)
                 {
@@ -53,23 +66,27 @@ namespace AppGet.CreatePackage
                 }
             }
 
-            if (filePath == null)
+            if (installer == null)
             {
-                filePath = DownloadInstaller(uri, installer);
+                installer = DownloadInstaller(uri);
             }
 
-            fileVersionInfo = FileVersionInfo.GetVersionInfo(filePath);
+            foreach (var populater in _populaters)
+            {
+                populater.Populate(installer);
+            }
 
             return installer;
         }
 
-        private string DownloadInstaller(Uri uri, Installer installer)
+        private Installer DownloadInstaller(Uri uri)
         {
+            var installer = new Installer();
             var filePath = _fileTransferService.TransferFile(uri.ToString(), _pathResolver.TempFolder, null);
             installer.Sha256 = _sha256.CalculateHash(filePath);
             installer.Location = uri.ToString();
-            return filePath;
+            installer.FilePath = filePath;
+            return installer;
         }
-
     }
 }

@@ -15,7 +15,13 @@ namespace AppGet.HostSystem
 
     public class PathResolver : IPathResolver
     {
-        public string TempFolder => Path.GetTempPath();
+        public PathResolver()
+        {
+            Directory.CreateDirectory(TempFolder);
+            Directory.CreateDirectory(AppDataDirectory);
+        }
+
+        public string TempFolder => Path.Combine(AppDataDirectory, "Temp");
 
         private string ProgramData => Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
 
@@ -29,7 +35,7 @@ namespace AppGet.HostSystem
 
             Directory.CreateDirectory(installerLogDir);
 
-            var fileName = $"{packageId}_{DateTime.Now:yyyyMMdd_HHssmm}.log".ToLowerInvariant();
+            var fileName = $"{packageId}_{DateTime.Now:yyyyMMdd_HHmmss}.log".ToLowerInvariant();
 
             return Path.Combine(installerLogDir, fileName);
         }
@@ -39,7 +45,7 @@ namespace AppGet.HostSystem
         {
             switch (packageManifest.InstallMethod)
             {
-                case InstallMethodType.Zip:
+                case InstallMethodTypes.Zip:
                     {
                         var folderName = $"{packageManifest.Id}-{packageManifest.Version}";
                         return Path.Combine(AppDataDirectory, folderName);

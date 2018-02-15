@@ -14,11 +14,11 @@ namespace AppGet.ProgressTracker
 
         public override string ToString()
         {
-            var filled = (int)Math.Abs(PROGRESS_LENGTH * PercentCompleted / 100);
+            var filled = (int)Math.Round(PROGRESS_LENGTH * PercentCompleted / 100);
 
             var progress = new string('█', filled);
 
-            return $"   [{progress.PadRight(PROGRESS_LENGTH, '░')}] {PercentCompleted:00}%: {Completed:N0} / {Total:N0}";
+            return $"   {progress.PadRight(PROGRESS_LENGTH, '░')} {Math.Round(PercentCompleted)}%: {Completed:N0} / {Total:N0}";
         }
     }
 }

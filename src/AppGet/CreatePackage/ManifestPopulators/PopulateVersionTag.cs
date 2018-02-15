@@ -6,10 +6,10 @@ namespace AppGet.CreatePackage.ManifestPopulators
 {
     public class PopulateVersionTag : IPopulateManifest
     {
-        private readonly IPrompt<string> _prompt;
+        private readonly TextPrompt _prompt;
         private const string LATEST = "latest";
 
-        public PopulateVersionTag(IPrompt<string> prompt)
+        public PopulateVersionTag(TextPrompt prompt)
         {
             _prompt = prompt;
         }

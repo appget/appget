@@ -57,7 +57,6 @@ namespace AppGet.Manifests
                     {
                         return "Windows 7";
                     }
-
                 case "6.2":
                     {
                         return "Windows 8";

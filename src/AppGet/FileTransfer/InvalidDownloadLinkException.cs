@@ -5,7 +5,7 @@ namespace AppGet.FileTransfer
     public class InvalidDownloadLinkException : AppGetException
     {
         public InvalidDownloadLinkException(string url)
-            : base($"Invalid download URL {url}.")
+            : base($"Invalid download URL {url}")
         {
         }
     }

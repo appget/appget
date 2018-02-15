@@ -86,7 +86,7 @@ namespace AppGet.Commands.Install
                 Architecture = installer.Architecture
             };
 
-            if (flightPlan.InstallMethod == InstallMethodType.Zip)
+            if (flightPlan.InstallMethod == InstallMethodTypes.Zip)
             {
                 return installedPackage;
             }

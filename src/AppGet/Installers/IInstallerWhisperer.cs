@@ -8,6 +8,6 @@ namespace AppGet.Installers
     {
         void Install(string installerLocation, PackageManifest packageManifest, InstallOptions installOptions);
         void Uninstall(PackageManifest packageManifest, UninstallOptions installOptions);
-        bool CanHandle(InstallMethodType installMethod);
+        bool CanHandle(InstallMethodTypes installMethod);
     }
 }

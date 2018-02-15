@@ -11,14 +11,10 @@
 
         public override string ToString()
         {
-            var formatted = $"[{Id}] {Name}";
+            var friendly = $"{Name} {Version}".Trim();
+            var tag = $"{Id}:{MajorVersion ?? "latest"}";
 
-            if (!string.IsNullOrEmpty(Version))
-            {
-                formatted += $" ({Version})";
-            }
-
-            return formatted;
+            return $"{friendly} [{tag}]";
         }
     }
 }

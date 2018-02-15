@@ -7,7 +7,7 @@ namespace AppGet.Crypto.Hash
 {
     public abstract class CheckSumBase : ICheckSum
     {
-        public abstract HashType HashType { get; }
+        public abstract HashTypes HashType { get; }
 
         protected abstract HashAlgorithm GetHashAlgorithm();
 

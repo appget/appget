@@ -9,9 +9,9 @@ namespace AppGet.CreatePackage.ManifestPopulators
 {
     public class PopulateVersion : IPopulateManifest
     {
-        private readonly IPrompt<string> _prompt;
+        private readonly TextPrompt _prompt;
 
-        public PopulateVersion(IPrompt<string> prompt)
+        public PopulateVersion(TextPrompt prompt)
         {
             _prompt = prompt;
         }
@@ -28,7 +28,7 @@ namespace AppGet.CreatePackage.ManifestPopulators
                     .FirstOrDefault(c => !string.IsNullOrWhiteSpace(c));
             }
 
-            if (urlVersion?.Length > defaultValue?.Length)
+            if ((urlVersion ?? "").Length > (defaultValue ?? "").Length)
             {
                 defaultValue = urlVersion;
             }

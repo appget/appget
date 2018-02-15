@@ -10,7 +10,7 @@ namespace AppGet.InstalledPackages
         public string UninstallCommand { get; set; }
         public string InstallLocation { get; set; }
         public string Publisher { get; set; }
-        public InstallMethodType InstallMethod { get; set; }
+        public InstallMethodTypes InstallMethod { get; set; }
         public string QuietUninstallCommand { get; set; }
         public string InstallDate { get; set; }
         public string InstallSource { get; set; }

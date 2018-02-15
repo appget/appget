@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace AppGet.Tests.PackageRepository
 {
     [TestFixture]
-    public class AppGetServerClientFixture : TestBase<AppGetServerClient>
+    public class HttpPackageRepositoryFixture : TestBase<HttpPackageRepository>
     {
         [TestCase("linqpad")]
         [TestCase("seven-zip")]

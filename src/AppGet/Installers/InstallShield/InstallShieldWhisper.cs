@@ -13,9 +13,9 @@ namespace AppGet.Installers.InstallShield
         {
         }
 
-        public override bool CanHandle(InstallMethodType installMethod)
+        public override bool CanHandle(InstallMethodTypes installMethod)
         {
-            return installMethod == InstallMethodType.InstallShield;
+            return installMethod == InstallMethodTypes.InstallShield;
         }
     }
 }

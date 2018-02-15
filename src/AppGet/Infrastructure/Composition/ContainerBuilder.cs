@@ -6,6 +6,7 @@ using AppGet.Commands.Search;
 using AppGet.Commands.Uninstall;
 using AppGet.Commands.ViewManifest;
 using AppGet.Commands.WindowsInstallerSearch;
+using AppGet.CreatePackage.InstallerPopulators;
 using AppGet.CreatePackage.ManifestPopulators;
 using AppGet.Crypto.Hash;
 using AppGet.Crypto.Hash.Algorithms;
@@ -73,6 +74,13 @@ namespace AppGet.Infrastructure.Composition
                 typeof(PopulatePackageId),
                 typeof(PopulateVersion),
                 typeof(PopulateVersionTag)
+            });
+
+
+            container.RegisterMultiple<IPopulateInstaller>(new[]
+            {
+                typeof(ArchitecturePopulater),
+                typeof(MinWindowsVersionPopulater)
             });
 
             container.RegisterMultiple<IFileTransferClient>(new[]

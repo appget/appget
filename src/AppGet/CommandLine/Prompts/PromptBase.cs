@@ -10,23 +10,16 @@ namespace AppGet.CommandLine.Prompts
 
             T result;
 
-            if (defaultValue != null)
-            {
-                Console.Write($"{message} (guess: {defaultValue.ToString().Trim()}): ");
-            }
-            else
-            {
-                Console.Write($"{message}: ");
-            }
+            Console.WriteLine(GetPromptText(message, defaultValue));
 
             PrintHints();
 
 
             var inputString = Console.ReadLine()?.Trim();
 
-            if (string.IsNullOrWhiteSpace(inputString))
+            if (string.IsNullOrWhiteSpace(inputString) && defaultValue != null)
             {
-                result = defaultValue;
+                return defaultValue;
             }
 
 
@@ -39,6 +32,16 @@ namespace AppGet.CommandLine.Prompts
         }
 
         protected abstract bool TryParse(string input, out T result);
+
+        protected virtual string GetPromptText(string message, T defaultValue)
+        {
+            if (defaultValue != null)
+            {
+                return ($"{message} (guess: {defaultValue.ToString().Trim()}): ");
+            }
+
+            return $"{message}: ";
+        }
 
         protected virtual void PrintHints()
         {

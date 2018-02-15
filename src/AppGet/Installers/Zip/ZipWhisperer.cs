@@ -45,9 +45,9 @@ namespace AppGet.Installers.Zip
             }
         }
 
-        public bool CanHandle(InstallMethodType installMethod)
+        public bool CanHandle(InstallMethodTypes installMethod)
         {
-            return installMethod == InstallMethodType.Zip;
+            return installMethod == InstallMethodTypes.Zip;
         }
     }
 }

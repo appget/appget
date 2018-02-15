@@ -81,8 +81,9 @@
     <Compile Include="Commands\WindowsInstallerSearch\WindowsInstallerSearchOptions.cs" />
     <Compile Include="Commands\ViewManifest\ViewManifestCommandHandler.cs" />
     <Compile Include="Commands\Uninstall\PackageNotInstalledException.cs" />
+    <Compile Include="CreatePackage\InstallerPopulators\BuildInstaller.cs" />
     <Compile Include="CreatePackage\InstallerPopulators\ArchitecturePopulater.cs" />
-    <Compile Include="CreatePackage\InstallerPopulators\IPopulateManifest.cs" />
+    <Compile Include="CreatePackage\InstallerPopulators\IPopulateInstaller.cs" />
     <Compile Include="CreatePackage\InstallerPopulators\MinWindowsVersionPopulater.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\IPopulateManifest.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\PopulateVersionTag.cs" />
@@ -146,13 +147,13 @@
     <Compile Include="Installers\InstallerWhispererBase.cs" />
     <Compile Include="Installers\Zip\ZipWhisperer.cs" />
     <Compile Include="InstalledPackages\InventoryManager.cs" />
-    <Compile Include="Manifests\WindowsVersionParseException.cs" />
     <Compile Include="Commands\AppGetOption.cs" />
     <Compile Include="Commands\PackageCommandOptions.cs" />
     <Compile Include="Commands\OptionException.cs" />
     <Compile Include="Commands\OptionsParser.cs" />
     <Compile Include="Commands\ViewManifest\ViewManifestOptions.cs" />
-    <Compile Include="PackageRepository\AppGetServerClient.cs" />
+    <Compile Include="PackageRepository\FileSystemPackageRepository.cs" />
+    <Compile Include="PackageRepository\HttpPackageRepository.cs" />
     <Compile Include="PackageRepository\IPackageRepository.cs" />
     <Compile Include="PackageRepository\PackageInfo.cs" />
     <Compile Include="Manifests\FindInstaller.cs" />
@@ -181,7 +182,7 @@
     <Compile Include="Serialization\Yaml.cs" />
     <Compile Include="Requirements\IEnforceRequirements.cs" />
     <Compile Include="Requirements\Specifications\MinOsVersionSpecification.cs" />
-    <Compile Include="CreatePackage\XRayService.cs" />
+    <Compile Include="Update\AppGetUpdateService.cs" />
     <Compile Include="Update\GithubRelease.cs" />
     <Compile Include="Update\GitHubReleaseClient.cs" />
   </ItemGroup>

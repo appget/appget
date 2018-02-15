@@ -72,7 +72,7 @@ namespace AppGet.Installers
 
 
         public abstract void Uninstall(PackageManifest packageManifest, UninstallOptions installOptions);
-        public abstract bool CanHandle(InstallMethodType installMethod);
+        public abstract bool CanHandle(InstallMethodTypes installMethod);
 
 
         private string GetInstallArguments(InstallOptions installOptions)

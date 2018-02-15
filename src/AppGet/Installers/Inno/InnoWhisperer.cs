@@ -19,9 +19,9 @@ namespace AppGet.Installers.Inno
             throw new NotImplementedException();
         }
 
-        public override bool CanHandle(InstallMethodType installMethod)
+        public override bool CanHandle(InstallMethodTypes installMethod)
         {
-            return installMethod == InstallMethodType.Inno;
+            return installMethod == InstallMethodTypes.Inno;
         }
 
         //Command line args: http://www.jrsoftware.org/ishelp/index.php?topic=setupcmdline

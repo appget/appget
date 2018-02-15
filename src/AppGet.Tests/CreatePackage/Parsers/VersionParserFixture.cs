@@ -13,6 +13,7 @@ namespace AppGet.Tests.CreatePackage.Parsers
         [TestCase("https://nodejs.org/dist/v8.9.4/node-v8.9.4.400-x86.msi", ExpectedResult = "8.9.4.400")]
         [TestCase("https://download.piriform.com/ccsetup500.exe", ExpectedResult = "500")]
         [TestCase("http://www.7-zip.org/a/7z1801-x64.exe", ExpectedResult = "1801")]
+        [TestCase("https://github.com/gitextensions/gitextensions/releases/download/v2.51/GitExtensions-2.51-Setup.msi", ExpectedResult = "2.51")]
         public string should_parse_version(string url)
         {
             return VersionParser.Parse(new Uri(url));

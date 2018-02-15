@@ -19,7 +19,7 @@ namespace AppGet.Tests.Manifests
                 Version = "4.51.03",
                 Exe = new[] { "LINQPad.exe" },
                 ProductUrl = "http://www.linqpad.net/",
-                InstallMethod = InstallMethodType.Zip,
+                InstallMethod = InstallMethodTypes.Zip,
                 Installers = new List<Installer>
                 {
                     new Installer

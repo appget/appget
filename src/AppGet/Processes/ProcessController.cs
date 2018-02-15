@@ -181,7 +181,7 @@ namespace AppGet.Processes
 
         public void WaitForExit(Process process)
         {
-            _logger.Debug("Waiting for process {0} to exit.", process.ProcessName);
+            _logger.Debug("Waiting for process {0} to exit", process.ProcessName);
 
             process.WaitForExit();
         }

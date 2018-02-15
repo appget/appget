@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using AppGet.CreatePackage;
+using AppGet.CreatePackage.InstallerPopulators;
 using AppGet.CreatePackage.ManifestPopulators;
 using AppGet.Manifests;
 
@@ -7,13 +9,13 @@ namespace AppGet.Commands.CreateManifest
 {
     public class CreateManifestCommandHandler : ICommandHandler
     {
-        private readonly IXRayService _xRayService;
+        private readonly IBuildInstaller _installerBuilder;
         private readonly IPackageManifestService _packageManifestService;
         private readonly IEnumerable<IPopulateManifest> _populaters;
 
-        public CreateManifestCommandHandler(IXRayService xRayService, IPackageManifestService packageManifestService, IEnumerable<IPopulateManifest> populaters)
+        public CreateManifestCommandHandler(IBuildInstaller installerBuilder, IPackageManifestService packageManifestService, IEnumerable<IPopulateManifest> populaters)
         {
-            _xRayService = xRayService;
+            _installerBuilder = installerBuilder;
             _packageManifestService = packageManifestService;
             _populaters = populaters;
         }
@@ -28,9 +30,11 @@ namespace AppGet.Commands.CreateManifest
             var createOptions = (CreateManifestOptions)appGetOption;
 
             var manifest = new PackageManifest { Installers = new List<Installer>() };
+            var installer = _installerBuilder.Populate(createOptions.DownloadUrl);
+            var fileVersionInfo = FileVersionInfo.GetVersionInfo(installer.FilePath);
 
-            var installer = _xRayService.Scan(createOptions.DownloadUrl, out var fileVersionInfo);
             manifest.Installers.Add(installer);
+
 
             foreach (var populater in _populaters)
             {

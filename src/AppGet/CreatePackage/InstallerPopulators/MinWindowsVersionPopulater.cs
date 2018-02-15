@@ -1,20 +1,20 @@
-using System;
-using System.Diagnostics;
 using AppGet.CommandLine.Prompts;
-using AppGet.CreatePackage.Parsers;
 using AppGet.Manifests;
 
 namespace AppGet.CreatePackage.InstallerPopulators
 {
     public class MinWindowsVersionPopulater : IPopulateInstaller
     {
-        public void Populate(Installer installer, PackageManifest manifest, FileVersionInfo fileVersionInfo)
+        private readonly WindowsVersionPrompt _prompt;
+
+        public MinWindowsVersionPopulater(WindowsVersionPrompt prompt)
         {
-            var prompt = new EnumPrompt<ArchitectureTypes>();
+            _prompt = prompt;
+        }
 
-            var defaultArch = ArchitectureParser.Parse(new Uri(installer.Location));
-
-//            installer.Architecture = prompt.Request("Minimum Windows Version");
+        public void Populate(Installer installer)
+        {
+            installer.MinWindowsVersion = _prompt.Request("Minimum Windows Version", null);
         }
     }
 }
