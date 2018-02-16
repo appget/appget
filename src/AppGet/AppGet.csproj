@@ -9,32 +9,35 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AppGet</RootNamespace>
     <AssemblyName>appget</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>AppGet.Application</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommandLine, Version=2.2.1.0, Culture=neutral, PublicKeyToken=de6f01bd326f8c32, processorArchitecture=MSIL">
@@ -51,6 +54,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WindowsBase" />
     <Reference Include="YamlDotNet, Version=4.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\YamlDotNet.4.3.0\lib\net35\YamlDotNet.dll</HintPath>
@@ -81,6 +85,7 @@
     <Compile Include="Commands\WindowsInstallerSearch\WindowsInstallerSearchOptions.cs" />
     <Compile Include="Commands\ViewManifest\ViewManifestCommandHandler.cs" />
     <Compile Include="Commands\Uninstall\PackageNotInstalledException.cs" />
+    <Compile Include="Compression\SfxReader.cs" />
     <Compile Include="CreatePackage\InstallerPopulators\BuildInstaller.cs" />
     <Compile Include="CreatePackage\InstallerPopulators\ArchitecturePopulater.cs" />
     <Compile Include="CreatePackage\InstallerPopulators\IPopulateInstaller.cs" />
@@ -114,6 +119,10 @@
     <Compile Include="FileTransfer\FileTransferService.cs" />
     <Compile Include="FileTransfer\Protocols\HttpFileTransferClient.cs" />
     <Compile Include="FileTransfer\IFileTransferClient.cs" />
+    <Compile Include="Installers\IDetectInstallMethod.cs" />
+    <Compile Include="Installers\Inno\InnoDetector.cs" />
+    <Compile Include="Installers\Msi\MsiDetector.cs" />
+    <Compile Include="Installers\Nsis\NsisDetector.cs" />
     <Compile Include="Manifests\WindowsVersion.cs" />
     <Compile Include="Manifests\PackageManifestService.cs" />
     <Compile Include="HostSystem\EnvironmentProxy.cs" />
@@ -191,9 +200,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Installers\Msi\MSIHelp.txt" />
+    <ProjectReference Include="..\SevenZip\SevenZip.csproj">
+      <Project>{4960DD14-3431-47EC-B9D9-9D2730A98DC3}</Project>
+      <Name>SevenZip</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

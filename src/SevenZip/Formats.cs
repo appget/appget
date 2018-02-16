@@ -161,7 +161,7 @@ namespace SevenZip
         /// Flash video format.
         /// </summary>
         /// <remarks><a href="http://en.wikipedia.org/wiki/Flv">Wikipedia information</a></remarks>
-        Flv,
+//        Flv,
         /// <summary>
         /// Shockwave Flash format.
         /// </summary>
@@ -442,7 +442,7 @@ namespace SevenZip
              {"dmg",    InArchiveFormat.Dmg},
              {"Z",      InArchiveFormat.Lzw},
              {"xz",     InArchiveFormat.XZ},
-             {"flv",    InArchiveFormat.Flv},
+//             {"flv",    InArchiveFormat.Flv},
              {"swf",    InArchiveFormat.Swf},
              {"exe",    InArchiveFormat.PE},
              {"dll",    InArchiveFormat.PE},
@@ -484,7 +484,7 @@ namespace SevenZip
             //0x400 byte offset
             {"48-2B",								                            InArchiveFormat.Hfs},
             {"FD-37-7A-58-5A",							                        InArchiveFormat.XZ},
-            {"46-4C-56",							                                InArchiveFormat.Flv},
+//            {"46-4C-56",							                                InArchiveFormat.Flv},
             {"46-57-53",							                                InArchiveFormat.Swf},
             {"4D-5A",							                                InArchiveFormat.PE},
             {"7F-45-4C-46",							                            InArchiveFormat.Elf},

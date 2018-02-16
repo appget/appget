@@ -1,7 +1,9 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using AppGet.ProgressTracker;
 using NLog;
+using SevenZip;
 using SharpCompress.Archives;
 using SharpCompress.Readers;
 
@@ -12,6 +14,7 @@ namespace AppGet.Compression
         void Decompress(string sourcePath, string destination);
     }
 
+
     public class CompressionService : ICompressionService
     {
         private readonly Logger _logger;
@@ -21,6 +24,7 @@ namespace AppGet.Compression
             _logger = logger;
         }
 
+
         public void Decompress(string sourcePath, string destination)
         {
             _logger.Info("Extracting package to " + destination);
@@ -28,7 +32,7 @@ namespace AppGet.Compression
 
             var progress = new ProgressState
             {
-                Total = archive.Count()
+                Total = archive.Count
             };
 
             foreach (var entry in archive)
@@ -43,6 +47,27 @@ namespace AppGet.Compression
                 OnStatusUpdated?.Invoke(progress);
                 OnCompleted?.Invoke(progress);
             }
+        }
+
+        public SevenZipExtractor TryOpen(string path)
+        {
+            foreach (var format in Enum.GetValues(typeof(InArchiveFormat)).Cast<InArchiveFormat>())
+            {
+                try
+                {
+                    var archive = new SevenZipExtractor(path, format);
+                    if (archive.FilesCount != 0)
+                    {
+                        return archive;
+                    }
+                }
+                catch (SevenZipArchiveException)
+                {
+
+                }
+            }
+
+            return null;
         }
 
         public Action<ProgressState> OnStatusUpdated { get; set; }
