@@ -39,7 +39,7 @@ namespace AppGet.Commands
             commandHandler.Execute(option);
             stopwatch.Stop();
             Console.WriteLine();
-            _logger.Debug("Completed command [{0}]. duration: {1:N}s", option.CommandName, stopwatch.Elapsed.TotalSeconds);
+            _logger.Debug("Completed command [{0}]. took: {1:N}s", option.CommandName, stopwatch.Elapsed.TotalSeconds);
         }
     }
 }

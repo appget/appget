@@ -16,5 +16,10 @@ namespace AppGet.InstalledPackages
         {
             ProductIds = new List<string>();
         }
+
+        public override string ToString()
+        {
+            return $"{Id} {Version}";
+        }
     }
 }
