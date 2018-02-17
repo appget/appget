@@ -53,6 +53,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="WindowsBase" />
@@ -91,6 +92,7 @@
     <Compile Include="CreatePackage\InstallerPopulators\IPopulateInstaller.cs" />
     <Compile Include="CreatePackage\InstallerPopulators\MinWindowsVersionPopulater.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\IPopulateManifest.cs" />
+    <Compile Include="CreatePackage\ManifestPopulators\PopulateInstallMethod.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\PopulateVersionTag.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\PopulatePackageId.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\PopulateProductName.cs" />
@@ -191,6 +193,7 @@
     <Compile Include="Serialization\Yaml.cs" />
     <Compile Include="Requirements\IEnforceRequirements.cs" />
     <Compile Include="Requirements\Specifications\MinOsVersionSpecification.cs" />
+    <Compile Include="Update\AppGetRelease.cs" />
     <Compile Include="Update\AppGetUpdateService.cs" />
     <Compile Include="Update\GithubRelease.cs" />
     <Compile Include="Update\GitHubReleaseClient.cs" />

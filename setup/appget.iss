@@ -41,6 +41,8 @@ VersionInfoVersion={#BuildNumber}
 UninstallDisplayName={#AppName}
 ChangesEnvironment=true
 
+PrivilegesRequired=lowest
+
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
 

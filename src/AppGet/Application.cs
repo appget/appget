@@ -5,6 +5,7 @@ using AppGet.Commands;
 using AppGet.Exceptions;
 using AppGet.Infrastructure.Composition;
 using AppGet.Infrastructure.Logging;
+using AppGet.Update;
 using NLog;
 
 namespace AppGet
@@ -42,6 +43,9 @@ namespace AppGet
                 var optionsService = container.Resolve<IParseOptions>();
                 var options = optionsService.Parse(args);
 
+                var updatedService = container.Resolve<IAppGetUpdateService>();
+                updatedService.Start();
+
                 if (options == null)
                 {
                     return 1;
@@ -56,6 +60,8 @@ namespace AppGet
 
                 var commandExecutor = container.Resolve<ICommandExecutor>();
                 commandExecutor.ExecuteCommand(options);
+
+                updatedService.Commit();
 
                 return 0;
             }

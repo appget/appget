@@ -87,9 +87,9 @@ namespace AppGet.InstalledPackages
 
 
 
-            var keys = registryKey.GetValueNames().OrderBy(c => c).ToArray();
+            //            var keys = registryKey.GetValueNames().OrderBy(c => c).ToArray();
 
-            Console.WriteLine(string.Join("|", keys));
+            //            Console.WriteLine(string.Join("|", keys));
 
 
 

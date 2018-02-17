@@ -1,4 +1,5 @@
-﻿using AppGet.Update;
+﻿using System.Threading.Tasks;
+using AppGet.Update;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -8,16 +9,15 @@ namespace AppGet.Tests.Update
     public class GitHubReleaseClientFixture : TestBase<GitHubReleaseClient>
     {
         [Test]
-        public void get_releases()
+        public async Task get_releases()
         {
             WithRealHttp();
 
-            var release = Subject.GetReleases();
+            var release = await Subject.GetReleases();
 
             release.Should().NotBeEmpty();
-            release[0].Assets.Should().NotBeEmpty();
-            release[0].Assets[0].browser_download_url.Should().EndWith(".exe");
-            release[0].tag_name.Should().NotBeNullOrWhiteSpace();
+            release[0].Version.Should().NotBeNull();
+            release[0].Url.Should().EndWith(".exe");
         }
     }
 }
