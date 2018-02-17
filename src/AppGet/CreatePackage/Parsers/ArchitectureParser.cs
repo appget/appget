@@ -7,8 +7,9 @@ namespace AppGet.CreatePackage.Parsers
     public static class ArchitectureParser
     {
         private static readonly Regex[] ArchRegexes = {
-            new Regex("x(64|86)", RegexOptions.IgnoreCase),
-            new Regex("\\b64\\b", RegexOptions.IgnoreCase)
+            new Regex("x64", RegexOptions.IgnoreCase),
+            new Regex("win64", RegexOptions.IgnoreCase),
+            new Regex("\\D64\\b", RegexOptions.IgnoreCase)
         };
 
         public static ArchitectureTypes Parse(Uri uri)
@@ -18,7 +19,7 @@ namespace AppGet.CreatePackage.Parsers
             foreach (var regex in ArchRegexes)
             {
                 var match = regex.Match(source);
-                if (match.Success && match.Value.Contains("64"))
+                if (match.Success)
                 {
                     return ArchitectureTypes.x64;
 

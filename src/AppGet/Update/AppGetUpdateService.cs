@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using AppGet.Commands.Install;
 using AppGet.Installers;
@@ -41,27 +42,30 @@ namespace AppGet.Update
         {
             var releases = await _releaseTask;
             var latest = releases.OrderByDescending(c => c.Version).First();
-            if (latest.Version > Assembly.GetEntryAssembly().GetName().Version)
-            {
-                _logger.Info("There is an update avilable for AppGet client. Applying update...");
-                var manifest = new PackageManifest
-                {
-                    Id = "AppGet",
-                    InstallMethod = InstallMethodTypes.Inno,
-                    Name = "AppGet",
-                    Version = latest.Version.ToString(),
-                    ProductUrl = "https://appget.net",
-                    Installers = new List<Installer>
-                    {
-                        new Installer
-                        {
-                            Location = latest.Url
-                        }
-                    }
-                };
+            
+            if (latest.Version <= Assembly.GetEntryAssembly().GetName().Version) return;
 
-                _installService.Install(manifest, new InstallOptions { Force = true });
-            }
+            _logger.Info("There is an update avilable for AppGet client. Applying update...");
+
+            Thread.Sleep(1000);
+
+            var manifest = new PackageManifest
+            {
+                Id = "AppGet",
+                InstallMethod = InstallMethodTypes.Inno,
+                Name = "AppGet",
+                Version = latest.Version.ToString(),
+                ProductUrl = "https://appget.net",
+                Installers = new List<Installer>
+                {
+                    new Installer
+                    {
+                        Location = latest.Url
+                    }
+                }
+            };
+
+            _installService.Install(manifest, new InstallOptions { Force = true, PackageId = manifest.Id });
         }
     }
 }

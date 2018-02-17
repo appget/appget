@@ -20,6 +20,12 @@ namespace AppGet.Tests.FileTransfer.Protocols
             Subject.GetFileName(url).Should().Be("LINQPad4-AnyCPU.zip");
         }
 
+        [TestCase("https://dl.pstmn.io/download/latest/win64")]
+        public void should_get_file_name(string url)
+        {
+            Subject.GetFileName(url).Should().EndWith(".exe");
+        }
+
         [TestCase("http://server.com/dir/dir2/somefile.zip", "somefile.zip")]
         [TestCase("http://server.com/dir/dir2/somefile.rar", "somefile.rar")]
         [TestCase("http://server.com/dir/dir2/somefile.msi", "somefile.msi")]
