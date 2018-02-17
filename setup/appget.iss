@@ -51,7 +51,7 @@ Source: "..\src\AppGet\bin\x86\Release\*"; DestDir: "{app}"; Flags: ignoreversio
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]
-Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment";ValueType: expandsz;ValueName: "Path";ValueData: "{olddata};{app}";Check: NeedsAddPath('{app}')
+Root: HKLM; Subkey: "HKEY_CURRENT_USER\Environment";ValueType: expandsz;ValueName: "Path";ValueData: "{olddata};{app}";Check: NeedsAddPath('{app}')
 
 [Code]
 function NeedsAddPath(Param: string): boolean;
@@ -59,7 +59,7 @@ var
   OrigPath: string;
 begin
   if not RegQueryStringValue(HKEY_LOCAL_MACHINE,
-    'SYSTEM\CurrentControlSet\Control\Session Manager\Environment',
+    'HKEY_CURRENT_USER\Environment',
     'Path', OrigPath)
   then begin
     Result := True;
