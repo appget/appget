@@ -8,6 +8,7 @@ using NUnit.Framework;
 namespace AppGet.Tests.Compression
 {
 
+    [TestFixture(Category = "Local")]
     public class CompressionServiceFixture : TestBase<CompressionService>
     {
         [TestCaseSource(nameof(GetInstallers), Category = "Local")]
