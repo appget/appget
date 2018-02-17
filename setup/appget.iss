@@ -6,11 +6,8 @@
 #define AppURL "https://appget.net/"
 #define SupportURL "https://github.com/appget/appget/issues"
 #define UpdatesURL "https://github.com/appget/appget/releases"
-#define AppExeName "appget.exe"
-; #define BuildNumber "{%APPVEYOR_BUILD_VERSION}"
-#define BuildNumber "1.0.0"
-; #define BranchName "{%BRANCH}"
-; #define BranchName "local"
+#define BuildNumber GetEnv('APPVEYOR_BUILD_VERSION')
+; #define BuildNumber "1.0.0"
 #define CopyRight "Apache License, Version 2.0"
 
 [Setup]
@@ -32,7 +29,7 @@ OutputBaseFilename=appget.{#BuildNumber}
 SolidCompression=yes
 AppCopyright={#CopyRight}
 AllowUNCPath=False
-;UninstallDisplayIcon={app}\appget.exe
+UninstallDisplayIcon={app}\appget.exe
 DisableReadyPage=True
 CompressionThreads=2
 Compression=lzma2/normal
@@ -51,16 +48,14 @@ Source: "..\src\AppGet\bin\x86\Release\*"; DestDir: "{app}"; Flags: ignoreversio
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]
-Root: HKLM; Subkey: "HKEY_CURRENT_USER\Environment";ValueType: expandsz;ValueName: "Path";ValueData: "{olddata};{app}";Check: NeedsAddPath('{app}')
+Root: HKCU; Subkey:"HKEY_CURRENT_USER\Environment"; ValueType:expandsz; ValueName:"Path"; ValueData:"{olddata};{app}"; Check:NeedsAddPath('{app}')
 
 [Code]
 function NeedsAddPath(Param: string): boolean;
 var
   OrigPath: string;
 begin
-  if not RegQueryStringValue(HKEY_LOCAL_MACHINE,
-    'HKEY_CURRENT_USER\Environment',
-    'Path', OrigPath)
+  if not RegQueryStringValue(HKEY_CURRENT_USER,'Environment', 'Path', OrigPath)
   then begin
     Result := True;
     exit;
