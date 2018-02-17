@@ -431,10 +431,12 @@ namespace SevenZip
             {
                 type = "SevenZipExtractor";
             }
+#if COMPRESS
             if (this is SevenZipCompressor)
             {
                 type = "SevenZipCompressor";
             }
+#endif
             return string.Format("{0} [{1}]", type, _uniqueID);
         }        
     }

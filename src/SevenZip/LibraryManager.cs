@@ -228,6 +228,7 @@ namespace SevenZip
             return true;
         }
 
+#if COMPRESS
         private static bool CompressionBenchmark(Stream inStream, Stream outStream,
             OutArchiveFormat format, CompressionMethod method,
             ref LibraryFeature? features, LibraryFeature testedFeature)
@@ -244,6 +245,7 @@ namespace SevenZip
             features |= testedFeature;
             return true;
         }
+#endif
 
         public static LibraryFeature CurrentLibraryFeatures
         {
@@ -283,6 +285,7 @@ namespace SevenZip
                 }
                 #endregion
                 #region Compression features
+#if COMPRESS
                 using (var inStream = new MemoryStream())
                 {
                     inStream.Write(Encoding.UTF8.GetBytes("Test"), 0, 4);
@@ -329,6 +332,7 @@ namespace SevenZip
                             ref _features, LibraryFeature.CompressXz);                   
                     }
                 }
+#endif
                 #endregion
                 #endregion
                 if (ModifyCapable && (_features.Value & LibraryFeature.Compress7z) != 0)

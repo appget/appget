@@ -14,6 +14,7 @@
     along with SevenZipSharp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#if COMPRESS
 namespace SevenZip
 {
     using System.Collections.Generic;
@@ -703,3 +704,4 @@ namespace SevenZip
         #endregion
     }
 }
+#endif
