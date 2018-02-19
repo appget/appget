@@ -8,7 +8,7 @@ namespace AppGet.CommandLine.Prompts
 
     public class UrlPrompt : TextPrompt, IUrlPrompt
     {
-        protected override bool TryParse(string input, out string result)
+        protected override bool Convert(string input, out string result)
         {
             var isValid = Uri.IsWellFormedUriString(input, UriKind.Absolute);
 

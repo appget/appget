@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using AppGet.AppData;
 using AppGet.Commands;
 using AppGet.Exceptions;
@@ -18,7 +19,7 @@ namespace AppGet
         {
             var result = Run(args);
 
-            while (Debugger.IsAttached)
+            while (Debugger.IsAttached && !args.Any())
             {
                 Run(args);
             }
@@ -31,7 +32,7 @@ namespace AppGet
         {
             try
             {
-                if (Debugger.IsAttached)
+                if (Debugger.IsAttached && !args.Any())
                 {
                     args = TakeArgsFromInput();
                 }

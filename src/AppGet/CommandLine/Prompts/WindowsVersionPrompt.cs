@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AppGet.Manifests;
 
@@ -6,44 +7,16 @@ namespace AppGet.CommandLine.Prompts
 {
     public class WindowsVersionPrompt : PromptBase<Version>
     {
-        protected override string GetPromptText(string message, Version defaultValue)
+        protected override List<Version> Options => WindowsVersion.KnownVersions.ToList();
+
+        protected override bool Convert(string input, out Version result)
         {
-            return ($"{message} (default: none): ");
+            throw new NotImplementedException();
         }
 
-        protected override void PrintHints()
+        protected override string OptionString(Version option)
         {
-            Console.WriteLine();
-
-            var versions = WindowsVersion.KnownVersions.ToList();
-
-            for (var i = 0; i < versions.Count; i++)
-            {
-                Console.WriteLine($"    {i + 1}. {WindowsVersion.ToDesktopName(versions[i])}");
-            }
-        }
-
-        protected override bool TryParse(string input, out Version result)
-        {
-            var versions = WindowsVersion.KnownVersions.ToList();
-
-            if (string.IsNullOrWhiteSpace(input))
-            {
-                result = null;
-                return true;
-            }
-
-            if (short.TryParse(input, out var index))
-            {
-                if (versions.Count >= index)
-                {
-                    result = versions[index - 1];
-                    return true;
-                }
-            }
-
-            result = null;
-            return false;
+            return WindowsVersion.ToDesktopName(option);
         }
     }
 }

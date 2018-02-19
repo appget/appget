@@ -72,6 +72,7 @@ namespace AppGet.Infrastructure.Composition
                 typeof(PopulateProductUrl),
                 typeof(PopulateProductName),
                 typeof(PopulatePackageId),
+                typeof(PopulateLicense),
                 typeof(PopulateVersion),
                 typeof(PopulateVersionTag)
             });

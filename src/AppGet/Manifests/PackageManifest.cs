@@ -8,6 +8,7 @@ namespace AppGet.Manifests
     {
         public string Id { get; set; }
         public string Name { get; set; }
+        public string Licence { get; set; }
         public string Version { get; set; }
 
         [YamlIgnore]

@@ -60,6 +60,9 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="WindowsBase" />
+    <Reference Include="WindowsInput, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\InputSimulatorPlus.1.0.4\lib\net20\WindowsInput.dll</HintPath>
+    </Reference>
     <Reference Include="YamlDotNet, Version=4.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\YamlDotNet.4.3.0\lib\net35\YamlDotNet.dll</HintPath>
     </Reference>
@@ -96,6 +99,7 @@
     <Compile Include="CreatePackage\InstallerPopulators\MinWindowsVersionPopulater.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\IPopulateManifest.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\PopulateInstallMethod.cs" />
+    <Compile Include="CreatePackage\ManifestPopulators\PopulateLicense.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\PopulateVersionTag.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\PopulatePackageId.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\PopulateProductName.cs" />

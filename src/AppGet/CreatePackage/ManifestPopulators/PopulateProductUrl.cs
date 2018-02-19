@@ -35,7 +35,7 @@ namespace AppGet.CreatePackage.ManifestPopulators
 
             defaultValue = defaultValue.Trim().ToLowerInvariant();
 
-            manifest.ProductUrl = _prompt.Request("Product homepage", defaultValue).ToLowerInvariant();
+            manifest.ProductUrl = _prompt.Request("Product Homepage", defaultValue).ToLowerInvariant();
         }
     }
 }

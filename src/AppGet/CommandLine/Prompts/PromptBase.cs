@@ -1,50 +1,103 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using WindowsInput;
 
 namespace AppGet.CommandLine.Prompts
 {
     public abstract class PromptBase<T> : IPrompt<T>
     {
+        private readonly IKeyboardSimulator _keyboardSimulator = new InputSimulator().Keyboard;
+        protected virtual bool SingleLine => true;
+
         public T Request(string message, T defaultValue)
         {
-            Console.WriteLine();
-
-            T result;
-
-            Console.WriteLine(GetPromptText(message, defaultValue));
-
-            PrintHints();
-
+            PrintPrompt(message, defaultValue);
 
             var inputString = Console.ReadLine()?.Trim();
 
-            if (string.IsNullOrWhiteSpace(inputString) && defaultValue != null)
+            if (string.IsNullOrWhiteSpace(inputString))
             {
-                return defaultValue;
+                return default(T);
             }
 
 
-            if (!TryParse(inputString, out result))
+            if (!TryParse(inputString, out var result))
             {
+                Console.WriteLine($"'{inputString}' is not a valid entry.");
                 result = Request(message, defaultValue);
             }
 
             return result;
         }
 
-        protected abstract bool TryParse(string input, out T result);
-
-        protected virtual string GetPromptText(string message, T defaultValue)
+        private void PrintPrompt(string message, T defaultValue)
         {
-            if (defaultValue != null)
+            var options = Options;
+
+            Console.WriteLine();
+            if (options.Any())
             {
-                return ($"{message} (guess: {defaultValue.ToString().Trim()}): ");
+                Console.WriteLine(message);
+                for (var i = 1; i <= options.Count; i++)
+                {
+                    Console.WriteLine($" {i}: {OptionString(options[i - 1]),3}");
+                }
+
+                Console.WriteLine();
+                Console.Write("Selection: ");
+            }
+            else
+            {
+                Console.Write($"{message}: ");
             }
 
-            return $"{message}: ";
+            if (defaultValue != null)
+            {
+                _keyboardSimulator.TextEntry(OptionString(defaultValue));
+            }
         }
 
-        protected virtual void PrintHints()
+        private bool TryParse(string input, out T result)
         {
+            var options = Options;
+            input = input.Trim();
+
+            result = default(T);
+
+            if (options.Any())
+            {
+                if (int.TryParse(input, out int index))
+                {
+                    if (index > 0 && index - 1 < options.Count)
+                    {
+                        result = options[index - 1];
+                        return true;
+                    }
+                }
+                else
+                {
+                    var found = options.Any(c => string.Equals(OptionString(c), input, StringComparison.CurrentCultureIgnoreCase));
+                    if (found)
+                    {
+                        result = options.First(c => string.Equals(OptionString(c), input, StringComparison.CurrentCultureIgnoreCase));
+                    }
+
+                    return found;
+                }
+            }
+
+            return Convert(input, out result);
         }
+
+        protected virtual string OptionString(T option)
+        {
+            return option.ToString();
+        }
+
+
+        protected abstract bool Convert(string input, out T result);
+
+        protected virtual List<T> Options => new List<T>();
     }
 }

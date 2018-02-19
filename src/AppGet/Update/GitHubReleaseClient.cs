@@ -24,6 +24,7 @@ namespace AppGet.Update
 
         public async Task<List<AppGetRelease>> GetReleases()
         {
+            _logger.Trace("Checking for AppGet updates...");
             var client = new HttpClient();
             client.DefaultRequestHeaders.Add("User-Agent", "AppGet");
             var response = await client.GetAsync("https://api.github.com/repos/appget/appget/releases");

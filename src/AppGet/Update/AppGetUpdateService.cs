@@ -42,8 +42,11 @@ namespace AppGet.Update
         {
             var releases = await _releaseTask;
             var latest = releases.OrderByDescending(c => c.Version).First();
-            
-            if (latest.Version <= Assembly.GetEntryAssembly().GetName().Version) return;
+            var current = Assembly.GetEntryAssembly().GetName().Version;
+
+            _logger.Trace($"Update Status.  Current: {current}    Latest: {latest.Version}");
+
+            if (latest.Version <= current) return;
 
             _logger.Info("There is an update avilable for AppGet client. Applying update...");
 

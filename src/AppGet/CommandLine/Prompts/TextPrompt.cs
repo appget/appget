@@ -8,7 +8,8 @@
 
     public class TextPrompt : PromptBase<string>
     {
-        protected override bool TryParse(string input, out string result)
+
+        protected override bool Convert(string input, out string result)
         {
             result = input;
             return true;
