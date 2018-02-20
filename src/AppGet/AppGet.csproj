@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppData\AppDataService.cs" />
+    <Compile Include="CommandLine\Prompts\BooleanPrompt.cs" />
     <Compile Include="CommandLine\Prompts\WindowsVersionPrompt.cs" />
     <Compile Include="CommandLine\Prompts\PromptBase.cs" />
     <Compile Include="CommandLine\Prompts\TextPrompt.cs" />

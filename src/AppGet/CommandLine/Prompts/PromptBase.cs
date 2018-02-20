@@ -54,7 +54,11 @@ namespace AppGet.CommandLine.Prompts
 
             if (defaultValue != null)
             {
-                _keyboardSimulator.TextEntry(OptionString(defaultValue));
+                var defaultString = OptionString(defaultValue);
+                if (!string.IsNullOrWhiteSpace(defaultString))
+                {
+                    _keyboardSimulator.TextEntry(defaultString);
+                }
             }
         }
 

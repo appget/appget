@@ -467,10 +467,10 @@ namespace SevenZip
                         AddException(new ExtractionFailedException("File is corrupted. Crc check has failed."));
                         break;
                     case OperationResult.DataError:
-                        AddException(new ExtractionFailedException("File is corrupted. Data error has occured."));
+                        AddException(new ExtractionFailedException("File is corrupted. Data error has occurred."));
                         break;
                     case OperationResult.UnsupportedMethod:
-                        AddException(new ExtractionFailedException("Unsupported method error has occured."));
+                        AddException(new ExtractionFailedException("Unsupported method error has occurred."));
                         break;
                 }
             }
