@@ -116,6 +116,6 @@ namespace AppGet.Manifests
         InstallShield,
         ClickOnce,
         NSIS,
-        Electron
+        Squirrel
     }
 }

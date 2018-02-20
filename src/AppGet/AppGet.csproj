@@ -63,8 +63,8 @@
     <Reference Include="WindowsInput, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\InputSimulatorPlus.1.0.4\lib\net20\WindowsInput.dll</HintPath>
     </Reference>
-    <Reference Include="YamlDotNet, Version=4.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\YamlDotNet.4.3.0\lib\net35\YamlDotNet.dll</HintPath>
+    <Reference Include="YamlDotNet, Version=4.3.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\YamlDotNet.4.3.1\lib\net45\YamlDotNet.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -131,6 +131,8 @@
     <Compile Include="Installers\IDetectInstallMethod.cs" />
     <Compile Include="Installers\Inno\InnoDetector.cs" />
     <Compile Include="Installers\Msi\MsiDetector.cs" />
+    <Compile Include="Installers\Squirrel\SquirrelDetector.cs" />
+    <Compile Include="Installers\Squirrel\SquirrelWhisperer.cs" />
     <Compile Include="Installers\Nsis\NsisDetector.cs" />
     <Compile Include="Manifests\WindowsVersion.cs" />
     <Compile Include="Manifests\PackageManifestService.cs" />

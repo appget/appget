@@ -19,9 +19,9 @@ namespace AppGet
         {
             var result = Run(args);
 
-            while (Debugger.IsAttached && !args.Any())
+            while (Debugger.IsAttached)
             {
-                Run(args);
+                Run(new string[0]);
             }
 
             return result;

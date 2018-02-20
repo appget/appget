@@ -1,12 +1,16 @@
-﻿using SevenZip;
+﻿using AppGet.Manifests;
+using SevenZip;
 
 namespace AppGet.Installers.Nsis
 {
     public class NsisDetector : IDetectInstallMethod
     {
-        public decimal GetConfidence(string path, SevenZipExtractor zip)
+        public InstallMethodTypes InstallMethod => InstallMethodTypes.NSIS;
+
+
+        public decimal GetConfidence(string path, SevenZipExtractor archive)
         {
-            foreach (var prop in zip.ArchiveProperties)
+            foreach (var prop in archive.ArchiveProperties)
             {
                 if (prop.Value != null && prop.Value.ToString().ToUpperInvariant().Contains("NSIS"))
                 {

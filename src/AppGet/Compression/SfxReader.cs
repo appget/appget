@@ -8,25 +8,31 @@ using SevenZip;
 
 namespace AppGet.Compression
 {
-    public class SfxReader
+    public interface ISfxReader
+    {
+        XDocument Read(SevenZipExtractor archive);
+        string ReadRaw(SevenZipExtractor archive);
+    }
+
+    public class SfxReader : ISfxReader
     {
         private static readonly Regex AssemblyRegex = new Regex(@"\<(\w+:)?assembly\W(.|\n)*assembly>", RegexOptions.Compiled);
 
-        public XDocument Read(string path)
+        public XDocument Read(SevenZipExtractor archive)
         {
-            using (var archiveFile = new SevenZipExtractor(path, InArchiveFormat.PE))
+            var rawText = ReadRaw(archive);
+            var assemblyElementText = AssemblyRegex.Match(rawText).Value;
+            var xDocument = XDocument.Parse("<?xml version=\"1.0\" standalone=\"yes\"?> " + assemblyElementText);
+            return xDocument;
+        }
+
+        public string ReadRaw(SevenZipExtractor archive)
+        {
+            var entry = archive.ArchiveFileData.First(e => e.FileName.EndsWith("MANIFEST\\1", StringComparison.InvariantCultureIgnoreCase));
+            using (var memoryStream = new MemoryStream())
             {
-                var entry = archiveFile.ArchiveFileData.First(e => e.FileName.EndsWith("MANIFEST\\1", StringComparison.InvariantCultureIgnoreCase));
-                Console.WriteLine(entry.FileName);
-                // extract to stream
-                using (var memoryStream = new MemoryStream())
-                {
-                    archiveFile.ExtractFile(entry.Index, memoryStream);
-                    var text = Encoding.ASCII.GetString(memoryStream.ToArray());
-                    var assemblyElementText = AssemblyRegex.Match(text).Value;
-                    var xDocument = XDocument.Parse("<?xml version=\"1.0\" standalone=\"yes\"?> " + assemblyElementText);
-                    return xDocument;
-                }
+                archive.ExtractFile(entry.Index, memoryStream);
+                return Encoding.ASCII.GetString(memoryStream.ToArray());
             }
         }
     }

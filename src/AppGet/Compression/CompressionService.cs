@@ -12,6 +12,7 @@ namespace AppGet.Compression
     public interface ICompressionService : IReportProgress
     {
         void Decompress(string sourcePath, string destination);
+        SevenZipExtractor TryOpen(string path);
     }
 
 

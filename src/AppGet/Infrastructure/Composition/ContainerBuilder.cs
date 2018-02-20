@@ -17,6 +17,7 @@ using AppGet.Installers.Inno;
 using AppGet.Installers.InstallShield;
 using AppGet.Installers.Msi;
 using AppGet.Installers.Nsis;
+using AppGet.Installers.Squirrel;
 using AppGet.Installers.Zip;
 using NLog;
 
@@ -57,6 +58,7 @@ namespace AppGet.Infrastructure.Composition
                 typeof(InstallShieldWhisperer),
                 typeof(MsiWhisperer),
                 typeof(NsisWhisperer),
+                typeof(SquirrelWhisperer),
                 typeof(ZipWhisperer)
             });
 
@@ -69,12 +71,13 @@ namespace AppGet.Infrastructure.Composition
 
             container.RegisterMultiple<IPopulateManifest>(new[]
             {
-                typeof(PopulateProductUrl),
                 typeof(PopulateProductName),
                 typeof(PopulatePackageId),
-                typeof(PopulateLicense),
                 typeof(PopulateVersion),
-                typeof(PopulateVersionTag)
+                typeof(PopulateVersionTag),
+                typeof(PopulateProductUrl),
+                typeof(PopulateLicense),
+                typeof(PopulateInstallMethod)
             });
 
 
@@ -83,6 +86,15 @@ namespace AppGet.Infrastructure.Composition
                 typeof(ArchitecturePopulater),
                 typeof(MinWindowsVersionPopulater)
             });
+
+            container.RegisterMultiple<IDetectInstallMethod>(new[]
+            {
+                typeof(MsiDetector),
+                typeof(SquirrelDetector),
+                typeof(NsisDetector),
+                typeof(InnoDetector)
+            });
+
 
             container.RegisterMultiple<IFileTransferClient>(new[]
             {
