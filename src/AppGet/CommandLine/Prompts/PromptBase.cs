@@ -8,7 +8,6 @@ namespace AppGet.CommandLine.Prompts
     public abstract class PromptBase<T> : IPrompt<T>
     {
         private readonly IKeyboardSimulator _keyboardSimulator = new InputSimulator().Keyboard;
-        protected virtual bool SingleLine => true;
 
         public T Request(string message, T defaultValue)
         {
@@ -57,7 +56,7 @@ namespace AppGet.CommandLine.Prompts
                 var defaultString = OptionString(defaultValue);
                 if (!string.IsNullOrWhiteSpace(defaultString))
                 {
-                    _keyboardSimulator.TextEntry(defaultString);
+                    _keyboardSimulator.TextEntry(defaultString.Trim());
                 }
             }
         }
@@ -96,7 +95,7 @@ namespace AppGet.CommandLine.Prompts
 
         protected virtual string OptionString(T option)
         {
-            return option.ToString();
+            return option.ToString().Trim();
         }
 
 

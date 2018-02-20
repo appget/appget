@@ -36,15 +36,9 @@ namespace AppGet.CreatePackage.ManifestPopulators
                 var githubUrl = new GithubUrl(url);
                 if (githubUrl.IsValid)
                 {
-                    defaultValue = githubUrl.OrganizationName;
-                }
-                else
-                {
-                    var uri = new Uri(manifest.ProductUrl);
-                    defaultValue = uri.Host.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries).First(c => c.ToLower() != "www");
+                    defaultValue = _textInfo.ToTitleCase(githubUrl.OrganizationName);
                 }
 
-                defaultValue = _textInfo.ToTitleCase(defaultValue);
             }
 
             manifest.Name = _prompt.Request("Product Name", defaultValue);

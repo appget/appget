@@ -11,7 +11,7 @@
 
         protected override bool Convert(string input, out string result)
         {
-            result = input;
+            result = (input ?? "").Trim();
             return true;
         }
     }

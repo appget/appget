@@ -26,22 +26,21 @@ namespace AppGet.CreatePackage.ManifestPopulators
         {
             _logger.Info("Detecting application installer");
             var installer = manifest.Installers.First();
-//            var archiveContent = _
-//
-//            foreach (var detector in _installMethodDetectors)
-//            {
-//                    detector.GetConfidence(installer.FilePath,)
-//            }
+
             var archive = _compressionService.TryOpen(installer.FilePath);
-            var scores = _installMethodDetectors.ToDictionary(c => c.InstallMethod, c => c.GetConfidence(installer.FilePath, archive));
-
-            var positives = scores.Values.Count(c => c != 0);
-
-            if (positives == 1)
+            if (archive != null)
             {
-                manifest.InstallMethod = scores.Single(c => c.Value == 1).Key;
-                _logger.Info("Installer was detected as " + manifest.InstallMethod);
-                return;
+                var scores = _installMethodDetectors.ToDictionary(c => c.InstallMethod,
+                    c => c.GetConfidence(installer.FilePath, archive));
+
+                var positives = scores.Values.Count(c => c != 0);
+
+                if (positives == 1)
+                {
+                    manifest.InstallMethod = scores.Single(c => c.Value == 1).Key;
+                    _logger.Info("Installer was detected as " + manifest.InstallMethod);
+                    return;
+                }
             }
 
             var methodPrompt = new EnumPrompt<InstallMethodTypes>();

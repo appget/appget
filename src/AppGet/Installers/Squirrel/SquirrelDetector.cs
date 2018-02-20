@@ -49,12 +49,6 @@ namespace AppGet.Installers.Squirrel
 
         public decimal GetConfidence(string path, SevenZipExtractor archive)
         {
-            foreach (var names in archive.ArchiveFileNames)
-            {
-                Console.WriteLine(names);
-            }
-
-
             foreach (var prop in archive.ArchiveProperties)
             {
                 if (prop.Value != null && prop.Value.ToString().ToUpperInvariant().Contains("SQUIRREL"))

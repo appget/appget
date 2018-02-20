@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using AppGet.ProgressTracker;
 using NLog;
@@ -62,7 +64,7 @@ namespace AppGet.Compression
                         return archive;
                     }
                 }
-                catch (SevenZipArchiveException)
+                catch (Exception)
                 {
 
                 }
