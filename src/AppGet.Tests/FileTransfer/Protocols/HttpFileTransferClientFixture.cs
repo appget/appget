@@ -41,6 +41,7 @@ namespace AppGet.Tests.FileTransfer.Protocols
         [TestCase("http://server.com/dir/dir2/somefile.7z", "somefile.7z")]
         [TestCase("http://server.com/dir/dir2/somefile.rar", "somefile.rar")]
         [TestCase("http://server.com/dir/dir2/somefile.msi", "somefile.msi")]
+        [TestCase("https://download.sublimetext.com/Sublime Text Build 3143 x64 Setup.exe", "Sublime Text Build 3143 x64 Setup.exe")]
         [TestCase("http://server.com/dir/dir2/somefile.exe?querystring=12", "somefile.exe")]
         [TestCase("http://www.linqpad.net/GetFile.aspx?LINQPad4-AnyCPU.zip", "LINQPad4-AnyCPU.zip")]
         [TestCase("http://www.jtricks.com/download-unknown", "content.txt")]
