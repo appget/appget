@@ -13,7 +13,7 @@ namespace AppGet.FileTransfer.Protocols
     {
         private readonly IHttpClient _httpClient;
         private static readonly Regex HttpRegex = new Regex(@"^https?\:\/\/", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        private static readonly Regex FileNameRegex = new Regex(@"\w\.(zip|7zip|rar|msi|exe)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex FileNameRegex = new Regex(@"\w\.(zip|7zip|7z|rar|msi|exe)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static readonly Regex ContentDepositionRegex = new Regex(@"filename=\W*(?<fileName>.+\.\w{2,4})", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private bool _inTransit;
 
@@ -62,13 +62,15 @@ namespace AppGet.FileTransfer.Protocols
                 }
             }
 
-            throw new InvalidDownloadLinkException(source);
+            throw new InvalidDownloadUrlException(source);
 
         }
 
         public void TransferFile(string source, string destinationFile)
         {
+            _error = null;
             var webClient = new WebClient();
+
             webClient.DownloadProgressChanged += TransferProgressCallback;
             webClient.DownloadFileCompleted += TransferCompletedCallback;
             webClient.DownloadFileAsync(new Uri(source), destinationFile);
@@ -83,7 +85,9 @@ namespace AppGet.FileTransfer.Protocols
 
             if (_error != null)
             {
-                throw _error;
+                var e = _error;
+                _error = null;
+                throw e;
             }
         }
 
@@ -97,8 +101,26 @@ namespace AppGet.FileTransfer.Protocols
 
         private void TransferProgressCallback(object sender, DownloadProgressChangedEventArgs e)
         {
+            var client = (WebClient)sender;
+            var contentType = client.ResponseHeaders["Content-Type"];
             _progress.Completed = e.BytesReceived;
-            _progress.Total = e.TotalBytesToReceive;
+
+
+
+            if (contentType.Contains("text"))
+            {
+                _error = new InvalidDownloadUrlException(client.BaseAddress, $"[ContentType={contentType}]");
+                client.CancelAsync();
+            }
+
+            if (e.TotalBytesToReceive > 0)
+            {
+                _progress.Total = e.TotalBytesToReceive;
+            }
+            else
+            {
+                _progress.Total = null;
+            }
 
             OnStatusUpdated?.Invoke(_progress);
         }
@@ -108,7 +130,11 @@ namespace AppGet.FileTransfer.Protocols
             var webClient = (WebClient)sender;
             webClient.DownloadProgressChanged -= TransferProgressCallback;
             _inTransit = false;
-            _error = e.Error;
+
+            if (_error == null)
+            {
+                _error = e.Error;
+            }
 
             OnCompleted?.Invoke(_progress);
         }

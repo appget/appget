@@ -117,7 +117,7 @@
     <Compile Include="Crypto\Hash\Algorithms\Md5Hash.cs" />
     <Compile Include="Crypto\Hash\Algorithms\Sha256Hash.cs" />
     <Compile Include="Extensions\UriExtensions.cs" />
-    <Compile Include="FileTransfer\InvalidDownloadLinkException.cs" />
+    <Compile Include="FileTransfer\InvalidDownloadUrlException.cs" />
     <Compile Include="FileTransfer\TransferCacheService.cs" />
     <Compile Include="Infrastructure\Composition\ContainerBuilder.cs" />
     <Compile Include="Compression\CompressionService.cs" />
