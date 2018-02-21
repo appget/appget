@@ -3,7 +3,7 @@ using SevenZip;
 
 namespace AppGet.Installers.Msi
 {
-    public class MsiDetector : IDetectInstallMethod
+    public class MsiDetector : InstallerDetectorBase, IDetectInstallMethod
     {
         public InstallMethodTypes InstallMethod => InstallMethodTypes.MSI;
 
@@ -19,15 +19,7 @@ namespace AppGet.Installers.Msi
                 return 1;
             }
 
-            foreach (var prop in archive.ArchiveProperties)
-            {
-                if (prop.Value != null && prop.Value.ToString().ToUpperInvariant().Contains("MSI"))
-                {
-                    return 1;
-                }
-            }
-
-            return 0;
+            return HasProperty(archive, InstallMethod.ToString()) ? 1 : 0;
         }
     }
 }

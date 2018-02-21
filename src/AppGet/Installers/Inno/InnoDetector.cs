@@ -1,24 +1,15 @@
-﻿using System;
-using AppGet.Manifests;
+﻿using AppGet.Manifests;
 using SevenZip;
 
 namespace AppGet.Installers.Inno
 {
-    public class InnoDetector : IDetectInstallMethod
+    public class InnoDetector : InstallerDetectorBase, IDetectInstallMethod
     {
         public InstallMethodTypes InstallMethod => InstallMethodTypes.Inno;
 
         public decimal GetConfidence(string path, SevenZipExtractor archive)
         {
-            foreach (var prop in archive.ArchiveProperties)
-            {
-                if (prop.Value != null && prop.Value.ToString().ToUpperInvariant().Contains("INNO"))
-                {
-                    return 1;
-                }
-            }
-
-            return 0;
+            return HasProperty(archive, InstallMethod.ToString()) ? 1 : 0;
         }
     }
 }

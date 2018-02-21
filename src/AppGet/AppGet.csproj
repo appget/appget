@@ -132,6 +132,7 @@
     <Compile Include="FileTransfer\IFileTransferClient.cs" />
     <Compile Include="Installers\IDetectInstallMethod.cs" />
     <Compile Include="Installers\Inno\InnoDetector.cs" />
+    <Compile Include="Installers\InstallerDetectorBase.cs" />
     <Compile Include="Installers\Msi\MsiDetector.cs" />
     <Compile Include="Installers\Squirrel\SquirrelDetector.cs" />
     <Compile Include="Installers\Squirrel\SquirrelWhisperer.cs" />

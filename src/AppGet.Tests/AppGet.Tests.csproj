@@ -102,6 +102,7 @@
     <Compile Include="Extensions\UriExtensionsFixture.cs" />
     <Compile Include="FileTransfer\Protocols\WindowsPathFileTransferClientFixture.cs" />
     <Compile Include="FileTransfer\TransferCacheServiceFixture.cs" />
+    <Compile Include="Installers\DetectorTestBase.cs" />
     <Compile Include="Installers\Inno\InnoDetectorFixture.cs" />
     <Compile Include="Installers\Msi\MsiDetectorFixture.cs" />
     <Compile Include="Installers\Nsis\NsisDetectorFixture.cs" />
