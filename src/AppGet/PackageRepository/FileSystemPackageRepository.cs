@@ -1,61 +1,57 @@
 ﻿using System.Collections.Generic;
-using System.Net;
+using System.IO;
+using System.Linq;
+using AppGet.AppData;
 using AppGet.FileSystem;
-using AppGet.Http;
-using NLog;
+using AppGet.Manifests;
+using AppGet.Serialization;
 
 namespace AppGet.PackageRepository
 {
-//    public class CentralRepository : IPackageRepository
-//    {
-//        private readonly IHttpClient _httpClient;
-//        private readonly IFileSystem _fileSystem;
-//        private readonly Logger _logger;
-//        private readonly HttpRequestBuilder _requestBuilder;
-//
-//        private const string API_ROOT = "https://api.appget.net/v1/";
-//
-//        public CentralRepository(IFileSystem fileSystem, Logger logger)
-//        {
-//            _fileSystem = fileSystem;
-//            _logger = logger;
-//
-//            _requestBuilder = new HttpRequestBuilder(API_ROOT);
-//        }
-//
-//
-//        public PackageInfo GetLatest(string name)
-//        {
-//            _logger.Info("Getting package " + name);
-//
-//            var request = _requestBuilder.Build("packages/{package}/latest");
-//            request.AddSegment("package", name);
-//
-//            try
-//            {
-//                var package = _httpClient.Get<PackageInfo>(request);
-//                return package.Resource;
-//            }
-//            catch (HttpException ex)
-//            {
-//                if (ex.Response.StatusCode == HttpStatusCode.NotFound)
-//                {
-//                    return null;
-//                }
-//                throw;
-//            }
-//        }
-//
-//        public List<PackageInfo> Search(string term)
-//        {
-//            _logger.Info("Searching for " + term);
-//
-//            var request = _requestBuilder.Build("packages");
-//
-//            request.UriBuilder.SetQueryParam("q", term.Trim());
-//
-//            var package = _httpClient.Get<List<PackageInfo>>(request);
-//            return package.Resource;
-//        }
-//    }
+    public class LocalPackageRepository : IPackageRepository
+    {
+        private readonly IFileSystem _fileSystem;
+        private readonly IConfig _config;
+
+        public LocalPackageRepository(IFileSystem fileSystem, IConfig config)
+        {
+            _fileSystem = fileSystem;
+            _config = config;
+        }
+
+        public PackageInfo GetLatest(string name)
+        {
+            if (string.IsNullOrWhiteSpace(_config.LocalRepository))
+            {
+                return null;
+            }
+
+            var pkgDir = Path.Combine(_config.LocalRepository, name);
+            if (!_fileSystem.DirectoryExists(pkgDir))
+            {
+                return null;
+            }
+
+            var packages = _fileSystem.GetFiles(pkgDir, "*.yaml").Select(Read);
+            return packages.OrderByDescending(c => c.MajorVersion).FirstOrDefault();
+        }
+
+        private PackageInfo Read(string path)
+        {
+            var yaml = _fileSystem.ReadAllText(path);
+            var manifest = Yaml.Deserialize<PackageManifest>(yaml);
+
+            return new PackageInfo
+            {
+                Id = manifest.Id,
+                MajorVersion = "latest",
+                ManifestUrl = path
+            };
+        }
+
+        public List<PackageInfo> Search(string term)
+        {
+            return new List<PackageInfo>();
+        }
+    }
 }

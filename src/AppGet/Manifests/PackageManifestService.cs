@@ -2,7 +2,6 @@
 using System.IO;
 using AppGet.FileSystem;
 using AppGet.FileTransfer;
-using AppGet.PackageRepository;
 using AppGet.Serialization;
 using NLog;
 
@@ -10,7 +9,7 @@ namespace AppGet.Manifests
 {
     public interface IPackageManifestService
     {
-        PackageManifest LoadManifest(PackageInfo packageInfo);
+        PackageManifest LoadManifest(string source);
         string WriteManifest(PackageManifest manifest, string manifestRoot);
         void PrintManifest(PackageManifest manifest);
     }
@@ -29,9 +28,10 @@ namespace AppGet.Manifests
         }
 
 
-        public PackageManifest LoadManifest(PackageInfo packageInfo)
+        public PackageManifest LoadManifest(string source)
         {
-            var text = ReadManifest(packageInfo);
+            _logger.Info($"Loading package manifest from {source}");
+            var text = _fileTransferService.ReadContent(source);
             return Yaml.Deserialize<PackageManifest>(text);
         }
 
@@ -58,13 +58,6 @@ namespace AppGet.Manifests
             Console.WriteLine(text);
             Console.WriteLine();
             Console.WriteLine("===============================================");
-        }
-
-        private string ReadManifest(PackageInfo packageInfo)
-        {
-            _logger.Info("Loading manifest for " + packageInfo);
-            var text = _fileTransferService.ReadContent(packageInfo.ManifestUrl);
-            return text;
         }
     }
 }

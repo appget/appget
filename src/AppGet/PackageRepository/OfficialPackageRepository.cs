@@ -5,7 +5,7 @@ using NLog;
 
 namespace AppGet.PackageRepository
 {
-    public class HttpPackageRepository : IPackageRepository
+    public class OfficialPackageRepository : IPackageRepository
     {
         private readonly IHttpClient _httpClient;
         private readonly Logger _logger;
@@ -13,7 +13,7 @@ namespace AppGet.PackageRepository
 
         private const string API_ROOT = "https://api.appget.net/v1/";
 
-        public HttpPackageRepository(IHttpClient httpClient, Logger logger)
+        public OfficialPackageRepository(IHttpClient httpClient, Logger logger)
         {
             _httpClient = httpClient;
             _logger = logger;

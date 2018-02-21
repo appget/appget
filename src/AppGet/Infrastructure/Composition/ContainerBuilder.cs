@@ -19,6 +19,7 @@ using AppGet.Installers.Msi;
 using AppGet.Installers.Nsis;
 using AppGet.Installers.Squirrel;
 using AppGet.Installers.Zip;
+using AppGet.PackageRepository;
 using NLog;
 
 namespace AppGet.Infrastructure.Composition
@@ -98,8 +99,18 @@ namespace AppGet.Infrastructure.Composition
 
             container.RegisterMultiple<IFileTransferClient>(new[]
             {
-                typeof(HttpFileTransferClient)
+                typeof(HttpFileTransferClient),
+                typeof(WindowsPathFileTransferClient)
             });
+
+
+            container.RegisterMultiple<IPackageRepository>(new[]
+            {
+                typeof(LocalPackageRepository),
+                typeof(OfficialPackageRepository)
+            });
+
+            container.Register<IPackageRepository, AggregateRepository>();
         }
 
     }

@@ -6,8 +6,10 @@ namespace AppGet.FileSystem
 {
     public interface IFileSystem
     {
-        bool FileExists(string source);
-        string ReadAllText(string source);
+        bool FileExists(string path);
+        bool DirectoryExists(string path);
+        string[] GetFiles(string path, string searchPattern = "*.*", SearchOption searchOption = SearchOption.AllDirectories);
+        string ReadAllText(string path);
         void WriteAllText(string path, string content);
         void CreateDirectory(string path);
         void DeleteDirectory(string path);
@@ -19,6 +21,16 @@ namespace AppGet.FileSystem
         public bool FileExists(string path)
         {
             return File.Exists(path);
+        }
+
+        public bool DirectoryExists(string path)
+        {
+            return Directory.Exists(path);
+        }
+
+        public string[] GetFiles(string path, string searchPattern = "*.*", SearchOption searchOption = SearchOption.AllDirectories)
+        {
+            return Directory.GetFiles(path, searchPattern, searchOption);
         }
 
         public string ReadAllText(string path)
@@ -40,7 +52,7 @@ namespace AppGet.FileSystem
         {
             Directory.Delete(path, true);
         }
-        
+
         public void SetPermissions(string path, WellKnownSidType accountSid, FileSystemRights rights, AccessControlType controlType)
         {
             var sid = new SecurityIdentifier(accountSid, null);

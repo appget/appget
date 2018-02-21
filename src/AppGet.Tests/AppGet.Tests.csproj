@@ -110,7 +110,7 @@
     <Compile Include="InstalledPackages\WindowsInstallerInventoryManagerFixture.cs" />
     <Compile Include="Options\OptionsParserFixture.cs" />
     <Compile Include="Manifests\FindInstallerFixture.cs" />
-    <Compile Include="PackageRepository\HttpPackageRepositoryFixture.cs" />
+    <Compile Include="PackageRepository\OfficialPackageRepositoryFixture.cs" />
     <Compile Include="Processes\FileInUseFixture.cs" />
     <Compile Include="Processes\HandleFixture.cs" />
     <Compile Include="ProgressTracker\ProgressStateFixture.cs" />

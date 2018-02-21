@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppData\AppDataService.cs" />
+    <Compile Include="AppData\Config.cs" />
     <Compile Include="CommandLine\Prompts\BooleanPrompt.cs" />
     <Compile Include="CommandLine\Prompts\WindowsVersionPrompt.cs" />
     <Compile Include="CommandLine\Prompts\PromptBase.cs" />
@@ -173,8 +174,9 @@
     <Compile Include="Commands\OptionException.cs" />
     <Compile Include="Commands\OptionsParser.cs" />
     <Compile Include="Commands\ViewManifest\ViewManifestOptions.cs" />
+    <Compile Include="PackageRepository\AggregateRepository.cs" />
     <Compile Include="PackageRepository\FileSystemPackageRepository.cs" />
-    <Compile Include="PackageRepository\HttpPackageRepository.cs" />
+    <Compile Include="PackageRepository\OfficialPackageRepository.cs" />
     <Compile Include="PackageRepository\IPackageRepository.cs" />
     <Compile Include="PackageRepository\PackageInfo.cs" />
     <Compile Include="Manifests\FindInstaller.cs" />

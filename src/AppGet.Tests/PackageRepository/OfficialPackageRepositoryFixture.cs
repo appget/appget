@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace AppGet.Tests.PackageRepository
 {
     [TestFixture]
-    public class HttpPackageRepositoryFixture : TestBase<HttpPackageRepository>
+    public class OfficialPackageRepositoryFixture : TestBase<OfficialPackageRepository>
     {
         [TestCase("linqpad")]
         [TestCase("seven-zip")]
@@ -21,7 +21,6 @@ namespace AppGet.Tests.PackageRepository
             latest.Should().NotBeNull();
             latest.ManifestUrl.Should().StartWith("https://raw.githubusercontent.com/appget/packages/master/manifests/");
             latest.Id.Should().Be(package);
-            latest.SourceUrl.Should().StartWith("https://github.com/appget/packages/blob/master/manifests/");
             latest.MajorVersion.Should().HaveLength(1);
         }
 
@@ -38,7 +37,6 @@ namespace AppGet.Tests.PackageRepository
             found.Should().NotBeNull();
             found.ManifestUrl.Should().StartWith("https://raw.githubusercontent.com/appget/packages/master/manifests/");
             found.Id.Should().Contain(term);
-            found.SourceUrl.Should().StartWith("https://github.com/appget/packages/blob/master/manifests/");
             found.MajorVersion.Should().HaveLength(1);
         }
 

@@ -1,11 +1,7 @@
-﻿using System.Linq;
-using AppGet.FileTransfer;
-using AppGet.HostSystem;
-using AppGet.InstalledPackages;
+﻿using AppGet.InstalledPackages;
 using AppGet.Installers;
 using AppGet.Manifests;
 using AppGet.PackageRepository;
-using NLog;
 
 namespace AppGet.Commands.Install
 {
@@ -48,7 +44,7 @@ namespace AppGet.Commands.Install
                 throw new PackageNotFoundException(installOptions.PackageId);
             }
 
-            var manifest = _packageManifestService.LoadManifest(package);
+            var manifest = _packageManifestService.LoadManifest(package.ManifestUrl);
 
             _installService.Install(manifest, installOptions);
         }

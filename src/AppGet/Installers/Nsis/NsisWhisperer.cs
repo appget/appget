@@ -26,7 +26,7 @@ namespace AppGet.Installers.Nsis
         }
 
         protected override string InteractiveArgs => "";
-        protected override string PassiveArgs => null;
+        protected override string PassiveArgs => "/S";
         protected override string SilentArgs => "/S";
     }
 }
