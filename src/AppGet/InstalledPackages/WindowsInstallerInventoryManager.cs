@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AppGet.Extensions;
 using AppGet.Manifests;
+using AppGet.Serialization;
 using Microsoft.Win32;
 
 namespace AppGet.InstalledPackages
@@ -24,6 +25,7 @@ namespace AppGet.InstalledPackages
                     .Concat(GetInstallRecordsForLocalMachine(registryKey64))
                     .Concat(GetInstallRecordsForCurrentUser(registryKey))
                     .Concat(GetInstallRecordsForCurrentUser(registryKey64))
+                    .Distinct(JsonComparator<WindowsInstallRecord>.Comparator)
                     .ToList();
         }
 
@@ -32,7 +34,7 @@ namespace AppGet.InstalledPackages
         {
             var packages = GetInstalledApplications();
             var targetName = name.ToAlphaNumeric();
-            return packages.Where(c => c.Name.ToAlphaNumeric() == targetName);
+            return packages.Where(c => c.Name.ToAlphaNumeric().Contains(targetName));
         }
 
 
@@ -85,16 +87,9 @@ namespace AppGet.InstalledPackages
                 return registryKey.GetValue(key)?.ToString();
             }
 
-
-
-            //            var keys = registryKey.GetValueNames().OrderBy(c => c).ToArray();
-
-            //            Console.WriteLine(string.Join("|", keys));
-
-
-
             var record = new WindowsInstallRecord
             {
+                RegistryKey = registryKey,
                 Id = name,
                 Name = GetValue("DisplayName"),
                 Version = GetValue("DisplayVersion"),
@@ -103,7 +98,8 @@ namespace AppGet.InstalledPackages
                 InstallLocation = GetValue("InstallLocation"),
                 UninstallCommand = GetValue("UninstallString"),
                 QuietUninstallCommand = GetValue("QuietUninstallString"),
-                InstallSource = GetValue("InstallSource")
+                InstallSource = GetValue("InstallSource"),
+                InstallMethod = InstallMethodTypes.Unknown
 
             };
 
@@ -113,20 +109,26 @@ namespace AppGet.InstalledPackages
                 record.InstallMethod = InstallMethodTypes.Inno;
             }
 
-            /*if (record.UninstallCommand != null && record.UninstallCommand.Contains("Oarpmany.exe"))
+            if (record.UninstallCommand != null)
             {
-                continue;
-            }*/
+                if (record.UninstallCommand.ToLowerInvariant().Contains("rundll32.exe dfshim.dll,sharpmaintain"))
+                {
+                    record.InstallMethod = InstallMethodTypes.ClickOnce;
+                }
 
-            if (record.UninstallCommand != null &&
-                record.UninstallCommand.ToLowerInvariant().Contains("rundll32.exe dfshim.dll,sharpmaintain"))
-            {
-                record.InstallMethod = InstallMethodTypes.ClickOnce;
-            }
+                if (record.UninstallCommand.ToLowerInvariant().Contains("msiexec.exe"))
+                {
+                    record.InstallMethod = InstallMethodTypes.MSI;
+                }
 
-            if (record.UninstallCommand != null && record.UninstallCommand.ToLowerInvariant().Contains("msiexec.exe"))
-            {
-                record.InstallMethod = InstallMethodTypes.MSI;
+                if (record.UninstallCommand.EndsWith("--uninstall -s") && record.UninstallCommand.Contains("Update.exe"))
+                {
+                    record.InstallMethod = InstallMethodTypes.Squirrel;
+
+                    var keys = registryKey.GetValueNames().OrderBy(c => c).ToArray();
+
+                    Console.WriteLine(string.Join("|", keys));
+                }
             }
 
             return record;

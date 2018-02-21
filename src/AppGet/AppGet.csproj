@@ -202,6 +202,7 @@
     <Compile Include="Serialization\fastJSON\Reflection.cs" />
     <Compile Include="Serialization\fastJSON\SafeDictionary.cs" />
     <Compile Include="Serialization\Json.cs" />
+    <Compile Include="Serialization\JsonComparator.cs" />
     <Compile Include="Serialization\VersionConverter.cs" />
     <Compile Include="Serialization\Yaml.cs" />
     <Compile Include="Requirements\IEnforceRequirements.cs" />

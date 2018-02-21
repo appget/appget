@@ -1,7 +1,10 @@
-﻿using AppGet.Manifests;
+﻿using System.Diagnostics;
+using AppGet.Manifests;
+using Microsoft.Win32;
 
 namespace AppGet.InstalledPackages
 {
+    [DebuggerDisplay("{" + nameof(Name) + "}" + "{ " + nameof(Id) + "} ")]
     public class WindowsInstallRecord
     {
         public string Id { get; set; }
@@ -14,20 +17,6 @@ namespace AppGet.InstalledPackages
         public string QuietUninstallCommand { get; set; }
         public string InstallDate { get; set; }
         public string InstallSource { get; set; }
-
-        public override int GetHashCode()
-        {
-            return Id.GetHashCode();
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (!(obj is WindowsInstallRecord other))
-            {
-                return false;
-            }
-
-            return other.Id == Id;
-        }
+        public RegistryKey RegistryKey { get; set; }
     }
 }
