@@ -74,13 +74,21 @@ namespace AppGet.InstalledPackages
                 {
                     var record = GetRecords(subKey, subKeyName);
 
-                    yield return record;
+                    if (record != null)
+                    {
+                        yield return record;
+                    }
                 }
             }
         }
 
         private static WindowsInstallRecord GetRecords(RegistryKey registryKey, string name)
         {
+            var names = registryKey.GetValueNames();
+            if (names.Contains("SystemComponent"))
+            {
+                return null;
+            }
 
             string GetValue(string key)
             {
@@ -103,31 +111,23 @@ namespace AppGet.InstalledPackages
 
             };
 
-            if (registryKey.GetValue("QuietUninstallString") != null)
+            if (names.Any(c => c.StartsWith("Inno")))
             {
-                record.UninstallCommand = registryKey.GetValue("QuietUninstallString").ToString();
                 record.InstallMethod = InstallMethodTypes.Inno;
             }
-
-            if (record.UninstallCommand != null)
+            else if (record.UninstallCommand != null)
             {
                 if (record.UninstallCommand.ToLowerInvariant().Contains("rundll32.exe dfshim.dll,sharpmaintain"))
                 {
                     record.InstallMethod = InstallMethodTypes.ClickOnce;
                 }
-
-                if (record.UninstallCommand.ToLowerInvariant().Contains("msiexec.exe"))
+                else if (record.UninstallCommand.ToLowerInvariant().Contains("msiexec.exe"))
                 {
                     record.InstallMethod = InstallMethodTypes.MSI;
                 }
-
-                if (record.UninstallCommand.EndsWith("--uninstall -s") && record.UninstallCommand.Contains("Update.exe"))
+                else if (record.UninstallCommand.Contains(" --uninstall") && record.UninstallCommand.Contains("Update.exe"))
                 {
                     record.InstallMethod = InstallMethodTypes.Squirrel;
-
-                    var keys = registryKey.GetValueNames().OrderBy(c => c).ToArray();
-
-                    Console.WriteLine(string.Join("|", keys));
                 }
             }
 

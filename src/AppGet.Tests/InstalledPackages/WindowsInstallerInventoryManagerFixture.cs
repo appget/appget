@@ -9,7 +9,7 @@ namespace AppGet.Tests.InstalledPackages
         [Test]
         public void should_get_uninstall_records()
         {
-            var records = Subject.GetInstalledApplications();
+            var records = Subject.GetInstalledApplications().OrderBy(c => c.Name).ToList();
             records.Should().NotBeEmpty();
         }
 
