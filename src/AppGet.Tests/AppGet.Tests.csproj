@@ -94,6 +94,7 @@
     <Compile Include="CreatePackage\Parsers\VersionParserFixture.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\PopulateProductUrlFixture.cs" />
     <Compile Include="CreatePackage\Parsers\GithubUrlFixture.cs" />
+    <Compile Include="Crypto\Certificates\FileSignatureServiceFixture.cs" />
     <Compile Include="Crypto\Hash\Algorithms\Md5HashFixture.cs" />
     <Compile Include="Crypto\Hash\Algorithms\Sha1HashFixture.cs" />
     <Compile Include="Crypto\Hash\Algorithms\Sha256HashFixture.cs" />

@@ -4,7 +4,7 @@ using Microsoft.Win32;
 
 namespace AppGet.InstalledPackages
 {
-    [DebuggerDisplay("{" + nameof(Name) + "}" + "{ " + nameof(Id) + "} ")]
+    [DebuggerDisplay("{" + nameof(Name) + "} " + "{" + nameof(Id) + "}")]
     public class WindowsInstallRecord
     {
         public string Id { get; set; }

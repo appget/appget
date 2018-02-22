@@ -14,14 +14,11 @@ namespace AppGet.Installers.Inno
         {
         }
 
+        protected override InstallMethodTypes InstallMethod => InstallMethodTypes.Inno;
+
         public override void Uninstall(PackageManifest packageManifest, UninstallOptions installOptions)
         {
             throw new NotImplementedException();
-        }
-
-        public override bool CanHandle(InstallMethodTypes installMethod)
-        {
-            return installMethod == InstallMethodTypes.Inno;
         }
 
         //Command line args: http://www.jrsoftware.org/ishelp/index.php?topic=setupcmdline

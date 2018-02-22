@@ -12,6 +12,5 @@ namespace AppGet.CommandLine.Prompts
         }
 
         protected override List<T> Options => Enum.GetValues(typeof(T)).Cast<T>().ToList();
-
     }
 }

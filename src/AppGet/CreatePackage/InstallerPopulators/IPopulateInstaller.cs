@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using AppGet.Manifests;
 
 namespace AppGet.CreatePackage.InstallerPopulators

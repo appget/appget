@@ -13,6 +13,7 @@ using AppGet.Crypto.Hash.Algorithms;
 using AppGet.FileTransfer;
 using AppGet.FileTransfer.Protocols;
 using AppGet.Installers;
+using AppGet.Installers.Exe;
 using AppGet.Installers.Inno;
 using AppGet.Installers.InstallShield;
 using AppGet.Installers.Msi;
@@ -60,13 +61,15 @@ namespace AppGet.Infrastructure.Composition
                 typeof(MsiWhisperer),
                 typeof(NsisWhisperer),
                 typeof(SquirrelWhisperer),
-                typeof(ZipWhisperer)
+                typeof(ZipWhisperer),
+                typeof(ExeWhisperer)
+
             });
 
             container.RegisterMultiple<ICheckSum>(new[]
             {
-                typeof(Sha1Hash),
                 typeof(Sha256Hash),
+                typeof(Sha1Hash),
                 typeof(Md5Hash),
             });
 

@@ -20,10 +20,7 @@ namespace AppGet.Installers.Msi
             throw new NotImplementedException();
         }
 
-        public override bool CanHandle(InstallMethodTypes installMethod)
-        {
-            return installMethod == InstallMethodTypes.MSI;
-        }
+        protected override InstallMethodTypes InstallMethod => InstallMethodTypes.MSI;
 
         protected override Process StartProcess(string installerLocation, string args)
         {

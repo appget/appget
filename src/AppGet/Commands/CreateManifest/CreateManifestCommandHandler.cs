@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using AppGet.CommandLine.Prompts;
-using AppGet.CreatePackage;
 using AppGet.CreatePackage.InstallerPopulators;
 using AppGet.CreatePackage.ManifestPopulators;
 using AppGet.Manifests;

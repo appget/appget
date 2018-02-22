@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using AppGet.CommandLine.Prompts;
-using AppGet.CreatePackage.ManifestPopulators;
 using AppGet.Crypto.Hash.Algorithms;
 using AppGet.Extensions;
 using AppGet.FileTransfer;

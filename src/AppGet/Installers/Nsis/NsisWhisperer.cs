@@ -15,14 +15,11 @@ namespace AppGet.Installers.Nsis
 
         }
 
+        protected override InstallMethodTypes InstallMethod => InstallMethodTypes.NSIS;
+
         public override void Uninstall(PackageManifest packageManifest, UninstallOptions installOptions)
         {
             throw new NotImplementedException();
-        }
-
-        public override bool CanHandle(InstallMethodTypes installMethod)
-        {
-            return installMethod == InstallMethodTypes.NSIS;
         }
 
         protected override string InteractiveArgs => "";

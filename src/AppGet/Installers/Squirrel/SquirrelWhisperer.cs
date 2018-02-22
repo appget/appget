@@ -15,14 +15,11 @@ namespace AppGet.Installers.Squirrel
 
         }
 
+        protected override InstallMethodTypes InstallMethod => InstallMethodTypes.Squirrel;
+
         public override void Uninstall(PackageManifest packageManifest, UninstallOptions installOptions)
         {
             throw new NotImplementedException();
-        }
-
-        public override bool CanHandle(InstallMethodTypes installMethod)
-        {
-            return installMethod == InstallMethodTypes.Squirrel;
         }
 
         protected override string InteractiveArgs => "";

@@ -27,7 +27,7 @@ namespace AppGet.Update
             _logger.Trace("Checking for AppGet updates...");
             var client = new HttpClient();
             client.DefaultRequestHeaders.Add("User-Agent", "AppGet");
-            var response = await client.GetAsync("https://api.github.com/repos/appget/appget/releases");
+            var response = await client.GetAsync("https://api.github.com/repos/appget/appget/releases?no_cache=" + Guid.NewGuid());
             //            response.EnsureSuccessStatusCode();
             var responseBody = await response.Content.ReadAsStringAsync();
 

@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using AppGet.CommandLine.Prompts;
 using AppGet.CreatePackage.Parsers;
 using AppGet.Manifests;

@@ -13,18 +13,22 @@ namespace AppGet.Manifests
 
         [YamlIgnore]
         public string VersionTag { get; set; }
+
         public string ProductUrl { get; set; }
 
         public string[] Exe { get; set; }
+
         public InstallMethodTypes InstallMethod { get; set; }
 
         public List<Installer> Installers { get; set; }
+
+        public InstallArgs Args { get; set; }
     }
 
-
-    public class Artifact
+    public class InstallArgs
     {
-        public string Path { get; set; }
+        public string Passive { get; set; }
+        public string Silent { get; set; }
     }
 
     public class Installer
@@ -42,7 +46,6 @@ namespace AppGet.Manifests
         public ArchitectureTypes Architecture { get; set; }
 
         public Version MinWindowsVersion { get; set; }
-        public DotNetVersions MinDotNet { get; set; }
 
         public List<string> ProductIds { get; set; }
 
@@ -52,11 +55,11 @@ namespace AppGet.Manifests
             {
                 return new FileHash { HashType = HashTypes.Sha256, Value = Sha256 };
             }
-            if (!string.IsNullOrEmpty(Sha256))
+            if (!string.IsNullOrEmpty(Sha1))
             {
                 return new FileHash { HashType = HashTypes.Sha1, Value = Sha1 };
             }
-            if (!string.IsNullOrEmpty(Sha256))
+            if (!string.IsNullOrEmpty(Md5))
             {
                 return new FileHash { HashType = HashTypes.Md5, Value = Md5 };
             }
@@ -79,28 +82,6 @@ namespace AppGet.Manifests
         Sha256,
     }
 
-    public enum DotNetVersions
-    {
-        Unknown = -1,
-        None = 0,
-        Net10 = 100,
-        Net20 = 200,
-        Net30 = 300,
-        Net35Client = 350,
-        Net35 = 351,
-        Net40Client = 400,
-        Net40 = 401,
-        Net45 = 450,
-        Net451 = 451,
-        Net452 = 452,
-        Net460 = 460,
-        Net461 = 461,
-        Net470 = 470,
-        Net471 = 471,
-        Core100 = 1000,
-        Core200 = 2000
-    }
-
     public enum ArchitectureTypes
     {
         x86,
@@ -111,6 +92,7 @@ namespace AppGet.Manifests
     {
         Unknown = -1,
         Zip,
+        Custom,
         MSI,
         Inno,
         InstallShield,

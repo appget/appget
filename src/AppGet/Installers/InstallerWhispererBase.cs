@@ -15,6 +15,10 @@ namespace AppGet.Installers
         private readonly IPathResolver _pathResolver;
         private readonly Logger _logger;
 
+        protected abstract InstallMethodTypes InstallMethod { get; }
+
+
+
         protected InstallerWhispererBase(IProcessController processController, IPathResolver pathResolver, Logger logger)
         {
             _processController = processController;
@@ -24,7 +28,7 @@ namespace AppGet.Installers
 
         public virtual void Install(string installerLocation, PackageManifest packageManifest, InstallOptions installOptions)
         {
-            var process = StartProcess(installerLocation, GetInstallArguments(installOptions));
+            var process = StartProcess(installerLocation, GetInstallArguments(installOptions, packageManifest));
             _logger.Info("Waiting for installation to complete ...");
             _processController.WaitForExit(process);
 
@@ -41,12 +45,16 @@ namespace AppGet.Installers
 
 
         public abstract void Uninstall(PackageManifest packageManifest, UninstallOptions installOptions);
-        public abstract bool CanHandle(InstallMethodTypes installMethod);
 
-
-        private string GetInstallArguments(InstallOptions installOptions)
+        public bool CanHandle(InstallMethodTypes installMethod)
         {
-            var args = "";
+            return installMethod == InstallMethod;
+        }
+
+
+        protected virtual string GetInstallArguments(InstallOptions installOptions, PackageManifest manifest)
+        {
+            string args;
             if (installOptions.Silent)
             {
                 args = SilentArgs;
