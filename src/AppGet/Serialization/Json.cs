@@ -1,12 +1,18 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace AppGet.Serialization
 {
     public static class Json
     {
-        public static string Serialize(object obj)
+        private static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
         {
-            return JsonConvert.SerializeObject(obj);
+            ContractResolver = new CamelCasePropertyNamesContractResolver()
+        };
+
+        public static string Serialize(object obj, Formatting formatting = Formatting.None)
+        {
+            return JsonConvert.SerializeObject(obj, formatting, Settings);
         }
 
         public static T Deserialize<T>(string json)

@@ -45,13 +45,14 @@ namespace AppGet.PackageRepository
             return new PackageInfo
             {
                 Id = manifest.Id,
-                MajorVersion = "latest",
+                MajorVersion = "latest", // TODO
                 ManifestUrl = path
             };
         }
 
         public Task<List<PackageInfo>> Search(string term)
         {
+            // TODO
             return Task.FromResult(new List<PackageInfo>());
         }
     }
