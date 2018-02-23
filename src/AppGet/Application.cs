@@ -42,11 +42,11 @@ namespace AppGet
 
                 var container = ContainerBuilder.Build();
 
-                var optionsService = container.Resolve<IParseOptions>();
-                var options = optionsService.Parse(args);
-
                 var updatedService = container.Resolve<IAppGetUpdateService>();
                 updatedService.Start();
+
+                var optionsService = container.Resolve<IParseOptions>();
+                var options = optionsService.Parse(args);
 
                 if (options == null)
                 {
@@ -63,7 +63,7 @@ namespace AppGet
                 var commandExecutor = container.Resolve<ICommandExecutor>();
                 await commandExecutor.ExecuteCommand(options);
 
-                updatedService.Commit();
+                updatedService.Commit().Wait();
 
                 return 0;
             }

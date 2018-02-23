@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
 using AppGet.Commands.Install;
 using AppGet.Installers;
@@ -13,7 +12,7 @@ namespace AppGet.Update
     public interface IAppGetUpdateService
     {
         void Start();
-        void Commit();
+        Task Commit();
     }
 
     public class AppGetUpdateService : IAppGetUpdateService
@@ -33,11 +32,11 @@ namespace AppGet.Update
 
         public void Start()
         {
-            this._releaseTask = _releaseClient.GetReleases();
+            _releaseTask = _releaseClient.GetReleases();
         }
 
 
-        public async void Commit()
+        public async Task Commit()
         {
             var releases = await _releaseTask;
             var latest = releases.OrderByDescending(c => c.Version).First();
@@ -48,8 +47,6 @@ namespace AppGet.Update
             if (latest.Version <= current) return;
 
             _logger.Info("There is an update avilable for AppGet client. Applying update...");
-
-            Thread.Sleep(1000);
 
             var manifest = new PackageManifest
             {
@@ -67,7 +64,7 @@ namespace AppGet.Update
                 }
             };
 
-            _installService.Install(manifest, new InstallOptions { Force = true, PackageId = manifest.Id });
+            await _installService.Install(manifest, new InstallOptions { Force = true, PackageId = manifest.Id });
         }
     }
 }
