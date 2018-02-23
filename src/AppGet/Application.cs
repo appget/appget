@@ -37,7 +37,7 @@ namespace AppGet
                     args = TakeArgsFromInput();
                 }
 
-                LogConfigurator.ConfigureLogger();
+                LogConfigurator.ConfigureLogger(args);
 
                 var container = ContainerBuilder.Build();
 

@@ -23,6 +23,22 @@ namespace AppGet.HostSystem
             }
         }
 
+
+        public static bool IsProduction
+        {
+            get
+            {
+                if (IsDebug) return false;
+
+                if (Version == new Version("1.0.0.0"))
+                {
+                    return false;
+                }
+
+                return true;
+            }
+        }
+
         public static bool IsDebug
         {
             get

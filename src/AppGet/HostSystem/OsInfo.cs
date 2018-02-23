@@ -28,7 +28,7 @@ namespace AppGet.HostSystem
             return IsOS(OS_ANYSERVER);
         }
 
-        public OsInfo(Logger logger)
+        public OsInfo()
         {
             try
             {
@@ -45,7 +45,6 @@ namespace AppGet.HostSystem
             }
             catch (Exception e)
             {
-                logger.Error(e, "Couldn't get OS Version info");
             }
         }
     }

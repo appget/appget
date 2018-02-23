@@ -7,17 +7,39 @@ namespace AppGet.Infrastructure.Logging
 {
     public static class LogConfigurator
     {
-        private static LoggingRule _rule;
+        private static LoggingRule _consoleRule;
 
-        public static void ConfigureLogger()
+        public static void ConfigureLogger(string[] args)
         {
             LogManager.Configuration = new LoggingConfiguration();
 
+            BuildConsoleTarget();
+
+
+            BuildSentryTarget(args);
+
+
+
+            LogManager.ReconfigExistingLoggers();
+        }
+
+        private static void BuildSentryTarget(string[] args)
+        {
+            var sentryTarget = new SentryTarget(args);
+
+            var rule = new LoggingRule("*", LogLevel.Trace, sentryTarget);
+            LogManager.Configuration.AddTarget("sentry", sentryTarget);
+
+            LogManager.Configuration.LoggingRules.Add(rule);
+        }
+
+
+        private static ColoredConsoleTarget BuildConsoleTarget()
+        {
             var consoleTarget = new ColoredConsoleTarget
             {
                 Layout = new SimpleLayout("${trim-whitespace:${message} ${exception:format=message}}"),
             };
-
 
             consoleTarget.WordHighlightingRules.Add(new ConsoleWordHighlightingRule
             {
@@ -36,17 +58,17 @@ namespace AppGet.Infrastructure.Logging
 
             consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Info", ConsoleOutputColor.NoChange, ConsoleOutputColor.NoChange));
 
-            _rule = new LoggingRule("*", LogLevel.Info, consoleTarget);
+            _consoleRule = new LoggingRule("*", LogLevel.Info, consoleTarget);
             LogManager.Configuration.AddTarget("console", consoleTarget);
-            LogManager.Configuration.LoggingRules.Add(_rule);
+            LogManager.Configuration.LoggingRules.Add(_consoleRule);
 
-            LogManager.ReconfigExistingLoggers();
+            return consoleTarget;
         }
 
         public static void EnableVerboseLogging()
         {
-            _rule.EnableLoggingForLevel(LogLevel.Debug);
-            _rule.EnableLoggingForLevel(LogLevel.Trace);
+            _consoleRule.EnableLoggingForLevel(LogLevel.Debug);
+            _consoleRule.EnableLoggingForLevel(LogLevel.Trace);
             LogManager.ReconfigExistingLoggers();
         }
     }

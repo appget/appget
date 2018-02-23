@@ -42,6 +42,9 @@
   <PropertyGroup>
     <ApplicationIcon>appet.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommandLine, Version=2.2.1.0, Culture=neutral, PublicKeyToken=de6f01bd326f8c32, processorArchitecture=MSIL">
       <HintPath>..\packages\CommandLineParser.2.2.1\lib\net40\CommandLine.dll</HintPath>
@@ -143,6 +146,7 @@
     <Compile Include="FileTransfer\FileTransferService.cs" />
     <Compile Include="FileTransfer\Protocols\HttpFileTransferClient.cs" />
     <Compile Include="FileTransfer\IFileTransferClient.cs" />
+    <Compile Include="Infrastructure\Logging\SentryTarget.cs" />
     <Compile Include="Installers\IDetectInstallMethod.cs" />
     <Compile Include="Installers\Inno\InnoDetector.cs" />
     <Compile Include="Installers\InstallerDetectorBase.cs" />
@@ -211,6 +215,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="app.manifest" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
