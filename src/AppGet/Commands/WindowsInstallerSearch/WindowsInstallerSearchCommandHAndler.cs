@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using AppGet.InstalledPackages;
 using AppGet.Serialization;
 
@@ -19,7 +20,7 @@ namespace AppGet.Commands.WindowsInstallerSearch
             return commandOptions is WindowsInstallerSearchOptions;
         }
 
-        public void Execute(AppGetOption commandOptions)
+        public Task Execute(AppGetOption commandOptions)
         {
 
             var searchOptions = (WindowsInstallerSearchOptions)commandOptions;
@@ -36,6 +37,8 @@ namespace AppGet.Commands.WindowsInstallerSearch
             {
                 Console.WriteLine(Yaml.Serialize(uninstallRecord));
             }
+
+            return Task.FromResult(0);
         }
     }
 }

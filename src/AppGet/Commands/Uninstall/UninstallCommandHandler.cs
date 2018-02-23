@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using AppGet.InstalledPackages;
 using AppGet.Installers;
 using AppGet.Manifests;
@@ -37,7 +38,7 @@ namespace AppGet.Commands.Uninstall
             return commandOptions is UninstallOptions;
         }
 
-        public void Execute(AppGetOption commandOptions)
+        public async Task Execute(AppGetOption commandOptions)
         {
             var uninstallOptions = (UninstallOptions)commandOptions;
 
@@ -48,14 +49,14 @@ namespace AppGet.Commands.Uninstall
             {
                 foreach (var installedPackage in installedPackages)
                 {
-                    var package = _packageRepository.GetLatest(uninstallOptions.PackageId);
+                    var package = await _packageRepository.GetLatest(uninstallOptions.PackageId);
 
                     if (package == null)
                     {
                         throw new PackageNotFoundException(uninstallOptions.PackageId);
                     }
 
-                    var manifest = _packageManifestService.LoadManifest(package.ManifestUrl);
+                    var manifest = await _packageManifestService.LoadManifest(package.ManifestUrl);
 
                     //TODO: Does the uninstall service know how to choose the correct package to remove?
                     _uninstallService.Uninstall(manifest, uninstallOptions);
@@ -67,12 +68,6 @@ namespace AppGet.Commands.Uninstall
                 _logger.Warn($"Package {uninstallOptions.PackageId} wasn't installed using AppGet. Searching Windows installer records");
 
             }
-
-
-
-
-
-
         }
     }
 }

@@ -121,6 +121,8 @@
     <Compile Include="Extensions\UriExtensions.cs" />
     <Compile Include="FileTransfer\InvalidDownloadUrlException.cs" />
     <Compile Include="FileTransfer\TransferCacheService.cs" />
+    <Compile Include="Http\HttpException.cs" />
+    <Compile Include="Http\HttpExtension.cs" />
     <Compile Include="Infrastructure\Composition\ContainerBuilder.cs" />
     <Compile Include="Compression\CompressionService.cs" />
     <Compile Include="Application.cs" />
@@ -148,15 +150,7 @@
     <Compile Include="Http\GZipWebClient.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Http\HttpAccept.cs" />
     <Compile Include="Http\HttpClient.cs" />
-    <Compile Include="Http\HttpException.cs" />
-    <Compile Include="Http\HttpHeader.cs" />
-    <Compile Include="Http\HttpMethod.cs" />
-    <Compile Include="Http\HttpRequest.cs" />
-    <Compile Include="Http\HttpRequestBuilder.cs" />
-    <Compile Include="Http\HttpResponse.cs" />
-    <Compile Include="Http\UriExtensions.cs" />
     <Compile Include="Infrastructure\Logging\LogConfigurator.cs" />
     <Compile Include="InstalledPackages\InstalledPackage.cs" />
     <Compile Include="InstalledPackages\InstallTracker.cs" />

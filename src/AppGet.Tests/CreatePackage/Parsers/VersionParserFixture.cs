@@ -1,5 +1,6 @@
 ﻿using System;
 using AppGet.CreatePackage.Parsers;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace AppGet.Tests.CreatePackage.Parsers
@@ -17,6 +18,19 @@ namespace AppGet.Tests.CreatePackage.Parsers
         public string should_parse_version(string url)
         {
             return VersionParser.Parse(new Uri(url));
+        }
+
+
+        [TestCase("https://download.sublimetext.com/Sublime Text Build x64 Setup.exe")]
+        [TestCase("https://g.com/win7.exe")]
+        [TestCase("https://g.com/windows10.exe")]
+        [TestCase("https://g.com/g_i386.exe")]
+        [TestCase("https://download.piriform.com/ccsetup.exe")]
+        [TestCase("http://www.7-zip.org/a/x64.exe")]
+        [TestCase("https://download.mozilla.org/?product=firefox-latest-ssl&os=win64&lang=en-US")]
+        public void should_not_return_Version(string url)
+        {
+            VersionParser.Parse(new Uri(url)).Should().BeNull();
         }
     }
 }

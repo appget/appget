@@ -1,9 +1,12 @@
 ﻿using System;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using AppGet.Http;
 using AppGet.ProgressTracker;
 
@@ -32,34 +35,27 @@ namespace AppGet.FileTransfer.Protocols
         }
 
 
-        public string GetFileName(string source)
+        public async Task<string> GetFileName(string source)
         {
-            var url = new Uri(source);
+            var uri = new Uri(source);
 
-            var fileName = Path.GetFileName(url.LocalPath);
+            var fileName = Path.GetFileName(uri.LocalPath);
 
             if (FileNameRegex.IsMatch(fileName))
             {
                 return fileName;
             }
 
-            var resp = _httpClient.Head(new HttpRequest(source) { AllowAutoRedirect = false });
+            var resp = await _httpClient.Head(uri);
 
-            if (resp.Headers.ContainsKey("Location"))
+            if (resp.RequestMessage.RequestUri != uri)
             {
-                return GetFileName(resp.Headers["Location"].ToString());
+                return await GetFileName(resp.RequestMessage.RequestUri.ToString());
             }
 
-            if (resp.Headers.ContainsKey("Content-Disposition"))
+            if (resp.Content.Headers.ContentDisposition != null)
             {
-                var contentDeposition = resp.Headers["Content-Disposition"].ToString();
-
-                var match = ContentDepositionRegex.Match(contentDeposition);
-
-                if (match.Success && match.Groups["fileName"] != null)
-                {
-                    return match.Groups["fileName"].Value;
-                }
+                return resp.Content.Headers.ContentDisposition.FileName;
             }
 
             throw new InvalidDownloadUrlException(source);
@@ -91,12 +87,13 @@ namespace AppGet.FileTransfer.Protocols
             }
         }
 
-        public string ReadString(string source)
+        public async Task<string> ReadString(string source)
         {
-            var req = new HttpRequest(source);
-            req.DisableCache();
-            var resp = _httpClient.Get(req);
-            return resp.Content;
+            var req = new HttpRequestMessage(HttpMethod.Get, source);
+            req.Headers.CacheControl.NoCache = true;
+
+            var resp = await _httpClient.Send(req);
+            return await resp.Content.ReadAsStringAsync();
         }
 
         private void TransferProgressCallback(object sender, DownloadProgressChangedEventArgs e)

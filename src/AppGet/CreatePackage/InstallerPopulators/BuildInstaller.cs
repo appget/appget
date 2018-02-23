@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AppGet.CommandLine.Prompts;
+using AppGet.CreatePackage.Parsers;
 using AppGet.Crypto.Hash.Algorithms;
 using AppGet.Extensions;
 using AppGet.FileTransfer;
@@ -12,8 +14,8 @@ namespace AppGet.CreatePackage.InstallerPopulators
 {
     public interface IBuildInstaller
     {
-        Installer Populate();
-        Installer Populate(string url);
+        Task<Installer> Populate();
+        Task<Installer> Populate(string url);
     }
 
     public class BuildInstaller : IBuildInstaller
@@ -35,13 +37,13 @@ namespace AppGet.CreatePackage.InstallerPopulators
         }
 
 
-        public Installer Populate()
+        public async Task<Installer> Populate()
         {
             var url = _urlPrompt.Request("Installer direct download URL:", null);
-            return Populate(url);
+            return await Populate(url);
         }
 
-        public Installer Populate(string url)
+        public async Task<Installer> Populate(string url)
         {
             var uri = new Uri(url, UriKind.Absolute);
 
@@ -54,7 +56,7 @@ namespace AppGet.CreatePackage.InstallerPopulators
 
                 try
                 {
-                    installer = DownloadInstaller(uri.ToHttps());
+                    installer = await DownloadInstaller(uri.ToHttps());
                     _logger.Info("Installer aprears to be avilable using HTTPS. Using HTTPS instead.");
 
                 }
@@ -66,7 +68,7 @@ namespace AppGet.CreatePackage.InstallerPopulators
 
             if (installer == null)
             {
-                installer = DownloadInstaller(uri);
+                installer = await DownloadInstaller(uri);
             }
 
             foreach (var populater in _populaters)
@@ -77,11 +79,21 @@ namespace AppGet.CreatePackage.InstallerPopulators
             return installer;
         }
 
-        private Installer DownloadInstaller(Uri uri)
+        private async Task<Installer> DownloadInstaller(Uri uri)
         {
             var installer = new Installer();
-            var filePath = _fileTransferService.TransferFile(uri.ToString(), _pathResolver.TempFolder, null);
-            installer.Sha256 = _sha256.CalculateHash(filePath);
+            var filePath = await _fileTransferService.TransferFile(uri.ToString(), _pathResolver.TempFolder, null);
+            var sha256 = _sha256.CalculateHash(filePath);
+            Console.WriteLine($"SHA-256: {sha256}");
+            if (VersionParser.Parse(uri) != null)
+            {
+                installer.Sha256 = sha256;
+            }
+            else
+            {
+                _logger.Warn("Download URL doesn't aprear to point to a specific version. WILL NOT assign a SHA-256 to this installer.");
+            }
+
             installer.Location = uri.ToString();
             installer.FilePath = filePath;
             return installer;

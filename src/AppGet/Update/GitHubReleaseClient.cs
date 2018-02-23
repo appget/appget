@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
-using AppGet.Serialization;
+using AppGet.Http;
 using NLog;
 
 namespace AppGet.Update
@@ -15,25 +14,21 @@ namespace AppGet.Update
 
     public class GitHubReleaseClient : IReleaseClient
     {
+        private readonly IHttpClient _httpClient;
         private readonly Logger _logger;
 
-        public GitHubReleaseClient(Logger logger)
+        public GitHubReleaseClient(IHttpClient httpClient, Logger logger)
         {
+            _httpClient = httpClient;
             _logger = logger;
         }
 
         public async Task<List<AppGetRelease>> GetReleases()
         {
             _logger.Trace("Checking for AppGet updates...");
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Add("User-Agent", "AppGet");
-            var response = await client.GetAsync("https://api.github.com/repos/appget/appget/releases?no_cache=" + Guid.NewGuid());
-            //            response.EnsureSuccessStatusCode();
-            var responseBody = await response.Content.ReadAsStringAsync();
-
-            var releases = Json.Deserialize<List<GithubRelease>>(responseBody);
+            var response = await _httpClient.Get("https://api.github.com/repos/appget/appget/releases?no_cache=" + Guid.NewGuid());
+            var releases = response.AsResource<List<GithubRelease>>();
             _logger.Trace($"Found {releases.Count} releases");
-
 
             return releases.Select(c => new AppGetRelease
             {
@@ -41,11 +36,6 @@ namespace AppGet.Update
                 Version = new Version(c.tag_name)
             }).ToList();
 
-            //            _logger.Trace("Getting AppGet client releases from github");
-            //            var builder = new HttpRequestBuilder("https://api.github.com/repos/appget/appget/");
-            //            var response = _httpClient.Get<List<GithubRelease>>(builder.Build("releases"));
-
-            //            return releases;
         }
     }
 }

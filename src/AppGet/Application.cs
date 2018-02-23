@@ -60,7 +60,7 @@ namespace AppGet
                 container.Resolve<IAppDataService>().EnsureAppDataDirectoryExists();
 
                 var commandExecutor = container.Resolve<ICommandExecutor>();
-                commandExecutor.ExecuteCommand(options);
+                commandExecutor.ExecuteCommand(options).Wait();
 
                 updatedService.Commit();
 

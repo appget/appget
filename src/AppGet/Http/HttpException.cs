@@ -1,23 +1,15 @@
-using AppGet.Exceptions;
+﻿using System;
+using System.Net.Http;
 
 namespace AppGet.Http
 {
-    public class HttpException : AppGetException
+    public class HttpException : Exception
     {
-        public HttpRequest Request { get; private set; }
-        public HttpResponse Response { get; private set; }
+        public HttpResponseMessage Response { get; }
 
-        public HttpException(HttpRequest request, HttpResponse response)
-            : base("HTTP request failed: " + response)
+        public HttpException(HttpResponseMessage response)
         {
-            Request = request;
             Response = response;
-        }
-
-        public HttpException(HttpResponse response)
-            : this(response.Request, response)
-        {
-
         }
     }
 }

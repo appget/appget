@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Threading.Tasks;
 using AppGet.FileTransfer;
 using AppGet.FileTransfer.Protocols;
 using FluentAssertions;
@@ -18,23 +19,25 @@ namespace AppGet.Tests.FileTransfer.Protocols
         [TestCase("https://www.fosshub.com/ConEmu.html/ConEmuPack.161206.7z")]
         public void should_throw_on_html_download_file(string url)
         {
-            Assert.Throws<InvalidDownloadUrlException>(() =>
+            Assert.ThrowsAsync<InvalidDownloadUrlException>(async () =>
             {
-                Subject.TransferFile(url, Path.Combine(Path.GetTempPath(), Subject.GetFileName(url)));
+                Subject.TransferFile(url, Path.Combine(Path.GetTempPath(), await Subject.GetFileName(url)));
             });
         }
 
         [Test]
-        public void should_download_file_using_correct_name()
+        public async Task should_download_file_using_correct_name()
         {
             const string url = "http://www.linqpad.net/GetFile.aspx?LINQPad4-AnyCPU.zip";
-            Subject.GetFileName(url).Should().Be("LINQPad4-AnyCPU.zip");
+            var fileName = await Subject.GetFileName(url);
+            fileName.Should().Be("LINQPad4-AnyCPU.zip");
         }
 
         [TestCase("https://dl.pstmn.io/download/latest/win64")]
-        public void should_get_file_name(string url)
+        public async Task should_get_file_name(string url)
         {
-            Subject.GetFileName(url).Should().EndWith(".exe");
+            var fileName = await Subject.GetFileName(url);
+            fileName.Should().EndWith(".exe");
         }
 
         [TestCase("http://server.com/dir/dir2/somefile.zip", "somefile.zip")]
@@ -46,9 +49,10 @@ namespace AppGet.Tests.FileTransfer.Protocols
         [TestCase("http://www.linqpad.net/GetFile.aspx?LINQPad4-AnyCPU.zip", "LINQPad4-AnyCPU.zip")]
         [TestCase("http://www.jtricks.com/download-unknown", "content.txt")]
         [TestCase("http://www.jtricks.com/download-text", "content.txt")]
-        public void should_get_file_name_from_nameless_url(string url, string fileName)
+        public async Task should_get_file_name_from_nameless_url(string url, string expected)
         {
-            Subject.GetFileName(url).Should().Be(fileName);
+            var fileName = await Subject.GetFileName(url);
+            fileName.Should().Be(expected);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using AppGet.InstalledPackages;
 using NLog;
 
@@ -20,7 +21,7 @@ namespace AppGet.Commands.List
             return commandOptions is ListOptions;
         }
 
-        public void Execute(AppGetOption commandOptions)
+        public Task Execute(AppGetOption commandOptions)
         {
             var packages = _inventoryManager.GetInstalledPackages();
 
@@ -37,6 +38,7 @@ namespace AppGet.Commands.List
                 _logger.Info("You have no packages installed.");
             }
 
+            return Task.FromResult(0);
         }
     }
 }

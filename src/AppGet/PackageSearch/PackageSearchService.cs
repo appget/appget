@@ -1,11 +1,12 @@
-﻿using AppGet.PackageRepository;
+﻿using System.Threading.Tasks;
+using AppGet.PackageRepository;
 using NLog;
 
 namespace AppGet.PackageSearch
 {
     public interface IPackageSearchService
     {
-        void DisplayResults(string query);
+        Task DisplayResults(string query);
     }
 
     public class PackageSearchService : IPackageSearchService
@@ -19,9 +20,9 @@ namespace AppGet.PackageSearch
             _logger = logger;
         }
 
-        public void DisplayResults(string query)
+        public async Task DisplayResults(string query)
         {
-            var results = _packageRepository.Search(query);
+            var results = await _packageRepository.Search(query);
 
             _logger.Info("Found {0} package(s)", results.Count);
 

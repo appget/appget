@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using AppGet.ProgressTracker;
 
 namespace AppGet.FileTransfer.Protocols
@@ -17,9 +18,9 @@ namespace AppGet.FileTransfer.Protocols
         public void TransferFile(string source, string destinationFile)
         {
             var progress = new ProgressState
-                        {
-                            Total = 1
-                        };
+            {
+                Total = 1
+            };
 
             //TODO: move this to a Copy using streams/that way we can provide progress
             File.Copy(source, destinationFile);
@@ -31,14 +32,17 @@ namespace AppGet.FileTransfer.Protocols
             OnCompleted?.Invoke(progress);
         }
 
-        public string ReadString(string source)
+        public async Task<string> ReadString(string source)
         {
-            return File.ReadAllText(source);
+            using (var reader = File.OpenText(source))
+            {
+                return await reader.ReadToEndAsync();
+            }
         }
 
-        public string GetFileName(string source)
+        public Task<string> GetFileName(string source)
         {
-            return new FileInfo(source).Name;
+            return Task.FromResult(new FileInfo(source).Name);
         }
 
         public Action<ProgressState> OnStatusUpdated { get; set; }

@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using NLog;
 
 namespace AppGet.Commands
 {
     public interface ICommandExecutor
     {
-        void ExecuteCommand(AppGetOption option);
+        Task ExecuteCommand(AppGetOption option);
     }
 
     public class CommandExecutor : ICommandExecutor
@@ -18,14 +19,14 @@ namespace AppGet.Commands
         private readonly List<ICommandHandler> _commandHandlers;
 
 
-        public CommandExecutor(IEnumerable<ICommandHandler> commandHandlers,AppGetOption option, Logger logger)
+        public CommandExecutor(IEnumerable<ICommandHandler> commandHandlers, AppGetOption option, Logger logger)
         {
             _option = option;
             _logger = logger;
             _commandHandlers = commandHandlers.ToList();
         }
 
-        public void ExecuteCommand(AppGetOption option)
+        public async Task ExecuteCommand(AppGetOption option)
         {
             var commandHandler = _commandHandlers.FirstOrDefault(c => c.CanExecute(option));
 
@@ -36,7 +37,7 @@ namespace AppGet.Commands
 
             _logger.Debug("Starting command [{0}]", option.CommandName);
             var stopwatch = Stopwatch.StartNew();
-            commandHandler.Execute(option);
+            await commandHandler.Execute(option);
             stopwatch.Stop();
             Console.WriteLine();
             _logger.Debug("Completed command [{0}]. took: {1:N}s", option.CommandName, stopwatch.Elapsed.TotalSeconds);

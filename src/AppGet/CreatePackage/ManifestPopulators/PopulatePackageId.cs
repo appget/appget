@@ -18,6 +18,7 @@ namespace AppGet.CreatePackage.ManifestPopulators
         public void Populate(PackageManifest manifest, FileVersionInfo fileVersionInfo)
         {
             var defaultValue = _idRegex.Replace(manifest.Name, "-").ToLowerInvariant().Trim('-');
+            defaultValue = defaultValue.Replace("+", "plus");
             manifest.Id = _prompt.Request("Package ID", defaultValue.ToLowerInvariant());
         }
     }

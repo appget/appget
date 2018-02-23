@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AppGet.PackageRepository
 {
     public interface IPackageRepository
     {
-        PackageInfo GetLatest(string name);
-        List<PackageInfo> Search(string term);
+        Task<PackageInfo> GetLatest(string name);
+        Task<List<PackageInfo>> Search(string term);
     }
 }

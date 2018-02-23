@@ -1,4 +1,5 @@
-﻿using AppGet.InstalledPackages;
+﻿using System.Threading.Tasks;
+using AppGet.InstalledPackages;
 using AppGet.Installers;
 using AppGet.Manifests;
 using AppGet.PackageRepository;
@@ -28,7 +29,7 @@ namespace AppGet.Commands.Install
             return commandOptions is InstallOptions;
         }
 
-        public void Execute(AppGetOption commandOptions)
+        public async Task Execute(AppGetOption commandOptions)
         {
             var installOptions = (InstallOptions)commandOptions;
 
@@ -37,16 +38,16 @@ namespace AppGet.Commands.Install
                 throw new PackageAlreadyInstalledException(installOptions.PackageId);
             }
 
-            var package = _packageRepository.GetLatest(installOptions.PackageId);
+            var package = await _packageRepository.GetLatest(installOptions.PackageId);
 
             if (package == null)
             {
                 throw new PackageNotFoundException(installOptions.PackageId);
             }
 
-            var manifest = _packageManifestService.LoadManifest(package.ManifestUrl);
+            var manifest = await _packageManifestService.LoadManifest(package.ManifestUrl);
 
-            _installService.Install(manifest, installOptions);
+            await _installService.Install(manifest, installOptions);
         }
     }
 }

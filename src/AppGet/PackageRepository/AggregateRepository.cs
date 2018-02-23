@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace AppGet.PackageRepository
 {
@@ -12,14 +13,14 @@ namespace AppGet.PackageRepository
             _repositories = repositories;
         }
 
-        public PackageInfo GetLatest(string name)
+        public Task<PackageInfo> GetLatest(string name)
         {
             return _repositories.Select(c => c.GetLatest(name)).FirstOrDefault();
         }
 
-        public List<PackageInfo> Search(string term)
+        public Task<List<PackageInfo>> Search(string term)
         {
-            return _repositories.SelectMany(c => c.Search(term)).ToList();
+            return Task.FromResult(_repositories.SelectMany(c => c.Search(term).Result).ToList());
         }
     }
 }

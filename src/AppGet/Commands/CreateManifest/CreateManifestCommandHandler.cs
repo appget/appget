@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using AppGet.CommandLine.Prompts;
 using AppGet.CreatePackage.InstallerPopulators;
 using AppGet.CreatePackage.ManifestPopulators;
@@ -30,12 +31,12 @@ namespace AppGet.Commands.CreateManifest
             return commandOptions is CreateManifestOptions;
         }
 
-        public void Execute(AppGetOption appGetOption)
+        public async Task Execute(AppGetOption appGetOption)
         {
             var createOptions = (CreateManifestOptions)appGetOption;
 
             var manifest = new PackageManifest { Installers = new List<Installer>() };
-            var installer = _installerBuilder.Populate(createOptions.DownloadUrl);
+            var installer = await _installerBuilder.Populate(createOptions.DownloadUrl);
             manifest.Installers.Add(installer);
 
             var fileVersionInfo = FileVersionInfo.GetVersionInfo(installer.FilePath);
@@ -54,7 +55,7 @@ namespace AppGet.Commands.CreateManifest
                 {
                     break;
                 }
-                manifest.Installers.Add(_installerBuilder.Populate(url));
+                manifest.Installers.Add(await _installerBuilder.Populate(url));
             }
 
 

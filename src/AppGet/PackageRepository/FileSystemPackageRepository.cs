@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using AppGet.AppData;
 using AppGet.FileSystem;
 using AppGet.Manifests;
@@ -19,7 +20,7 @@ namespace AppGet.PackageRepository
             _config = config;
         }
 
-        public PackageInfo GetLatest(string name)
+        public Task<PackageInfo> GetLatest(string name)
         {
             if (string.IsNullOrWhiteSpace(_config.LocalRepository))
             {
@@ -33,7 +34,7 @@ namespace AppGet.PackageRepository
             }
 
             var packages = _fileSystem.GetFiles(pkgDir, "*.yaml").Select(Read);
-            return packages.OrderByDescending(c => c.MajorVersion).FirstOrDefault();
+            return Task.FromResult(packages.OrderByDescending(c => c.MajorVersion).FirstOrDefault());
         }
 
         private PackageInfo Read(string path)
@@ -49,9 +50,9 @@ namespace AppGet.PackageRepository
             };
         }
 
-        public List<PackageInfo> Search(string term)
+        public Task<List<PackageInfo>> Search(string term)
         {
-            return new List<PackageInfo>();
+            return Task.FromResult(new List<PackageInfo>());
         }
     }
 }
