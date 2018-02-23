@@ -36,11 +36,8 @@ namespace AppGet.Tests.InstalledPackages
             records.Should().NotBeEmpty();
         }
 
-        [TestCase("Node", Category = "Local")]
         [TestCase("VLC", Category = "Local")]
-        [TestCase("discord", Category = "Local")]
         [TestCase("slack", Category = "Local")]
-        [TestCase("Chrome", Category = "Local")]
         public void should_find_install_record(string name)
         {
             var apps = Subject.GetInstalledApplications(name);
