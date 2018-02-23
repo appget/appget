@@ -36,7 +36,7 @@ namespace AppGet.Infrastructure.Logging
                 Compression = true,
                 ErrorOnCapture = OnError,
                 Release = BuildInfo.Version.ToString(),
-                Environment = BuildInfo.IsProduction ? "Production": "Dev",
+                Environment = BuildInfo.IsProduction ? "Production" : "Dev",
             };
 
             var osInfo = new OsInfo();
@@ -45,6 +45,7 @@ namespace AppGet.Infrastructure.Logging
             _client.Tags.Add("os_name", osInfo.Name);
             _client.Tags.Add("os_version", osInfo.Version.ToString());
             _client.Tags.Add("os_bit", osInfo.Is64BitOperatingSystem ? "64" : "32");
+            _client.Tags.Add("args", string.Join("|", args));
         }
 
         private void OnError(Exception ex)
@@ -72,7 +73,7 @@ namespace AppGet.Infrastructure.Logging
             {
                 var message = logEvent.FormattedMessage;
 
-                _client.AddTrail(new Breadcrumb(logEvent.LoggerName, BreadcrumbType.Navigation)
+                _client.AddTrail(new Breadcrumb("log", BreadcrumbType.Navigation)
                 {
                     Level = GetLevel(logEvent.Level),
                     Message = message
@@ -84,34 +85,34 @@ namespace AppGet.Infrastructure.Logging
                 }
 
                 var extras = logEvent.Properties.ToDictionary(x => x.Key.ToString(), x => x.Value.ToString());
-                _client.Logger = logEvent.LoggerName;
 
-                if (logEvent.Exception != null)
+                var ex = logEvent.Exception;
+
+                if (ex is AggregateException aggException)
                 {
-                    foreach (DictionaryEntry data in logEvent.Exception.Data)
-                    {
-                        extras.Add(data.Key.ToString(), data.Value.ToString());
-                    }
+                    ex = aggException.Flatten();
                 }
 
-                var sentryMessage = new SentryMessage(message);
-
-                var sentryEvent = new SentryEvent(logEvent.Exception)
+                var sentryEvent = new SentryEvent(ex)
                 {
                     Level = LoggingLevelMap[logEvent.Level],
-                    Message = sentryMessage,
+                    Message = new SentryMessage(message),
                     Extra = extras,
                     Fingerprint =
                     {
                         logEvent.Level.ToString(),
-                        logEvent.LoggerName,
                         logEvent.Message
                     }
                 };
 
-                if (logEvent.Exception != null)
+                if (ex != null)
                 {
-                    sentryEvent.Fingerprint.Add(logEvent.Exception.GetType().FullName);
+                    foreach (DictionaryEntry data in ex.Data)
+                    {
+                        extras.Add(data.Key.ToString(), data.Value.ToString());
+                    }
+
+                    sentryEvent.Fingerprint.Add(ex.GetType().FullName);
                 }
 
                 _client.Capture(sentryEvent);

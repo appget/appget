@@ -43,7 +43,7 @@ namespace AppGet.PackageRepository
 
         public async Task<List<PackageInfo>> Search(string term)
         {
-            _logger.Info("Searching for " + term);
+            _logger.Debug($"Searching for '{term}' in {API_ROOT}");
 
             var uri = new Uri($"{API_ROOT}/packages")
                 .AddQuery("q", term.Trim());

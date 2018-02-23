@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AppGet.PackageRepository;
 using NLog;
 
@@ -25,10 +26,11 @@ namespace AppGet.PackageSearch
             var results = await _packageRepository.Search(query);
 
             _logger.Info("Found {0} package(s)", results.Count);
+            Console.WriteLine();
 
             foreach (var package in results)
             {
-                _logger.Info(package);
+                Console.WriteLine($" {package}");
             }
         }
     }
