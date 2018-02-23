@@ -46,12 +46,18 @@
     <Reference Include="CommandLine, Version=2.2.1.0, Culture=neutral, PublicKeyToken=de6f01bd326f8c32, processorArchitecture=MSIL">
       <HintPath>..\packages\CommandLineParser.2.2.1\lib\net40\CommandLine.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.4.12\lib\net35\NLog.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="SharpCompress, Version=0.19.2.0, Culture=neutral, PublicKeyToken=afb0a02973931d96, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpCompress.0.19.2\lib\net35\SharpCompress.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpRaven, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpRaven.2.2.0\lib\net45\SharpRaven.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -191,14 +197,6 @@
     <Compile Include="Infrastructure\Composition\TinyIoC.cs" />
     <Compile Include="Requirements\InstallerCompatibility.cs" />
     <Compile Include="Requirements\Specifications\OsArchitectureSpecification.cs" />
-    <Compile Include="Serialization\fastJSON\dynamic.cs" />
-    <Compile Include="Serialization\fastJSON\Formatter.cs" />
-    <Compile Include="Serialization\fastJSON\Getters.cs" />
-    <Compile Include="Serialization\fastJSON\FastJson.cs" />
-    <Compile Include="Serialization\fastJSON\JsonParser.cs" />
-    <Compile Include="Serialization\fastJSON\JsonSerializer.cs" />
-    <Compile Include="Serialization\fastJSON\Reflection.cs" />
-    <Compile Include="Serialization\fastJSON\SafeDictionary.cs" />
     <Compile Include="Serialization\Json.cs" />
     <Compile Include="Serialization\JsonComparator.cs" />
     <Compile Include="Serialization\VersionConverter.cs" />

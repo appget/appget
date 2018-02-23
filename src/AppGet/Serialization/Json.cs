@@ -1,4 +1,4 @@
-﻿using AppGet.Serialization.fastJSON;
+﻿using Newtonsoft.Json;
 
 namespace AppGet.Serialization
 {
@@ -6,12 +6,12 @@ namespace AppGet.Serialization
     {
         public static string Serialize(object obj)
         {
-            return FastJson.ToJSON(obj);
+            return JsonConvert.SerializeObject(obj);
         }
 
-        public static T Deserialize<T>(string text)
+        public static T Deserialize<T>(string json)
         {
-            return FastJson.ToObject<T>(text);
+            return JsonConvert.DeserializeObject<T>(json);
         }
     }
 }
