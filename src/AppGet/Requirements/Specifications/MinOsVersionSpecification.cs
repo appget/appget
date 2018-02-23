@@ -5,9 +5,9 @@ namespace AppGet.Requirements.Specifications
 {
     public class MinOsVersionSpecification : IEnforceRequirements
     {
-        private readonly IOsInfo _environmentProxy;
+        private readonly IEnvInfo _environmentProxy;
 
-        public MinOsVersionSpecification(IOsInfo environmentProxy)
+        public MinOsVersionSpecification(IEnvInfo environmentProxy)
         {
             _environmentProxy = environmentProxy;
         }

@@ -40,7 +40,7 @@ namespace AppGet.Installers
 
         protected virtual Process StartProcess(string installerLocation, string args)
         {
-            return _processController.Start(installerLocation, args, OnOutputDataReceived, OnErrorDataReceived);
+            return _processController.Start(installerLocation, args);
         }
 
 
@@ -88,16 +88,6 @@ namespace AppGet.Installers
         protected virtual string GetLoggingArgs(string path)
         {
             return null;
-        }
-
-        private void OnOutputDataReceived(string message)
-        {
-            _logger.Info(message);
-        }
-
-        private void OnErrorDataReceived(string message)
-        {
-            _logger.Error(message);
         }
     }
 }

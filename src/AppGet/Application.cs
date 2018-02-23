@@ -70,17 +70,17 @@ namespace AppGet
 
             catch (AppGetException ex)
             {
-                Logger.Error(ex, "");
+                Logger.Error(ex, null);
                 return 1;
             }
             catch (NotImplementedException ex)
             {
-                Logger.Error(ex, "");
+                Logger.Error(ex, null);
                 return 1;
             }
             catch (Exception ex)
             {
-                Logger.Fatal(ex, "");
+                Logger.Fatal(ex, null);
                 return 1;
             }
         }

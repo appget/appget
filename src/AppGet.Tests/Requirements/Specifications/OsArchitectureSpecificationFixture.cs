@@ -12,7 +12,7 @@ namespace AppGet.Tests.Requirements.Specifications
         [Test]
         public void should_be_true_when_type_is_x86()
         {
-            Mocker.GetMock<IOsInfo>()
+            Mocker.GetMock<IEnvInfo>()
                   .SetupGet(s => s.Is64BitOperatingSystem)
                   .Returns(true);
 
@@ -26,7 +26,7 @@ namespace AppGet.Tests.Requirements.Specifications
         [Test]
         public void should_be_true_when_type_is_x64_on_x64_os()
         {
-            Mocker.GetMock<IOsInfo>()
+            Mocker.GetMock<IEnvInfo>()
                   .SetupGet(s => s.Is64BitOperatingSystem)
                   .Returns(true);
 
@@ -39,7 +39,7 @@ namespace AppGet.Tests.Requirements.Specifications
         [Test]
         public void should_be_false_when_x64_on_x86_os()
         {
-            Mocker.GetMock<IOsInfo>()
+            Mocker.GetMock<IEnvInfo>()
                   .SetupGet(s => s.Is64BitOperatingSystem)
                   .Returns(false);
 

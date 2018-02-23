@@ -11,8 +11,7 @@ namespace AppGet.Manifests
         public string Licence { get; set; }
         public string Version { get; set; }
 
-        [YamlIgnore]
-        public string VersionTag { get; set; }
+        [YamlIgnore] public string VersionTag { get; set; }
 
         public string ProductUrl { get; set; }
 
@@ -40,8 +39,7 @@ namespace AppGet.Manifests
         public string Sha256 { get; set; }
         public string Md5 { get; set; }
 
-        [YamlIgnore]
-        public string FilePath { get; set; }
+        [YamlIgnore] public string FilePath { get; set; }
 
         public ArchitectureTypes Architecture { get; set; }
 
@@ -55,10 +53,12 @@ namespace AppGet.Manifests
             {
                 return new FileHash { HashType = HashTypes.Sha256, Value = Sha256 };
             }
+
             if (!string.IsNullOrEmpty(Sha1))
             {
                 return new FileHash { HashType = HashTypes.Sha1, Value = Sha1 };
             }
+
             if (!string.IsNullOrEmpty(Md5))
             {
                 return new FileHash { HashType = HashTypes.Md5, Value = Md5 };
@@ -66,38 +66,5 @@ namespace AppGet.Manifests
 
             return null;
         }
-    }
-
-    public class FileHash
-    {
-        public HashTypes HashType { get; set; }
-        public string Value { get; set; }
-    }
-
-
-    public enum HashTypes
-    {
-        Md5,
-        Sha1,
-        Sha256,
-    }
-
-    public enum ArchitectureTypes
-    {
-        x86,
-        x64
-    }
-
-    public enum InstallMethodTypes
-    {
-        Unknown = -1,
-        Zip,
-        Custom,
-        MSI,
-        Inno,
-        InstallShield,
-        ClickOnce,
-        NSIS,
-        Squirrel
     }
 }

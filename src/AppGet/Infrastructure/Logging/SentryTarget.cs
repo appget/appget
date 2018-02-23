@@ -39,7 +39,7 @@ namespace AppGet.Infrastructure.Logging
                 Environment = BuildInfo.IsProduction ? "Production" : "Dev",
             };
 
-            var osInfo = new OsInfo();
+            var osInfo = new EnvInfo();
 
             _client.Tags.Add("culture", Thread.CurrentThread.CurrentCulture.Name);
             _client.Tags.Add("os_name", osInfo.Name);
@@ -96,11 +96,11 @@ namespace AppGet.Infrastructure.Logging
                 var sentryEvent = new SentryEvent(ex)
                 {
                     Level = LoggingLevelMap[logEvent.Level],
-                    Message = new SentryMessage(message),
+                    Message = string.IsNullOrWhiteSpace(message) ? null : new SentryMessage(message),
                     Extra = extras,
                     Fingerprint =
                     {
-                        logEvent.Level.ToString(),
+                    logEvent.Level.ToString(),
                         logEvent.Message
                     }
                 };

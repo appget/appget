@@ -40,7 +40,7 @@ namespace AppGet.Tests
 
         protected void WithRealHttp()
         {
-            Mocker.SetInstance<IOsInfo>(Mocker.Resolve<OsInfo>());
+            Mocker.SetInstance<IEnvInfo>(Mocker.Resolve<EnvInfo>());
             Mocker.SetInstance<IUserAgentBuilder>(Mocker.Resolve<UserAgentBuilder>());
             Mocker.SetInstance<IHttpClient>(Mocker.Resolve<HttpClient>());
         }

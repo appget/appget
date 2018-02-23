@@ -13,7 +13,7 @@ namespace AppGet.Tests.Requirements.Specifications
         [Test]
         public void should_be_true_when_min_has_not_been_set()
         {
-            Mocker.GetMock<IOsInfo>()
+            Mocker.GetMock<IEnvInfo>()
                   .SetupGet(s => s.Version)
                   .Returns(new Version(1, 0));
 
@@ -23,7 +23,7 @@ namespace AppGet.Tests.Requirements.Specifications
         [Test]
         public void should_be_true_when_OS_is_greater_than_min()
         {
-            Mocker.GetMock<IOsInfo>()
+            Mocker.GetMock<IEnvInfo>()
                   .SetupGet(s => s.Version)
                   .Returns(new Version(10, 0));
 
@@ -36,7 +36,7 @@ namespace AppGet.Tests.Requirements.Specifications
         [Test]
         public void should_be_true_when_OS_is_same_as_min()
         {
-            Mocker.GetMock<IOsInfo>()
+            Mocker.GetMock<IEnvInfo>()
                 .SetupGet(s => s.Version)
                 .Returns(new Version(10, 0));
 
@@ -49,7 +49,7 @@ namespace AppGet.Tests.Requirements.Specifications
         [Test]
         public void should_be_false_when_OS_is_less_than_min()
         {
-            Mocker.GetMock<IOsInfo>()
+            Mocker.GetMock<IEnvInfo>()
                   .SetupGet(s => s.Version)
                 .Returns(new Version(6, 0));
 

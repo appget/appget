@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace AppGet.Tests.HostSystem
 {
     [TestFixture]
-    public class OsInfoFixture : TestBase<OsInfo>
+    public class EnvInfoFixture : TestBase<EnvInfo>
     {
         [Test]
         public void should_get_os_info()

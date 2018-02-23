@@ -17,11 +17,11 @@ namespace AppGet.Http
             return simplified ? _userAgentSimplified : _userAgent;
         }
 
-        public UserAgentBuilder(IOsInfo osInfo)
+        public UserAgentBuilder(IEnvInfo envInfo)
         {
-            var bits = osInfo.Is64BitOperatingSystem ? "64" : "32";
+            var bits = envInfo.Is64BitOperatingSystem ? "64" : "32";
 
-            _userAgent = $"AppGet/{BuildInfo.Version} ({ osInfo.Name} {osInfo.Version}; {bits})";
+            _userAgent = $"AppGet/{BuildInfo.Version} ({ envInfo.Name} {envInfo.Version}; {bits})";
             _userAgentSimplified = $"AppGet/{BuildInfo.Version.ToString(2)}";
         }
     }

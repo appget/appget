@@ -132,7 +132,7 @@
     <Compile Include="FileTransfer\InvalidDownloadUrlException.cs" />
     <Compile Include="FileTransfer\TransferCacheService.cs" />
     <Compile Include="HostSystem\BuildInfo.cs" />
-    <Compile Include="HostSystem\OsInfo.cs" />
+    <Compile Include="HostSystem\EnvInfo.cs" />
     <Compile Include="Http\UserAgentBuilder.cs" />
     <Compile Include="Http\HttpException.cs" />
     <Compile Include="Http\HttpExtension.cs" />
@@ -155,6 +155,10 @@
     <Compile Include="Installers\Squirrel\SquirrelDetector.cs" />
     <Compile Include="Installers\Squirrel\SquirrelWhisperer.cs" />
     <Compile Include="Installers\Nsis\NsisDetector.cs" />
+    <Compile Include="Manifests\ArchitectureTypes.cs" />
+    <Compile Include="Manifests\FileHash.cs" />
+    <Compile Include="Manifests\HashTypes.cs" />
+    <Compile Include="Manifests\InstallMethodTypes.cs" />
     <Compile Include="Manifests\WindowsVersion.cs" />
     <Compile Include="Manifests\PackageManifestService.cs" />
     <Compile Include="Exceptions\AppGetException.cs" />
