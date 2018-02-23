@@ -5,11 +5,11 @@ namespace AppGet.Requirements.Specifications
 {
     public class OsArchitectureSpecification : IEnforceRequirements
     {
-        private readonly IEnvironmentProxy _environmentProxy;
+        private readonly IOsInfo _osInfo;
 
-        public OsArchitectureSpecification(IEnvironmentProxy environmentProxy)
+        public OsArchitectureSpecification(IOsInfo osInfo)
         {
-            _environmentProxy = environmentProxy;
+            _osInfo = osInfo;
         }
 
         public EnforcementResult IsRequirementSatisfied(Installer installer)
@@ -22,7 +22,7 @@ namespace AppGet.Requirements.Specifications
                     }
                 case ArchitectureTypes.x64:
                     {
-                        if (_environmentProxy.Is64BitOperatingSystem)
+                        if (_osInfo.Is64BitOperatingSystem)
                         {
                             return EnforcementResult.Pass();
                         }

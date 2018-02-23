@@ -17,26 +17,31 @@ namespace AppGet.Http
 
     public class HttpClient : IHttpClient
     {
+        private readonly IUserAgentBuilder _userAgentBuilder;
         private readonly Logger _logger;
-        private readonly string _userAgent;
         private readonly System.Net.Http.HttpClient _client;
 
-        public HttpClient(Logger logger)
+        public HttpClient(IUserAgentBuilder userAgentBuilder, Logger logger)
         {
             ServicePointManager.DefaultConnectionLimit = 12;
             ServicePointManager.Expect100Continue = true;
             ServicePointManager.SecurityProtocol |=
                 SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 
+            _userAgentBuilder = userAgentBuilder;
             _logger = logger;
-            _userAgent = "AppGet Client";
 
             _client = new System.Net.Http.HttpClient();
-            _client.DefaultRequestHeaders.Add("User-Agent", "AppGet Client");
+            _client.DefaultRequestHeaders.Add("User-Agent", userAgentBuilder.GetUserAgent(true));
         }
 
         public async Task<HttpResponseMessage> Send(HttpRequestMessage request)
         {
+            if (request.RequestUri.Host.EndsWith(".appget.net"))
+            {
+                request.Headers.Add("User-Agent", _userAgentBuilder.GetUserAgent());
+            }
+
             var response = await _client.SendAsync(request);
             if (!response.IsSuccessStatusCode)
             {

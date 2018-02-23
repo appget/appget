@@ -121,6 +121,9 @@
     <Compile Include="Extensions\UriExtensions.cs" />
     <Compile Include="FileTransfer\InvalidDownloadUrlException.cs" />
     <Compile Include="FileTransfer\TransferCacheService.cs" />
+    <Compile Include="HostSystem\BuildInfo.cs" />
+    <Compile Include="HostSystem\OsInfo.cs" />
+    <Compile Include="Http\UserAgentBuilder.cs" />
     <Compile Include="Http\HttpException.cs" />
     <Compile Include="Http\HttpExtension.cs" />
     <Compile Include="Infrastructure\Composition\ContainerBuilder.cs" />
@@ -143,7 +146,6 @@
     <Compile Include="Installers\Nsis\NsisDetector.cs" />
     <Compile Include="Manifests\WindowsVersion.cs" />
     <Compile Include="Manifests\PackageManifestService.cs" />
-    <Compile Include="HostSystem\EnvironmentProxy.cs" />
     <Compile Include="Exceptions\AppGetException.cs" />
     <Compile Include="Manifests\PackageManifest.cs" />
     <Compile Include="HostSystem\PathResolver.cs" />

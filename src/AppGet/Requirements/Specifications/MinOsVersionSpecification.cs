@@ -5,9 +5,9 @@ namespace AppGet.Requirements.Specifications
 {
     public class MinOsVersionSpecification : IEnforceRequirements
     {
-        private readonly IEnvironmentProxy _environmentProxy;
+        private readonly IOsInfo _environmentProxy;
 
-        public MinOsVersionSpecification(IEnvironmentProxy environmentProxy)
+        public MinOsVersionSpecification(IOsInfo environmentProxy)
         {
             _environmentProxy = environmentProxy;
         }
@@ -16,14 +16,14 @@ namespace AppGet.Requirements.Specifications
         {
             if (installer.MinWindowsVersion == null) return EnforcementResult.Pass();
 
-            if (_environmentProxy.WindowsVersion >= installer.MinWindowsVersion)
+            if (_environmentProxy.Version >= installer.MinWindowsVersion)
             {
                 return EnforcementResult.Pass();
             }
 
             return EnforcementResult.Fail("Min supported OS version: {0}. Current version: {1}",
                                                         installer.MinWindowsVersion,
-                                                        _environmentProxy.WindowsVersion);
+                                                        _environmentProxy.Version);
         }
     }
 }

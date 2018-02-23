@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using AppGet.HostSystem;
 using AppGet.Http;
 using AutoMoq;
 using NLog;
@@ -39,7 +40,9 @@ namespace AppGet.Tests
 
         protected void WithRealHttp()
         {
-            Mocker.SetInstance<IHttpClient>(new HttpClient(logger));
+            Mocker.SetInstance<IOsInfo>(Mocker.Resolve<OsInfo>());
+            Mocker.SetInstance<IUserAgentBuilder>(Mocker.Resolve<UserAgentBuilder>());
+            Mocker.SetInstance<IHttpClient>(Mocker.Resolve<HttpClient>());
         }
 
         protected string GetTestPath(string path)

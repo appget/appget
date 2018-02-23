@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using AppGet.HostSystem;
 using AppGet.Http;
 using AppGet.PackageRepository;
 using FluentAssertions;
@@ -55,10 +56,10 @@ namespace AppGet.Tests.PackageRepository
         }
 
         [Test]
-        public void should_get_manifest()
+        public async Task should_get_manifest()
         {
-            Mocker.SetInstance<IHttpClient>(new HttpClient(logger));
-            var c = Subject.GetLatest("postman");
+            WithRealHttp();
+            var c = await Subject.GetLatest("postman");
 
             c.Should().NotBeNull();
         }
