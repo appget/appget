@@ -15,9 +15,7 @@
 */
 
 using System;
-#if !WINCE
 using System.Runtime.Serialization;
-#endif
 
 namespace SevenZip
 {    

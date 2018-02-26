@@ -15,7 +15,6 @@
 */
 
 using System;
-using SevenZip;
 
 namespace SevenZip
 {
@@ -37,8 +36,6 @@ namespace SevenZip
             _inSize = inSize;
             Working += working;
         }
-
-        #region ICodeProgress Members
 
         /// <summary>
         /// Sets the progress
@@ -64,8 +61,6 @@ namespace SevenZip
                                   delta > 0 ? PercentDoneEventArgs.ProducePercentDone(delta) : (byte)0));
             }
         }
-
-        #endregion
 
         public event EventHandler<ProgressEventArgs> Working;
     }

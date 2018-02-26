@@ -49,46 +49,22 @@ namespace SevenZip
         /// <summary>
         /// Gets the chunk size.
         /// </summary>
-        public int ChunkSize
-        {
-            get
-            {
-                return (int) _buffer.Length;
-            }
-        }
+        public int ChunkSize => (int) _buffer.Length;
 
         /// <summary>
         /// Gets a value indicating whether the current stream supports reading.
         /// </summary>
-        public override bool CanRead
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public override bool CanRead => true;
 
         /// <summary>
         /// Gets a value indicating whether the current stream supports seeking.
         /// </summary>
-        public override bool CanSeek
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public override bool CanSeek => false;
 
         /// <summary>
         /// Gets a value indicating whether the current stream supports writing.
         /// </summary>
-        public override bool CanWrite
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public override bool CanWrite => false;
 
         /// <summary>
         /// Gets the length in bytes of the output stream.
@@ -118,10 +94,7 @@ namespace SevenZip
                 }
                 return _buffer.Position;
             }
-            set
-            {
-                throw new NotSupportedException();
-            }
+            set => throw new NotSupportedException();
         }
 
         private void ReadChunk()

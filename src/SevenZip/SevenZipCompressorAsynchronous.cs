@@ -19,11 +19,6 @@ namespace SevenZip
 {
     using System.Collections.Generic;
     using System.IO;
-#if DOTNET20
-    using System.Threading;
-#else
-    using System.Windows.Threading;
-#endif
 
     partial class SevenZipCompressor
     {

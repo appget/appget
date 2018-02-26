@@ -18,16 +18,10 @@ namespace SevenZip
 {
     using System;
     using System.IO;
-#if DOTNET20
-    using System.Threading;
-#else
     using System.Windows.Threading;
-#endif
 
     partial class SevenZipExtractor
     {
-        #region Asynchronous core methods
-
         /// <summary>
         /// Recreates the instance of the SevenZipExtractor class.
         /// Used in asynchronous methods.
@@ -84,9 +78,6 @@ namespace SevenZip
             _asynchronousDisposeLock = false;
         }
 
-        #endregion
-
-        #region Delegates
         /// <summary>
         /// The delegate to use in BeginExtractArchive.
         /// </summary>
@@ -126,7 +117,6 @@ namespace SevenZip
         /// </summary>
         /// <param name="extractFileCallback">The callback to call for each file in the archive.</param>
         private delegate void ExtractFiles3Delegate(ExtractFileCallback extractFileCallback);
-        #endregion
 
 #if !DOTNET20
         /// <summary>

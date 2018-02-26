@@ -14,6 +14,7 @@
     along with SevenZipSharp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#if SFX
 
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,6 @@ using System.Text;
 
 namespace SevenZip
 {
-#if SFX
     using SfxSettings = Dictionary<string, string>;
 
     /// <summary>
@@ -493,5 +493,5 @@ namespace SevenZip
             }
         }
     }
-#endif
 }
+#endif

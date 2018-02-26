@@ -54,12 +54,13 @@
     <DocumentationFile>
     </DocumentationFile>
     <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>embedded</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
     <NoWarn>CS3001,CS3002,CS3003,CS3008</NoWarn>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Deploy|x86'">
     <OutputPath>bin\x86\Deploy\</OutputPath>

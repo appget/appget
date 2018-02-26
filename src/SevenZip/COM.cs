@@ -20,11 +20,7 @@ using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Permissions;
-#if !WINCE
 using FILETIME=System.Runtime.InteropServices.ComTypes.FILETIME;
-#elif WINCE
-using FILETIME=OpenNETCF.Runtime.InteropServices.ComTypes.FILETIME;
-#endif
 
 namespace SevenZip
 {
@@ -686,9 +682,7 @@ namespace SevenZip
         /// <summary>
         /// PropId string names
         /// </summary>
-        public static readonly Dictionary<ItemPropId, string> PropIdNames =
-        #region Initialization
-            new Dictionary<ItemPropId, string>(46)
+        public static readonly Dictionary<ItemPropId, string> PropIdNames = new Dictionary<ItemPropId, string>(46)
             {
                 {ItemPropId.Path, "Path"},
                 {ItemPropId.Name, "Name"},
@@ -757,7 +751,6 @@ namespace SevenZip
                 {ItemPropId.FreeSpace, "Free Space"},
                 {ItemPropId.ClusterSize, "Cluster Size"}
             };
-        #endregion
     }
 
     /// <summary>

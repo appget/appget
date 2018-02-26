@@ -11,12 +11,12 @@ namespace SevenZip
         /// <summary>
         /// Gets the file offset.
         /// </summary>
-        public int Offset { get; private set; }
+        public int Offset { get; }
 
         /// <summary>
         /// The source wrapped stream.
         /// </summary>
-        public Stream Source { get; private set; }
+        public Stream Source { get; }
 
         /// <summary>
         /// Initializes a new instance of the ArchiveEmulationStream class.
@@ -30,37 +30,22 @@ namespace SevenZip
             Source.Position = offset;
         }
 
-        public override bool CanRead
-        {
-            get { return Source.CanRead; }
-        }
+        public override bool CanRead => Source.CanRead;
 
-        public override bool CanSeek
-        {
-            get { return Source.CanSeek; }
-        }
+        public override bool CanSeek => Source.CanSeek;
 
-        public override bool CanWrite
-        {
-            get { return Source.CanWrite; }
-        }
+        public override bool CanWrite => Source.CanWrite;
 
         public override void Flush()
         {
             Source.Flush();
         }
 
-        public override long Length
-        {
-            get { return Source.Length - Offset; }
-        }
+        public override long Length => Source.Length - Offset;
 
         public override long Position
         {
-            get
-            {
-                return Source.Position - Offset;
-            }
+            get => Source.Position - Offset;
             set
             {
                 Source.Position = value;

@@ -13,29 +13,22 @@
     You should have received a copy of the GNU Lesser General Public License
     along with SevenZipSharp.  If not, see <http://www.gnu.org/licenses/>.
 */
+#if COMPRESS
 
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-#if DOTNET20
-using System.Threading;
-#else
-using System.Linq;
-#endif
 using System.Runtime.InteropServices;
 #if !WINCE
 using System.Security.Permissions;
 #endif
 using SevenZip;
 using SevenZip.Compression.LZMA;
-#if MONO
-using SevenZip.Mono.COM;
-#endif
+
 
 namespace SevenZip
 {
-#if COMPRESS
     /// <summary>
     /// Class to pack data into archives supported by 7-Zip.
     /// </summary>
@@ -2048,5 +2041,5 @@ namespace SevenZip
             }
         }
     }
-#endif
 }
+#endif

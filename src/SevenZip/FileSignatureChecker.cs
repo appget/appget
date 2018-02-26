@@ -78,8 +78,6 @@ namespace SevenZip
                 throw new ArgumentException("The stream is invalid.");
             }
 
-            #region Get file signature
-
             var signature = new byte[SIGNATURE_SIZE];
             int bytesRequired = SIGNATURE_SIZE;
             int index = 0;
@@ -91,8 +89,6 @@ namespace SevenZip
                 index += bytesRead;
             }
             string actualSignature = BitConverter.ToString(signature);
-
-            #endregion
 
             InArchiveFormat suspectedFormat = InArchiveFormat.XZ; // any except PE and Cab
             isExecutable = false;
@@ -121,7 +117,6 @@ namespace SevenZip
                 suspectedFormat = InArchiveFormat.Cab; // != InArchiveFormat.XZ
             }
 
-            #region SpecialDetect
             try
             {
                 SpecialDetect(stream, 257, InArchiveFormat.Tar);
@@ -147,7 +142,7 @@ namespace SevenZip
             {
                 return InArchiveFormat.Hfs;
             }
-            #region Last resort for tar - can mistake
+
             if (stream.Length >= 1024)
             {
                 stream.Seek(-1024, SeekOrigin.End);
@@ -163,13 +158,9 @@ namespace SevenZip
                     return InArchiveFormat.Tar;
                 }
             }
-            #endregion
-            #endregion
 
-            #region Check if it is an SFX archive or a file with an embedded archive.
             if (suspectedFormat != InArchiveFormat.XZ)
             {
-                #region Get first Min(stream.Length, SFX_SCAN_LENGTH) bytes
                 var scanLength = Math.Min(stream.Length, SFX_SCAN_LENGTH);
                 signature = new byte[scanLength];
                 bytesRequired = (int)scanLength;
@@ -182,8 +173,7 @@ namespace SevenZip
                     index += bytesRead;
                 }
                 actualSignature = BitConverter.ToString(signature);
-                #endregion
-                
+
                 foreach (var format in new InArchiveFormat[] 
                 {
                     InArchiveFormat.Zip, 
@@ -206,8 +196,7 @@ namespace SevenZip
                     return InArchiveFormat.PE;
                 }
             }
-            #endregion
-            
+
             throw new ArgumentException("The stream is invalid or no corresponding signature was found.");
         }
 

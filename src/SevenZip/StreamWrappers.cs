@@ -19,9 +19,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
-#if MONO
-using SevenZip.Mono.COM;
-#endif
 
 namespace SevenZip
 {
@@ -83,15 +80,7 @@ namespace SevenZip
         /// <summary>
         /// Gets the worker stream for reading, writing and seeking.
         /// </summary>
-        protected Stream BaseStream
-        {
-            get
-            {
-                return _baseStream;
-            }
-        }
-
-        #region IDisposable Members
+        protected Stream BaseStream => _baseStream;
 
         /// <summary>
         /// Cleans up any resources used and fixes file attributes.
@@ -128,8 +117,6 @@ namespace SevenZip
             GC.SuppressFinalize(this);
         }
 
-        #endregion
-
         public virtual void Seek(long offset, SeekOrigin seekOrigin, IntPtr newPosition)
         {
             if (BaseStream != null)
@@ -155,8 +142,6 @@ namespace SevenZip
         /// <param name="disposeStream">Indicates whether to dispose the baseStream</param>
         public InStreamWrapper(Stream baseStream, bool disposeStream) : base(baseStream, disposeStream) { }
 
-        #region ISequentialInStream Members
-
         /// <summary>
         /// Reads data from the stream.
         /// </summary>
@@ -176,8 +161,6 @@ namespace SevenZip
             }
             return readCount;
         }
-
-        #endregion
 
         /// <summary>
         /// Occurs when IntEventArgs.Value bytes were read from the source.
@@ -216,17 +199,11 @@ namespace SevenZip
         public OutStreamWrapper(Stream baseStream, bool disposeStream) :
             base(baseStream, disposeStream) {}
 
-        #region IOutStream Members
-
         public int SetSize(long newSize)
         {
             BaseStream.SetLength(newSize);
             return 0;
         }
-
-        #endregion
-
-        #region ISequentialOutStream Members
 
         /// <summary>
         /// Writes data to the stream
@@ -245,8 +222,6 @@ namespace SevenZip
             OnBytesWritten(new IntEventArgs((int) size));
             return 0;
         }
-
-        #endregion
 
         /// <summary>
         /// Occurs when IntEventArgs.Value bytes were written.
@@ -284,15 +259,7 @@ namespace SevenZip
         /// <summary>
         /// Gets the total length of input data.
         /// </summary>
-        public long Length
-        {
-            get
-            {
-                return StreamLength;
-            }
-        }
-
-        #region IDisposable Members
+        public long Length => StreamLength;
 
         /// <summary>
         /// Cleans up any resources used and fixes file attributes.
@@ -313,8 +280,6 @@ namespace SevenZip
             }
             GC.SuppressFinalize(this);
         }
-
-        #endregion
 
         protected static string VolumeNumber(int num)
         {
@@ -387,8 +352,6 @@ namespace SevenZip
             }
         }
 
-        #region ISequentialInStream Members
-
         /// <summary>
         /// Reads data from the stream.
         /// </summary>
@@ -416,8 +379,6 @@ namespace SevenZip
             }
             return readCount;
         }
-
-        #endregion
     }
 
 #if COMPRESS
@@ -498,16 +459,10 @@ namespace SevenZip
 
     internal sealed class FakeOutStreamWrapper : ISequentialOutStream, IDisposable
     {
-        #region IDisposable Members
-
         public void Dispose()
         {
             GC.SuppressFinalize(this);
         }
-
-        #endregion
-
-        #region ISequentialOutStream Members
 
         /// <summary>
         /// Does nothing except calling the BytesWritten event
@@ -525,8 +480,6 @@ namespace SevenZip
             }
             return 0;
         }
-
-        #endregion
 
         /// <summary>
         /// Occurs when IntEventArgs.Value bytes were written

@@ -20,15 +20,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-#if DOTNET20
-using System.Threading;
-#else
-using System.Linq;
-#endif
 using SevenZip.Compression.LZMA;
-#if MONO
-using SevenZip.Mono.COM;
-#endif
 
 namespace SevenZip
 {
@@ -69,7 +61,6 @@ namespace SevenZip
         /// </summary>
         private bool _asynchronousDisposeLock;
 
-        #region Constructors
         /// <summary>
         /// General initialization function.
         /// </summary>
@@ -259,10 +250,6 @@ namespace SevenZip
             Init(archiveStream);
         }
 
-        #endregion
-
-        #region Properties
-
         /// <summary>
         /// Gets or sets archive full file name
         /// </summary>
@@ -368,7 +355,6 @@ namespace SevenZip
         /// Gets or sets the value indicating whether to preserve the directory structure of extracted files.
         /// </summary>
         public bool PreserveDirectoryStructure { get; set; }
-        #endregion                
 
         /// <summary>
         /// Checked whether the class was disposed.
@@ -384,8 +370,6 @@ namespace SevenZip
             RecreateInstanceIfNeeded();
 #endif
         }
-
-        #region Core private functions
 
         private ArchiveOpenCallback GetArchiveOpenCallback()
         {
@@ -505,8 +489,6 @@ namespace SevenZip
                         var data = new PropVariant();
                         try
                         {
-                            #region Getting archive items data
-
                             for (uint i = 0; i < _filesCount; i++)
                             {
                                 try
@@ -543,10 +525,6 @@ namespace SevenZip
                                     ThrowException(null, new SevenZipArchiveException("probably archive is corrupted."));
                                 }
                             }
-
-                            #endregion
-
-                            #region Getting archive properties
 
                             uint numProps = _archive.GetNumberOfArchiveProperties();
                             var archProps = new List<ArchiveProperty>((int)numProps);
@@ -591,8 +569,6 @@ namespace SevenZip
                             {
                                 _isSolid = true;
                             }
-
-                            #endregion
                         }
                         catch (Exception)
                         {
@@ -726,7 +702,6 @@ namespace SevenZip
             callback.Extracting -= ExtractingEventProxy;
             callback.FileExists -= FileExistsEventProxy;
         }
-        #endregion        
 #endif
 
         /// <summary>
@@ -750,8 +725,6 @@ namespace SevenZip
         }
 
 #if UNMANAGED
-
-        #region IDisposable Members
 
         private void CommonDispose()
         {
@@ -817,12 +790,6 @@ namespace SevenZip
             GC.SuppressFinalize(this);
         }
 
-        #endregion
-
-        #region Core public Members
-
-        #region Events
-
         /// <summary>
         /// Occurs when a new file is going to be unpacked.
         /// </summary>
@@ -850,7 +817,6 @@ namespace SevenZip
         /// </summary>
         public event EventHandler<FileOverwriteEventArgs> FileExists;
 
-        #region Event proxies
         /// <summary>
         /// Event proxy for FileExtractionStarted.
         /// </summary>
@@ -890,10 +856,7 @@ namespace SevenZip
         {
             OnEvent(FileExists, e, true);
         }
-        #endregion
-        #endregion
 
-        #region Properties
         /// <summary>
         /// Gets the collection of ArchiveFileInfo with all information about files in the archive
         /// </summary>
@@ -957,7 +920,6 @@ namespace SevenZip
                 return _volumeFileNames;
             }           
         }
-        #endregion
 
         /// <summary>
         /// Performs the archive integrity test.
@@ -1006,7 +968,6 @@ namespace SevenZip
             return true;
         }
 
-        #region ExtractFile overloads
         /// <summary>
         /// Unpacks the file by its name to the specified stream.
         /// </summary>
@@ -1109,9 +1070,7 @@ namespace SevenZip
             OnEvent(ExtractionFinished, EventArgs.Empty, false);
             ThrowUserException();
         }
-        #endregion
 
-        #region ExtractFiles overloads
         /// <summary>
         /// Unpacks files by their indices to the specified directory.
         /// </summary>
@@ -1130,8 +1089,6 @@ namespace SevenZip
                 }
             }
             InitArchiveFileData(false);
-
-            #region Indexes stuff
 
             var uindexes = new uint[indexes.Length];
             for (int i = 0; i < indexes.Length; i++)
@@ -1171,8 +1128,6 @@ namespace SevenZip
             {
                 uindexes = SolidIndexes(uindexes);
             }
-
-            #endregion
 
             try
             {
@@ -1326,7 +1281,6 @@ namespace SevenZip
                 }
             }
         }
-        #endregion
 
         /// <summary>
         /// Unpacks the whole archive to the specified directory.
@@ -1383,12 +1337,9 @@ namespace SevenZip
                 _opened = false;
             }
             ThrowUserException();
-        }        
-        #endregion
+        }
 
 #endif
-
-        #region LZMA SDK functions
 
         internal static byte[] GetLzmaProperties(Stream inStream, out long outSize)
         {
@@ -1452,7 +1403,5 @@ namespace SevenZip
                 }
             }
         }
-
-        #endregion
     }
 }

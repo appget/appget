@@ -21,14 +21,7 @@ using System.Globalization;
 #if !WINCE
 using System.Runtime.Remoting.Messaging;
 #endif
-#if DOTNET20
-using System.Threading;
-#else
 using System.Windows.Threading;
-#endif
-#if MONO
-using SevenZip.Mono.COM;
-#endif
 
 namespace SevenZip
 {
@@ -207,13 +200,7 @@ namespace SevenZip
         /// <summary>
         /// Gets the unique identificator of this SevenZipBase instance.
         /// </summary>
-        public int UniqueID
-        {
-            get
-            {
-                return _uniqueID;
-            }
-        }
+        public int UniqueID => _uniqueID;
 
         /// <summary>
         /// User exceptions thrown during the requested operations, for example, in events.
@@ -233,7 +220,6 @@ namespace SevenZip
             return id;
         }
 
-        #region Constructors
         /// <summary>
         /// Initializes a new instance of the SevenZipBase class.
         /// </summary>
@@ -258,7 +244,6 @@ namespace SevenZip
             _reportErrors = true;
             _uniqueID = GetUniqueID();
         }
-        #endregion
 
         /// <summary>
         /// Removes the UniqueID from the list.
@@ -271,35 +256,17 @@ namespace SevenZip
         /// <summary>
         /// Gets or sets the archive password
         /// </summary>
-        public string Password
-        {
-            get
-            {
-                return _password;
-            }
-        }
+        public string Password => _password;
 
         /// <summary>
         /// Gets or sets throw exceptions on archive errors flag
         /// </summary>
-        internal bool ReportErrors
-        {
-            get
-            {
-                return _reportErrors;
-            }
-        }
+        internal bool ReportErrors => _reportErrors;
 
         /// <summary>
         /// Gets the user exceptions thrown during the requested operations, for example, in events.
         /// </summary>
-        internal ReadOnlyCollection<Exception> Exceptions
-        {
-            get
-            {
-                return new ReadOnlyCollection<Exception>(_exceptions);
-            }
-        }
+        internal ReadOnlyCollection<Exception> Exceptions => new ReadOnlyCollection<Exception>(_exceptions);
 
         internal void AddException(Exception e)
         {
@@ -311,13 +278,7 @@ namespace SevenZip
             _exceptions.Clear();
         }
 
-        internal bool HasExceptions
-        {
-            get
-            {
-                return _exceptions.Count > 0;
-            }
-        }
+        internal bool HasExceptions => _exceptions.Count > 0;
 
         /// <summary>
         /// Throws the specified exception when is able to.
@@ -388,13 +349,7 @@ namespace SevenZip
         /// Gets the current library features.
         /// </summary>
         [CLSCompliant(false)]
-        public static LibraryFeature CurrentLibraryFeatures
-        {
-            get
-            {
-                return SevenZipLibraryManager.CurrentLibraryFeatures;
-            }
-        }
+        public static LibraryFeature CurrentLibraryFeatures => SevenZipLibraryManager.CurrentLibraryFeatures;
 
         /// <summary>
         /// Determines whether the specified System.Object is equal to the current SevenZipBase.
@@ -450,7 +405,6 @@ namespace SevenZip
         /// </summary>
         private readonly List<Exception> _exceptions = new List<Exception>();
 
-        #region Constructors
         /// <summary>
         /// Initializes a new instance of the CallbackBase class.
         /// </summary>
@@ -473,18 +427,11 @@ namespace SevenZip
             _password = password;
             _reportErrors = true;
         }
-        #endregion
 
         /// <summary>
         /// Gets or sets the archive password
         /// </summary>
-        public string Password
-        {
-            get
-            {
-                return _password;
-            }
-        }
+        public string Password => _password;
 
         /// <summary>
         /// Gets or sets the value indicating whether the current procedure was cancelled.
@@ -494,24 +441,12 @@ namespace SevenZip
         /// <summary>
         /// Gets or sets throw exceptions on archive errors flag
         /// </summary>
-        public bool ReportErrors
-        {
-            get
-            {
-                return _reportErrors;
-            }
-        }
+        public bool ReportErrors => _reportErrors;
 
         /// <summary>
         /// Gets the user exceptions thrown during the requested operations, for example, in events.
         /// </summary>
-        public ReadOnlyCollection<Exception> Exceptions
-        {
-            get
-            {
-                return new ReadOnlyCollection<Exception>(_exceptions);
-            }
-        }
+        public ReadOnlyCollection<Exception> Exceptions => new ReadOnlyCollection<Exception>(_exceptions);
 
         public void AddException(Exception e)
         {
@@ -523,13 +458,7 @@ namespace SevenZip
             _exceptions.Clear();
         }
 
-        public bool HasExceptions
-        {
-            get
-            {
-                return _exceptions.Count > 0;
-            }
-        }
+        public bool HasExceptions => _exceptions.Count > 0;
 
         /// <summary>
         /// Throws the specified exception when is able to.

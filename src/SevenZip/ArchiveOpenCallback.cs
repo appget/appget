@@ -18,14 +18,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
-#if MONO
-using SevenZip.Mono;
-using SevenZip.Mono.COM;
-#endif
 
 namespace SevenZip
 {
-    #if UNMANAGED
+#if UNMANAGED
     /// <summary>
     /// Callback to handle the archive opening
     /// </summary>
@@ -33,20 +29,14 @@ namespace SevenZip
                                                 ICryptoGetTextPassword, IDisposable
     {
         private FileInfo _fileInfo;
-        private Dictionary<string, InStreamWrapper> _wrappers = 
+        private Dictionary<string, InStreamWrapper> _wrappers =
             new Dictionary<string, InStreamWrapper>();
         private readonly List<string> _volumeFileNames = new List<string>();
 
         /// <summary>
         /// Gets the list of volume file names.
         /// </summary>
-        public IList<string> VolumeFileNames
-        {
-            get
-            {
-                return _volumeFileNames;
-            }
-        }
+        public IList<string> VolumeFileNames => _volumeFileNames;
 
         /// <summary>
         /// Performs the common initialization.
@@ -62,7 +52,7 @@ namespace SevenZip
                 {
                     int index = 2;
                     var baseName = fileName.Substring(0, fileName.Length - 3);
-                    var volName = baseName + (index > 99 ? index.ToString() : 
+                    var volName = baseName + (index > 99 ? index.ToString() :
                         index > 9 ? "0" + index : "00" + index);
                     while (File.Exists(volName))
                     {
@@ -94,15 +84,9 @@ namespace SevenZip
             Init(fileName);
         }
 
-        #region IArchiveOpenCallback Members
+        public void SetTotal(IntPtr files, IntPtr bytes) { }
 
-        public void SetTotal(IntPtr files, IntPtr bytes) {}
-
-        public void SetCompleted(IntPtr files, IntPtr bytes) {}
-
-        #endregion
-
-        #region IArchiveOpenVolumeCallback Members
+        public void SetCompleted(IntPtr files, IntPtr bytes) { }
 
         public int GetProperty(ItemPropId propId, ref PropVariant value)
         {
@@ -114,15 +98,15 @@ namespace SevenZip
                     break;
                 case ItemPropId.IsDirectory:
                     value.VarType = VarEnum.VT_BOOL;
-                    value.UInt64Value = (byte) (_fileInfo.Attributes & FileAttributes.Directory);
+                    value.UInt64Value = (byte)(_fileInfo.Attributes & FileAttributes.Directory);
                     break;
                 case ItemPropId.Size:
                     value.VarType = VarEnum.VT_UI8;
-                    value.UInt64Value = (UInt64) _fileInfo.Length;
+                    value.UInt64Value = (UInt64)_fileInfo.Length;
                     break;
                 case ItemPropId.Attributes:
                     value.VarType = VarEnum.VT_UI4;
-                    value.UInt32Value = (uint) _fileInfo.Attributes;
+                    value.UInt32Value = (uint)_fileInfo.Attributes;
                     break;
                 case ItemPropId.CreationTime:
                     value.VarType = VarEnum.VT_FILETIME;
@@ -164,7 +148,7 @@ namespace SevenZip
                     var wrapper = new InStreamWrapper(
                         new FileStream(name, FileMode.Open, FileAccess.Read, FileShare.ReadWrite), true);
                     _wrappers.Add(name, wrapper);
-                    inStream = wrapper;                    
+                    inStream = wrapper;
                 }
                 catch (Exception)
                 {
@@ -175,10 +159,6 @@ namespace SevenZip
             }
             return 0;
         }
-
-        #endregion
-
-        #region ICryptoGetTextPassword Members
 
         /// <summary>
         /// Sets password for the archive
@@ -191,10 +171,6 @@ namespace SevenZip
             return 0;
         }
 
-        #endregion
-
-        #region IDisposable Members
-
         public void Dispose()
         {
             if (_wrappers != null)
@@ -205,13 +181,8 @@ namespace SevenZip
                 }
                 _wrappers = null;
             }
-#if MONO
-			libp7zInvokerRaw.FreeObject(Handle);	
-#endif
             GC.SuppressFinalize(this);
         }
-
-        #endregion        
     }
 #endif
 }

@@ -18,10 +18,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-#if MONO
-using SevenZip.Mono.COM;
-using System.Runtime.InteropServices;
-#endif
 
 namespace SevenZip
 {
@@ -59,7 +55,6 @@ namespace SevenZip
 #if !WINCE
         const int MEMORY_PRESSURE = 64 * 1024 * 1024; //64mb seems to be the maximum value
 #endif
-        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the ArchiveExtractCallback class
@@ -155,9 +150,6 @@ namespace SevenZip
             GC.AddMemoryPressure(MEMORY_PRESSURE);
 #endif
         }
-        #endregion
-
-        #region Events
 
         /// <summary>
         /// Occurs when a new file is going to be unpacked
@@ -241,10 +233,6 @@ namespace SevenZip
             }
         }
 
-        #endregion
-
-        #region IArchiveExtractCallback Members
-
         /// <summary>
         /// Gives the size of the unpacked archive files
         /// </summary>
@@ -287,15 +275,11 @@ namespace SevenZip
                 var fileName = _directory;
                 if (!_fileIndex.HasValue)
                 {
-                    #region Extraction to a file
-
                     if (_actualIndexes == null || _actualIndexes.Contains(index))
                     {
                         var data = new PropVariant();
                         _archive.GetProperty(index, ItemPropId.Path, ref data);
                         string entryName = NativeMethods.SafeCast(data, "");
-
-                        #region Get entryName
 
                         if (String.IsNullOrEmpty(entryName))
                         {
@@ -315,8 +299,6 @@ namespace SevenZip
                             }
                         }
 
-                        #endregion
-
                         fileName = Path.Combine(_directory, _directoryStructure? entryName : Path.GetFileName(entryName));
                         _archive.GetProperty(index, ItemPropId.IsDirectory, ref data);
                         try
@@ -330,8 +312,6 @@ namespace SevenZip
                         }
                         if (!NativeMethods.SafeCast(data, false))
                         {
-                            #region Branch
-
                             _archive.GetProperty(index, ItemPropId.LastWriteTime, ref data);
                             var time = NativeMethods.SafeCast(data, DateTime.MinValue);
                             if (File.Exists(fileName))
@@ -375,13 +355,9 @@ namespace SevenZip
                             }
                             _fileStream.BytesWritten += IntEventArgsHandler;
                             outStream = _fileStream;
-
-                            #endregion
                         }
                         else
                         {
-                            #region Branch
-
                             if (!Directory.Exists(fileName))
                             {
                                 try
@@ -394,21 +370,15 @@ namespace SevenZip
                                 }
                                 outStream = _fakeStream;
                             }
-
-                            #endregion
                         }
                     }
                     else
                     {
                         outStream = _fakeStream;
                     }
-
-                    #endregion
                 }
                 else
                 {
-                    #region Extraction to a stream
-
                     if (index == _fileIndex)
                     {
                         outStream = _fileStream;
@@ -418,8 +388,6 @@ namespace SevenZip
                     {
                         outStream = _fakeStream;
                     }
-
-                    #endregion
                 }
 
             FileExtractionStartedLabel:
@@ -498,10 +466,6 @@ namespace SevenZip
             }
         }
 
-        #endregion
-
-        #region ICryptoGetTextPassword Members
-
         /// <summary>
         /// Sets password for the archive
         /// </summary>
@@ -512,10 +476,6 @@ namespace SevenZip
             password = Password;
             return 0;
         }
-
-        #endregion
-
-        #region IDisposable Members
 
         public void Dispose()
         {
@@ -541,8 +501,6 @@ namespace SevenZip
                 _fakeStream = null;
             }
         }
-
-        #endregion
 
         /// <summary>
         /// Validates the file name and ensures that the directory to the file name is valid and creates intermediate directories if necessary

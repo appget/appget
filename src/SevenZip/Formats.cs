@@ -322,9 +322,7 @@ namespace SevenZip
         /// List of readable archive format interface guids for 7-zip COM interop.
         /// </summary>
         internal static readonly Dictionary<InArchiveFormat, Guid> InFormatGuids =
-            new Dictionary<InArchiveFormat, Guid>(20) 
-            #region InFormatGuids initialization
-
+            new Dictionary<InArchiveFormat, Guid>(20)
             {
                 {InArchiveFormat.SevenZip,  new Guid("23170f69-40c1-278a-1000-000110070000")},
                 {InArchiveFormat.Arj,       new Guid("23170f69-40c1-278a-1000-000110040000")},
@@ -358,8 +356,6 @@ namespace SevenZip
                 {InArchiveFormat.Swf,       new Guid("23170f69-40c1-278a-1000-000110D70000")},
                 {InArchiveFormat.Vhd,       new Guid("23170f69-40c1-278a-1000-000110DC0000")}
             };
-
-            #endregion
 
 #if COMPRESS
         /// <summary>
@@ -418,8 +414,6 @@ namespace SevenZip
         /// </summary>
         private static readonly Dictionary<string, InArchiveFormat> InExtensionFormats =
             new Dictionary<string, InArchiveFormat>
-            #region InExtensionFormats initialization
-
             {{"7z",     InArchiveFormat.SevenZip},
              {"gz",     InArchiveFormat.GZip},
              {"tar",    InArchiveFormat.Tar},
@@ -449,16 +443,12 @@ namespace SevenZip
              {"vhd",    InArchiveFormat.Vhd}
         };
 
-        #endregion
-
         /// <summary>
         /// List of archive formats corresponding to specific signatures
         /// </summary>
         /// <remarks>Based on the information at <a href="http://www.garykessler.net/library/file_sigs.html">this site.</a></remarks>
         internal static readonly Dictionary<string, InArchiveFormat> InSignatureFormats =
             new Dictionary<string, InArchiveFormat>
-            #region InSignatureFormats initialization
-
             {{"37-7A-BC-AF-27-1C",                                              InArchiveFormat.SevenZip},
             {"1F-8B-08",                                                        InArchiveFormat.GZip},
             {"75-73-74-61-72",                                                  InArchiveFormat.Tar},
@@ -490,7 +480,6 @@ namespace SevenZip
             {"7F-45-4C-46",							                            InArchiveFormat.Elf},
             {"78",                                                              InArchiveFormat.Dmg},
             {"63-6F-6E-65-63-74-69-78",                                         InArchiveFormat.Vhd}};
-            #endregion
 
         internal static Dictionary<InArchiveFormat, string> InSignatureFormatsReversed;
 

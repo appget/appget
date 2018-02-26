@@ -16,21 +16,13 @@
 
 using System;
 using System.Collections.Generic;
-#if !WINCE && !MONO
 using System.Configuration;
 using System.Diagnostics;
 using System.Security.Permissions;
-#endif
-#if WINCE
-using OpenNETCF.Diagnostics;
-#endif
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Text;
-#if MONO
-using SevenZip.Mono.COM;
-#endif
+
 
 namespace SevenZip
 {
@@ -40,7 +32,6 @@ namespace SevenZip
     /// </summary>
     internal static class SevenZipLibraryManager
     {        
-#if !WINCE && !MONO
         /// <summary>
         /// Path to the 7-zip dll.
         /// </summary>
@@ -53,11 +44,7 @@ namespace SevenZip
         /// </remarks>
         private static string _libraryFileName = ConfigurationManager.AppSettings["7zLocation"] ??
             Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "7z.dll");
-#endif
-#if WINCE 		
-        private static string _libraryFileName =
-            Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase), "7z.dll");
-#endif
+
         /// <summary>
         /// 7-zip library handle.
         /// </summary>
@@ -256,8 +243,7 @@ namespace SevenZip
                     return _features.Value;
                 }
                 _features = LibraryFeature.None;
-                #region Benchmark
-                #region Extraction features
+
                 using (var outStream = new MemoryStream())
                 {
                     ExtractionBenchmark("Test.lzma.7z", outStream, ref _features, LibraryFeature.Extract7z);
@@ -283,8 +269,7 @@ namespace SevenZip
                     ExtractionBenchmark("Test.txt.xz", outStream, ref _features, LibraryFeature.ExtractXz);
                     ExtractionBenchmark("Test.zip", outStream, ref _features, LibraryFeature.ExtractZip);
                 }
-                #endregion
-                #region Compression features
+
 #if COMPRESS
                 using (var inStream = new MemoryStream())
                 {
@@ -333,8 +318,7 @@ namespace SevenZip
                     }
                 }
 #endif
-                #endregion
-                #endregion
+
                 if (ModifyCapable && (_features.Value & LibraryFeature.Compress7z) != 0)
                 {
                     _features |= LibraryFeature.Modify;
