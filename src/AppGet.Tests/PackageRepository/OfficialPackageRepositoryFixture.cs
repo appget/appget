@@ -1,7 +1,5 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using AppGet.HostSystem;
-using AppGet.Http;
 using AppGet.PackageRepository;
 using FluentAssertions;
 using NUnit.Framework;

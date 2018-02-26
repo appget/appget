@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using AppGet.Crypto.Certificates;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace AppGet.Tests.Crypto.Certificates

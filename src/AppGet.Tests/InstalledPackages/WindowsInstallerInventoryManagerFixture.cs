@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using AppGet.InstalledPackages;
-using AppGet.Serialization;
 using FluentAssertions;
 using NUnit.Framework;
 
