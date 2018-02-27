@@ -34,6 +34,7 @@ namespace AppGet.Installers.Exe
         }
 
         protected override InstallMethodTypes InstallMethod => InstallMethodTypes.Custom;
+        protected override bool HasLogs => false;
 
         public override void Uninstall(PackageManifest packageManifest, UninstallOptions installOptions)
         {

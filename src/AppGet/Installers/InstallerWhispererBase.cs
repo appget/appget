@@ -18,6 +18,8 @@ namespace AppGet.Installers
         protected abstract InstallMethodTypes InstallMethod { get; }
 
 
+        protected abstract bool HasLogs { get; }
+
 
         protected InstallerWhispererBase(IProcessController processController, IPathResolver pathResolver, Logger logger)
         {
@@ -31,10 +33,11 @@ namespace AppGet.Installers
             var process = StartProcess(installerLocation, GetInstallArguments(installOptions, packageManifest));
             _logger.Info("Waiting for installation to complete ...");
             _processController.WaitForExit(process);
+            var logFile = _pathResolver.GetInstallerLogFile(packageManifest.Id);
 
             if (process.ExitCode != 0)
             {
-                throw new AppGetException($"Installer '{process.ProcessName}' returned with a non-zero exit code. code: {process.ExitCode}");
+                throw new InstallerException(process, packageManifest, logFile);
             }
         }
 
@@ -68,12 +71,11 @@ namespace AppGet.Installers
                 args = PassiveArgs;
             }
 
-            var logFile = _pathResolver.GetInstallerLogFile(installOptions.PackageId);
-            var loggingArgs = GetLoggingArgs(logFile);
 
-
-            if (!string.IsNullOrWhiteSpace(loggingArgs))
+            if (HasLogs)
             {
+                var logFile = _pathResolver.GetInstallerLogFile(installOptions.PackageId);
+                var loggingArgs = GetLoggingArgs(logFile);
                 _logger.Debug($"Writing installer log files to {logFile}");
                 args = $"{args.Trim()} {loggingArgs.Trim()}";
             }

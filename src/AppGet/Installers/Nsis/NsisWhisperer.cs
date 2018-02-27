@@ -17,6 +17,8 @@ namespace AppGet.Installers.Nsis
 
         protected override InstallMethodTypes InstallMethod => InstallMethodTypes.NSIS;
 
+        protected override bool HasLogs => false;
+
         public override void Uninstall(PackageManifest packageManifest, UninstallOptions installOptions)
         {
             throw new NotImplementedException();

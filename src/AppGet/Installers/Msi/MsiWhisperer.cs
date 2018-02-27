@@ -21,6 +21,7 @@ namespace AppGet.Installers.Msi
         }
 
         protected override InstallMethodTypes InstallMethod => InstallMethodTypes.MSI;
+        protected override bool HasLogs => true;
 
         protected override Process StartProcess(string installerLocation, string args)
         {

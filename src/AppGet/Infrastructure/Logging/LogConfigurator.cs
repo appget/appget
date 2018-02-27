@@ -45,6 +45,7 @@ namespace AppGet.Infrastructure.Logging
             {
                 Regex = "https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,4}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)",
                 CompileRegex = true,
+                IgnoreCase = true,
                 ForegroundColor = ConsoleOutputColor.DarkCyan
             });
 
@@ -54,6 +55,24 @@ namespace AppGet.Infrastructure.Logging
                 Regex = "\\B\\[(\\w|-)+:\\w+]\\B",
                 CompileRegex = true,
                 ForegroundColor = ConsoleOutputColor.DarkMagenta
+            });
+
+            consoleTarget.WordHighlightingRules.Add(new ConsoleWordHighlightingRule
+            {
+                Regex = "PASSED",
+                WholeWords = true,
+                CompileRegex = true,
+                IgnoreCase = false,
+                ForegroundColor = ConsoleOutputColor.DarkGreen
+            });
+
+            consoleTarget.WordHighlightingRules.Add(new ConsoleWordHighlightingRule
+            {
+                Regex = "FAILED",
+                WholeWords = true,
+                CompileRegex = true,
+                IgnoreCase = false,
+                ForegroundColor = ConsoleOutputColor.DarkRed
             });
 
             consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Info", ConsoleOutputColor.NoChange, ConsoleOutputColor.NoChange));

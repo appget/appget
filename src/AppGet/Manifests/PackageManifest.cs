@@ -11,7 +11,8 @@ namespace AppGet.Manifests
         public string Licence { get; set; }
         public string Version { get; set; }
 
-        [YamlIgnore] public string VersionTag { get; set; }
+        [YamlIgnore]
+        public string VersionTag { get; set; }
 
         public string ProductUrl { get; set; }
 
@@ -39,7 +40,8 @@ namespace AppGet.Manifests
         public string Sha256 { get; set; }
         public string Md5 { get; set; }
 
-        [YamlIgnore] public string FilePath { get; set; }
+        [YamlIgnore] 
+        public string FilePath { get; set; }
 
         public ArchitectureTypes Architecture { get; set; }
 

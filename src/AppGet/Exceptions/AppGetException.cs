@@ -2,10 +2,9 @@
 
 namespace AppGet.Exceptions
 {
-    public class AppGetException : ApplicationException
+    public abstract class AppGetException : ApplicationException
     {
-        public AppGetException(string message)
-            : base(message)
+        protected AppGetException(string message) : base(message)
         {
 
         }

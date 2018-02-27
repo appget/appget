@@ -15,6 +15,8 @@ namespace AppGet.Installers.Squirrel
 
         }
 
+        protected override bool HasLogs => false;
+
         protected override InstallMethodTypes InstallMethod => InstallMethodTypes.Squirrel;
 
         public override void Uninstall(PackageManifest packageManifest, UninstallOptions installOptions)
