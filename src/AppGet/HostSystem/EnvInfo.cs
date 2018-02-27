@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.InteropServices;
 
 namespace AppGet.HostSystem
@@ -10,6 +11,7 @@ namespace AppGet.HostSystem
         string FullName { get; }
         bool Is64BitOperatingSystem { get; }
         bool UserInteractive { get; }
+        string AppDir { get; }
     }
 
     public class EnvInfo : IEnvInfo
@@ -19,6 +21,8 @@ namespace AppGet.HostSystem
         public string FullName { get; }
         public bool Is64BitOperatingSystem { get; }
         public bool UserInteractive => Environment.UserInteractive;
+        public string AppDir { get; }
+
 
         [DllImport("shlwapi.dll", SetLastError = true, EntryPoint = "#437")]
         private static extern bool IsOS(int os);
@@ -37,6 +41,9 @@ namespace AppGet.HostSystem
                 var windowsServer = IsWindowsServer();
                 Name = windowsServer ? "Windows Server" : "Windows";
                 Version = Environment.OSVersion.Version;
+
+                AppDir = Path.GetDirectoryName(GetType().Assembly.Location);
+
                 if (string.IsNullOrWhiteSpace(Environment.OSVersion.VersionString))
                 {
                     FullName = $"{Name} {Version}";
@@ -48,5 +55,6 @@ namespace AppGet.HostSystem
             {
             }
         }
+
     }
 }

@@ -214,6 +214,7 @@
     <Compile Include="Serialization\Yaml.cs" />
     <Compile Include="Requirements\IEnforceRequirements.cs" />
     <Compile Include="Requirements\Specifications\MinOsVersionSpecification.cs" />
+    <Compile Include="Tools\SigCheck.cs" />
     <Compile Include="Update\AppGetRelease.cs" />
     <Compile Include="Update\AppGetUpdateService.cs" />
     <Compile Include="Update\GithubRelease.cs" />
@@ -231,6 +232,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\Tools\sigcheck.exe">
+      <Link>sigcheck.exe</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="appet.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
