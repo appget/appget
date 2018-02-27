@@ -9,23 +9,23 @@ namespace AppGet.Infrastructure.Logging
     {
         private static LoggingRule _consoleRule;
 
-        public static void ConfigureLogger(string[] args)
+        public static void ConfigureLogger()
         {
             LogManager.Configuration = new LoggingConfiguration();
 
             BuildConsoleTarget();
 
 
-            BuildSentryTarget(args);
+            BuildSentryTarget();
 
 
 
             LogManager.ReconfigExistingLoggers();
         }
 
-        private static void BuildSentryTarget(string[] args)
+        private static void BuildSentryTarget()
         {
-            var sentryTarget = new SentryTarget(args);
+            var sentryTarget = new SentryTarget();
 
             var rule = new LoggingRule("*", LogLevel.Trace, sentryTarget);
             LogManager.Configuration.AddTarget("sentry", sentryTarget);

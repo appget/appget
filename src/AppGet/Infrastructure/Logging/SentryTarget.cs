@@ -29,7 +29,7 @@ namespace AppGet.Infrastructure.Logging
             {LogLevel.Warn, ErrorLevel.Warning},
         };
 
-        public SentryTarget(string[] args)
+        public SentryTarget()
         {
             _client = new RavenClient(new Dsn(DSN), new JsonPacketFactory(), new SentryRequestFactory(), new SentryUserFactory())
             {
@@ -45,7 +45,8 @@ namespace AppGet.Infrastructure.Logging
             _client.Tags.Add("os_name", osInfo.Name);
             _client.Tags.Add("os_version", osInfo.Version.ToString());
             _client.Tags.Add("os_bit", osInfo.Is64BitOperatingSystem ? "64" : "32");
-            _client.Tags.Add("args", string.Join("|", args));
+            _client.Tags.Add("args", Environment.CommandLine);
+            _client.Tags.Add("runtime", Environment.Version.ToString());
         }
 
         private void OnError(Exception ex)
@@ -97,12 +98,7 @@ namespace AppGet.Infrastructure.Logging
                 {
                     Level = LoggingLevelMap[logEvent.Level],
                     Message = string.IsNullOrWhiteSpace(message) ? null : new SentryMessage(message),
-                    Extra = extras,
-                    Fingerprint =
-                    {
-                    logEvent.Level.ToString(),
-                        logEvent.Message
-                    }
+                    Extra = extras
                 };
 
                 if (ex != null)
@@ -111,8 +107,6 @@ namespace AppGet.Infrastructure.Logging
                     {
                         extras.Add(data.Key.ToString(), data.Value.ToString());
                     }
-
-                    sentryEvent.Fingerprint.Add(ex.GetType().FullName);
                 }
 
                 _client.Capture(sentryEvent);

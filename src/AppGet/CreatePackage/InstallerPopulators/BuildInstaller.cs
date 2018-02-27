@@ -14,7 +14,6 @@ namespace AppGet.CreatePackage.InstallerPopulators
 {
     public interface IBuildInstaller
     {
-        Task<Installer> Populate();
         Task<Installer> Populate(string url);
     }
 
@@ -36,12 +35,6 @@ namespace AppGet.CreatePackage.InstallerPopulators
             _logger = logger;
         }
 
-
-        public async Task<Installer> Populate()
-        {
-            var url = _urlPrompt.Request("Installer direct download URL:", null);
-            return await Populate(url);
-        }
 
         public async Task<Installer> Populate(string url)
         {
