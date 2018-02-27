@@ -8,14 +8,13 @@ using SharpCompress.Readers.Zip;
 
 namespace AppGet.Installers.Squirrel
 {
-    public class SquirrelDetector : InstallerDetectorBase, IDetectInstallMethod
+    public class SquirrelDetector : InstallerDetectorBase
     {
-        public InstallMethodTypes InstallMethod => InstallMethodTypes.Squirrel;
+        public override InstallMethodTypes InstallMethod => InstallMethodTypes.Squirrel;
 
 
         private static IEnumerable<ZipEntry> GetInternal(SevenZipExtractor archive)
         {
-
             var biggestFile = archive.ArchiveFileData.OrderByDescending(c => c.Size).First();
 
             if (!biggestFile.FileName.EndsWith("DATA\\131"))
@@ -38,16 +37,21 @@ namespace AppGet.Installers.Squirrel
 
         }
 
-        public decimal GetConfidence(string path, SevenZipExtractor archive)
+        public override decimal GetConfidence(string path, SevenZipExtractor archive, string exeManifest)
         {
-            if (HasProperty(archive, InstallMethod.ToString()))
+            if (base.GetConfidence(path, archive, exeManifest) == 1)
             {
                 return 1;
             }
 
-            var entries = GetInternal(archive);
+            if (archive != null)
+            {
+                var entries = GetInternal(archive);
 
-            return entries.Any(c => c.Key.EndsWith(".nupkg")) ? 1 : 0;
+                return entries.Any(c => c.Key.EndsWith(".nupkg")) ? 1 : 0;
+            }
+
+            return 0;
         }
     }
 }

@@ -5,6 +5,7 @@ using AppGet.CommandLine.Prompts;
 using AppGet.Compression;
 using AppGet.Installers;
 using AppGet.Manifests;
+using AppGet.Tools;
 using NLog;
 
 namespace AppGet.CreatePackage.ManifestPopulators
@@ -13,12 +14,14 @@ namespace AppGet.CreatePackage.ManifestPopulators
     {
         private readonly IEnumerable<IDetectInstallMethod> _installMethodDetectors;
         private readonly ICompressionService _compressionService;
+        private readonly ISigCheck _sigCheck;
         private readonly Logger _logger;
 
-        public PopulateInstallMethod(IEnumerable<IDetectInstallMethod> installMethodDetectors, ICompressionService compressionService, Logger logger)
+        public PopulateInstallMethod(IEnumerable<IDetectInstallMethod> installMethodDetectors, ICompressionService compressionService, ISigCheck sigCheck, Logger logger)
         {
             _installMethodDetectors = installMethodDetectors;
             _compressionService = compressionService;
+            _sigCheck = sigCheck;
             _logger = logger;
         }
 
@@ -28,10 +31,12 @@ namespace AppGet.CreatePackage.ManifestPopulators
             var installer = manifest.Installers.First();
 
             var archive = _compressionService.TryOpen(installer.FilePath);
-            if (archive != null)
+            var exeManifest = _sigCheck.GetManifest(installer.FilePath);
+
+            if (archive != null || !string.IsNullOrWhiteSpace(exeManifest))
             {
                 var scores = _installMethodDetectors.ToDictionary(c => c.InstallMethod,
-                    c => c.GetConfidence(installer.FilePath, archive));
+                    c => c.GetConfidence(installer.FilePath, archive, exeManifest));
 
                 var positives = scores.Values.Count(c => c != 0);
 

@@ -3,23 +3,23 @@ using SevenZip;
 
 namespace AppGet.Installers.Msi
 {
-    public class MsiDetector : InstallerDetectorBase, IDetectInstallMethod
+    public class MsiDetector : InstallerDetectorBase
     {
-        public InstallMethodTypes InstallMethod => InstallMethodTypes.MSI;
+        public override InstallMethodTypes InstallMethod => InstallMethodTypes.MSI;
 
-        public decimal GetConfidence(string path, SevenZipExtractor archive)
+        public override decimal GetConfidence(string path, SevenZipExtractor archive, string exeManifest)
         {
             if (path.ToLowerInvariant().EndsWith(".msi"))
             {
                 return 1;
             }
 
-            if (archive.ArchiveFileNames.Contains(".wixburn"))
+            if (archive != null && archive.ArchiveFileNames.Contains(".wixburn"))
             {
                 return 1;
             }
 
-            return HasProperty(archive, InstallMethod.ToString()) ? 1 : 0;
+            return base.GetConfidence(path, archive, exeManifest);
         }
     }
 }

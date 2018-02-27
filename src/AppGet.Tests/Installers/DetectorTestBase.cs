@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using AppGet.Compression;
+using AppGet.HostSystem;
 using AppGet.Installers;
+using AppGet.Processes;
+using AppGet.Tools;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -14,30 +18,33 @@ namespace AppGet.Tests.Installers
         [SetUp]
         public void Setup()
         {
-
+            Mocker.SetInstance<IEnvInfo>(new EnvInfo());
+            Mocker.SetInstance<IProcessController>(new ProcessController(logger));
         }
 
+
         [TestCaseSource(nameof(GetMatchingInstallers))]
-        public void should_match_correct_installers(string name)
+        public void should_match_correct_installers(string path)
         {
             var compression = Mocker.Resolve<CompressionService>();
-            Subject.GetConfidence(name, compression.TryOpen(name)).Should().Be(1);
+            var sigCheck = Mocker.Resolve<SigCheck>();
+            Subject.GetConfidence(path, compression.TryOpen(path), sigCheck.GetManifest(path)).Should().Be(1);
         }
 
 
         [TestCaseSource(nameof(GetNonMatchingInstallers))]
-        public void should_not_match_other_installers(string name)
+        public void should_not_match_other_installers(string path)
         {
             var compression = Mocker.Resolve<CompressionService>();
-            Subject.GetConfidence(name, compression.TryOpen(name)).Should().Be(0);
+            Subject.GetConfidence(path, compression.TryOpen(path), null).Should().Be(0);
         }
 
         [Explicit]
         [TestCaseSource(nameof(GetRootInstallers))]
-        public void match_root_installers(string name)
+        public void match_root_installers(string path)
         {
             var compression = Mocker.Resolve<CompressionService>();
-            Subject.GetConfidence(name, compression.TryOpen(name)).Should().Be(1);
+            Subject.GetConfidence(path, compression.TryOpen(path), null).Should().Be(1);
         }
 
         private static string Type()

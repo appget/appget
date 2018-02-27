@@ -15,6 +15,7 @@ using AppGet.FileTransfer.Protocols;
 using AppGet.Installers;
 using AppGet.Installers.Exe;
 using AppGet.Installers.Inno;
+using AppGet.Installers.InstallBuilder;
 using AppGet.Installers.InstallShield;
 using AppGet.Installers.Msi;
 using AppGet.Installers.Nsis;
@@ -60,6 +61,7 @@ namespace AppGet.Infrastructure.Composition
                 typeof(InstallShieldWhisperer),
                 typeof(MsiWhisperer),
                 typeof(NsisWhisperer),
+                typeof(InstallBuilderWhisperer),
                 typeof(SquirrelWhisperer),
                 typeof(ZipWhisperer),
                 typeof(ExeWhisperer)
@@ -96,7 +98,8 @@ namespace AppGet.Infrastructure.Composition
                 typeof(MsiDetector),
                 typeof(SquirrelDetector),
                 typeof(NsisDetector),
-                typeof(InnoDetector)
+                typeof(InnoDetector),
+                typeof(InstallBuilderDetector)
             });
 
 

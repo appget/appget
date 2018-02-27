@@ -107,6 +107,7 @@
     <Compile Include="Http\UserAgentBuilderFixture.cs" />
     <Compile Include="Installers\DetectorTestBase.cs" />
     <Compile Include="Installers\Inno\InnoDetectorFixture.cs" />
+    <Compile Include="Installers\InstallBuilder\InstallBuilderDetectorFixture.cs" />
     <Compile Include="Installers\Msi\MsiDetectorFixture.cs" />
     <Compile Include="Installers\Nsis\NsisDetectorFixture.cs" />
     <Compile Include="Installers\Squirrel\SquirrelDetectorFixture.cs" />

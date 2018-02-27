@@ -1,10 +1,21 @@
-﻿using SevenZip;
+﻿using System.Linq;
+using AppGet.Manifests;
+using SevenZip;
 
 namespace AppGet.Installers
 {
-    public class InstallerDetectorBase
+    public abstract class InstallerDetectorBase : IDetectInstallMethod
     {
-        protected static bool HasProperty(SevenZipExtractor archive, string term)
+        public abstract InstallMethodTypes InstallMethod { get; }
+
+        protected virtual string[] Terms => new[] { InstallMethod.ToString().ToLowerInvariant() };
+
+        public virtual decimal GetConfidence(string path, SevenZipExtractor archive, string exeManifest)
+        {
+            return Terms.Any(t => HasProperty(archive, t) || ManifestContains(exeManifest, t)) ? 1 : 0;
+        }
+
+        private static bool HasProperty(SevenZipExtractor archive, string term)
         {
             if (archive == null) return false;
 
@@ -20,6 +31,13 @@ namespace AppGet.Installers
             }
 
             return false;
+        }
+
+        private static bool ManifestContains(string exeManifest, string term)
+        {
+            if (string.IsNullOrWhiteSpace(exeManifest)) return false;
+
+            return exeManifest.ToLowerInvariant().Contains(term.ToLowerInvariant());
         }
     }
 }

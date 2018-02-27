@@ -24,6 +24,7 @@ namespace AppGet.Installers
         {
             var msg = $"Installer for {packageManifest.Name} {packageManifest.Version} returned with a non-zero exit code: {installerProcess.ExitCode}";
 
+
             if (!string.IsNullOrWhiteSpace(logPath))
             {
                 msg += Environment.NewLine + $"Logs: {logPath}";

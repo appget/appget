@@ -10,6 +10,7 @@
         InstallShield,
         ClickOnce,
         NSIS,
+        InstallBuilder,
         Squirrel
     }
 }
