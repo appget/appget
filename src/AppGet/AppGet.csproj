@@ -129,6 +129,8 @@
     <Compile Include="Crypto\Hash\Algorithms\Sha1Hash.cs" />
     <Compile Include="Crypto\Hash\Algorithms\Md5Hash.cs" />
     <Compile Include="Crypto\Hash\Algorithms\Sha256Hash.cs" />
+    <Compile Include="Installers\ExistReason.cs" />
+    <Compile Include="Installers\ExitCodeTypes.cs" />
     <Compile Include="Installers\InstallBuilder\InstallBuilderDetector.cs" />
     <Compile Include="Installers\InstallBuilder\InstallBuilderWhisperer.cs" />
     <Compile Include="Installers\InstallerException.cs" />
