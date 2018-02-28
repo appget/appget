@@ -17,11 +17,6 @@ namespace AppGet.Installers.Inno
         protected override InstallMethodTypes InstallMethod => InstallMethodTypes.Inno;
         protected override bool HasLogs => false;
 
-        public override void Uninstall(PackageManifest packageManifest, UninstallOptions installOptions)
-        {
-            throw new NotImplementedException();
-        }
-
         //Command line args: http://www.jrsoftware.org/ishelp/index.php?topic=setupcmdline
         protected override string InteractiveArgs => "";
         protected override string PassiveArgs => "/SILENT /SUPPRESSMSGBOXES /NORESTART /CLOSEAPPLICATIONS /FORCECLOSEAPPLICATIONS /RESTARTEXITCODE=3010";

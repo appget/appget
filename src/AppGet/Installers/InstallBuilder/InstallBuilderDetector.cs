@@ -1,5 +1,4 @@
 ﻿using AppGet.Manifests;
-using SevenZip;
 
 namespace AppGet.Installers.InstallBuilder
 {

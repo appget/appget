@@ -1,6 +1,4 @@
-﻿using System;
-using AppGet.Commands.Uninstall;
-using AppGet.HostSystem;
+﻿using AppGet.HostSystem;
 using AppGet.Manifests;
 using AppGet.Processes;
 using NLog;
@@ -18,11 +16,6 @@ namespace AppGet.Installers.Nsis
         protected override InstallMethodTypes InstallMethod => InstallMethodTypes.NSIS;
 
         protected override bool HasLogs => false;
-
-        public override void Uninstall(PackageManifest packageManifest, UninstallOptions installOptions)
-        {
-            throw new NotImplementedException();
-        }
 
         protected override string InteractiveArgs => "";
         protected override string PassiveArgs => "/S";

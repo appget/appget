@@ -23,7 +23,6 @@ using System.Runtime.InteropServices;
 #if !WINCE
 using System.Security.Permissions;
 #endif
-using SevenZip;
 using SevenZip.Compression.LZMA;
 
 

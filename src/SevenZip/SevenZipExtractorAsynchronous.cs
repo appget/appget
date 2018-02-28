@@ -18,7 +18,6 @@ namespace SevenZip
 {
     using System;
     using System.IO;
-    using System.Windows.Threading;
 
     partial class SevenZipExtractor
     {

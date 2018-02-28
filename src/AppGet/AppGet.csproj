@@ -155,7 +155,7 @@
     <Compile Include="Installers\Inno\InnoDetector.cs" />
     <Compile Include="Installers\InstallerDetectorBase.cs" />
     <Compile Include="Installers\Msi\MsiDetector.cs" />
-    <Compile Include="Installers\Exe\ExeWhisperer.cs" />
+    <Compile Include="Installers\Custom\CustomWhisperer.cs" />
     <Compile Include="Installers\Squirrel\SquirrelDetector.cs" />
     <Compile Include="Installers\Squirrel\SquirrelWhisperer.cs" />
     <Compile Include="Installers\Nsis\NsisDetector.cs" />
@@ -240,6 +240,7 @@
     </Content>
     <Content Include="appet.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -22,7 +22,6 @@ using System.Threading;
 #if !WINCE
 using System.Runtime.Remoting.Messaging;
 #endif
-using System.Windows.Threading;
 
 namespace SevenZip
 {

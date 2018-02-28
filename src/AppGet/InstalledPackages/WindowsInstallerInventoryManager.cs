@@ -106,7 +106,7 @@ namespace AppGet.InstalledPackages
                 UninstallCommand = GetValue("UninstallString"),
                 QuietUninstallCommand = GetValue("QuietUninstallString"),
                 InstallSource = GetValue("InstallSource"),
-                InstallMethod = InstallMethodTypes.Unknown
+                InstallMethod = InstallMethodTypes.Custom
 
             };
 
@@ -116,11 +116,7 @@ namespace AppGet.InstalledPackages
             }
             else if (record.UninstallCommand != null)
             {
-                if (record.UninstallCommand.ToLowerInvariant().Contains("rundll32.exe dfshim.dll,sharpmaintain"))
-                {
-                    record.InstallMethod = InstallMethodTypes.ClickOnce;
-                }
-                else if (record.UninstallCommand.ToLowerInvariant().Contains("msiexec.exe"))
+                if (record.UninstallCommand.ToLowerInvariant().Contains("msiexec.exe"))
                 {
                     record.InstallMethod = InstallMethodTypes.MSI;
                 }

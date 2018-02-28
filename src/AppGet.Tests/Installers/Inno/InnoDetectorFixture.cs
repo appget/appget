@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using AppGet.Installers.Inno;
-using Microsoft.Practices.ObjectBuilder2;
 using NUnit.Framework;
 
 namespace AppGet.Tests.Installers.Inno

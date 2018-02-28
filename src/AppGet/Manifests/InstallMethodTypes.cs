@@ -2,13 +2,11 @@
 {
     public enum InstallMethodTypes
     {
-        Unknown = -1,
-        Zip,
         Custom,
+        Zip,
         MSI,
         Inno,
         InstallShield,
-        ClickOnce,
         NSIS,
         InstallBuilder,
         Squirrel

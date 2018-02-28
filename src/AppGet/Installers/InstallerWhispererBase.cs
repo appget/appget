@@ -1,8 +1,9 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using AppGet.Commands.Install;
 using AppGet.Commands.Uninstall;
-using AppGet.Exceptions;
 using AppGet.HostSystem;
+using AppGet.Installers.Inno;
 using AppGet.Manifests;
 using AppGet.Processes;
 using NLog;
@@ -14,6 +15,8 @@ namespace AppGet.Installers
         private readonly IProcessController _processController;
         private readonly IPathResolver _pathResolver;
         private readonly Logger _logger;
+
+        public virtual Dictionary<int, ExistReason> ExitCodes => new Dictionary<int, ExistReason>();
 
         protected abstract InstallMethodTypes InstallMethod { get; }
 
@@ -47,7 +50,10 @@ namespace AppGet.Installers
         }
 
 
-        public abstract void Uninstall(PackageManifest packageManifest, UninstallOptions installOptions);
+        public virtual void Uninstall(PackageManifest packageManifest, UninstallOptions installOptions)
+        {
+
+        }
 
         public bool CanHandle(InstallMethodTypes installMethod)
         {

@@ -13,7 +13,7 @@ using AppGet.Crypto.Hash.Algorithms;
 using AppGet.FileTransfer;
 using AppGet.FileTransfer.Protocols;
 using AppGet.Installers;
-using AppGet.Installers.Exe;
+using AppGet.Installers.Custom;
 using AppGet.Installers.Inno;
 using AppGet.Installers.InstallBuilder;
 using AppGet.Installers.InstallShield;
@@ -64,7 +64,7 @@ namespace AppGet.Infrastructure.Composition
                 typeof(InstallBuilderWhisperer),
                 typeof(SquirrelWhisperer),
                 typeof(ZipWhisperer),
-                typeof(ExeWhisperer)
+                typeof(CustomWhisperer)
 
             });
 

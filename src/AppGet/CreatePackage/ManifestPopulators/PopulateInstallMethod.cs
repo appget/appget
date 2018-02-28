@@ -49,7 +49,7 @@ namespace AppGet.CreatePackage.ManifestPopulators
             }
 
             var methodPrompt = new EnumPrompt<InstallMethodTypes>();
-            manifest.InstallMethod = methodPrompt.Request("Installer", InstallMethodTypes.Unknown);
+            manifest.InstallMethod = methodPrompt.Request("Installer", InstallMethodTypes.Custom);
         }
     }
 }
