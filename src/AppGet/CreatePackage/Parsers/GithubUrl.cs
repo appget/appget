@@ -20,7 +20,7 @@ namespace AppGet.CreatePackage.Parsers
             get
             {
                 if (!IsValid) return null;
-                if (_parts.Length < 1) return "";
+                if (_parts.Length < 1) return null;
 
                 return _parts[0];
             }
@@ -31,7 +31,7 @@ namespace AppGet.CreatePackage.Parsers
             get
             {
                 if (!IsValid) return null;
-                if (_parts.Length < 2) return "";
+                if (_parts.Length < 2) return null;
 
                 return _parts[1];
             }
@@ -42,7 +42,7 @@ namespace AppGet.CreatePackage.Parsers
             get
             {
                 if (!IsValid) return null;
-                if (_parts.Length < 2) return "";
+                if (_parts.Length < 2) return null;
 
                 return $"https://github.com/{Owner}/{_parts[1]}";
             }

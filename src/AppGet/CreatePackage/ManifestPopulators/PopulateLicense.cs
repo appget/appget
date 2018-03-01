@@ -15,6 +15,8 @@ namespace AppGet.CreatePackage.ManifestPopulators
 
         public void Populate(PackageManifest manifest, FileVersionInfo fileVersionInfo, bool interactive)
         {
+            if (manifest.Licence != null) return;
+
             manifest.Licence = _prompt.Request("License", null, interactive);
         }
     }

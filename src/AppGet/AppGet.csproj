@@ -114,6 +114,7 @@
     <Compile Include="CreatePackage\ManifestPopulators\ManifestBuilder.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\PopulateInstallMethod.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\PopulateLicense.cs" />
+    <Compile Include="CreatePackage\ManifestPopulators\GithubPopulater.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\PopulateVersionTag.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\PopulatePackageId.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\PopulateProductName.cs" />
@@ -130,7 +131,7 @@
     <Compile Include="Crypto\Hash\Algorithms\Sha1Hash.cs" />
     <Compile Include="Crypto\Hash\Algorithms\Md5Hash.cs" />
     <Compile Include="Crypto\Hash\Algorithms\Sha256Hash.cs" />
-    <Compile Include="Github\Repository\GitHubReleaseClient.cs" />
+    <Compile Include="Github\Repository\GitHubRepositoryClient.cs" />
     <Compile Include="Github\Repository\Repository.cs" />
     <Compile Include="Installers\ExistReason.cs" />
     <Compile Include="Installers\ExitCodeTypes.cs" />

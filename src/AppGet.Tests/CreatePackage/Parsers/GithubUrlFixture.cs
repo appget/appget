@@ -15,8 +15,9 @@ namespace AppGet.Tests.CreatePackage.Parsers
         }
 
         [TestCase("https://github.com/AppGet/appget/releases", ExpectedResult = "AppGet")]
+        [TestCase(" https://github.com/tim-lebedkov/npackd-cpp/releases/download/version_1.23.2/NpackdCL-1.23.2.msi", ExpectedResult = "tim-lebedkov")]
         [TestCase("https://github.com/AppGet/", ExpectedResult = "AppGet")]
-        [TestCase("https://github.com/", ExpectedResult = "")]
+        [TestCase("https://github.com/", ExpectedResult = null)]
         [TestCase("http://google.com", ExpectedResult = null)]
         public string owner(string url)
         {
@@ -26,8 +27,10 @@ namespace AppGet.Tests.CreatePackage.Parsers
 
         [TestCase("https://github.com/AppGet/appget/releases", ExpectedResult = "appget")]
         [TestCase("https://github.com/AppGet/appget.packages/releases", ExpectedResult = "appget.packages")]
+        [TestCase(" https://github.com/tim-lebedkov/npackd-cpp/releases/download/version_1.23.2/NpackdCL-1.23.2.msi", ExpectedResult = "npackd-cpp")]
+
         [TestCase("https://github.com/AppGet/", ExpectedResult = null)]
-        [TestCase("https://github.com/", ExpectedResult = "")]
+        [TestCase("https://github.com/", ExpectedResult = null)]
         [TestCase("http://google.com", ExpectedResult = null)]
         public string repo(string url)
         {
@@ -36,7 +39,7 @@ namespace AppGet.Tests.CreatePackage.Parsers
 
 
         [TestCase("https://github.com/AppGet/appget/releases", ExpectedResult = "https://github.com/AppGet/appget")]
-        [TestCase("https://github.com/", ExpectedResult = "")]
+        [TestCase("https://github.com/", ExpectedResult = null)]
         [TestCase("http://google.com", ExpectedResult = null)]
         public string repo_url(string url)
         {

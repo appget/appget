@@ -34,7 +34,10 @@ namespace AppGet.Tests.CreatePackage.ManifestPopulators
         [TestCase("https://download.microsoft.com/", ExpectedResult = "https://microsoft.com")]
         [TestCase("https://downloads.microsoft.com/", ExpectedResult = "https://microsoft.com")]
         [TestCase("https://update.microsoft.com/", ExpectedResult = "https://microsoft.com")]
+        [TestCase("https://www.microsoft.com/", ExpectedResult = "https://www.microsoft.com")]
         [TestCase("https://updates.microsoft.com/", ExpectedResult = "https://microsoft.com")]
+        [TestCase("https://swupdate.openvpn.org/community/", ExpectedResult = "https://openvpn.org")]
+        [TestCase("https://cc.download.openvpn.org/community/", ExpectedResult = "https://openvpn.org")]
         public string remove_update_download_segments(string url)
         {
             var installer = new Installer { Location = url };

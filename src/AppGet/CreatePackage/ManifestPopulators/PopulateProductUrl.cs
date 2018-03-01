@@ -13,54 +13,50 @@ namespace AppGet.CreatePackage.ManifestPopulators
     public class PopulateProductUrl : IPopulateManifest
     {
         private readonly IUrlPrompt _prompt;
-        private readonly IGitHubRepositoryClient _repositoryClient;
         private readonly Logger _logger;
 
-        private static readonly Regex HostNameRegex = new Regex(@"(download|update|mirror|^repo|^dl)\w*\.", RegexOptions.IgnoreCase);
+        private static readonly Regex HostNameRegex = new Regex(@"(download|update|mirror|^repo|^dl)\w*", RegexOptions.IgnoreCase);
         private static readonly Regex DedicatedFileHost = new Regex(@"(\.s3\.amazonaws\.)|(fosshub\.com)", RegexOptions.IgnoreCase);
 
         public PopulateProductUrl(IUrlPrompt prompt, IGitHubRepositoryClient repositoryClient, Logger logger)
         {
             _prompt = prompt;
-            _repositoryClient = repositoryClient;
             _logger = logger;
         }
 
         public void Populate(PackageManifest manifest, FileVersionInfo fileVersionInfo, bool interactive)
         {
+            if (manifest.ProductUrl != null) return;
+
             string defaultValue;
             var url = manifest.Installers.First().Location;
 
 
-            var githubUrl = new GithubUrl(url);
-            if (githubUrl.IsValid)
+            var uri = new Uri(url);
+            if (DedicatedFileHost.IsMatch(uri.Host))
             {
-                defaultValue = githubUrl.RepositoryUrl;
-
-                try
-                {
-                    var repo = _repositoryClient.Get(githubUrl.Owner, githubUrl.Repository).Result;
-                    if (Uri.IsWellFormedUriString(repo.homepage, UriKind.Absolute))
-                    {
-                        defaultValue = repo.homepage.Trim();
-                    }
-                }
-                catch (Exception e)
-                {
-                    _logger.Error(e, "Couldn't get github repository information.");
-                }
+                defaultValue = "";
             }
             else
             {
-                var uri = new Uri(url);
-                if (DedicatedFileHost.IsMatch(uri.Host))
+                var domainParts = uri.Host.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
+                var subDomainsCount = Math.Max(0, domainParts.Length - 2);
+                var subs = domainParts.Take(subDomainsCount).ToList();
+                var host = domainParts.Skip(subDomainsCount).ToList();
+
+                for (var i = subs.Count; i > 0; i--)
                 {
-                    defaultValue = "";
+                    if (!HostNameRegex.IsMatch(subs[i - 1]))
+                    {
+                        host.Insert(0, subs[i - 1]);
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
-                else
-                {
-                    defaultValue = $"{uri.Scheme}://{HostNameRegex.Replace(uri.Host, "")}";
-                }
+
+                defaultValue = $"{uri.Scheme}://{string.Join(".", host)}";
             }
 
             defaultValue = defaultValue.Trim().ToLowerInvariant();
