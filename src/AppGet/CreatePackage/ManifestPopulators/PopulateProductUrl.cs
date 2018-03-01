@@ -16,7 +16,7 @@ namespace AppGet.CreatePackage.ManifestPopulators
         private readonly Logger _logger;
 
         private static readonly Regex HostNameRegex = new Regex(@"(download|update|mirror|^repo|^dl)\w*", RegexOptions.IgnoreCase);
-        private static readonly Regex DedicatedFileHost = new Regex(@"(\.s3\.amazonaws\.)|(fosshub\.com)", RegexOptions.IgnoreCase);
+        private static readonly Regex DedicatedFileHost = new Regex(@"(\.s3\.amazonaws\.)|(fosshub\.com)|(akamaihd\.net)", RegexOptions.IgnoreCase);
 
         public PopulateProductUrl(IUrlPrompt prompt, IGitHubRepositoryClient repositoryClient, Logger logger)
         {

@@ -13,7 +13,7 @@ namespace AppGet.CreatePackage.Parsers
         };
 
         private static readonly Regex[] KnownNumberCleanup = {
-            new Regex(@"(\w|\b)(x|win)(64|32)(\w|\b)", RegexOptions.IgnoreCase),
+            new Regex(@"(\w|\b)(ia|x|win)(64|32)(\w|\b)", RegexOptions.IgnoreCase),
             new Regex(@"(\w|\b)i?(x|\d)86(\w|\b)", RegexOptions.IgnoreCase),
             new Regex(@"(\w|\b)win(dows)?.?\d{1,4}(\w|\b)", RegexOptions.IgnoreCase),
         };
