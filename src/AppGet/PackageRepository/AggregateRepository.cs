@@ -13,9 +13,15 @@ namespace AppGet.PackageRepository
             _repositories = repositories;
         }
 
-        public Task<PackageInfo> GetLatest(string name)
+        public Task<PackageInfo> Get(string id, string tag)
         {
-            return _repositories.Select(c => c.GetLatest(name)).FirstOrDefault();
+            var task = _repositories.Select(c => c.Get(id, tag)).FirstOrDefault();
+            if (task == null)
+            {
+                task = Task.FromResult<PackageInfo>(null);
+            }
+
+            return task;
         }
 
         public Task<List<PackageInfo>> Search(string term)

@@ -49,7 +49,7 @@ namespace AppGet.Commands.Uninstall
             {
                 foreach (var installedPackage in installedPackages)
                 {
-                    var package = await _packageRepository.GetLatest(uninstallOptions.PackageId);
+                    var package = await _packageRepository.Get(uninstallOptions.PackageId, uninstallOptions.PackageTag);
 
                     if (package == null)
                     {

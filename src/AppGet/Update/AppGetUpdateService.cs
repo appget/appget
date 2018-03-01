@@ -64,7 +64,7 @@ namespace AppGet.Update
                 }
             };
 
-            await _installService.Install(manifest, new InstallOptions { Force = true, PackageId = manifest.Id });
+            await _installService.Install(manifest, new InstallOptions { Force = true, Package = manifest.Id });
         }
     }
 }

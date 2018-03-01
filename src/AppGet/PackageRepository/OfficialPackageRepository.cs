@@ -21,13 +21,18 @@ namespace AppGet.PackageRepository
         }
 
 
-        public async Task<PackageInfo> GetLatest(string name)
+        public async Task<PackageInfo> Get(string id, string tag)
         {
-            _logger.Info("Getting package " + name);
+            if (string.IsNullOrWhiteSpace(tag))
+            {
+                tag = "latest";
+            }
+
+            _logger.Info("Getting package " + id);
 
             try
             {
-                var package = await _httpClient.Get($"{API_ROOT}/packages/{name}/latest");
+                var package = await _httpClient.Get($"{API_ROOT}/packages/{id}/{tag}");
                 return await package.AsResource<PackageInfo>();
             }
             catch (HttpException ex)

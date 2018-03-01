@@ -3,15 +3,15 @@
     public class PackageInfo
     {
         public string Id { get; set; }
-        public string MajorVersion { get; set; }
+        public string Tag { get; set; }
         public string ManifestUrl { get; set; }
 
         public override string ToString()
         {
             var text = $"{Id}";
-            if (MajorVersion != null)
+            if (Tag != null)
             {
-                text += $":{MajorVersion}";
+                text += $":{Tag}";
             }
 
             return text;

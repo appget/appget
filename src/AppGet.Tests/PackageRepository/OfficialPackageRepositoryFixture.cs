@@ -16,12 +16,12 @@ namespace AppGet.Tests.PackageRepository
 
             WithRealHttp();
 
-            var latest = await Subject.GetLatest(package);
+            var latest = await Subject.Get(package, null);
 
             latest.Should().NotBeNull();
             latest.ManifestUrl.Should().StartWith("https://raw.githubusercontent.com/appget/packages/master/manifests/");
             latest.Id.Should().Be(package);
-            //            latest.MajorVersion.Should().HaveLength(1);
+            latest.Tag.Should().BeNull();
         }
 
         [Test]
@@ -30,7 +30,18 @@ namespace AppGet.Tests.PackageRepository
 
             WithRealHttp();
 
-            var latest = await Subject.GetLatest("bad-package-id");
+            var latest = await Subject.Get("bad-package-id", null);
+
+            latest.Should().BeNull();
+        }
+
+        [Test]
+        public async Task should_get_null_for_unknown_tag()
+        {
+
+            WithRealHttp();
+
+            var latest = await Subject.Get("vlc", "1");
 
             latest.Should().BeNull();
         }
@@ -50,14 +61,13 @@ namespace AppGet.Tests.PackageRepository
             found.Should().NotBeNull();
             found.ManifestUrl.Should().StartWith("https://raw.githubusercontent.com/appget/packages/master/manifests/");
             found.Id.Should().Contain(term);
-            //            found.MajorVersion.Should().HaveLength(1);
         }
 
         [Test]
         public async Task should_get_manifest()
         {
             WithRealHttp();
-            var c = await Subject.GetLatest("postman");
+            var c = await Subject.Get("postman", null);
 
             c.Should().NotBeNull();
         }

@@ -5,9 +5,9 @@ namespace AppGet.Commands.Install
     [Verb("install", HelpText = "Install a package")]
     public class InstallOptions : PackageCommandOptions
     {
-        [Value(0, MetaName = PACKAGE_META_NAME, HelpText = "ID of package to install", Required = true)]
-        public override string PackageId { get; set; }
-
+        [Value(0, MetaName = PACKAGE_META_NAME, HelpText = "Package to install", Required = true)]
+        public override string Package { get; set; }
+    
         [Option('f', "force", HelpText = "Force the operation")]
         public bool Force { get; set; }
 

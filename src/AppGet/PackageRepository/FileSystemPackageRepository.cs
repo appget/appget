@@ -20,32 +20,42 @@ namespace AppGet.PackageRepository
             _config = config;
         }
 
-        public Task<PackageInfo> GetLatest(string name)
+        public Task<PackageInfo> Get(string id, string tag)
         {
             if (string.IsNullOrWhiteSpace(_config.LocalRepository))
             {
                 return null;
             }
 
-            var pkgDir = Path.Combine(_config.LocalRepository, name);
+            var pkgDir = Path.Combine(_config.LocalRepository, id);
             if (!_fileSystem.DirectoryExists(pkgDir))
             {
                 return null;
             }
 
-            var packages = _fileSystem.GetFiles(pkgDir, "*.yaml").Select(Read);
-            return Task.FromResult(packages.OrderByDescending(c => c.MajorVersion).FirstOrDefault());
+            var packages = _fileSystem.GetFiles(pkgDir, "*.yaml").Select(Read).Where(c => c.Tag == tag);
+            return Task.FromResult(packages.OrderByDescending(c => c.Tag).FirstOrDefault());
         }
 
         private PackageInfo Read(string path)
         {
             var yaml = _fileSystem.ReadAllText(path);
             var manifest = Yaml.Deserialize<PackageManifest>(yaml);
+            var fileName = Path.GetFileNameWithoutExtension(path);
+
+            var indexOfTag = fileName.IndexOf(".");
+
+            var tag = "";
+            if (indexOfTag > 0)
+            {
+                tag = fileName.Substring(indexOfTag).Trim('.', ' ');
+            }
+
 
             return new PackageInfo
             {
                 Id = manifest.Id,
-                MajorVersion = "latest", // TODO
+                Tag = string.IsNullOrWhiteSpace(tag) ? null : tag,
                 ManifestUrl = path
             };
         }

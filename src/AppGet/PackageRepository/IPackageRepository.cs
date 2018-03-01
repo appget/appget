@@ -5,7 +5,7 @@ namespace AppGet.PackageRepository
 {
     public interface IPackageRepository
     {
-        Task<PackageInfo> GetLatest(string name);
+        Task<PackageInfo> Get(string id, string tag);
         Task<List<PackageInfo>> Search(string term);
     }
 }

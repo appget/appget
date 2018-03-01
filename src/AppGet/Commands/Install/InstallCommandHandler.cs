@@ -38,7 +38,7 @@ namespace AppGet.Commands.Install
                 throw new PackageAlreadyInstalledException(installOptions.PackageId);
             }
 
-            var package = await _packageRepository.GetLatest(installOptions.PackageId);
+            var package = await _packageRepository.Get(installOptions.PackageId, installOptions.PackageTag);
 
             if (package == null)
             {

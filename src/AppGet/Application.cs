@@ -18,14 +18,14 @@ namespace AppGet
 
         public static int Main(string[] args)
         {
-            var result = Run(args);
+            var result = Run(args).Result;
 
             while (Debugger.IsAttached)
             {
                 Run(new string[0]).Wait();
             }
 
-            return result.Result;
+            return result;
         }
 
 

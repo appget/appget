@@ -25,7 +25,7 @@ namespace AppGet.Commands.ViewManifest
 
             var viewOptions = (ViewManifestOptions)searchCommandOptions;
 
-            var package = await _packageRepository.GetLatest(viewOptions.PackageId);
+            var package = await _packageRepository.Get(viewOptions.PackageId, viewOptions.PackageTag);
             if (package == null)
             {
                 throw new PackageNotFoundException(viewOptions.PackageId);
