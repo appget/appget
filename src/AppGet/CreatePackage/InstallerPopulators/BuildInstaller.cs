@@ -73,6 +73,7 @@ namespace AppGet.CreatePackage.InstallerPopulators
         {
             var installer = new Installer();
             var filePath = await _fileTransferService.TransferFile(uri.ToString(), _pathResolver.TempFolder, null);
+
             var sha256 = _sha256.CalculateHash(filePath);
             _logger.Info($"SHA-256: {sha256}");
             if (VersionParser.Parse(uri) != null)

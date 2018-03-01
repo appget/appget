@@ -4,24 +4,20 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using AppGet.CommandLine.Prompts;
 using AppGet.CreatePackage.Parsers;
-using AppGet.Github.Repository;
 using AppGet.Manifests;
-using NLog;
 
 namespace AppGet.CreatePackage.ManifestPopulators
 {
     public class PopulateProductUrl : IPopulateManifest
     {
         private readonly IUrlPrompt _prompt;
-        private readonly Logger _logger;
 
-        private static readonly Regex HostNameRegex = new Regex(@"(download|update|mirror|^repo|^dl)\w*", RegexOptions.IgnoreCase);
+        private static readonly Regex HostNameRegex = new Regex(@"(^get$|download|update|mirror|release|^repo|^dl)\w*", RegexOptions.IgnoreCase);
         private static readonly Regex DedicatedFileHost = new Regex(@"(\.s3\.amazonaws\.)|(fosshub\.com)|(akamaihd\.net)", RegexOptions.IgnoreCase);
 
-        public PopulateProductUrl(IUrlPrompt prompt, IGitHubRepositoryClient repositoryClient, Logger logger)
+        public PopulateProductUrl(IUrlPrompt prompt)
         {
             _prompt = prompt;
-            _logger = logger;
         }
 
         public void Populate(PackageManifest manifest, FileVersionInfo fileVersionInfo, bool interactive)
