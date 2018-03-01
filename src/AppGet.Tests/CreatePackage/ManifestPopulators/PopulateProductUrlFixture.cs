@@ -28,7 +28,7 @@ namespace AppGet.Tests.CreatePackage.ManifestPopulators
 
             Subject.Populate(man, null, false);
 
-            man.ProductUrl.Should().Be("https://microsoft.com");
+            man.Home.Should().Be("https://microsoft.com");
         }
 
         [TestCase("https://download.microsoft.com/", ExpectedResult = "https://microsoft.com")]
@@ -38,6 +38,7 @@ namespace AppGet.Tests.CreatePackage.ManifestPopulators
         [TestCase("https://updates.microsoft.com/", ExpectedResult = "https://microsoft.com")]
         [TestCase("https://swupdate.openvpn.org/community/", ExpectedResult = "https://openvpn.org")]
         [TestCase("https://cc.download.openvpn.org/community/", ExpectedResult = "https://openvpn.org")]
+        [TestCase("https://a.openvpn.org/community/", ExpectedResult = "https://openvpn.org")]
         public string remove_update_download_segments(string url)
         {
             var installer = new Installer { Location = url };
@@ -48,7 +49,7 @@ namespace AppGet.Tests.CreatePackage.ManifestPopulators
 
             Subject.Populate(man, null, false);
 
-            return man.ProductUrl;
+            return man.Home;
         }
     }
 }

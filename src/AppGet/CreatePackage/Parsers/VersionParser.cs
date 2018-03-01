@@ -8,7 +8,7 @@ namespace AppGet.CreatePackage.Parsers
     {
         private static readonly Regex[] VersionRegexes = {
             new Regex(@"\d+(\.\d+){1,3}"),
-            new Regex(@"\d{1,4}")
+            new Regex(@"\d{2,4}")
 
         };
 
@@ -18,18 +18,17 @@ namespace AppGet.CreatePackage.Parsers
             new Regex(@"(\w|\b)win(dows)?.?\d{1,4}(\w|\b)", RegexOptions.IgnoreCase),
         };
 
-        public static string Parse(Uri uri)
-        {
-            var source = uri.LocalPath + uri.Query;
 
+        public static string Parse(string text)
+        {
             foreach (var regex in KnownNumberCleanup)
             {
-                source = regex.Replace(source, "");
+                text = regex.Replace(text, "");
             }
 
             foreach (var regex in VersionRegexes)
             {
-                var matches = regex.Matches(source);
+                var matches = regex.Matches(text);
                 if (matches.Count > 0)
                 {
                     return matches.Cast<Capture>()
@@ -39,6 +38,12 @@ namespace AppGet.CreatePackage.Parsers
             }
 
             return null;
+        }
+
+        public static string Parse(Uri uri)
+        {
+            var source = uri.LocalPath + uri.Query;
+            return Parse(source);
         }
 
     }

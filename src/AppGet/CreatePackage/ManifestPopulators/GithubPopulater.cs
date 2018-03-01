@@ -1,10 +1,10 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using AppGet.CreatePackage.Parsers;
+﻿using AppGet.CreatePackage.Parsers;
 using AppGet.Github.Repository;
 using AppGet.Manifests;
 using NLog;
+using System;
+using System.Diagnostics;
+using System.Linq;
 
 namespace AppGet.CreatePackage.ManifestPopulators
 {
@@ -27,7 +27,7 @@ namespace AppGet.CreatePackage.ManifestPopulators
             var githubUrl = new GithubUrl(url);
             if (!githubUrl.IsValid) return;
 
-            manifest.ProductUrl = githubUrl.RepositoryUrl;
+            manifest.Repo = githubUrl.RepositoryUrl;
             manifest.Name = githubUrl.Repository;
 
             try
@@ -35,7 +35,7 @@ namespace AppGet.CreatePackage.ManifestPopulators
                 var repo = _repositoryClient.Get(githubUrl.Owner, githubUrl.Repository).Result;
                 if (Uri.IsWellFormedUriString(repo.homepage, UriKind.Absolute))
                 {
-                    manifest.ProductUrl = repo.homepage.Trim();
+                    manifest.Home = repo.homepage.Trim();
                 }
 
                 manifest.Name = repo.name;

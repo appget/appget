@@ -77,6 +77,7 @@ namespace AppGet.Infrastructure.Composition
 
             container.RegisterMultiple<IPopulateManifest>(new[]
             {
+                typeof(SourceforgePopulater),
                 typeof(GithubPopulater),
                 typeof(PopulateProductName),
                 typeof(PopulatePackageId),

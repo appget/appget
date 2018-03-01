@@ -110,6 +110,7 @@
     <Compile Include="CreatePackage\InstallerPopulators\ArchitecturePopulater.cs" />
     <Compile Include="CreatePackage\InstallerPopulators\IPopulateInstaller.cs" />
     <Compile Include="CreatePackage\InstallerPopulators\MinWindowsVersionPopulater.cs" />
+    <Compile Include="CreatePackage\ManifestPopulators\Sourceforge.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\IPopulateManifest.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\ManifestBuilder.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\PopulateInstallMethod.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="CreatePackage\ManifestPopulators\PopulatePackageId.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\PopulateProductName.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\PopulateVersion.cs" />
+    <Compile Include="CreatePackage\Parsers\HomePageParser.cs" />
     <Compile Include="CreatePackage\Parsers\VersionParser.cs" />
     <Compile Include="CreatePackage\Parsers\ArchitectureParser.cs" />
     <Compile Include="CreatePackage\Parsers\GithubUrl.cs" />
@@ -131,6 +133,7 @@
     <Compile Include="Crypto\Hash\Algorithms\Sha1Hash.cs" />
     <Compile Include="Crypto\Hash\Algorithms\Md5Hash.cs" />
     <Compile Include="Crypto\Hash\Algorithms\Sha256Hash.cs" />
+    <Compile Include="Extensions\FileVersionInfoExtensions.cs" />
     <Compile Include="Github\Repository\GitHubRepositoryClient.cs" />
     <Compile Include="Github\Repository\Repository.cs" />
     <Compile Include="Installers\ExistReason.cs" />

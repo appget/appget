@@ -10,13 +10,11 @@ namespace AppGet.Manifests
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public string Licence { get; set; }
         public string Version { get; set; }
 
-        [YamlIgnore]
-        public string VersionTag { get; set; }
-
-        public string ProductUrl { get; set; }
+        public string Home { get; set; }
+        public string Repo { get; set; }
+        public string Licence { get; set; }
 
         public string[] Exe { get; set; }
 
@@ -25,6 +23,9 @@ namespace AppGet.Manifests
         public List<Installer> Installers { get; set; }
 
         public InstallArgs Args { get; set; }
+
+        [YamlIgnore]
+        public string VersionTag { get; set; }
     }
 
     public class InstallArgs
