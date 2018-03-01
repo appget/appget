@@ -124,7 +124,7 @@
     <Compile Include="CreatePackage\Parsers\VersionParser.cs" />
     <Compile Include="CreatePackage\Parsers\ArchitectureParser.cs" />
     <Compile Include="CreatePackage\Parsers\GithubUrl.cs" />
-    <Compile Include="CreatePackage\ManifestPopulators\PopulateProductUrl.cs" />
+    <Compile Include="CreatePackage\ManifestPopulators\PopulateHomePage.cs" />
     <Compile Include="Crypto\Certificates\FileSignatureService.cs" />
     <Compile Include="Crypto\Hash\CheckSumBase.cs" />
     <Compile Include="Crypto\Hash\ChecksumVerificationException.cs" />

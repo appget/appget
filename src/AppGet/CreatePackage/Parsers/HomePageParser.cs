@@ -13,7 +13,9 @@ namespace AppGet.CreatePackage.Parsers
             "fosshub",
             "akamaihd",
             "code42",
-            "netdna-ssl"
+            "netdna-ssl",
+            "github.com",
+            "sourceforge"
         };
 
 

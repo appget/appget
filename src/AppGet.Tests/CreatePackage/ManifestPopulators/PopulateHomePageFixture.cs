@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace AppGet.Tests.CreatePackage.ManifestPopulators
 {
     [TestFixture]
-    public class PopulateProductUrlFixture : TestBase<PopulateProductUrl>
+    public class PopulateHomePageFixture : TestBase<PopulateHomePage>
     {
         [SetUp]
         public void Setup()

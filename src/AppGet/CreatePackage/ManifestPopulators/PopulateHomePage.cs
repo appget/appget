@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Text.RegularExpressions;
 using AppGet.CommandLine.Prompts;
 using AppGet.CreatePackage.Parsers;
 using AppGet.Manifests;
 
 namespace AppGet.CreatePackage.ManifestPopulators
 {
-    public class PopulateProductUrl : IPopulateManifest
+    public class PopulateHomePage : IPopulateManifest
     {
         private readonly IUrlPrompt _prompt;
 
 
-        public PopulateProductUrl(IUrlPrompt prompt)
+        public PopulateHomePage(IUrlPrompt prompt)
         {
             _prompt = prompt;
         }

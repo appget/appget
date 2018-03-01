@@ -11,7 +11,7 @@ namespace AppGet.CreatePackage.ManifestPopulators
         {
             var uri = new Uri(manifest.Installers.First().Location);
 
-            if (!uri.Host.ToLowerInvariant().Contains("sourceforce.")) return;
+            if (!uri.Host.ToLowerInvariant().Contains("sourceforge.")) return;
 
             manifest.Repo = $"https://sourceforge.net/projects/{uri.Segments[3]}";
         }
