@@ -12,7 +12,7 @@ namespace AppGet.Installers.Msi
     public class MsiWhisperer : InstallerWhispererBase
     {
 
-        // https://msdn.microsoft.com/en-us/library/windows/desktop/aa376931%28v=vs.85%29.aspx?f=255&MSPPError=-2147217396
+        // http://msdn.microsoft.com/library/aa368542.aspx
         public override Dictionary<int, ExistReason> ExitCodes => new Dictionary<int, ExistReason>
         {
             {   13, new ExistReason(ExitCodeTypes.Failed,"ERROR_INVALID_DATA")},
@@ -76,6 +76,9 @@ namespace AppGet.Installers.Msi
             {   1653, new ExistReason(ExitCodeTypes.RestartRequired,"Could not perform a multiple-package transaction because rollback has been disabled. Multiple-Package Installations cannot run if rollback is disabled.")},
             {   1654, new ExistReason(ExitCodeTypes.RestartRequired,"The app that you are trying to run is not supported on this version of Windows.")},
             {   3010, new ExistReason(ExitCodeTypes.RestartRequired,null,true)},
+
+            // https://docs.microsoft.com/en-us/dotnet/framework/deployment/guide-for-administrators#return-codes
+            {   5100, new ExistReason(ExitCodeTypes.RequirementUnmet ,"The user's computer does not meet system requirements.")},
         };
 
         public MsiWhisperer(IProcessController processController, IPathResolver pathResolver, Logger logger)

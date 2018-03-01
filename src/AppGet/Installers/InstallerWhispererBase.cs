@@ -3,7 +3,6 @@ using System.Diagnostics;
 using AppGet.Commands.Install;
 using AppGet.Commands.Uninstall;
 using AppGet.HostSystem;
-using AppGet.Installers.Inno;
 using AppGet.Manifests;
 using AppGet.Processes;
 using NLog;

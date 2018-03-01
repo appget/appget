@@ -1,4 +1,4 @@
-﻿namespace AppGet.Installers.Inno
+﻿namespace AppGet.Installers
 {
     public class ExistReason
     {

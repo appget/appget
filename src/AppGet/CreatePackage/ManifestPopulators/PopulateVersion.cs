@@ -16,24 +16,29 @@ namespace AppGet.CreatePackage.ManifestPopulators
             _prompt = prompt;
         }
 
-        public void Populate(PackageManifest manifest, FileVersionInfo fileVersionInfo)
+        public void Populate(PackageManifest manifest, FileVersionInfo fileVersionInfo, bool interactive)
         {
             string defaultValue = null;
 
-            var urlVersion = VersionParser.Parse(new Uri(manifest.Installers.First().Location));
 
             if (fileVersionInfo != null)
             {
                 defaultValue = new[] { fileVersionInfo.ProductVersion, fileVersionInfo.FileVersion }
-                    .FirstOrDefault(c => !string.IsNullOrWhiteSpace(c));
+                    .FirstOrDefault(c => !string.IsNullOrWhiteSpace(c))?.Trim().Replace(",", ".");
             }
 
-            if ((urlVersion ?? "").Length > (defaultValue ?? "").Length)
+            var urlVersion = VersionParser.Parse(new Uri(manifest.Installers.First().Location));
+            if (string.IsNullOrWhiteSpace(manifest.Version) && (urlVersion ?? "").Length > (defaultValue ?? "").Length)
             {
                 defaultValue = urlVersion;
             }
 
-            manifest.Version = _prompt.Request("Application Version", defaultValue).ToLowerInvariant();
+            if (defaultValue == null || manifest.Version?.Length > defaultValue.Length)
+            {
+                defaultValue = manifest.Version;
+            }
+
+            manifest.Version = _prompt.Request("Application Version", defaultValue, interactive)?.ToLowerInvariant();
         }
     }
 }

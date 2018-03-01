@@ -4,7 +4,7 @@ namespace AppGet.CommandLine.Prompts
 {
     public interface IPrompt<T>
     {
-        T Request(string message, T defaultValue);
+        T Request(string message, T defaultValue, bool interactive);
     }
 
 

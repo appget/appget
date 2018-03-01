@@ -5,6 +5,6 @@ namespace AppGet.CreatePackage.ManifestPopulators
 {
     public interface IPopulateManifest
     {
-        void Populate(PackageManifest manifest, FileVersionInfo fileVersionInfo);
+        void Populate(PackageManifest manifest, FileVersionInfo fileVersionInfo, bool interactive);
     }
 }

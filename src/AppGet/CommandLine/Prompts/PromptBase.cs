@@ -9,8 +9,10 @@ namespace AppGet.CommandLine.Prompts
     {
         private readonly IKeyboardSimulator _keyboardSimulator = new InputSimulator().Keyboard;
 
-        public T Request(string message, T defaultValue)
+        public T Request(string message, T defaultValue, bool interactive)
         {
+            if (!interactive) return defaultValue;
+
             PrintPrompt(message, defaultValue);
 
             var inputString = Console.ReadLine()?.Trim();
@@ -24,7 +26,7 @@ namespace AppGet.CommandLine.Prompts
             if (!TryParse(inputString, out var result))
             {
                 Console.WriteLine($"'{inputString}' is not a valid entry.");
-                result = Request(message, defaultValue);
+                result = Request(message, defaultValue, true);
             }
 
             return result;

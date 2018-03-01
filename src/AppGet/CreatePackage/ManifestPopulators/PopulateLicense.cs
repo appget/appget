@@ -13,9 +13,9 @@ namespace AppGet.CreatePackage.ManifestPopulators
             _prompt = prompt;
         }
 
-        public void Populate(PackageManifest manifest, FileVersionInfo fileVersionInfo)
+        public void Populate(PackageManifest manifest, FileVersionInfo fileVersionInfo, bool interactive)
         {
-            manifest.Licence = _prompt.Request("License", null);
+            manifest.Licence = _prompt.Request("License", null, interactive);
         }
     }
 }

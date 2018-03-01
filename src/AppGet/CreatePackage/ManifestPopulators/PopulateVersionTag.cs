@@ -14,9 +14,9 @@ namespace AppGet.CreatePackage.ManifestPopulators
             _prompt = prompt;
         }
 
-        public void Populate(PackageManifest manifest, FileVersionInfo fileVersionInfo)
+        public void Populate(PackageManifest manifest, FileVersionInfo fileVersionInfo, bool interactive)
         {
-            var tag = _prompt.Request("Version Tag", LATEST).ToLowerInvariant();
+            var tag = _prompt.Request("Version Tag", LATEST, interactive).ToLowerInvariant();
 
             if (tag == LATEST)
             {

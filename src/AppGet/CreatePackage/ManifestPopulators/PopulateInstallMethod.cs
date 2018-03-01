@@ -25,7 +25,7 @@ namespace AppGet.CreatePackage.ManifestPopulators
             _logger = logger;
         }
 
-        public void Populate(PackageManifest manifest, FileVersionInfo fileVersionInfo)
+        public void Populate(PackageManifest manifest, FileVersionInfo fileVersionInfo, bool interactive)
         {
             _logger.Info("Detecting application installer");
             var installer = manifest.Installers.First();
@@ -49,7 +49,7 @@ namespace AppGet.CreatePackage.ManifestPopulators
             }
 
             var methodPrompt = new EnumPrompt<InstallMethodTypes>();
-            manifest.InstallMethod = methodPrompt.Request("Installer", InstallMethodTypes.Custom);
+            manifest.InstallMethod = methodPrompt.Request("Installer", InstallMethodTypes.Custom, interactive);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace AppGet.PackageRepository
             try
             {
                 var package = await _httpClient.Get($"{API_ROOT}/packages/{name}/latest");
-                return package.AsResource<PackageInfo>();
+                return await package.AsResource<PackageInfo>();
             }
             catch (HttpException ex)
             {
@@ -48,7 +48,7 @@ namespace AppGet.PackageRepository
                 .AddQuery("q", term.Trim());
 
             var package = await _httpClient.Get(uri);
-            return package.AsResource<List<PackageInfo>>();
+            return await package.AsResource<List<PackageInfo>>();
         }
     }
 }

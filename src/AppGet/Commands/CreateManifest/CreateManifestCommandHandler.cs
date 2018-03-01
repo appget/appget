@@ -12,16 +12,16 @@ namespace AppGet.Commands.CreateManifest
     {
         private readonly IBuildInstaller _installerBuilder;
         private readonly IPackageManifestService _packageManifestService;
-        private readonly IEnumerable<IPopulateManifest> _populaters;
+        private readonly IManifestBuilder _manifestBuilder;
         private readonly IUrlPrompt _urlPrompt;
         private readonly BooleanPrompt _booleanPrompt;
 
         public CreateManifestCommandHandler(IBuildInstaller installerBuilder, IPackageManifestService packageManifestService,
-            IEnumerable<IPopulateManifest> populaters, IUrlPrompt urlPrompt, BooleanPrompt booleanPrompt)
+           IManifestBuilder manifestBuilder, IUrlPrompt urlPrompt, BooleanPrompt booleanPrompt)
         {
             _installerBuilder = installerBuilder;
             _packageManifestService = packageManifestService;
-            _populaters = populaters;
+            _manifestBuilder = manifestBuilder;
             _urlPrompt = urlPrompt;
             _booleanPrompt = booleanPrompt;
         }
@@ -36,26 +36,19 @@ namespace AppGet.Commands.CreateManifest
             var createOptions = (CreateManifestOptions)appGetOption;
 
             var manifest = new PackageManifest { Installers = new List<Installer>() };
-            var installer = await _installerBuilder.Populate(createOptions.DownloadUrl);
+            var installer = await _installerBuilder.Populate(createOptions.DownloadUrl, true);
             manifest.Installers.Add(installer);
 
-            var fileVersionInfo = FileVersionInfo.GetVersionInfo(installer.FilePath);
+            _manifestBuilder.Populate(manifest, true);
 
-
-
-            foreach (var populater in _populaters)
+            while (_booleanPrompt.Request("Add an additional installer for different architecture or version of Windows?", false, true))
             {
-                populater.Populate(manifest, fileVersionInfo);
-            }
-
-            while (_booleanPrompt.Request("Add an additional installer for different architecture or version of Windows?", false))
-            {
-                var url = _urlPrompt.Request("Download URL (leave blank to cancel)", "");
+                var url = _urlPrompt.Request("Download URL (leave blank to cancel)", "", true);
                 if (string.IsNullOrWhiteSpace(url))
                 {
                     break;
                 }
-                manifest.Installers.Add(await _installerBuilder.Populate(url));
+                manifest.Installers.Add(await _installerBuilder.Populate(url, true));
             }
 
 

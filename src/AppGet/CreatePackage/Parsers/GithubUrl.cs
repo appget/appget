@@ -15,7 +15,7 @@ namespace AppGet.CreatePackage.Parsers
 
         public bool IsValid => _uri.Host == "github.com";
 
-        public string OrganizationName
+        public string Owner
         {
             get
             {
@@ -26,6 +26,17 @@ namespace AppGet.CreatePackage.Parsers
             }
         }
 
+        public string Repository
+        {
+            get
+            {
+                if (!IsValid) return null;
+                if (_parts.Length < 2) return "";
+
+                return _parts[1];
+            }
+        }
+
         public string RepositoryUrl
         {
             get
@@ -33,7 +44,7 @@ namespace AppGet.CreatePackage.Parsers
                 if (!IsValid) return null;
                 if (_parts.Length < 2) return "";
 
-                return $"https://github.com/{OrganizationName}/{_parts[1]}";
+                return $"https://github.com/{Owner}/{_parts[1]}";
             }
         }
     }

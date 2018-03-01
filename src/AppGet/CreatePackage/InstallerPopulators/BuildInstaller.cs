@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AppGet.CommandLine.Prompts;
 using AppGet.CreatePackage.Parsers;
 using AppGet.Crypto.Hash.Algorithms;
 using AppGet.Extensions;
@@ -14,7 +13,7 @@ namespace AppGet.CreatePackage.InstallerPopulators
 {
     public interface IBuildInstaller
     {
-        Task<Installer> Populate(string url);
+        Task<Installer> Populate(string url, bool prompt);
     }
 
     public class BuildInstaller : IBuildInstaller
@@ -22,21 +21,19 @@ namespace AppGet.CreatePackage.InstallerPopulators
         private readonly IFileTransferService _fileTransferService;
         private readonly IEnumerable<IPopulateInstaller> _populaters;
         private readonly IPathResolver _pathResolver;
-        private readonly IUrlPrompt _urlPrompt;
         private readonly Logger _logger;
         private readonly Sha256Hash _sha256 = new Sha256Hash();
 
-        public BuildInstaller(IFileTransferService fileTransferService, IEnumerable<IPopulateInstaller> populaters, IPathResolver pathResolver, IUrlPrompt urlPrompt, Logger logger)
+        public BuildInstaller(IFileTransferService fileTransferService, IEnumerable<IPopulateInstaller> populaters, IPathResolver pathResolver, Logger logger)
         {
             _fileTransferService = fileTransferService;
             _populaters = populaters;
             _pathResolver = pathResolver;
-            _urlPrompt = urlPrompt;
             _logger = logger;
         }
 
 
-        public async Task<Installer> Populate(string url)
+        public async Task<Installer> Populate(string url, bool prompt)
         {
             var uri = new Uri(url, UriKind.Absolute);
 
@@ -55,7 +52,7 @@ namespace AppGet.CreatePackage.InstallerPopulators
                 }
                 catch (Exception e)
                 {
-                    _logger.Warn(e, "HTTPS switch over failed.");
+                    _logger.Warn(e, "HTTPS upgrade failed.");
                 }
             }
 
@@ -66,7 +63,7 @@ namespace AppGet.CreatePackage.InstallerPopulators
 
             foreach (var populater in _populaters)
             {
-                populater.Populate(installer);
+                populater.Populate(installer, prompt);
             }
 
             return installer;
@@ -77,7 +74,7 @@ namespace AppGet.CreatePackage.InstallerPopulators
             var installer = new Installer();
             var filePath = await _fileTransferService.TransferFile(uri.ToString(), _pathResolver.TempFolder, null);
             var sha256 = _sha256.CalculateHash(filePath);
-            Console.WriteLine($"SHA-256: {sha256}");
+            _logger.Info($"SHA-256: {sha256}");
             if (VersionParser.Parse(uri) != null)
             {
                 installer.Sha256 = sha256;

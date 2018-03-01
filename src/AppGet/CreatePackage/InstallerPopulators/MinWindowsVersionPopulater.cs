@@ -14,9 +14,9 @@ namespace AppGet.CreatePackage.InstallerPopulators
             _prompt = prompt;
         }
 
-        public void Populate(Installer installer)
+        public void Populate(Installer installer, bool interactive)
         {
-            var minWindowsVersion = _prompt.Request("Minimum Windows Version", WindowsVersion.KnownVersions.First());
+            var minWindowsVersion = _prompt.Request("Minimum Windows Version", WindowsVersion.KnownVersions.First(), interactive);
 
             if (minWindowsVersion != new Version(0, 0))
             {

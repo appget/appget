@@ -9,6 +9,7 @@ namespace AppGet.CreatePackage.Parsers
         private static readonly Regex[] ArchRegexes = {
             new Regex("x64", RegexOptions.IgnoreCase),
             new Regex("win64", RegexOptions.IgnoreCase),
+            new Regex("64bit", RegexOptions.IgnoreCase),
             new Regex("\\D64\\b", RegexOptions.IgnoreCase)
         };
 

@@ -111,6 +111,7 @@
     <Compile Include="CreatePackage\InstallerPopulators\IPopulateInstaller.cs" />
     <Compile Include="CreatePackage\InstallerPopulators\MinWindowsVersionPopulater.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\IPopulateManifest.cs" />
+    <Compile Include="CreatePackage\ManifestPopulators\ManifestBuilder.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\PopulateInstallMethod.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\PopulateLicense.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\PopulateVersionTag.cs" />
@@ -129,6 +130,8 @@
     <Compile Include="Crypto\Hash\Algorithms\Sha1Hash.cs" />
     <Compile Include="Crypto\Hash\Algorithms\Md5Hash.cs" />
     <Compile Include="Crypto\Hash\Algorithms\Sha256Hash.cs" />
+    <Compile Include="Github\Repository\GitHubReleaseClient.cs" />
+    <Compile Include="Github\Repository\Repository.cs" />
     <Compile Include="Installers\ExistReason.cs" />
     <Compile Include="Installers\ExitCodeTypes.cs" />
     <Compile Include="Installers\InstallBuilder\InstallBuilderDetector.cs" />
@@ -221,8 +224,8 @@
     <Compile Include="Tools\SigCheck.cs" />
     <Compile Include="Update\AppGetRelease.cs" />
     <Compile Include="Update\AppGetUpdateService.cs" />
-    <Compile Include="Update\GithubRelease.cs" />
-    <Compile Include="Update\GitHubReleaseClient.cs" />
+    <Compile Include="Github\Releases\GithubRelease.cs" />
+    <Compile Include="Github\Releases\GitHubReleaseClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

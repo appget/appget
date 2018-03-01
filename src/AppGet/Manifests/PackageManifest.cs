@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using YamlDotNet.Serialization;
 
 namespace AppGet.Manifests
 {
+    [DebuggerDisplay("{" + nameof(Id) + "} " + "{" + nameof(Version) + "}")]
     public class PackageManifest
     {
         public string Id { get; set; }

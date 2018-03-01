@@ -15,11 +15,23 @@ namespace AppGet.Tests.CreatePackage.Parsers
         }
 
         [TestCase("https://github.com/AppGet/appget/releases", ExpectedResult = "AppGet")]
+        [TestCase("https://github.com/AppGet/", ExpectedResult = "AppGet")]
         [TestCase("https://github.com/", ExpectedResult = "")]
         [TestCase("http://google.com", ExpectedResult = null)]
-        public string org_name(string url)
+        public string owner(string url)
         {
-            return new GithubUrl(url).OrganizationName;
+            return new GithubUrl(url).Owner;
+        }
+
+
+        [TestCase("https://github.com/AppGet/appget/releases", ExpectedResult = "appget")]
+        [TestCase("https://github.com/AppGet/appget.packages/releases", ExpectedResult = "appget.packages")]
+        [TestCase("https://github.com/AppGet/", ExpectedResult = null)]
+        [TestCase("https://github.com/", ExpectedResult = "")]
+        [TestCase("http://google.com", ExpectedResult = null)]
+        public string repo(string url)
+        {
+            return new GithubUrl(url).Repository;
         }
 
 

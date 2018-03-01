@@ -9,15 +9,16 @@ namespace AppGet.Infrastructure.Logging
     {
         private static LoggingRule _consoleRule;
 
-        public static void ConfigureLogger()
+        public static void ConfigureLogger(bool sentry = true)
         {
             LogManager.Configuration = new LoggingConfiguration();
 
             BuildConsoleTarget();
 
-
-            BuildSentryTarget();
-
+            if (sentry)
+            {
+                BuildSentryTarget();
+            }
 
 
             LogManager.ReconfigExistingLoggers();
