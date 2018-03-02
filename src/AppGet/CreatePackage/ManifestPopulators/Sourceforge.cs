@@ -19,7 +19,7 @@ namespace AppGet.CreatePackage.ManifestPopulators
 
             manifest.Repo.Add($"https://sourceforge.net/projects/{titleSegment}", Confidence.VeryHigh, this);
 
-            manifest.Name.Add(titleSegment.ToTitleCase(), Confidence.Low, this);
+            manifest.Name.Add(titleSegment.ToTitleCase().Trim('/'), Confidence.Low, this);
         }
     }
 }
