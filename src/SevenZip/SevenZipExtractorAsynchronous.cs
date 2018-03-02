@@ -14,6 +14,8 @@
     along with SevenZipSharp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System.Windows.Threading;
+
 namespace SevenZip
 {
     using System;

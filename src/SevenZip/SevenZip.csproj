@@ -40,7 +40,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;UNMANAGED, COMPRESS, LZMA_STREAM, DOTNET20</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;UNMANAGED, LZMA_STREAM</DefineConstants>
     <DocumentationFile>bin\Debug\SevenZipSharp.xml</DocumentationFile>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>

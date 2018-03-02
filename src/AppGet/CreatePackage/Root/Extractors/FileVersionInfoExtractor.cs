@@ -33,7 +33,7 @@ namespace AppGet.CreatePackage.Root.Extractors
             var fileVersion = GetValues(fileVersionInfo.ProductVersion, fileVersionInfo.FileVersion)
                 .Select(c => c.Replace(",", "."))
                 .Select(VersionParser.Parse)
-                .OrderByDescending(c => c?.Length)
+                .OrderByDescending(c => c?.Split('.').Length)
                 .FirstOrDefault();
 
             manifest.Version.Add(fileVersion, Confidence.Reasonable, this);
