@@ -53,7 +53,7 @@ namespace AppGet.Commands.CreateManifest
             _packageManifestService.PrintManifest(manifest.Build());
 
 
-            _packageManifestService.WriteManifest(manifest.Build(), "C:\\git\\AppGet.Packages\\manifests");
+            _packageManifestService.WriteManifest(manifest, "C:\\git\\AppGet.Packages\\manifests");
         }
     }
 }

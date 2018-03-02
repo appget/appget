@@ -22,7 +22,7 @@ namespace AppGet.CreatePackage.Root.Extractors
             var githubUrl = new GithubUrl(manifestBuilder.Uri.ToString());
             if (!githubUrl.IsValid) return;
 
-            manifestBuilder.Repo.Add(githubUrl.RepositoryUrl, Confidence.Authoritive, this);
+            manifestBuilder.Repo.Add(githubUrl.RepositoryUrl, Confidence.Authoritative, this);
             manifestBuilder.Name.Add(githubUrl.Repository, Confidence.LastEffort, this);
 
             try
@@ -30,13 +30,13 @@ namespace AppGet.CreatePackage.Root.Extractors
                 var repo = _repositoryClient.Get(githubUrl.Owner, githubUrl.Repository).Result;
                 if (Uri.IsWellFormedUriString(repo.homepage, UriKind.Absolute))
                 {
-                    manifestBuilder.Home.Add(repo.homepage, Confidence.Authoritive, this);
+                    manifestBuilder.Home.Add(repo.homepage, Confidence.Authoritative, this);
                 }
 
                 if (repo.license != null)
                 {
-                    manifestBuilder.Name.Add(repo.name, Confidence.Reasonable, this);
-                    manifestBuilder.Licence.Add(repo.license.name, Confidence.Authoritive, this);
+                    manifestBuilder.Name.Add(repo.name, Confidence.Plausible, this);
+                    manifestBuilder.Licence.Add(repo.license.name, Confidence.Authoritative, this);
                 }
             }
             catch (Exception e)

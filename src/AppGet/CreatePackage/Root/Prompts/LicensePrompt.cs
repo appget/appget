@@ -13,12 +13,12 @@ namespace AppGet.CreatePackage.Root.Prompts
 
         public bool ShouldPrompt(PackageManifestBuilder manifestBuilder)
         {
-            return manifestBuilder.Version.HasConfidence(Confidence.Reasonable);
+            return manifestBuilder.Version.HasConfidence(Confidence.Plausible);
         }
 
         public void Invoke(PackageManifestBuilder manifest)
         {
-            manifest.Licence.Add(_prompt.Request("License", manifest.Licence.Top), Confidence.Authoritive, this);
+            manifest.Licence.Add(_prompt.Request("License", manifest.Licence.Value), Confidence.Authoritative, this);
         }
     }
 }

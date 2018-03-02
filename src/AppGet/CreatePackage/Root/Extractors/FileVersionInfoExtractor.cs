@@ -36,7 +36,7 @@ namespace AppGet.CreatePackage.Root.Extractors
                 .OrderByDescending(c => c?.Split('.').Length)
                 .FirstOrDefault();
 
-            manifest.Version.Add(fileVersion, Confidence.Reasonable, this);
+            manifest.Version.Add(fileVersion, Confidence.Plausible, this);
         }
 
 
@@ -71,7 +71,7 @@ namespace AppGet.CreatePackage.Root.Extractors
             }
             else
             {
-                manifest.Name.Add(name, Confidence.Reasonable, this);
+                manifest.Name.Add(name, Confidence.Plausible, this);
             }
         }
     }

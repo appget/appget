@@ -4,7 +4,7 @@ using AppGet.CreatePackage.Root.Prompts;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace AppGet.Tests.CreatePackage.ManifestPopulators
+namespace AppGet.Tests.CreatePackage.Root.Prompts
 {
     [TestFixture]
     [Explicit]
@@ -27,7 +27,7 @@ namespace AppGet.Tests.CreatePackage.ManifestPopulators
 
             Subject.Invoke(man);
 
-            man.Home.Top.Should().Be("https://microsoft.com");
+            man.Home.Value.Should().Be("https://microsoft.com");
         }
 
         [TestCase("https://download.microsoft.com/", ExpectedResult = "https://microsoft.com")]
@@ -45,7 +45,7 @@ namespace AppGet.Tests.CreatePackage.ManifestPopulators
 
             Subject.Invoke(manifestBuilder);
 
-            return manifestBuilder.Home.Top;
+            return manifestBuilder.Home.Value;
         }
     }
 }

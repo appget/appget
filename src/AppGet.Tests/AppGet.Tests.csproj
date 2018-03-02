@@ -94,7 +94,7 @@
     <Compile Include="Compression\CompressionServiceFixture.cs" />
     <Compile Include="CreatePackage\Parsers\ArchitectureParserFixture.cs" />
     <Compile Include="CreatePackage\Parsers\VersionParserFixture.cs" />
-    <Compile Include="CreatePackage\ManifestPopulators\HomePagePromptFixture.cs" />
+    <Compile Include="CreatePackage\Root\Prompts\HomePagePromptFixture.cs" />
     <Compile Include="CreatePackage\Parsers\GithubUrlFixture.cs" />
     <Compile Include="Crypto\Certificates\FileSignatureServiceFixture.cs" />
     <Compile Include="Crypto\Hash\Algorithms\Md5HashFixture.cs" />
@@ -129,7 +129,7 @@
     <Compile Include="TestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\SigCheckFixture.cs" />
-    <Compile Include="Update\GitHubReleaseClientFixture.cs" />
+    <Compile Include="Github\Releases\GitHubReleaseClientFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -148,7 +148,9 @@
       <Name>SevenZip</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Update\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

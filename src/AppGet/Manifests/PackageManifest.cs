@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using YamlDotNet.Serialization;
 
 namespace AppGet.Manifests
 {
@@ -23,9 +22,6 @@ namespace AppGet.Manifests
         public List<Installer> Installers { get; set; }
 
         public InstallArgs Args { get; set; }
-
-        [YamlIgnore]
-        public string VersionTag { get; set; }
     }
 
     public class InstallArgs
@@ -43,9 +39,6 @@ namespace AppGet.Manifests
         public string Sha1 { get; set; }
         public string Sha256 { get; set; }
         public string Md5 { get; set; }
-
-        [YamlIgnore] 
-        public string FilePath { get; set; }
 
         public ArchitectureTypes Architecture { get; set; }
 

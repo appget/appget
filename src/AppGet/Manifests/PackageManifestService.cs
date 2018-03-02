@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using AppGet.CreatePackage;
 using AppGet.FileSystem;
 using AppGet.FileTransfer;
 using AppGet.Serialization;
@@ -11,7 +12,7 @@ namespace AppGet.Manifests
     public interface IPackageManifestService
     {
         Task<PackageManifest> LoadManifest(string source);
-        string WriteManifest(PackageManifest manifest, string manifestRoot);
+        string WriteManifest(PackageManifestBuilder manifestBuilder, string manifestRoot);
         void PrintManifest(PackageManifest manifest);
     }
 
@@ -36,9 +37,10 @@ namespace AppGet.Manifests
             return Yaml.Deserialize<PackageManifest>(text);
         }
 
-        public string WriteManifest(PackageManifest manifest, string manifestRoot)
+        public string WriteManifest(PackageManifestBuilder manifestBuilder, string manifestRoot)
         {
-            var manifestName = $"{manifest.Id}.{manifest.VersionTag}".Trim('.');
+            var manifest = manifestBuilder.Build();
+            var manifestName = $"{manifest.Id}.{manifestBuilder.VersionTag}".Trim('.');
             var fileName = $"{manifestName}.yaml";
             var applicationManifestDir = Path.Combine(manifestRoot, manifest.Id);
             var manifestPath = Path.Combine(applicationManifestDir, fileName);

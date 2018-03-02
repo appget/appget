@@ -16,7 +16,7 @@ namespace AppGet.CreatePackage.Installer.Prompts
 
         public bool ShouldPrompt(InstallerBuilder installerBuilder)
         {
-            return installerBuilder.MinWindowsVersion.HasConfidence(Confidence.Authoritive);
+            return installerBuilder.MinWindowsVersion.HasConfidence(Confidence.Authoritative);
         }
 
         public void Invoke(InstallerBuilder installerBuilder)
@@ -25,7 +25,7 @@ namespace AppGet.CreatePackage.Installer.Prompts
 
             if (minWindowsVersion != new Version(0, 0))
             {
-                installerBuilder.MinWindowsVersion.Add(minWindowsVersion, Confidence.Authoritive, this);
+                installerBuilder.MinWindowsVersion.Add(minWindowsVersion, Confidence.Authoritative, this);
             }
         }
     }

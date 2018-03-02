@@ -6,40 +6,43 @@ using AppGet.Manifests;
 
 namespace AppGet.CreatePackage
 {
-
     public enum Confidence
     {
         None,
         LastEffort,
-        Reasonable,
-        Authoritive
+        Plausible,
+        Authoritative
     }
 
+    [DebuggerDisplay("{Value} [{Source}:{Confidence}]")]
     public class ManifestAttributeCandidate<T>
     {
         public T Value { get; }
-        public Confidence Score { get; }
+        public Confidence Confidence { get; }
         public string Source { get; }
 
-        public ManifestAttributeCandidate(T value, Confidence score, object source)
+        public ManifestAttributeCandidate(T value, Confidence confidence, object source)
         {
+            if (value is string)
+            {
+                var str = value.ToString().Trim();
+
+                if (string.IsNullOrWhiteSpace(str))
+                {
+                    confidence = Confidence.None;
+                    str = null;
+                }
+
+                value = (dynamic)str;
+            }
+
             Source = source.GetType().Name;
             Value = value;
-            Score = score;
+            Confidence = confidence;
         }
     }
 
-    public class ManifestAttributeStringCandidate : ManifestAttributeCandidate<string>
-    {
-        public ManifestAttributeStringCandidate(string value, Confidence score, object source)
-            : base(
-                string.IsNullOrWhiteSpace(value) ? null : value.Trim(),
-                string.IsNullOrWhiteSpace(value) ? Confidence.None : score,
-                source)
-        {
-        }
-    }
-
+    [DebuggerDisplay("{Value} [{Values.Count}]")]
     public class ManifestAttribute<T>
     {
         public List<ManifestAttributeCandidate<T>> Values { get; }
@@ -49,66 +52,48 @@ namespace AppGet.CreatePackage
             Values = new List<ManifestAttributeCandidate<T>>();
         }
 
-        public virtual void Add(T value, Confidence scroe, object source)
+        public T Add(T value, Confidence confidence, object source)
         {
-            Values.Add(new ManifestAttributeCandidate<T>(value, scroe, source));
+            var attr = new ManifestAttributeCandidate<T>(value, confidence, source);
+            Values.Add(attr);
+            return attr.Value;
         }
 
-        public virtual T Top
+        private ManifestAttributeCandidate<T> GetTop()
+        {
+            return Values
+                 .OrderByDescending(c => c.Confidence)
+                 .FirstOrDefault(c => c.Confidence > Confidence.None);
+        }
+
+        public T Value
         {
             get
             {
-                if (!Values.Any() || Values.All(c => c.Score == Confidence.None)) return default(T);
-                return Values.OrderByDescending(c => c.Score).FirstOrDefault().Value;
+                var topAttr = GetTop();
+                return topAttr == null ? default(T) : topAttr.Value;
             }
         }
 
-        public bool HasValue => Top != null;
-
         public bool HasConfidence(Confidence confidence)
         {
-            return Values.OrderByDescending(c => c.Score).FirstOrDefault()?.Score >= confidence;
+            return GetTop()?.Confidence >= confidence;
         }
     }
 
-    public class ManifestStringAttribute
-    {
-        public List<ManifestAttributeStringCandidate> Values { get; }
 
-        public ManifestStringAttribute()
-        {
-            Values = new List<ManifestAttributeStringCandidate>();
-        }
-
-
-        public string Add(string value, Confidence scroe, object source)
-        {
-            var candidate = new ManifestAttributeStringCandidate(value, scroe, source);
-            Values.Add(candidate);
-            return candidate.Value;
-        }
-
-        public string Top => Values.OrderByDescending(c => c.Score).FirstOrDefault()?.Value;
-        public bool HasValue => Top != null;
-
-        public bool HasConfidence(Confidence confidence)
-        {
-            return Values.OrderByDescending(c => c.Score).FirstOrDefault()?.Score >= confidence;
-        }
-    }
-
-    [DebuggerDisplay("{" + nameof(Id) + "} " + "{" + nameof(Version) + "}")]
+    [DebuggerDisplay("{Id} {Version} [{Name}]")]
     public class PackageManifestBuilder
     {
         public string VersionTag { get; set; }
 
-        public ManifestStringAttribute Id { get; }
-        public ManifestStringAttribute Name { get; }
-        public ManifestStringAttribute Version { get; }
+        public ManifestAttribute<string> Id { get; }
+        public ManifestAttribute<string> Name { get; }
+        public ManifestAttribute<string> Version { get; }
 
-        public ManifestStringAttribute Home { get; }
-        public ManifestStringAttribute Repo { get; }
-        public ManifestStringAttribute Licence { get; }
+        public ManifestAttribute<string> Home { get; }
+        public ManifestAttribute<string> Repo { get; }
+        public ManifestAttribute<string> Licence { get; }
 
 
         public ManifestAttribute<InstallMethodTypes> InstallMethod { get; }
@@ -120,12 +105,12 @@ namespace AppGet.CreatePackage
 
         public PackageManifestBuilder()
         {
-            Id = new ManifestStringAttribute();
-            Name = new ManifestStringAttribute();
-            Version = new ManifestStringAttribute();
-            Home = new ManifestStringAttribute();
-            Repo = new ManifestStringAttribute();
-            Licence = new ManifestStringAttribute();
+            Id = new ManifestAttribute<string>();
+            Name = new ManifestAttribute<string>();
+            Version = new ManifestAttribute<string>();
+            Home = new ManifestAttribute<string>();
+            Repo = new ManifestAttribute<string>();
+            Licence = new ManifestAttribute<string>();
             InstallMethod = new ManifestAttribute<InstallMethodTypes>();
             Installers = new List<InstallerBuilder>();
         }
@@ -133,11 +118,23 @@ namespace AppGet.CreatePackage
 
         public PackageManifest Build()
         {
-            return null;
+            return new PackageManifest
+            {
+                Id = Id.Value,
+                Name = Name.Value,
+                Version = Version.Value,
+
+                Home = Home.Value,
+                Repo = Repo.Value,
+                Licence = Licence.Value,
+
+                InstallMethod = InstallMethod.Value,
+                Installers = Installers.Select(c => c.Build()).ToList(),
+            };
         }
     }
 
-
+    [DebuggerDisplay("{Architecture.Value} {Location} {MinWindowsVersion.Value}]")]
     public class InstallerBuilder
     {
         public string Location { get; set; }
@@ -151,6 +148,18 @@ namespace AppGet.CreatePackage
         {
             Architecture = new ManifestAttribute<ArchitectureTypes>();
             MinWindowsVersion = new ManifestAttribute<Version>();
+        }
+
+
+        public Manifests.Installer Build()
+        {
+            return new Manifests.Installer
+            {
+                Location = Location,
+                Sha256 = Sha256,
+                Architecture = Architecture.Value,
+                MinWindowsVersion = MinWindowsVersion.Value
+            };
         }
 
     }

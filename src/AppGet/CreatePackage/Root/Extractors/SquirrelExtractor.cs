@@ -23,7 +23,7 @@ namespace AppGet.CreatePackage.Root.Extractors
 
         public void Invoke(PackageManifestBuilder manifest)
         {
-            if (manifest.InstallMethod.Top != InstallMethodTypes.Squirrel) return;
+            if (manifest.InstallMethod.Value != InstallMethodTypes.Squirrel) return;
 
             var arch = _compressionService.TryOpen(manifest.Installers.First().FilePath);
 
@@ -32,9 +32,9 @@ namespace AppGet.CreatePackage.Root.Extractors
             try
             {
                 var nugetSpec = _squirrelReader.GetNugetSpec(arch);
-                manifest.Name.Add(nugetSpec.Metadata.Title, Confidence.Authoritive, this);
-                manifest.Version.Add(nugetSpec.Metadata.Version, Confidence.Authoritive, this);
-                manifest.Id.Add(nugetSpec.Metadata.Id.ToLowerInvariant(), Confidence.Reasonable, this);
+                manifest.Name.Add(nugetSpec.Metadata.Title, Confidence.Authoritative, this);
+                manifest.Version.Add(nugetSpec.Metadata.Version, Confidence.Authoritative, this);
+                manifest.Id.Add(nugetSpec.Metadata.Id.ToLowerInvariant(), Confidence.Plausible, this);
             }
             catch (Exception e)
             {

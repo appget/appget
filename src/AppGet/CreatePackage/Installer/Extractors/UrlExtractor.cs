@@ -7,7 +7,7 @@ namespace AppGet.CreatePackage.Installer.Extractors
     {
         public void Extract(InstallerBuilder installer)
         {
-            installer.Architecture.Add(ArchitectureParser.Parse(new Uri(installer.Location)), Confidence.Reasonable, this);
+            installer.Architecture.Add(ArchitectureParser.Parse(new Uri(installer.Location)), Confidence.Plausible, this);
         }
     }
 }

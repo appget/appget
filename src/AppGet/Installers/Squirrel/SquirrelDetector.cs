@@ -25,7 +25,7 @@ namespace AppGet.Installers.Squirrel
 
             if (archive != null)
             {
-                return _squirrelReader.IsSquirrel(archive) ? Confidence.Authoritive : Confidence.None;
+                return _squirrelReader.IsSquirrel(archive) ? Confidence.Authoritative : Confidence.None;
             }
 
             return Confidence.None;

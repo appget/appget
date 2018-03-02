@@ -1,4 +1,8 @@
 ﻿using System;
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+// ReSharper disable IdentifierTypo
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedMember.Global
 
 namespace AppGet.Github.Repository
 {

@@ -13,12 +13,12 @@ namespace AppGet.CreatePackage.Root.Prompts
 
         public bool ShouldPrompt(PackageManifestBuilder manifestBuilder)
         {
-            return manifestBuilder.Version.HasConfidence(Confidence.Authoritive);
+            return manifestBuilder.Version.HasConfidence(Confidence.Authoritative);
         }
 
         public void Invoke(PackageManifestBuilder manifest)
         {
-            manifest.Version.Add(_prompt.Request("Application Version", manifest.Version.Top), Confidence.Reasonable, this);
+            manifest.Version.Add(_prompt.Request("Application Version", manifest.Version.Value), Confidence.Plausible, this);
         }
     }
 }

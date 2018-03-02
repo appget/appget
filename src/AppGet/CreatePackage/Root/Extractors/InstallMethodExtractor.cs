@@ -40,7 +40,7 @@ namespace AppGet.CreatePackage.Root.Extractors
                         manifest.InstallMethod.Add(results.Key.InstallMethod, results.Value, results.Key);
                     }
 
-                    _logger.Info("Installer was detected as " + manifest.InstallMethod.Top);
+                    _logger.Info("Installer was detected as " + manifest.InstallMethod.Value);
                 }
             }
         }

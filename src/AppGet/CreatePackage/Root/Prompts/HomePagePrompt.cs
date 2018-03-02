@@ -14,13 +14,13 @@ namespace AppGet.CreatePackage.Root.Prompts
 
         public bool ShouldPrompt(PackageManifestBuilder manifestBuilder)
         {
-            return manifestBuilder.Version.HasConfidence(Confidence.Authoritive);
+            return manifestBuilder.Version.HasConfidence(Confidence.Authoritative);
         }
 
         public void Invoke(PackageManifestBuilder manifestBuilder)
         {
-            var result = _prompt.Request("Product Homepage", manifestBuilder.Home.Top);
-            manifestBuilder.Home.Add(result, Confidence.Authoritive, this);
+            var result = _prompt.Request("Product Homepage", manifestBuilder.Home.Value);
+            manifestBuilder.Home.Add(result, Confidence.Authoritative, this);
         }
     }
 }

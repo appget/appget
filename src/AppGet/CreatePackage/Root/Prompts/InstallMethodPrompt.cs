@@ -7,13 +7,13 @@ namespace AppGet.CreatePackage.Root.Prompts
     {
         public bool ShouldPrompt(PackageManifestBuilder manifestBuilder)
         {
-            return manifestBuilder.Version.HasConfidence(Confidence.Reasonable);
+            return manifestBuilder.Version.HasConfidence(Confidence.Plausible);
         }
 
         public void Invoke(PackageManifestBuilder manifest)
         {
             var methodPrompt = new EnumPrompt<InstallMethodTypes>();
-            manifest.InstallMethod.Add(methodPrompt.Request("Installer", InstallMethodTypes.Custom), Confidence.Reasonable, this);
+            manifest.InstallMethod.Add(methodPrompt.Request("Installer", InstallMethodTypes.Custom), Confidence.Plausible, this);
         }
     }
 }

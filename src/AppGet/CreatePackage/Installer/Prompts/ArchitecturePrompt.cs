@@ -7,14 +7,14 @@ namespace AppGet.CreatePackage.Installer.Prompts
     {
         public bool ShouldPrompt(InstallerBuilder installerBuilder)
         {
-            return installerBuilder.Architecture.HasConfidence(Confidence.Authoritive);
+            return installerBuilder.Architecture.HasConfidence(Confidence.Authoritative);
         }
 
         public void Invoke(InstallerBuilder installer)
         {
             var prompt = new EnumPrompt<ArchitectureTypes>();
-            var value = prompt.Request("Architecture", installer.Architecture.Top);
-            installer.Architecture.Add(value, Confidence.Authoritive, this);
+            var value = prompt.Request("Architecture", installer.Architecture.Value);
+            installer.Architecture.Add(value, Confidence.Authoritative, this);
         }
     }
 }

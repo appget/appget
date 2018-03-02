@@ -14,7 +14,7 @@ namespace AppGet.CreatePackage.Root.Extractors
 
             var titleSegment = uri.Segments[2];
 
-            manifest.Repo.Add($"https://sourceforge.net/projects/{titleSegment}", Confidence.Authoritive, this);
+            manifest.Repo.Add($"https://sourceforge.net/projects/{titleSegment}", Confidence.Authoritative, this);
 
             manifest.Name.Add(titleSegment.ToTitleCase().Trim('/'), Confidence.LastEffort, this);
         }

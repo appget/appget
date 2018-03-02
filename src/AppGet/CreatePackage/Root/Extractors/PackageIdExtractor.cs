@@ -10,17 +10,17 @@ namespace AppGet.CreatePackage.Root.Extractors
         public void Invoke(PackageManifestBuilder manifest)
         {
             var fileName = Path.GetFileNameWithoutExtension(manifest.FilePath);
-            var idInName = Regex.Match(Regex.Escape(fileName), manifest.Id.Top, RegexOptions.IgnoreCase);
+            var idInName = Regex.Match(Regex.Escape(fileName), manifest.Id.Value, RegexOptions.IgnoreCase);
 
             var nameInFileName = idInName.Captures.Cast<Capture>()
                 .FirstOrDefault(c => c.Value != c.Value.ToLower());
 
             if (!string.IsNullOrWhiteSpace(nameInFileName?.Value))
             {
-                manifest.Name.Add(nameInFileName.Value, Confidence.Reasonable, this);
+                manifest.Name.Add(nameInFileName.Value, Confidence.Plausible, this);
             }
 
-            var nameFromId = manifest.Id.Top.Replace("-", " ").ToTitleCase();
+            var nameFromId = manifest.Id.Value.Replace("-", " ").ToTitleCase();
 
             manifest.Name.Add(nameFromId, Confidence.LastEffort, this);
         }

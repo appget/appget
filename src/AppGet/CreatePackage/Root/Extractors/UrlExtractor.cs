@@ -8,7 +8,7 @@ namespace AppGet.CreatePackage.Root.Extractors
         {
             var uri = manifestBuilder.Uri;
             manifestBuilder.Home.Add(HomepageParser.Parse(uri), Confidence.LastEffort, this);
-            manifestBuilder.Version.Add(VersionParser.Parse(uri), Confidence.Reasonable, this);
+            manifestBuilder.Version.Add(VersionParser.Parse(uri), Confidence.Plausible, this);
         }
     }
 }
