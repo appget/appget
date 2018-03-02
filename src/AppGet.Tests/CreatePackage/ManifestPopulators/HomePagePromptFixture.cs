@@ -7,6 +7,7 @@ using NUnit.Framework;
 namespace AppGet.Tests.CreatePackage.ManifestPopulators
 {
     [TestFixture]
+    [Explicit]
     public class HomePagePromptFixture : TestBase<HomePagePrompt>
     {
         [SetUp]
