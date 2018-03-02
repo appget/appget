@@ -1,9 +1,8 @@
-using AppGet.Manifests;
 
 namespace AppGet.CreatePackage.InstallerPopulators
 {
     public interface IPopulateInstaller
     {
-        void Populate(Installer installer, bool interactive);
+        void Populate(InstallerBuilder installerBuilder, bool interactive);
     }
 }

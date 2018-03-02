@@ -1,10 +1,8 @@
 ﻿using AppGet.CreatePackage.Parsers;
 using AppGet.Github.Repository;
-using AppGet.Manifests;
 using NLog;
 using System;
 using System.Diagnostics;
-using System.Linq;
 
 namespace AppGet.CreatePackage.ManifestPopulators
 {
@@ -20,32 +18,29 @@ namespace AppGet.CreatePackage.ManifestPopulators
             _logger = logger;
         }
 
-        public void Populate(PackageManifest manifest, FileVersionInfo fileVersionInfo, bool interactive)
+        public void Populate(PackageManifestBuilder manifestBuilder, FileVersionInfo fileVersionInfo, bool interactive)
         {
-            var url = manifest.Installers.First().Location;
-
-            var githubUrl = new GithubUrl(url);
+            var githubUrl = new GithubUrl(manifestBuilder.Url.ToString());
             if (!githubUrl.IsValid) return;
 
-            manifest.Repo = githubUrl.RepositoryUrl;
-            manifest.Name = githubUrl.Repository;
+            manifestBuilder.Repo.Add(githubUrl.RepositoryUrl, Confidence.VeryHigh, this);
+            manifestBuilder.Name.Add(githubUrl.Repository, Confidence.Low, this);
 
             try
             {
                 var repo = _repositoryClient.Get(githubUrl.Owner, githubUrl.Repository).Result;
                 if (Uri.IsWellFormedUriString(repo.homepage, UriKind.Absolute))
                 {
-                    manifest.Home = repo.homepage.Trim();
+                    manifestBuilder.Home.Add(repo.homepage, Confidence.VeryHigh, this);
                 }
 
-                manifest.Name = repo.name;
-                manifest.Licence = repo.license.name;
+                manifestBuilder.Name.Add(repo.name, Confidence.Reasonable, this);
+                manifestBuilder.Licence.Add(repo.license.name, Confidence.VeryHigh, this);
             }
             catch (Exception e)
             {
                 _logger.Error(e, "Couldn't get github repository information.");
             }
-
         }
     }
 }

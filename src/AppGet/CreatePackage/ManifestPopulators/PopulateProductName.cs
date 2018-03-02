@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using AppGet.CommandLine.Prompts;
 using AppGet.CreatePackage.Parsers;
-using AppGet.Manifests;
+using AppGet.Extensions;
 
 namespace AppGet.CreatePackage.ManifestPopulators
 {
@@ -15,53 +15,49 @@ namespace AppGet.CreatePackage.ManifestPopulators
 
         private static readonly Regex NameCleanUp = new Regex("\\(.+\\)|_|\\.|setup|installer|", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static readonly Regex SpaceCleanUp = new Regex("\\s+|\\s\\W\\s", RegexOptions.Compiled);
-        private static readonly TextInfo TextInfo = new CultureInfo("en-US", false).TextInfo;
 
         public PopulateProductName(TextPrompt prompt)
         {
             _prompt = prompt;
         }
 
-
-
-        public void Populate(PackageManifest manifest, FileVersionInfo fileVersionInfo, bool interactive)
+        public void Populate(PackageManifestBuilder manifest, FileVersionInfo fileVersionInfo, bool interactive)
         {
-            string defaultValue = null;
-
             if (fileVersionInfo != null)
             {
-                defaultValue = new[] { fileVersionInfo.ProductName, fileVersionInfo.InternalName, fileVersionInfo.CompanyName }
+                var fileVersionName = new[] { fileVersionInfo.ProductName, fileVersionInfo.InternalName, fileVersionInfo.CompanyName }
                     .FirstOrDefault(c => !string.IsNullOrWhiteSpace(c))?.Trim();
 
-                if (defaultValue != null)
+                if (fileVersionName != null)
                 {
-                    defaultValue = NameCleanUp.Replace(defaultValue, "");
+                    fileVersionName = NameCleanUp.Replace(fileVersionName, "");
 
-                    var version = VersionParser.Parse(defaultValue);
+                    var version = VersionParser.Parse(fileVersionName);
 
                     if (version != null)
                     {
-                        defaultValue = defaultValue.Replace(version, "");
+                        fileVersionName = fileVersionName.Replace(version, "");
                     }
+                }
+
+                if (fileVersionName != null)
+                {
+                    SpaceCleanUp.Replace(fileVersionName, " ");
+                    manifest.Name.Add(fileVersionName, Confidence.VeryHigh, this);
                 }
             }
 
+            var filePath = manifest.Installers.First().FilePath;
+            var fileName = Path.GetFileNameWithoutExtension(filePath);
+            var idInName = Regex.Match(fileName, manifest.Id.Top, RegexOptions.IgnoreCase);
 
-            if (string.IsNullOrWhiteSpace(defaultValue))
-            {
-                var filePath = manifest.Installers.First().FilePath;
-                var fileName = Path.GetFileNameWithoutExtension(filePath);
-                var idInName = Regex.Match(fileName, manifest.Id, RegexOptions.IgnoreCase);
+            var nameInFileName = idInName.Captures.Cast<Capture>().FirstOrDefault(c => c.Value != c.Value.ToLower());
+            var nameFromId = nameInFileName?.Value ?? manifest.Id.Top.Replace("-", " ").ToTitleCase();
 
-                var result = idInName.Captures.Cast<Capture>().FirstOrDefault(c => c.Value != c.Value.ToLower());
-                defaultValue = result?.Value ?? TextInfo.ToTitleCase(manifest.Name.Replace("-", " "));
-            }
-            else
-            {
-                defaultValue = SpaceCleanUp.Replace(defaultValue, " ");
-            }
+            manifest.Name.Add(nameFromId, Confidence.Reasonable, this);
 
-            manifest.Name = _prompt.Request("Product Name", defaultValue.Trim(), interactive);
+            if (!interactive || manifest.Name.HasConfidence(Confidence.VeryHigh)) return;
+            manifest.Name.Add(_prompt.Request("Product Name", manifest.Name.Top), Confidence.VeryHigh, this);
         }
     }
 }

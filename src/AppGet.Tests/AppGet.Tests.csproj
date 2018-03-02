@@ -14,6 +14,8 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -112,6 +114,7 @@
     <Compile Include="Installers\Msi\MsiDetectorFixture.cs" />
     <Compile Include="Installers\Nsis\NsisDetectorFixture.cs" />
     <Compile Include="Installers\Squirrel\SquirrelDetectorFixture.cs" />
+    <Compile Include="Installers\Squirrel\SquirrelReaderFixture.cs" />
     <Compile Include="Manifests\PackageManifestFixture.cs" />
     <Compile Include="InstalledPackages\WindowsInstallerInventoryManagerFixture.cs" />
     <Compile Include="Options\OptionsParserFixture.cs" />

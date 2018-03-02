@@ -79,13 +79,14 @@ namespace AppGet.Infrastructure.Composition
             {
                 typeof(SourceforgePopulater),
                 typeof(GithubPopulater),
+                typeof(PopulateVersion),
+                typeof(SquirrelPopulater),
+                typeof(PopulateInstallMethod),
                 typeof(PopulateProductName),
                 typeof(PopulatePackageId),
-                typeof(PopulateVersion),
                 typeof(PopulateVersionTag),
                 typeof(PopulateHomePage),
-                typeof(PopulateLicense),
-                typeof(PopulateInstallMethod)
+                typeof(PopulateLicense)
             });
 
 

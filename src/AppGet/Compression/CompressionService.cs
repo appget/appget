@@ -51,7 +51,7 @@ namespace AppGet.Compression
 
         public SevenZipExtractor TryOpen(string path)
         {
-            foreach (var format in Enum.GetValues(typeof(InArchiveFormat)).Cast<InArchiveFormat>())
+            foreach (var format in Enum.GetValues(typeof(InArchiveFormat)).Cast<InArchiveFormat>().Where(c=>c != InArchiveFormat.Msi))
             {
                 try
                 {

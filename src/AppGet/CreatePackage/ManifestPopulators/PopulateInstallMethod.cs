@@ -25,31 +25,33 @@ namespace AppGet.CreatePackage.ManifestPopulators
             _logger = logger;
         }
 
-        public void Populate(PackageManifest manifest, FileVersionInfo fileVersionInfo, bool interactive)
+        public void Populate(PackageManifestBuilder manifest, FileVersionInfo fileVersionInfo, bool interactive)
         {
             _logger.Info("Detecting application installer");
-            var installer = manifest.Installers.First();
 
-            var archive = _compressionService.TryOpen(installer.FilePath);
-            var exeManifest = _sigCheck.GetManifest(installer.FilePath);
-
-            if (archive != null || !string.IsNullOrWhiteSpace(exeManifest))
+            using (var archive = _compressionService.TryOpen(manifest.FilePath))
             {
-                var scores = _installMethodDetectors.ToDictionary(c => c.InstallMethod,
-                    c => c.GetConfidence(installer.FilePath, archive, exeManifest));
+                var exeManifest = _sigCheck.GetManifest(manifest.FilePath);
 
-                var positives = scores.Values.Count(c => c != 0);
-
-                if (positives == 1)
+                if (archive != null || !string.IsNullOrWhiteSpace(exeManifest))
                 {
-                    manifest.InstallMethod = scores.Single(c => c.Value == 1).Key;
-                    _logger.Info("Installer was detected as " + manifest.InstallMethod);
-                    return;
+                    var scores = _installMethodDetectors.ToDictionary(c => c,
+                        c => c.GetConfidence(manifest.FilePath, archive, exeManifest));
+
+                    foreach (var results in scores)
+                    {
+                        manifest.InstallMethod.Add(results.Key.InstallMethod, results.Value, results.Key);
+                    }
+
+                    _logger.Info("Installer was detected as " + manifest.InstallMethod.Top);
                 }
             }
 
-            var methodPrompt = new EnumPrompt<InstallMethodTypes>();
-            manifest.InstallMethod = methodPrompt.Request("Installer", InstallMethodTypes.Custom, interactive);
+            if (interactive && manifest.InstallMethod.HasConfidence(Confidence.Reasonable))
+            {
+                var methodPrompt = new EnumPrompt<InstallMethodTypes>();
+                manifest.InstallMethod.Add(methodPrompt.Request("Installer", InstallMethodTypes.Custom), Confidence.Reasonable, this);
+            }
         }
     }
 }

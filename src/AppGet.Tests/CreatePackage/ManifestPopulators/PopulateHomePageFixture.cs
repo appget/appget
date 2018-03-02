@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using AppGet.CommandLine.Prompts;
+﻿using AppGet.CommandLine.Prompts;
+using AppGet.CreatePackage;
 using AppGet.CreatePackage.ManifestPopulators;
-using AppGet.Manifests;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -20,15 +19,14 @@ namespace AppGet.Tests.CreatePackage.ManifestPopulators
         [Test]
         public void get_non_github_hostname_as_url()
         {
-            var installer = new Installer { Location = "https://microsoft.com/office" };
-            var man = new PackageManifest
-            {
-                Installers = new List<Installer> { installer }
-            };
+            var installer = new InstallerBuilder { Location = "https://microsoft.com/office" };
+            var man = new PackageManifestBuilder();
+
+            man.Installers.Add(installer);
 
             Subject.Populate(man, null, false);
 
-            man.Home.Should().Be("https://microsoft.com");
+            man.Home.Top.Should().Be("https://microsoft.com");
         }
 
         [TestCase("https://download.microsoft.com/", ExpectedResult = "https://microsoft.com")]
@@ -41,15 +39,12 @@ namespace AppGet.Tests.CreatePackage.ManifestPopulators
         [TestCase("https://a.openvpn.org/community/", ExpectedResult = "https://openvpn.org")]
         public string remove_update_download_segments(string url)
         {
-            var installer = new Installer { Location = url };
-            var man = new PackageManifest
-            {
-                Installers = new List<Installer> { installer }
-            };
+            var manifestBuilder = new PackageManifestBuilder();
+            manifestBuilder.Installers.Add( new InstallerBuilder { Location = url });
 
-            Subject.Populate(man, null, false);
+            Subject.Populate(manifestBuilder, null, false);
 
-            return man.Home;
+            return manifestBuilder.Home.Top;
         }
     }
 }

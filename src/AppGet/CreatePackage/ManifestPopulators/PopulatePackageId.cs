@@ -1,7 +1,6 @@
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using AppGet.CommandLine.Prompts;
-using AppGet.Manifests;
 
 namespace AppGet.CreatePackage.ManifestPopulators
 {
@@ -15,11 +14,13 @@ namespace AppGet.CreatePackage.ManifestPopulators
             _prompt = prompt;
         }
 
-        public void Populate(PackageManifest manifest, FileVersionInfo fileVersionInfo, bool interactive)
+        public void Populate(PackageManifestBuilder manifestBuilder, FileVersionInfo fileVersionInfo, bool interactive)
         {
-            var defaultValue = _idRegex.Replace(manifest.Name, "-").ToLowerInvariant().Trim('-');
-            defaultValue = defaultValue.Replace("+", "plus");
-            manifest.Id = _prompt.Request("Package ID", defaultValue.ToLowerInvariant(), interactive);
+            var id = _idRegex.Replace(manifestBuilder.Name.Top, "-").ToLowerInvariant().Trim('-');
+            manifestBuilder.Id.Add(id.Replace("+", "plus"), Confidence.Reasonable, this);
+
+            if (!interactive || manifestBuilder.Id.HasConfidence(Confidence.VeryHigh)) return;
+            manifestBuilder.Id.Add(_prompt.Request("Package ID", manifestBuilder.Id.Top), Confidence.VeryHigh, this);
         }
     }
 }

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using AppGet.CommandLine.Prompts;
+using AppGet.CreatePackage;
 using AppGet.CreatePackage.InstallerPopulators;
 using AppGet.CreatePackage.ManifestPopulators;
 using AppGet.Manifests;
@@ -35,15 +35,15 @@ namespace AppGet.Commands.CreateManifest
         {
             var createOptions = (CreateManifestOptions)appGetOption;
 
-            var manifest = new PackageManifest { Installers = new List<Installer>() };
+            var manifest = new PackageManifestBuilder();
             var installer = await _installerBuilder.Populate(createOptions.DownloadUrl, true);
             manifest.Installers.Add(installer);
 
             _manifestBuilder.Populate(manifest, true);
 
-            while (_booleanPrompt.Request("Add an additional installer for different architecture or version of Windows?", false, true))
+            while (_booleanPrompt.Request("Add an additional installer for different architecture or version of Windows?", false))
             {
-                var url = _urlPrompt.Request("Download URL (leave blank to cancel)", "", true);
+                var url = _urlPrompt.Request("Download URL (leave blank to cancel)", "");
                 if (string.IsNullOrWhiteSpace(url))
                 {
                     break;
@@ -52,10 +52,10 @@ namespace AppGet.Commands.CreateManifest
             }
 
 
-            _packageManifestService.PrintManifest(manifest);
+            _packageManifestService.PrintManifest(manifest.Build());
 
 
-            _packageManifestService.WriteManifest(manifest, "C:\\git\\AppGet.Packages\\manifests");
+            _packageManifestService.WriteManifest(manifest.Build(), "C:\\git\\AppGet.Packages\\manifests");
         }
     }
 }

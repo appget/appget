@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using AppGet.Manifests;
 
 namespace AppGet.CreatePackage.ManifestPopulators
 {
     public interface IManifestBuilder
     {
-        void Populate(PackageManifest manifest, bool interactive);
+        void Populate(PackageManifestBuilder manifestBuilder, bool interactive);
     }
 
     public class ManifestBuilder : IManifestBuilder
@@ -20,14 +19,14 @@ namespace AppGet.CreatePackage.ManifestPopulators
         }
 
 
-        public void Populate(PackageManifest manifest, bool interactive)
+        public void Populate(PackageManifestBuilder manifestBuilder, bool interactive)
         {
-            var installer = manifest.Installers.First();
+            var installer = manifestBuilder.Installers.First();
             var fileVersionInfo = FileVersionInfo.GetVersionInfo(installer.FilePath);
 
             foreach (var populater in _populaters)
             {
-                populater.Populate(manifest, fileVersionInfo, interactive);
+                populater.Populate(manifestBuilder, fileVersionInfo, interactive);
             }
         }
     }

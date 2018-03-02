@@ -1,4 +1,5 @@
-﻿using AppGet.Manifests;
+﻿using AppGet.CreatePackage;
+using AppGet.Manifests;
 using SevenZip;
 
 namespace AppGet.Installers.Msi
@@ -7,16 +8,16 @@ namespace AppGet.Installers.Msi
     {
         public override InstallMethodTypes InstallMethod => InstallMethodTypes.MSI;
 
-        public override decimal GetConfidence(string path, SevenZipExtractor archive, string exeManifest)
+        public override Confidence GetConfidence(string path, SevenZipExtractor archive, string exeManifest)
         {
             if (path.ToLowerInvariant().EndsWith(".msi"))
             {
-                return 1;
+                return Confidence.VeryHigh;
             }
 
             if (archive != null && archive.ArchiveFileNames.Contains(".wixburn"))
             {
-                return 1;
+                return Confidence.Reasonable;
             }
 
             return base.GetConfidence(path, archive, exeManifest);

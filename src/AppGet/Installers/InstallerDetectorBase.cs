@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using AppGet.CreatePackage;
 using AppGet.Manifests;
 using SevenZip;
 
@@ -10,9 +11,9 @@ namespace AppGet.Installers
 
         protected virtual string[] Terms => new[] { InstallMethod.ToString().ToLowerInvariant() };
 
-        public virtual decimal GetConfidence(string path, SevenZipExtractor archive, string exeManifest)
+        public virtual Confidence GetConfidence(string path, SevenZipExtractor archive, string exeManifest)
         {
-            return Terms.Any(t => HasProperty(archive, t) || ManifestContains(exeManifest, t)) ? 1 : 0;
+            return Terms.Any(t => HasProperty(archive, t) || ManifestContains(exeManifest, t)) ? Confidence.VeryHigh : Confidence.NoMatch;
         }
 
         private static bool HasProperty(SevenZipExtractor archive, string term)

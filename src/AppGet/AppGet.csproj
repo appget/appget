@@ -110,6 +110,7 @@
     <Compile Include="CreatePackage\InstallerPopulators\ArchitecturePopulater.cs" />
     <Compile Include="CreatePackage\InstallerPopulators\IPopulateInstaller.cs" />
     <Compile Include="CreatePackage\InstallerPopulators\MinWindowsVersionPopulater.cs" />
+    <Compile Include="CreatePackage\ManifestPopulators\SquirrelPopulater.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\Sourceforge.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\IPopulateManifest.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\ManifestBuilder.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="CreatePackage\ManifestPopulators\PopulatePackageId.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\PopulateProductName.cs" />
     <Compile Include="CreatePackage\ManifestPopulators\PopulateVersion.cs" />
+    <Compile Include="CreatePackage\PackageManifestBuilder.cs" />
     <Compile Include="CreatePackage\Parsers\HomePageParser.cs" />
     <Compile Include="CreatePackage\Parsers\VersionParser.cs" />
     <Compile Include="CreatePackage\Parsers\ArchitectureParser.cs" />
@@ -165,7 +167,9 @@
     <Compile Include="Installers\InstallerDetectorBase.cs" />
     <Compile Include="Installers\Msi\MsiDetector.cs" />
     <Compile Include="Installers\Custom\CustomWhisperer.cs" />
+    <Compile Include="Installers\Squirrel\NugetSpec.cs" />
     <Compile Include="Installers\Squirrel\SquirrelDetector.cs" />
+    <Compile Include="Installers\Squirrel\SquirrelReader.cs" />
     <Compile Include="Installers\Squirrel\SquirrelWhisperer.cs" />
     <Compile Include="Installers\Nsis\NsisDetector.cs" />
     <Compile Include="Manifests\ArchitectureTypes.cs" />

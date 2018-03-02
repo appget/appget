@@ -1,4 +1,5 @@
-﻿using AppGet.Manifests;
+﻿using AppGet.CreatePackage;
+using AppGet.Manifests;
 using SevenZip;
 
 namespace AppGet.Installers
@@ -6,6 +7,6 @@ namespace AppGet.Installers
     public interface IDetectInstallMethod
     {
         InstallMethodTypes InstallMethod { get; }
-        decimal GetConfidence(string path, SevenZipExtractor archive, string exeManifest);
+        Confidence GetConfidence(string path, SevenZipExtractor archive, string exeManifest);
     }
 }

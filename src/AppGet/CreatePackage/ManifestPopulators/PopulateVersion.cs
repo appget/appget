@@ -1,9 +1,7 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Linq;
 using AppGet.CommandLine.Prompts;
 using AppGet.CreatePackage.Parsers;
-using AppGet.Manifests;
 
 namespace AppGet.CreatePackage.ManifestPopulators
 {
@@ -16,29 +14,22 @@ namespace AppGet.CreatePackage.ManifestPopulators
             _prompt = prompt;
         }
 
-        public void Populate(PackageManifest manifest, FileVersionInfo fileVersionInfo, bool interactive)
+        public void Populate(PackageManifestBuilder manifest, FileVersionInfo fileVersionInfo, bool interactive)
         {
-            string defaultValue = null;
-
-
             if (fileVersionInfo != null)
             {
-                defaultValue = new[] { fileVersionInfo.ProductVersion, fileVersionInfo.FileVersion }
+                var fileVersion = new[] { fileVersionInfo.ProductVersion, fileVersionInfo.FileVersion }
                     .FirstOrDefault(c => !string.IsNullOrWhiteSpace(c))?.Trim().Replace(",", ".");
+
+                manifest.Version.Add(fileVersion, Confidence.Reasonable, this);
             }
 
-            var urlVersion = VersionParser.Parse(new Uri(manifest.Installers.First().Location));
-            if (string.IsNullOrWhiteSpace(manifest.Version) && (urlVersion ?? "").Length > (defaultValue ?? "").Length)
-            {
-                defaultValue = urlVersion;
-            }
+            var urlVersion = VersionParser.Parse(manifest.Url);
+            manifest.Version.Add(urlVersion, Confidence.Reasonable, this);
 
-            if (defaultValue == null || manifest.Version?.Length > defaultValue.Length)
-            {
-                defaultValue = manifest.Version;
-            }
+            if (!interactive || manifest.Version.HasConfidence(Confidence.VeryHigh)) return;
 
-            manifest.Version = _prompt.Request("Application Version", defaultValue, interactive)?.ToLowerInvariant();
+            manifest.Version.Add(_prompt.Request("Application Version", manifest.Version.Top), Confidence.Reasonable, this);
         }
     }
 }

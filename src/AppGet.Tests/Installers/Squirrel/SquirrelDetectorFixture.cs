@@ -11,6 +11,7 @@ namespace AppGet.Tests.Installers.Squirrel
         public void Setup()
         {
             Mocker.SetInstance<ISfxReader>(new SfxReader());
+            Mocker.SetInstance<ISquirrelReader>(new SquirrelReader());
         }
     }
 }

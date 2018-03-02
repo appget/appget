@@ -7,12 +7,17 @@ namespace AppGet.CreatePackage.InstallerPopulators
 {
     public class ArchitecturePopulater : IPopulateInstaller
     {
-        public void Populate(Installer installer, bool interactive)
+        public void Populate(InstallerBuilder installer, bool interactive)
         {
-            var defaultArch = ArchitectureParser.Parse(new Uri(installer.Location));;
+            var urlArch = ArchitectureParser.Parse(new Uri(installer.Location));
+            installer.Architecture.Add(urlArch, Confidence.Reasonable, this);
 
-            var prompt = new EnumPrompt<ArchitectureTypes>();
-            installer.Architecture = prompt.Request("Architecture", defaultArch, interactive);
+            if (interactive)
+            {
+                var prompt = new EnumPrompt<ArchitectureTypes>();
+                var value = prompt.Request("Architecture", urlArch);
+                installer.Architecture.Add(value, Confidence.VeryHigh, this);
+            }
         }
     }
 }

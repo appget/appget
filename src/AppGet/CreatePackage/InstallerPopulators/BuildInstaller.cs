@@ -13,7 +13,7 @@ namespace AppGet.CreatePackage.InstallerPopulators
 {
     public interface IBuildInstaller
     {
-        Task<Installer> Populate(string url, bool prompt);
+        Task<InstallerBuilder> Populate(string url, bool prompt);
     }
 
     public class BuildInstaller : IBuildInstaller
@@ -33,12 +33,12 @@ namespace AppGet.CreatePackage.InstallerPopulators
         }
 
 
-        public async Task<Installer> Populate(string url, bool prompt)
+        public async Task<InstallerBuilder> Populate(string url, bool prompt)
         {
             var uri = new Uri(url, UriKind.Absolute);
 
 
-            Installer installer = null;
+            InstallerBuilder installer = null;
 
             if (uri.Scheme == Uri.UriSchemeHttp)
             {
@@ -69,9 +69,9 @@ namespace AppGet.CreatePackage.InstallerPopulators
             return installer;
         }
 
-        private async Task<Installer> DownloadInstaller(Uri uri)
+        private async Task<InstallerBuilder> DownloadInstaller(Uri uri)
         {
-            var installer = new Installer();
+            var installer = new InstallerBuilder();
             var filePath = await _fileTransferService.TransferFile(uri.ToString(), _pathResolver.TempFolder, null);
 
             var sha256 = _sha256.CalculateHash(filePath);

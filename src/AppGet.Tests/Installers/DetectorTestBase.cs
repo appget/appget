@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using AppGet.Compression;
+using AppGet.CreatePackage;
 using AppGet.HostSystem;
 using AppGet.Installers;
 using AppGet.Processes;
@@ -27,7 +28,11 @@ namespace AppGet.Tests.Installers
         {
             var compression = Mocker.Resolve<CompressionService>();
             var sigCheck = Mocker.Resolve<SigCheck>();
-            Subject.GetConfidence(path, compression.TryOpen(path), sigCheck.GetManifest(path)).Should().Be(1);
+            using (var zip = compression.TryOpen(path))
+            {
+                Subject.GetConfidence(path, zip, sigCheck.GetManifest(path)).Should().NotBe(Confidence.NoMatch);
+            }
+
         }
 
 
@@ -35,7 +40,10 @@ namespace AppGet.Tests.Installers
         public void should_not_match_other_installers(string path)
         {
             var compression = Mocker.Resolve<CompressionService>();
-            Subject.GetConfidence(path, compression.TryOpen(path), null).Should().Be(0);
+            using (var zip = compression.TryOpen(path))
+            {
+                Subject.GetConfidence(path, zip, null).Should().Be(Confidence.NoMatch);
+            }
         }
 
         [Explicit]
@@ -43,7 +51,10 @@ namespace AppGet.Tests.Installers
         public void match_root_installers(string path)
         {
             var compression = Mocker.Resolve<CompressionService>();
-            Subject.GetConfidence(path, compression.TryOpen(path), null).Should().Be(1);
+            using (var zip = compression.TryOpen(path))
+            {
+                Subject.GetConfidence(path, zip, null).Should().NotBe(Confidence.NoMatch);
+            }
         }
 
         private static string Type()

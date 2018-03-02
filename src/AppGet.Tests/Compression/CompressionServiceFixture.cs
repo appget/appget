@@ -9,13 +9,16 @@ namespace AppGet.Tests.Compression
 {
 
     [TestFixture(Category = "Local")]
+    [Explicit]
     public class CompressionServiceFixture : TestBase<CompressionService>
     {
         [TestCaseSource(nameof(GetInstallers), Category = "Local")]
         public void try_open(string name)
         {
-            var zip = Subject.TryOpen(Path.Combine("C:\\ProgramData\\AppGet\\Temp\\", name));
-            zip.Should().NotBeNull();
+            using (var zip = Subject.TryOpen(Path.Combine("C:\\ProgramData\\AppGet\\Temp\\", name)))
+            {
+                zip.Should().NotBeNull();
+            }
         }
 
 

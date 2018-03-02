@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 
 namespace AppGet.Serialization
@@ -8,8 +9,14 @@ namespace AppGet.Serialization
     {
         private static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
         {
-            ContractResolver = new CamelCasePropertyNamesContractResolver()
+            ContractResolver = new CamelCasePropertyNamesContractResolver(),
         };
+
+        static Json()
+        {
+            Settings.Converters.Add(new StringEnumConverter(false));
+            Settings.NullValueHandling = NullValueHandling.Ignore;
+        }
 
         public static string Serialize(object obj, Formatting formatting = Formatting.None)
         {

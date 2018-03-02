@@ -1,10 +1,9 @@
 using System.Diagnostics;
-using AppGet.Manifests;
 
 namespace AppGet.CreatePackage.ManifestPopulators
 {
     public interface IPopulateManifest
     {
-        void Populate(PackageManifest manifest, FileVersionInfo fileVersionInfo, bool interactive);
+        void Populate(PackageManifestBuilder manifestBuilder, FileVersionInfo fileVersionInfo, bool interactive);
     }
 }

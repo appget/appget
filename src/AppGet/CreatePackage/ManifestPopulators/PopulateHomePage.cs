@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Linq;
 using AppGet.CommandLine.Prompts;
 using AppGet.CreatePackage.Parsers;
-using AppGet.Manifests;
 
 namespace AppGet.CreatePackage.ManifestPopulators
 {
@@ -17,17 +16,18 @@ namespace AppGet.CreatePackage.ManifestPopulators
             _prompt = prompt;
         }
 
-        public void Populate(PackageManifest manifest, FileVersionInfo fileVersionInfo, bool interactive)
+        public void Populate(PackageManifestBuilder manifestBuilder, FileVersionInfo fileVersionInfo, bool interactive)
         {
-            if (manifest.Home != null) return;
+            if (manifestBuilder.Home.Top != null) return;
 
-            var uri = new Uri(manifest.Installers.First().Location);
+            manifestBuilder.Home.Add(HomepageParser.Parse(manifestBuilder.Url), Confidence.Low, this);
 
-            var defaultValue = HomepageParser.Parse(uri);
 
-            defaultValue = defaultValue?.Trim().ToLowerInvariant();
-
-            manifest.Home = _prompt.Request("Product Homepage", defaultValue, interactive)?.ToLowerInvariant();
+            if (interactive && !manifestBuilder.Home.HasConfidence(Confidence.VeryHigh))
+            {
+                var result = _prompt.Request("Product Homepage", manifestBuilder.Home.Top);
+                manifestBuilder.Home.Add(result, Confidence.VeryHigh, this);
+            }
         }
     }
 }

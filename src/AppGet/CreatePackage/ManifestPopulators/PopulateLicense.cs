@@ -13,11 +13,11 @@ namespace AppGet.CreatePackage.ManifestPopulators
             _prompt = prompt;
         }
 
-        public void Populate(PackageManifest manifest, FileVersionInfo fileVersionInfo, bool interactive)
+        public void Populate(PackageManifestBuilder manifest, FileVersionInfo fileVersionInfo, bool interactive)
         {
-            if (manifest.Licence != null) return;
+            if (!interactive || manifest.Licence.HasConfidence(Confidence.Reasonable)) return;
 
-            manifest.Licence = _prompt.Request("License", null, interactive);
+            manifest.Licence.Add(_prompt.Request("License", manifest.Licence.Top), Confidence.VeryHigh, this);
         }
     }
 }
