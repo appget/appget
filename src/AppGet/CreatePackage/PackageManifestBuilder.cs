@@ -9,10 +9,10 @@ namespace AppGet.CreatePackage
 
     public enum Confidence
     {
-        NoMatch,
-        Low,
+        None,
+        LastEffort,
         Reasonable,
-        VeryHigh
+        Authoritive
     }
 
     public class ManifestAttributeCandidate<T>
@@ -32,7 +32,10 @@ namespace AppGet.CreatePackage
     public class ManifestAttributeStringCandidate : ManifestAttributeCandidate<string>
     {
         public ManifestAttributeStringCandidate(string value, Confidence score, object source)
-            : base(value?.Trim(), score, source)
+            : base(
+                string.IsNullOrWhiteSpace(value) ? null : value.Trim(),
+                string.IsNullOrWhiteSpace(value) ? Confidence.None : score,
+                source)
         {
         }
     }
@@ -55,7 +58,7 @@ namespace AppGet.CreatePackage
         {
             get
             {
-                if (!Values.Any() || Values.All(c => c.Score == Confidence.NoMatch)) return default(T);
+                if (!Values.Any() || Values.All(c => c.Score == Confidence.None)) return default(T);
                 return Values.OrderByDescending(c => c.Score).FirstOrDefault().Value;
             }
         }
@@ -112,7 +115,7 @@ namespace AppGet.CreatePackage
 
         public List<InstallerBuilder> Installers { get; }
 
-        public Uri Url => new Uri(Installers.First().Location);
+        public Uri Uri => new Uri(Installers.First().Location);
         public string FilePath => Installers.First().FilePath;
 
         public PackageManifestBuilder()

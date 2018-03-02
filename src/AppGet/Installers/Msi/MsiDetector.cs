@@ -12,7 +12,7 @@ namespace AppGet.Installers.Msi
         {
             if (path.ToLowerInvariant().EndsWith(".msi"))
             {
-                return Confidence.VeryHigh;
+                return Confidence.Authoritive;
             }
 
             if (archive != null && archive.ArchiveFileNames.Contains(".wixburn"))

@@ -18,17 +18,17 @@ namespace AppGet.Installers.Squirrel
         public override Confidence GetConfidence(string path, SevenZipExtractor archive, string exeManifest)
         {
             var baseConfidence = base.GetConfidence(path, archive, exeManifest);
-            if (baseConfidence > Confidence.NoMatch)
+            if (baseConfidence > Confidence.None)
             {
                 return baseConfidence;
             }
 
             if (archive != null)
             {
-                return _squirrelReader.IsSquirrel(archive) ? Confidence.VeryHigh : Confidence.NoMatch;
+                return _squirrelReader.IsSquirrel(archive) ? Confidence.Authoritive : Confidence.None;
             }
 
-            return Confidence.NoMatch;
+            return Confidence.None;
         }
     }
 }

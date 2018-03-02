@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using AppGet.Commands.Install;
+using AppGet.Github.Releases;
 using AppGet.Installers;
 using AppGet.Manifests;
 using NLog;

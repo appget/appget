@@ -1,13 +1,13 @@
 ﻿using AppGet.CommandLine.Prompts;
 using AppGet.CreatePackage;
-using AppGet.CreatePackage.ManifestPopulators;
+using AppGet.CreatePackage.Root.Prompts;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace AppGet.Tests.CreatePackage.ManifestPopulators
 {
     [TestFixture]
-    public class PopulateHomePageFixture : TestBase<PopulateHomePage>
+    public class HomePagePromptFixture : TestBase<HomePagePrompt>
     {
         [SetUp]
         public void Setup()
@@ -24,7 +24,7 @@ namespace AppGet.Tests.CreatePackage.ManifestPopulators
 
             man.Installers.Add(installer);
 
-            Subject.Populate(man, null, false);
+            Subject.Invoke(man);
 
             man.Home.Top.Should().Be("https://microsoft.com");
         }
@@ -42,7 +42,7 @@ namespace AppGet.Tests.CreatePackage.ManifestPopulators
             var manifestBuilder = new PackageManifestBuilder();
             manifestBuilder.Installers.Add( new InstallerBuilder { Location = url });
 
-            Subject.Populate(manifestBuilder, null, false);
+            Subject.Invoke(manifestBuilder);
 
             return manifestBuilder.Home.Top;
         }

@@ -13,7 +13,7 @@ namespace AppGet.Installers
 
         public virtual Confidence GetConfidence(string path, SevenZipExtractor archive, string exeManifest)
         {
-            return Terms.Any(t => HasProperty(archive, t) || ManifestContains(exeManifest, t)) ? Confidence.VeryHigh : Confidence.NoMatch;
+            return Terms.Any(t => HasProperty(archive, t) || ManifestContains(exeManifest, t)) ? Confidence.Authoritive : Confidence.None;
         }
 
         private static bool HasProperty(SevenZipExtractor archive, string term)

@@ -6,8 +6,11 @@ using AppGet.Commands.Search;
 using AppGet.Commands.Uninstall;
 using AppGet.Commands.ViewManifest;
 using AppGet.Commands.WindowsInstallerSearch;
-using AppGet.CreatePackage.InstallerPopulators;
-using AppGet.CreatePackage.ManifestPopulators;
+using AppGet.CreatePackage.Installer;
+using AppGet.CreatePackage.Installer.Prompts;
+using AppGet.CreatePackage.Root;
+using AppGet.CreatePackage.Root.Extractors;
+using AppGet.CreatePackage.Root.Prompts;
 using AppGet.Crypto.Hash;
 using AppGet.Crypto.Hash.Algorithms;
 using AppGet.FileTransfer;
@@ -57,15 +60,14 @@ namespace AppGet.Infrastructure.Composition
 
             container.RegisterMultiple<IInstallerWhisperer>(new[]
             {
+                typeof(CustomWhisperer),
                 typeof(InnoWhisperer),
+                typeof(InstallBuilderWhisperer),
                 typeof(InstallShieldWhisperer),
                 typeof(MsiWhisperer),
                 typeof(NsisWhisperer),
-                typeof(InstallBuilderWhisperer),
                 typeof(SquirrelWhisperer),
                 typeof(ZipWhisperer),
-                typeof(CustomWhisperer)
-
             });
 
             container.RegisterMultiple<ICheckSum>(new[]
@@ -75,25 +77,40 @@ namespace AppGet.Infrastructure.Composition
                 typeof(Md5Hash),
             });
 
-            container.RegisterMultiple<IPopulateManifest>(new[]
+            container.RegisterMultiple<IExtractToManifestRoot>(new[]
             {
-                typeof(SourceforgePopulater),
-                typeof(GithubPopulater),
-                typeof(PopulateVersion),
-                typeof(SquirrelPopulater),
-                typeof(PopulateInstallMethod),
-                typeof(PopulateProductName),
-                typeof(PopulatePackageId),
-                typeof(PopulateVersionTag),
-                typeof(PopulateHomePage),
-                typeof(PopulateLicense)
+                typeof(FileVersionInfoExtractor),
+                typeof(GithubExtractor),
+                typeof(InstallMethodExtractor),
+                typeof(NameExtractor),
+                typeof(PackageIdExtractor),
+                typeof(SourceforgeExtractor),
+                typeof(SquirrelExtractor),
+                typeof(AppGet.CreatePackage.Root.Extractors.UrlExtractor),
+            });
+
+            container.RegisterMultiple<IManifestPrompt>(new[]
+            {
+                typeof(ProductNamePrompt),
+                typeof(PackageIdPrompt),
+                typeof(VersionPrompt),
+                typeof(HomePagePrompt),
+                typeof(LicensePrompt),
+                typeof(InstallMethodPrompt),
+                typeof(VersionTagPrompt),
             });
 
 
-            container.RegisterMultiple<IPopulateInstaller>(new[]
+
+            container.RegisterMultiple<IExtractToInstaller>(new[]
             {
-                typeof(ArchitecturePopulater),
-                typeof(MinWindowsVersionPopulater)
+                typeof(AppGet.CreatePackage.Installer.Extractors.UrlExtractor)
+            });
+
+            container.RegisterMultiple<IInstallerPrompt>(new[]
+            {
+                typeof(ArchitecturePrompt),
+                typeof(MinWindowsVersionPrompt)
             });
 
             container.RegisterMultiple<IDetectInstallMethod>(new[]

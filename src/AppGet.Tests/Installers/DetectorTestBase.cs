@@ -30,7 +30,7 @@ namespace AppGet.Tests.Installers
             var sigCheck = Mocker.Resolve<SigCheck>();
             using (var zip = compression.TryOpen(path))
             {
-                Subject.GetConfidence(path, zip, sigCheck.GetManifest(path)).Should().NotBe(Confidence.NoMatch);
+                Subject.GetConfidence(path, zip, sigCheck.GetManifest(path)).Should().NotBe(Confidence.None);
             }
 
         }
@@ -42,7 +42,7 @@ namespace AppGet.Tests.Installers
             var compression = Mocker.Resolve<CompressionService>();
             using (var zip = compression.TryOpen(path))
             {
-                Subject.GetConfidence(path, zip, null).Should().Be(Confidence.NoMatch);
+                Subject.GetConfidence(path, zip, null).Should().Be(Confidence.None);
             }
         }
 
@@ -53,7 +53,7 @@ namespace AppGet.Tests.Installers
             var compression = Mocker.Resolve<CompressionService>();
             using (var zip = compression.TryOpen(path))
             {
-                Subject.GetConfidence(path, zip, null).Should().NotBe(Confidence.NoMatch);
+                Subject.GetConfidence(path, zip, null).Should().NotBe(Confidence.None);
             }
         }
 

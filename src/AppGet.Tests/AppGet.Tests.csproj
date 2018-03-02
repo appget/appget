@@ -94,7 +94,7 @@
     <Compile Include="Compression\CompressionServiceFixture.cs" />
     <Compile Include="CreatePackage\Parsers\ArchitectureParserFixture.cs" />
     <Compile Include="CreatePackage\Parsers\VersionParserFixture.cs" />
-    <Compile Include="CreatePackage\ManifestPopulators\PopulateHomePageFixture.cs" />
+    <Compile Include="CreatePackage\ManifestPopulators\HomePagePromptFixture.cs" />
     <Compile Include="CreatePackage\Parsers\GithubUrlFixture.cs" />
     <Compile Include="Crypto\Certificates\FileSignatureServiceFixture.cs" />
     <Compile Include="Crypto\Hash\Algorithms\Md5HashFixture.cs" />
@@ -108,6 +108,7 @@
     <Compile Include="Github\Repository\GitHubRepositoryClientFixture.cs" />
     <Compile Include="HostSystem\EnvInfoFixture.cs" />
     <Compile Include="Http\UserAgentBuilderFixture.cs" />
+    <Compile Include="Infrastructure\Composition\ContainerBuilderFixture.cs" />
     <Compile Include="Installers\DetectorTestBase.cs" />
     <Compile Include="Installers\Inno\InnoDetectorFixture.cs" />
     <Compile Include="Installers\InstallBuilder\InstallBuilderDetectorFixture.cs" />

@@ -1,27 +1,25 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using AppGet.CommandLine.Prompts;
 using AppGet.CreatePackage;
-using AppGet.CreatePackage.InstallerPopulators;
-using AppGet.CreatePackage.ManifestPopulators;
+using AppGet.CreatePackage.Installer;
 using AppGet.Manifests;
 
 namespace AppGet.Commands.CreateManifest
 {
     public class CreateManifestCommandHandler : ICommandHandler
     {
-        private readonly IBuildInstaller _installerBuilder;
+        private readonly IComposeInstaller _installerBuilder;
         private readonly IPackageManifestService _packageManifestService;
-        private readonly IManifestBuilder _manifestBuilder;
+        private readonly IComposeManifest _composeManifest;
         private readonly IUrlPrompt _urlPrompt;
         private readonly BooleanPrompt _booleanPrompt;
 
-        public CreateManifestCommandHandler(IBuildInstaller installerBuilder, IPackageManifestService packageManifestService,
-           IManifestBuilder manifestBuilder, IUrlPrompt urlPrompt, BooleanPrompt booleanPrompt)
+        public CreateManifestCommandHandler(IComposeInstaller installerBuilder, IPackageManifestService packageManifestService,
+           IComposeManifest composeManifest, IUrlPrompt urlPrompt, BooleanPrompt booleanPrompt)
         {
             _installerBuilder = installerBuilder;
             _packageManifestService = packageManifestService;
-            _manifestBuilder = manifestBuilder;
+            _composeManifest = composeManifest;
             _urlPrompt = urlPrompt;
             _booleanPrompt = booleanPrompt;
         }
@@ -36,10 +34,10 @@ namespace AppGet.Commands.CreateManifest
             var createOptions = (CreateManifestOptions)appGetOption;
 
             var manifest = new PackageManifestBuilder();
-            var installer = await _installerBuilder.Populate(createOptions.DownloadUrl, true);
+            var installer = await _installerBuilder.Compose(createOptions.DownloadUrl, true);
             manifest.Installers.Add(installer);
 
-            _manifestBuilder.Populate(manifest, true);
+            _composeManifest.Compose(manifest, true);
 
             while (_booleanPrompt.Request("Add an additional installer for different architecture or version of Windows?", false))
             {
@@ -48,7 +46,7 @@ namespace AppGet.Commands.CreateManifest
                 {
                     break;
                 }
-                manifest.Installers.Add(await _installerBuilder.Populate(url, true));
+                manifest.Installers.Add(await _installerBuilder.Compose(url, true));
             }
 
 

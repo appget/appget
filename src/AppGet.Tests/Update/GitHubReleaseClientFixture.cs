@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using AppGet.Update;
+using AppGet.Github.Releases;
 using FluentAssertions;
 using NUnit.Framework;
 

@@ -1,23 +1,20 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using AppGet.CommandLine.Prompts;
 using AppGet.Compression;
 using AppGet.Installers;
-using AppGet.Manifests;
 using AppGet.Tools;
 using NLog;
 
-namespace AppGet.CreatePackage.ManifestPopulators
+namespace AppGet.CreatePackage.Root.Extractors
 {
-    public class PopulateInstallMethod : IPopulateManifest
+    public class InstallMethodExtractor : IExtractToManifestRoot
     {
         private readonly IEnumerable<IDetectInstallMethod> _installMethodDetectors;
         private readonly ICompressionService _compressionService;
         private readonly ISigCheck _sigCheck;
         private readonly Logger _logger;
 
-        public PopulateInstallMethod(IEnumerable<IDetectInstallMethod> installMethodDetectors, ICompressionService compressionService, ISigCheck sigCheck, Logger logger)
+        public InstallMethodExtractor(IEnumerable<IDetectInstallMethod> installMethodDetectors, ICompressionService compressionService, ISigCheck sigCheck, Logger logger)
         {
             _installMethodDetectors = installMethodDetectors;
             _compressionService = compressionService;
@@ -25,7 +22,7 @@ namespace AppGet.CreatePackage.ManifestPopulators
             _logger = logger;
         }
 
-        public void Populate(PackageManifestBuilder manifest, FileVersionInfo fileVersionInfo, bool interactive)
+        public void Invoke(PackageManifestBuilder manifest)
         {
             _logger.Info("Detecting application installer");
 
@@ -45,12 +42,6 @@ namespace AppGet.CreatePackage.ManifestPopulators
 
                     _logger.Info("Installer was detected as " + manifest.InstallMethod.Top);
                 }
-            }
-
-            if (interactive && manifest.InstallMethod.HasConfidence(Confidence.Reasonable))
-            {
-                var methodPrompt = new EnumPrompt<InstallMethodTypes>();
-                manifest.InstallMethod.Add(methodPrompt.Request("Installer", InstallMethodTypes.Custom), Confidence.Reasonable, this);
             }
         }
     }

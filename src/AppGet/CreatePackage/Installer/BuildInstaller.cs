@@ -1,39 +1,41 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AppGet.CreatePackage.Parsers;
 using AppGet.Crypto.Hash.Algorithms;
-using AppGet.Extensions;
 using AppGet.FileTransfer;
 using AppGet.HostSystem;
-using AppGet.Manifests;
 using NLog;
 
-namespace AppGet.CreatePackage.InstallerPopulators
+namespace AppGet.CreatePackage.Installer
 {
-    public interface IBuildInstaller
+    public interface IComposeInstaller
     {
-        Task<InstallerBuilder> Populate(string url, bool prompt);
+        Task<InstallerBuilder> Compose(string url, bool interactive);
     }
 
-    public class BuildInstaller : IBuildInstaller
+    public class ComposeInstaller : IComposeInstaller
     {
         private readonly IFileTransferService _fileTransferService;
-        private readonly IEnumerable<IPopulateInstaller> _populaters;
+        private readonly IEnumerable<IExtractToInstaller> _extractors;
+        private readonly IEnumerable<IInstallerPrompt> _prompts;
         private readonly IPathResolver _pathResolver;
         private readonly Logger _logger;
         private readonly Sha256Hash _sha256 = new Sha256Hash();
 
-        public BuildInstaller(IFileTransferService fileTransferService, IEnumerable<IPopulateInstaller> populaters, IPathResolver pathResolver, Logger logger)
+        public ComposeInstaller(IFileTransferService fileTransferService, IEnumerable<IExtractToInstaller> extractors,
+            IEnumerable<IInstallerPrompt> prompts, IPathResolver pathResolver, Logger logger)
         {
             _fileTransferService = fileTransferService;
-            _populaters = populaters;
+            _extractors = extractors;
+            _prompts = prompts;
             _pathResolver = pathResolver;
             _logger = logger;
         }
 
 
-        public async Task<InstallerBuilder> Populate(string url, bool prompt)
+        public async Task<InstallerBuilder> Compose(string url, bool interactive)
         {
             var uri = new Uri(url, UriKind.Absolute);
 
@@ -42,18 +44,18 @@ namespace AppGet.CreatePackage.InstallerPopulators
 
             if (uri.Scheme == Uri.UriSchemeHttp)
             {
-                _logger.Warn("Download link is using HTTP protocol. Checking HTTPS availability.");
-
-                try
-                {
-                    installer = await DownloadInstaller(uri.ToHttps());
-                    _logger.Info("Installer aprears to be avilable using HTTPS. Using HTTPS instead.");
-
-                }
-                catch (Exception e)
-                {
-                    _logger.Warn(e, "HTTPS upgrade failed.");
-                }
+                //                _logger.Warn("Download link is using HTTP protocol. Checking HTTPS availability.");
+                //
+                //                try
+                //                {
+                //                    installer = await DownloadInstaller(uri.ToHttps());
+                //                    _logger.Info("Installer appears to be available using HTTPS. Using HTTPS instead.");
+                //
+                //                }
+                //                catch (Exception e)
+                //                {
+                //                    _logger.Warn(e, "HTTPS upgrade failed.");
+                //                }
             }
 
             if (installer == null)
@@ -61,9 +63,17 @@ namespace AppGet.CreatePackage.InstallerPopulators
                 installer = await DownloadInstaller(uri);
             }
 
-            foreach (var populater in _populaters)
+            foreach (var populater in _extractors)
             {
-                populater.Populate(installer, prompt);
+                populater.Extract(installer);
+            }
+
+            if (interactive)
+            {
+                foreach (var prompt in _prompts.Where(p => p.ShouldPrompt(installer)))
+                {
+                    prompt.Invoke(installer);
+                }
             }
 
             return installer;
