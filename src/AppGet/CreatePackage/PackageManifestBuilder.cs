@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using AppGet.Extensions;
 using AppGet.Manifests;
 
 namespace AppGet.CreatePackage
@@ -45,10 +46,18 @@ namespace AppGet.CreatePackage
     [DebuggerDisplay("{Value} [{Values.Count}]")]
     public class ManifestAttribute<T>
     {
+        private readonly Func<T, object> _secondarySort;
         public List<ManifestAttributeCandidate<T>> Values { get; }
 
-        public ManifestAttribute()
+        public ManifestAttribute(Func<T, object> secondarySort = null)
         {
+            if (secondarySort == null)
+            {
+                secondarySort = candidate => null;
+            }
+
+            _secondarySort = secondarySort;
+
             Values = new List<ManifestAttributeCandidate<T>>();
         }
 
@@ -62,7 +71,7 @@ namespace AppGet.CreatePackage
         private ManifestAttributeCandidate<T> GetTop()
         {
             return Values
-                 .OrderByDescending(c => c.Confidence)
+                 .OrderByDescending(c => c.Confidence).ThenByDescending(c => _secondarySort(c.Value))
                  .FirstOrDefault(c => c.Confidence > Confidence.None);
         }
 
@@ -79,6 +88,13 @@ namespace AppGet.CreatePackage
         {
             return GetTop()?.Confidence >= confidence;
         }
+
+        public override string ToString()
+        {
+            var top = GetTop();
+            return top?.Value.ToString() ?? "";
+        }
+
     }
 
 
@@ -106,7 +122,7 @@ namespace AppGet.CreatePackage
         public PackageManifestBuilder()
         {
             Id = new ManifestAttribute<string>();
-            Name = new ManifestAttribute<string>();
+            Name = new ManifestAttribute<string>(m => m?.CapitalLettersCount());
             Version = new ManifestAttribute<string>();
             Home = new ManifestAttribute<string>();
             Repo = new ManifestAttribute<string>();
@@ -129,7 +145,7 @@ namespace AppGet.CreatePackage
                 Licence = Licence.Value,
 
                 InstallMethod = InstallMethod.Value,
-                Installers = Installers.Select(c => c.Build()).ToList(),
+                Installers = Installers.Select(c => c.Build()).OrderBy(c => c.Architecture).ToList(),
             };
         }
     }

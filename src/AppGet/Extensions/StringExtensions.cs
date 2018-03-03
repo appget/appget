@@ -23,5 +23,16 @@ namespace AppGet.Extensions
         {
             return TextInfo.ToTitleCase(value);
         }
+
+        public static int CapitalLettersCount(this string value)
+        {
+            var count = 0;
+            foreach (var t in value)
+            {
+                if (char.IsUpper(t)) count++;
+            }
+
+            return count;
+        }
     }
 }

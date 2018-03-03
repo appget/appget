@@ -11,11 +11,13 @@ namespace AppGet.CreatePackage.Parsers
         private static readonly string[] CDNs = {
             "amazonaws",
             "fosshub",
+            "oldfoss.",
             "akamaihd",
             "code42",
             "netdna-ssl",
             "github.com",
-            "sourceforge"
+            "sourceforge.",
+            "aka.ms"
         };
 
 

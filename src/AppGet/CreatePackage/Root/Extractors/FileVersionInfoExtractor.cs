@@ -40,7 +40,7 @@ namespace AppGet.CreatePackage.Root.Extractors
         }
 
 
-        private static readonly Regex NameCleanUp = new Regex("\\(.+\\)|_|\\.|setup|installer|\\.exe", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex NameCleanUp = new Regex("\\(.+\\)|_|\\.|setup|installer|update|\\.exe", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static readonly Regex SpaceCleanUp = new Regex("\\s+|\\s\\W\\s", RegexOptions.Compiled);
 
         private void ExtractName(PackageManifestBuilder manifest, FileVersionInfo fileVersionInfo)

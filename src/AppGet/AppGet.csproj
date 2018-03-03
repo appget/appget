@@ -143,6 +143,7 @@
     <Compile Include="Crypto\Hash\Algorithms\Md5Hash.cs" />
     <Compile Include="Crypto\Hash\Algorithms\Sha256Hash.cs" />
     <Compile Include="Extensions\FileVersionInfoExtensions.cs" />
+    <Compile Include="Github\GithubKeys.cs" />
     <Compile Include="Github\Repository\GitHubRepositoryClient.cs" />
     <Compile Include="Github\Repository\Repository.cs" />
     <Compile Include="Installers\ExistReason.cs" />

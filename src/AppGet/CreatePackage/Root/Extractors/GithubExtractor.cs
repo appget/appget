@@ -33,9 +33,8 @@ namespace AppGet.CreatePackage.Root.Extractors
                     manifestBuilder.Home.Add(repo.homepage, Confidence.Authoritative, this);
                 }
 
-                if (repo.license != null)
+                if (repo.license != null && repo.license.key != "other")
                 {
-                    manifestBuilder.Name.Add(repo.name, Confidence.Plausible, this);
                     manifestBuilder.Licence.Add(repo.license.name, Confidence.Authoritative, this);
                 }
             }

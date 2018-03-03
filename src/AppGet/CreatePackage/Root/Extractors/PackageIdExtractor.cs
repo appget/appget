@@ -10,7 +10,7 @@ namespace AppGet.CreatePackage.Root.Extractors
         public void Invoke(PackageManifestBuilder manifest)
         {
             var fileName = Path.GetFileNameWithoutExtension(manifest.FilePath);
-            var idInName = Regex.Match(Regex.Escape(fileName), manifest.Id.Value, RegexOptions.IgnoreCase);
+            var idInName = Regex.Match(fileName, Regex.Escape(manifest.Id.Value), RegexOptions.IgnoreCase);
 
             var nameInFileName = idInName.Captures.Cast<Capture>()
                 .FirstOrDefault(c => c.Value != c.Value.ToLower());
