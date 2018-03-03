@@ -45,7 +45,7 @@ namespace AppGet.Commands.Install
                 throw new PackageNotFoundException(installOptions.PackageId);
             }
 
-            var manifest = await _packageManifestService.LoadManifest(package.ManifestUrl);
+            var manifest = await _packageManifestService.LoadManifest(package.ManifestPath);
 
             await _installService.Install(manifest, installOptions);
         }

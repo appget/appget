@@ -4,7 +4,8 @@
     {
         public string Id { get; set; }
         public string Tag { get; set; }
-        public string ManifestUrl { get; set; }
+        public string Version { get; set; }
+        public string ManifestPath { get; set; }
 
         public override string ToString()
         {

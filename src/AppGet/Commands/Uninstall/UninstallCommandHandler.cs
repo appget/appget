@@ -56,7 +56,7 @@ namespace AppGet.Commands.Uninstall
                         throw new PackageNotFoundException(uninstallOptions.PackageId);
                     }
 
-                    var manifest = await _packageManifestService.LoadManifest(package.ManifestUrl);
+                    var manifest = await _packageManifestService.LoadManifest(package.ManifestPath);
 
                     //TODO: Does the uninstall service know how to choose the correct package to remove?
                     _uninstallService.Uninstall(manifest, uninstallOptions);

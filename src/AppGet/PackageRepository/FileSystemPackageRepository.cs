@@ -56,7 +56,7 @@ namespace AppGet.PackageRepository
             {
                 Id = manifest.Id,
                 Tag = string.IsNullOrWhiteSpace(tag) ? null : tag,
-                ManifestUrl = path
+                ManifestPath = path
             };
         }
 

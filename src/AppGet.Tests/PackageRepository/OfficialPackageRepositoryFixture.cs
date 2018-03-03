@@ -19,7 +19,7 @@ namespace AppGet.Tests.PackageRepository
             var latest = await Subject.Get(package, null);
 
             latest.Should().NotBeNull();
-            latest.ManifestUrl.Should().StartWith("https://raw.githubusercontent.com/appget/packages/master/manifests/");
+            latest.ManifestPath.Should().StartWith("https://raw.githubusercontent.com/appget/packages/master/manifests/");
             latest.Id.Should().Be(package);
             latest.Tag.Should().BeNull();
         }
@@ -59,7 +59,7 @@ namespace AppGet.Tests.PackageRepository
             var found = results.Single();
 
             found.Should().NotBeNull();
-            found.ManifestUrl.Should().StartWith("https://raw.githubusercontent.com/appget/packages/master/manifests/");
+            found.ManifestPath.Should().StartWith("https://raw.githubusercontent.com/appget/packages/master/manifests/");
             found.Id.Should().Contain(term);
         }
 

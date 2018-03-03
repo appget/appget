@@ -31,7 +31,7 @@ namespace AppGet.Commands.ViewManifest
                 throw new PackageNotFoundException(viewOptions.PackageId);
             }
 
-            var manifest = await _packageManifestService.LoadManifest(package.ManifestUrl);
+            var manifest = await _packageManifestService.LoadManifest(package.ManifestPath);
             _packageManifestService.PrintManifest(manifest);
         }
     }
