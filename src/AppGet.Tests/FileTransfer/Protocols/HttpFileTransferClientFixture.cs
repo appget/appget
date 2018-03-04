@@ -54,5 +54,13 @@ namespace AppGet.Tests.FileTransfer.Protocols
             var fileName = await Subject.GetFileName(url);
             fileName.Should().Be(expected);
         }
+
+        [Test]
+        public async Task read_file()
+        {
+           var text = await Subject.ReadString("https://raw.githubusercontent.com/appget/packages/master/LICENSE");
+
+            text.Should().NotBeNullOrWhiteSpace();
+        }
     }
 }

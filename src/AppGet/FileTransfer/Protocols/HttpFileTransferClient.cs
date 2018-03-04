@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -89,7 +90,7 @@ namespace AppGet.FileTransfer.Protocols
         public async Task<string> ReadString(string source)
         {
             var req = new HttpRequestMessage(HttpMethod.Get, source);
-            req.Headers.CacheControl.NoCache = true;
+            req.Headers.CacheControl = new CacheControlHeaderValue { NoCache = true, NoStore = true };
 
             var resp = await _httpClient.Send(req);
             return await resp.Content.ReadAsStringAsync();
