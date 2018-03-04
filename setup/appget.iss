@@ -48,7 +48,7 @@ Source: "..\src\AppGet\bin\x86\Release\*"; DestDir: "{app}"; Flags: ignoreversio
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]
-Root: HKCU; Subkey:"HKEY_CURRENT_USER\Environment"; ValueType:expandsz; ValueName:"Path"; ValueData:"{olddata};{app}"; Check:NeedsAddPath('{app}')
+Root: HKCU; Subkey:"Environment"; ValueType:expandsz; ValueName:"Path"; ValueData:"{olddata};{app}"; Check:NeedsAddPath('{app}')
 
 [Code]
 function NeedsAddPath(Param: string): boolean;
@@ -62,7 +62,5 @@ begin
   end;
   // look for the path with leading and trailing semicolon
   // Pos() returns 0 if not found
-  Result := Pos(';' + UpperCase(Param) + ';', ';' + UpperCase(OrigPath) + ';') = 0;
-  if Result = True then
-     Result := Pos(';' + UpperCase(Param) + '\;', ';' + UpperCase(OrigPath) + ';') = 0;
+  Result := Pos(';' + Param + ';', ';' + OrigPath + ';') = 0;
 end;
