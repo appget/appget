@@ -15,18 +15,14 @@ namespace AppGet.PackageRepository
 
         public Task<PackageInfo> Get(string id, string tag)
         {
-            var task = _repositories.Select(c => c.Get(id, tag)).FirstOrDefault();
-            if (task == null)
-            {
-                task = Task.FromResult<PackageInfo>(null);
-            }
-
-            return task;
+            var task = _repositories.Select(c => c.Get(id, tag).Result).FirstOrDefault(c => c != null);
+            return Task.FromResult(task);
         }
 
-        public Task<List<PackageInfo>> Search(string term)
+        public async Task<List<PackageInfo>> Search(string term)
         {
-            return Task.FromResult(_repositories.SelectMany(c => c.Search(term).Result).ToList());
+            var task = Task.FromResult(_repositories.SelectMany(c => c.Search(term).Result).ToList());
+            return await task;
         }
     }
 }

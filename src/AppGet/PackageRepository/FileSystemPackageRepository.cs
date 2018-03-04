@@ -24,13 +24,13 @@ namespace AppGet.PackageRepository
         {
             if (string.IsNullOrWhiteSpace(_config.LocalRepository))
             {
-                return null;
+                return Task.FromResult<PackageInfo>(null);
             }
 
             var pkgDir = Path.Combine(_config.LocalRepository, id);
             if (!_fileSystem.DirectoryExists(pkgDir))
             {
-                return null;
+                return Task.FromResult<PackageInfo>(null);
             }
 
             var packages = _fileSystem.GetFiles(pkgDir, "*.yaml").Select(Read).Where(c => c.Tag == tag);

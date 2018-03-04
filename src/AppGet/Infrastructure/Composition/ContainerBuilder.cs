@@ -104,7 +104,7 @@ namespace AppGet.Infrastructure.Composition
 
             container.RegisterMultiple<IExtractToInstaller>(new[]
             {
-                typeof(AppGet.CreatePackage.Installer.Extractors.UrlExtractor)
+                typeof(CreatePackage.Installer.Extractors.UrlExtractor)
             });
 
             container.RegisterMultiple<IInstallerPrompt>(new[]
