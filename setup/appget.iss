@@ -28,15 +28,15 @@ DisableProgramGroupPage=yes
 OutputBaseFilename=appget.{#BuildNumber}
 SolidCompression=yes
 AppCopyright={#CopyRight}
-AllowUNCPath=False
+AllowUNCPath=no
 UninstallDisplayIcon={app}\appget.exe
-DisableReadyPage=True
+DisableReadyPage=yes
 CompressionThreads=2
 Compression=lzma2/normal
 AppContact={#SupportURL}
 VersionInfoVersion={#BuildNumber}
 UninstallDisplayName={#AppName}
-ChangesEnvironment=true
+ChangesEnvironment=yes
 
 PrivilegesRequired=lowest
 
