@@ -18,7 +18,7 @@ namespace AppGet.Installers.Squirrel
         protected override InstallMethodTypes InstallMethod => InstallMethodTypes.Squirrel;
 
         protected override string InteractiveArgs => "";
-        protected override string PassiveArgs => null;
+        protected override string PassiveArgs => "";
         protected override string SilentArgs => "/S";
     }
 }

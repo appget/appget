@@ -22,6 +22,12 @@ namespace AppGet.Manifests
         public List<Installer> Installers { get; set; }
 
         public InstallArgs Args { get; set; }
+
+
+        public PackageManifest()
+        {
+            InstallMethod = InstallMethodTypes.Custom;
+        }
     }
 
     public class InstallArgs

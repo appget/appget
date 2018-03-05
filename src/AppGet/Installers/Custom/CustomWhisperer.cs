@@ -14,23 +14,6 @@ namespace AppGet.Installers.Custom
 
         }
 
-        protected override string GetInstallArguments(InstallOptions installOptions, PackageManifest manifest)
-        {
-            // Passive is default
-            var args = manifest.Args.Passive;
-
-            if (installOptions.Silent)
-            {
-                args = manifest.Args.Silent;
-            }
-            else if (installOptions.Interactive)
-            {
-                args = manifest.Args.Interactive;
-            }
-
-            return args?.Trim();
-        }
-
         protected override InstallMethodTypes InstallMethod => InstallMethodTypes.Custom;
         protected override bool HasLogs => false;
 

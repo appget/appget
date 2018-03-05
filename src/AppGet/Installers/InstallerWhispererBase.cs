@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using AppGet.Commands.Install;
 using AppGet.Commands.Uninstall;
 using AppGet.HostSystem;
@@ -35,11 +36,12 @@ namespace AppGet.Installers
             var process = StartProcess(installerLocation, GetInstallArguments(installOptions, packageManifest));
             _logger.Info("Waiting for installation to complete ...");
             _processController.WaitForExit(process);
-            var logFile = _pathResolver.GetInstallerLogFile(packageManifest.Id);
+            var logFile = HasLogs ? _pathResolver.GetInstallerLogFile(packageManifest.Id) : null;
 
             if (process.ExitCode != 0)
             {
-                throw new InstallerException(process, packageManifest, logFile);
+                ExitCodes.TryGetValue(process.ExitCode, out var exitReason);
+                throw new InstallerException(process, packageManifest, exitReason, logFile);
             }
         }
 
@@ -59,23 +61,50 @@ namespace AppGet.Installers
             return installMethod == InstallMethod;
         }
 
-
-        protected virtual string GetInstallArguments(InstallOptions installOptions, PackageManifest manifest)
+        private string GetInstallArguments(InstallOptions installOptions, PackageManifest manifest)
         {
+            if (installOptions.Silent && !SupportsSilent(manifest))
+            {
+                if (SupportsPassive(manifest))
+                {
+                    installOptions.Passive = true;
+                    _logger.Warn("Silent install is not supported by installer. Falling back to Passive");
+                }
+                else
+                {
+                    installOptions.Interactive = true;
+                    _logger.Warn("Silent or Passive install is not supported by installer. Falling back to Interactive");
+                }
+            }
+
+            if (installOptions.Passive && !SupportsPassive(manifest))
+            {
+                if (SupportsSilent(manifest))
+                {
+                    installOptions.Silent = true;
+                    _logger.Warn("Passive install is not supported by installer. Falling back to Silent.");
+                }
+                else
+                {
+                    installOptions.Interactive = true;
+                    _logger.Warn("Silent or Passive install is not supported by installer. Falling back to Interactive");
+                }
+            }
+
+
             string args;
             if (installOptions.Silent)
             {
-                args = SilentArgs;
+                args = $"{SilentArgs} {manifest.Args?.Silent}";
             }
             else if (installOptions.Interactive)
             {
-                args = InteractiveArgs;
+                args = $"{InteractiveArgs} {manifest.Args?.Interactive}";
             }
             else
             {
-                args = PassiveArgs;
+                args = $"{PassiveArgs} {manifest.Args?.Passive}";
             }
-
 
             if (HasLogs)
             {
@@ -85,7 +114,17 @@ namespace AppGet.Installers
                 args = $"{args.Trim()} {loggingArgs.Trim()}";
             }
 
-            return args?.Trim();
+            return args.Trim();
+        }
+
+        private bool SupportsSilent(PackageManifest manifest)
+        {
+            return manifest.Args?.Silent != null || SilentArgs != null;
+        }
+
+        private bool SupportsPassive(PackageManifest manifest)
+        {
+            return manifest.Args?.Passive != null || PassiveArgs != null;
         }
 
         protected abstract string InteractiveArgs { get; }

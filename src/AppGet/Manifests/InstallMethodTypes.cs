@@ -2,6 +2,7 @@
 {
     public enum InstallMethodTypes
     {
+        Unknown,
         Custom,
         Zip,
         MSI,
