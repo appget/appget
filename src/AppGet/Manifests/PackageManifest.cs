@@ -18,11 +18,9 @@ namespace AppGet.Manifests
         public string[] Exe { get; set; }
 
         public InstallMethodTypes InstallMethod { get; set; }
-
-        public List<Installer> Installers { get; set; }
-
         public InstallArgs Args { get; set; }
 
+        public List<Installer> Installers { get; set; }
 
         public PackageManifest()
         {

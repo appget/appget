@@ -98,13 +98,12 @@ namespace AppGet.FileTransfer.Protocols
 
         private void TransferProgressCallback(object sender, DownloadProgressChangedEventArgs e)
         {
-            var client = (WebClient)sender;
-            var contentType = client.ResponseHeaders["Content-Type"];
             _progress.Completed = e.BytesReceived;
 
+            var client = (WebClient)sender;
 
-
-            if (contentType.Contains("text"))
+            var contentType = client.ResponseHeaders["Content-Type"];
+            if (contentType != null && contentType.Contains("text"))
             {
                 _error = new InvalidDownloadUrlException(client.BaseAddress, $"[ContentType={contentType}]");
                 client.CancelAsync();

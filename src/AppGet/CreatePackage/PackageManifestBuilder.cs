@@ -116,6 +116,8 @@ namespace AppGet.CreatePackage
 
         public List<InstallerBuilder> Installers { get; }
 
+        public InstallArgs Args { get; }
+
         public Uri Uri => new Uri(Installers.First().Location);
         public string FilePath => Installers.First().FilePath;
 
@@ -128,6 +130,7 @@ namespace AppGet.CreatePackage
             Repo = new ManifestAttribute<string>();
             Licence = new ManifestAttribute<string>();
             InstallMethod = new ManifestAttribute<InstallMethodTypes>();
+            Args = new InstallArgs();
             Installers = new List<InstallerBuilder>();
         }
 
@@ -146,6 +149,7 @@ namespace AppGet.CreatePackage
 
                 InstallMethod = InstallMethod.Value,
                 Installers = Installers.Select(c => c.Build()).OrderBy(c => c.Architecture).ToList(),
+                Args = InstallMethod.Value == InstallMethodTypes.Custom ? Args : null
             };
         }
     }

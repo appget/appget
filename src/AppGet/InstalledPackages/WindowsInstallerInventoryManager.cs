@@ -17,13 +17,13 @@ namespace AppGet.InstalledPackages
     {
         public List<WindowsInstallRecord> GetInstalledApplications()
         {
-            const string registryKey = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
-            const string registryKey64 = @"SOFTWARE\WOW6432node\Microsoft\Windows\CurrentVersion\Uninstall";
+            const string REGISTRY_KEY = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
+            const string REGISTRY_KEY_64 = @"SOFTWARE\WOW6432node\Microsoft\Windows\CurrentVersion\Uninstall";
 
-            return GetInstallRecordsForLocalMachine(registryKey)
-                    .Concat(GetInstallRecordsForLocalMachine(registryKey64))
-                    .Concat(GetInstallRecordsForCurrentUser(registryKey))
-                    .Concat(GetInstallRecordsForCurrentUser(registryKey64))
+            return GetInstallRecordsForLocalMachine(REGISTRY_KEY)
+                    .Concat(GetInstallRecordsForLocalMachine(REGISTRY_KEY_64))
+                    .Concat(GetInstallRecordsForCurrentUser(REGISTRY_KEY))
+                    .Concat(GetInstallRecordsForCurrentUser(REGISTRY_KEY_64))
                     .Distinct(JsonComparator<WindowsInstallRecord>.Comparator)
                     .ToList();
         }
