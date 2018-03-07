@@ -15,8 +15,6 @@ namespace AppGet.Installers.InstallBuilder
 
         protected override InstallMethodTypes InstallMethod => InstallMethodTypes.InstallBuilder;
 
-        protected override bool HasLogs => false;
-
         protected override string InteractiveArgs => "";
         protected override string PassiveArgs => "--mode unattended --unattendedmodeui minimal";
         protected override string SilentArgs => "--mode unattended --unattendedmodeui none";

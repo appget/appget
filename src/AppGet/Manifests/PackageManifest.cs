@@ -33,6 +33,7 @@ namespace AppGet.Manifests
         public string Passive { get; set; }
         public string Silent { get; set; }
         public string Interactive { get; set; }
+        public string Log { get; set; }
     }
 
     public class Installer

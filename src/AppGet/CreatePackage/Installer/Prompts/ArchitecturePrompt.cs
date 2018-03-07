@@ -7,7 +7,7 @@ namespace AppGet.CreatePackage.Installer.Prompts
     {
         public bool ShouldPrompt(InstallerBuilder installerBuilder)
         {
-            return installerBuilder.Architecture.HasConfidence(Confidence.Authoritative);
+            return !installerBuilder.Architecture.HasConfidence(Confidence.Authoritative);
         }
 
         public void Invoke(InstallerBuilder installer)

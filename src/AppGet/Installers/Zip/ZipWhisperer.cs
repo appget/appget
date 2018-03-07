@@ -1,6 +1,4 @@
-﻿using System.IO;
-using AppGet.Commands.Install;
-using AppGet.Commands.Uninstall;
+﻿using AppGet.Commands.Install;
 using AppGet.Compression;
 using AppGet.FileSystem;
 using AppGet.HostSystem;
@@ -28,21 +26,6 @@ namespace AppGet.Installers.Zip
         {
             var target = _pathResolver.GetInstallationPath(packageManifest);
             _compressionService.Decompress(installerLocation, target);
-        }
-
-        public void Uninstall(PackageManifest packageManifest, UninstallOptions installOptions)
-        {
-            var target = _pathResolver.GetInstallationPath(packageManifest);
-            _logger.Info("Deleting {0}", target);
-
-            try
-            {
-                _fileSystem.DeleteDirectory(target);
-            }
-            catch (DirectoryNotFoundException e)
-            {
-                _logger.Warn(e.Message);
-            }
         }
 
         public bool CanHandle(InstallMethodTypes installMethod)

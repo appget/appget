@@ -116,6 +116,7 @@
     <Compile Include="Installers\Nsis\NsisDetectorFixture.cs" />
     <Compile Include="Installers\Squirrel\SquirrelDetectorFixture.cs" />
     <Compile Include="Installers\Squirrel\SquirrelReaderFixture.cs" />
+    <Compile Include="Installers\Wix\WixDetectorFixture.cs" />
     <Compile Include="Manifests\PackageManifestFixture.cs" />
     <Compile Include="InstalledPackages\WindowsInstallerInventoryManagerFixture.cs" />
     <Compile Include="Options\OptionsParserFixture.cs" />

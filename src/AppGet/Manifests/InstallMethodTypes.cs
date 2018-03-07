@@ -6,6 +6,7 @@
         Custom,
         Zip,
         MSI,
+        Wix,
         Inno,
         InstallShield,
         NSIS,

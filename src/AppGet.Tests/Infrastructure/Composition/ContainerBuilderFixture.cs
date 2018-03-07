@@ -24,9 +24,9 @@ namespace AppGet.Tests.Infrastructure.Composition
 
             void Assert<T>()
             {
-                var commandHandlesr = allTypes.Where(c => c.ImplementedInterfaces.Any(i => i == typeof(T))).Select(x => x.Name).OrderBy(o => o).ToList();
+                var commandHandler = allTypes.Where(c => c.ImplementedInterfaces.Any(i => i == typeof(T))).Select(x => x.Name).OrderBy(o => o).ToList();
                 var registered = container.Resolve<IEnumerable<T>>().Select(e => e.GetType().Name).OrderBy(o => o).ToList();
-                commandHandlesr.Should().Equal(registered);
+                commandHandler.Should().Equal(registered);
             }
 
             Assert<ICommandHandler>();

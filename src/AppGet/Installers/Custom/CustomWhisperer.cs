@@ -15,10 +15,10 @@ namespace AppGet.Installers.Custom
         }
 
         protected override InstallMethodTypes InstallMethod => InstallMethodTypes.Custom;
-        protected override bool HasLogs => false;
 
         protected override string InteractiveArgs => null;
         protected override string PassiveArgs => null;
         protected override string SilentArgs => null;
+        protected override string LogArgs => null;
     }
 }

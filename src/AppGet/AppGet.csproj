@@ -171,6 +171,8 @@
     <Compile Include="Installers\IDetectInstallMethod.cs" />
     <Compile Include="Installers\Inno\InnoDetector.cs" />
     <Compile Include="Installers\InstallerDetectorBase.cs" />
+    <Compile Include="Installers\Wix\WixDetector.cs" />
+    <Compile Include="Installers\Wix\WixWhisperer.cs" />
     <Compile Include="Installers\Msi\MsiDetector.cs" />
     <Compile Include="Installers\Custom\CustomWhisperer.cs" />
     <Compile Include="Installers\Squirrel\NugetSpec.cs" />

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using AppGet.Commands.Uninstall;
 using AppGet.HostSystem;
 using AppGet.Manifests;
 using AppGet.Processes;
@@ -86,13 +84,7 @@ namespace AppGet.Installers.Msi
         {
         }
 
-        public override void Uninstall(PackageManifest packageManifest, UninstallOptions installOptions)
-        {
-            throw new NotImplementedException();
-        }
-
         protected override InstallMethodTypes InstallMethod => InstallMethodTypes.MSI;
-        protected override bool HasLogs => true;
 
         protected override Process StartProcess(string installerLocation, string args)
         {
@@ -102,10 +94,6 @@ namespace AppGet.Installers.Msi
         protected override string InteractiveArgs => "/qf";
         protected override string PassiveArgs => "/qb /norestart";
         protected override string SilentArgs => "/qn /norestart";
-
-        protected override string GetLoggingArgs(string path)
-        {
-            return $"/L* \"{path}\"";
-        }
+        protected override string LogArgs => "/L* {path}";
     }
 }

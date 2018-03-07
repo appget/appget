@@ -16,7 +16,7 @@ namespace AppGet.CreatePackage.Installer.Prompts
 
         public bool ShouldPrompt(InstallerBuilder installerBuilder)
         {
-            return installerBuilder.MinWindowsVersion.HasConfidence(Confidence.Authoritative);
+            return !installerBuilder.MinWindowsVersion.HasConfidence(Confidence.Authoritative);
         }
 
         public void Invoke(InstallerBuilder installerBuilder)

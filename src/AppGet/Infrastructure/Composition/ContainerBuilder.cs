@@ -22,6 +22,7 @@ using AppGet.Installers.InstallShield;
 using AppGet.Installers.Msi;
 using AppGet.Installers.Nsis;
 using AppGet.Installers.Squirrel;
+using AppGet.Installers.Wix;
 using AppGet.Installers.Zip;
 using AppGet.PackageRepository;
 using NLog;
@@ -56,20 +57,8 @@ namespace AppGet.Infrastructure.Composition
                 typeof(CreateManifestCommandHandler)
             });
 
-            container.RegisterMultiple<IInstallerWhisperer>(new[]
-            {
-                typeof(CustomWhisperer),
-                typeof(InnoWhisperer),
-                typeof(InstallBuilderWhisperer),
-                typeof(InstallShieldWhisperer),
-                typeof(MsiWhisperer),
-                typeof(NsisWhisperer),
-                typeof(SquirrelWhisperer),
-                typeof(ZipWhisperer),
-            });
-
             container.RegisterMultiple<ICheckSum>(new[]
-            {
+              {
                 typeof(Sha256Hash),
                 typeof(Sha1Hash),
                 typeof(Md5Hash),
@@ -111,12 +100,26 @@ namespace AppGet.Infrastructure.Composition
                 typeof(MinWindowsVersionPrompt)
             });
 
+            container.RegisterMultiple<IInstallerWhisperer>(new[]
+            {
+                typeof(CustomWhisperer),
+                typeof(InnoWhisperer),
+                typeof(InstallBuilderWhisperer),
+                typeof(InstallShieldWhisperer),
+                typeof(MsiWhisperer),
+                typeof(WixWhisperer),
+                typeof(NsisWhisperer),
+                typeof(SquirrelWhisperer),
+                typeof(ZipWhisperer),
+            });
+
             container.RegisterMultiple<IDetectInstallMethod>(new[]
             {
                 typeof(MsiDetector),
                 typeof(SquirrelDetector),
                 typeof(NsisDetector),
                 typeof(InnoDetector),
+                typeof(WixDetector),
                 typeof(InstallBuilderDetector)
             });
 

@@ -1,13 +1,13 @@
 ﻿using AppGet.Compression;
 using AppGet.CreatePackage;
-using AppGet.Installers.Msi;
+using AppGet.Installers.Wix;
 using AppGet.Tools;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace AppGet.Tests.Installers.Msi
+namespace AppGet.Tests.Installers.Wix
 {
-    public class MsiDetectorFixture : DetectorTestBase<MsiDetector>
+    public class WixDetectorFixture : DetectorTestBase<WixDetector>
     {
         [Test]
         [Explicit]

@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using AppGet.Commands.Install;
-using AppGet.Commands.Uninstall;
 using AppGet.HostSystem;
 using AppGet.Manifests;
 using AppGet.Processes;
@@ -21,9 +19,6 @@ namespace AppGet.Installers
         protected abstract InstallMethodTypes InstallMethod { get; }
 
 
-        protected abstract bool HasLogs { get; }
-
-
         protected InstallerWhispererBase(IProcessController processController, IPathResolver pathResolver, Logger logger)
         {
             _processController = processController;
@@ -36,10 +31,10 @@ namespace AppGet.Installers
             var process = StartProcess(installerLocation, GetInstallArguments(installOptions, packageManifest));
             _logger.Info("Waiting for installation to complete ...");
             _processController.WaitForExit(process);
-            var logFile = HasLogs ? _pathResolver.GetInstallerLogFile(packageManifest.Id) : null;
 
             if (process.ExitCode != 0)
             {
+                var logFile = LogArgs == null ? null : _pathResolver.GetInstallerLogFile(packageManifest.Id);
                 ExitCodes.TryGetValue(process.ExitCode, out var exitReason);
                 throw new InstallerException(process, packageManifest, exitReason, logFile);
             }
@@ -50,11 +45,6 @@ namespace AppGet.Installers
             return _processController.Start(installerLocation, args);
         }
 
-
-        public virtual void Uninstall(PackageManifest packageManifest, UninstallOptions installOptions)
-        {
-
-        }
 
         public bool CanHandle(InstallMethodTypes installMethod)
         {
@@ -106,10 +96,11 @@ namespace AppGet.Installers
                 args = $"{PassiveArgs} {manifest.Args?.Passive}";
             }
 
-            if (HasLogs)
+            var logFile = _pathResolver.GetInstallerLogFile(installOptions.PackageId);
+            var loggingArgs = GetLoggingArgs(manifest, logFile);
+
+            if (loggingArgs != null)
             {
-                var logFile = _pathResolver.GetInstallerLogFile(installOptions.PackageId);
-                var loggingArgs = GetLoggingArgs(logFile);
                 _logger.Debug($"Writing installer log files to {logFile}");
                 args = $"{args.Trim()} {loggingArgs.Trim()}";
             }
@@ -130,10 +121,12 @@ namespace AppGet.Installers
         protected abstract string InteractiveArgs { get; }
         protected abstract string PassiveArgs { get; }
         protected abstract string SilentArgs { get; }
+        protected virtual string LogArgs { get; }
 
-        protected virtual string GetLoggingArgs(string path)
+        private string GetLoggingArgs(PackageManifest manifest, string path)
         {
-            return null;
+            var template = manifest.Args?.Log ?? LogArgs;
+            return template?.Replace("{path}", $"\"{path}\"");
         }
     }
 }

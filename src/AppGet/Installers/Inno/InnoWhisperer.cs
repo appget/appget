@@ -28,16 +28,11 @@ namespace AppGet.Installers.Inno
         }
 
         protected override InstallMethodTypes InstallMethod => InstallMethodTypes.Inno;
-        protected override bool HasLogs => false;
 
         //Command line args: http://www.jrsoftware.org/ishelp/index.php?topic=setupcmdline
         protected override string InteractiveArgs => "";
         protected override string PassiveArgs => "/SILENT /SUPPRESSMSGBOXES /NORESTART /CLOSEAPPLICATIONS /FORCECLOSEAPPLICATIONS /RESTARTEXITCODE=3010";
         protected override string SilentArgs => "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /CLOSEAPPLICATIONS /FORCECLOSEAPPLICATIONS /RESTARTEXITCODE=3010";
-
-        protected override string GetLoggingArgs(string path)
-        {
-            return $"/LOG=\"{path}\"";
-        }
+        protected override string LogArgs => "/LOG={path}";
     }
 }

@@ -27,8 +27,6 @@ namespace AppGet.Installers
             _logger.Info("Beginning uninstallation of " + packageManifest.Id);
 
             var whisperer = _installWhisperers.Single(c => c.CanHandle(packageManifest.InstallMethod));
-
-            whisperer.Uninstall(packageManifest, installOptions);
         }
     }
 }

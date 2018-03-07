@@ -15,8 +15,6 @@ namespace AppGet.Installers.Nsis
 
         protected override InstallMethodTypes InstallMethod => InstallMethodTypes.NSIS;
 
-        protected override bool HasLogs => false;
-
         protected override string InteractiveArgs => "";
         protected override string PassiveArgs => null;
         protected override string SilentArgs => "/S";

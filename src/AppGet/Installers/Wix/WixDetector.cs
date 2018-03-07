@@ -2,15 +2,15 @@
 using AppGet.Manifests;
 using SevenZip;
 
-namespace AppGet.Installers.Msi
+namespace AppGet.Installers.Wix
 {
-    public class MsiDetector : InstallerDetectorBase
+    public class WixDetector : InstallerDetectorBase
     {
-        public override InstallMethodTypes InstallMethod => InstallMethodTypes.MSI;
+        public override InstallMethodTypes InstallMethod => InstallMethodTypes.Wix;
 
         public override Confidence GetConfidence(string path, SevenZipExtractor archive, string exeManifest)
         {
-            if (path.ToLowerInvariant().EndsWith(".msi"))
+            if (archive != null && archive.ArchiveFileNames.Contains(".wixburn"))
             {
                 return Confidence.Authoritative;
             }
