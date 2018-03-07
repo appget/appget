@@ -22,18 +22,16 @@ namespace AppGet.Installers
         private readonly IFindInstaller _findInstaller;
         private readonly IPathResolver _pathResolver;
         private readonly IFileTransferService _fileTransferService;
-        private readonly IInventoryManager _inventoryManager;
         private readonly List<IInstallerWhisperer> _installWhisperers;
 
         public InstallService(Logger logger, IInstallTracker installTracker, IFindInstaller findInstaller, IPathResolver pathResolver,
-            IFileTransferService fileTransferService, IInventoryManager inventoryManager, List<IInstallerWhisperer> installWhisperers)
+            IFileTransferService fileTransferService, List<IInstallerWhisperer> installWhisperers)
         {
             _logger = logger;
             _installTracker = installTracker;
             _findInstaller = findInstaller;
             _pathResolver = pathResolver;
             _fileTransferService = fileTransferService;
-            _inventoryManager = inventoryManager;
             _installWhisperers = installWhisperers;
         }
 
@@ -49,47 +47,9 @@ namespace AppGet.Installers
 
             whisperer.Install(installerPath, packageManifest, installOptions);
 
-            var installedPackage = GetInstalledPackage(packageManifest, installer);
-
-            _inventoryManager.AddPackage(installedPackage);
-
             _logger.Info("Installation completed for [{0}] {1}", packageManifest.Id, packageManifest.Name);
         }
 
 
-        private InstalledPackage GetInstalledPackage(PackageManifest manifest, Installer installer)
-        {
-            var installedPackage = new InstalledPackage
-            {
-                Id = manifest.Id,
-                Name = manifest.Name,
-                Version = manifest.Version,
-                InstallMethod = manifest.InstallMethod,
-                Architecture = installer.Architecture
-            };
-
-            if (manifest.InstallMethod == InstallMethodTypes.Zip)
-            {
-                return installedPackage;
-            }
-
-            if (installer.ProductIds != null && installer.ProductIds.Any())
-            {
-                installedPackage.ProductIds = installer.ProductIds;
-
-                return installedPackage;
-            }
-
-            var productId = _installTracker.GetInstalledProductId();
-
-            if (productId == null)
-            {
-                return installedPackage;
-            }
-
-            installedPackage.ProductIds.Add(productId);
-
-            return installedPackage;
-        }
     }
 }

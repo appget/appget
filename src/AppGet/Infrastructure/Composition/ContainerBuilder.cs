@@ -1,7 +1,6 @@
 ﻿using AppGet.Commands;
 using AppGet.Commands.CreateManifest;
 using AppGet.Commands.Install;
-using AppGet.Commands.List;
 using AppGet.Commands.Search;
 using AppGet.Commands.Uninstall;
 using AppGet.Commands.ViewManifest;
@@ -51,7 +50,6 @@ namespace AppGet.Infrastructure.Composition
             {
                 typeof(ViewManifestCommandHandler),
                 typeof(SearchCommandHandler),
-                typeof(ListCommandHandler),
                 typeof(InstallCommandHandler),
                 typeof(WindowsInstallerSearchCommandHandler),
                 typeof(UninstallCommandHandler),
@@ -86,7 +84,7 @@ namespace AppGet.Infrastructure.Composition
                 typeof(PackageIdExtractor),
                 typeof(SourceforgeExtractor),
                 typeof(SquirrelExtractor),
-                typeof(AppGet.CreatePackage.Root.Extractors.UrlExtractor),
+                typeof(UrlExtractor),
             });
 
             container.RegisterMultiple<IManifestPrompt>(new[]

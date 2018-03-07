@@ -13,7 +13,7 @@ namespace AppGet.CreatePackage.Root.Prompts
 
         public bool ShouldPrompt(PackageManifestBuilder manifestBuilder)
         {
-            return manifestBuilder.Version.HasConfidence(Confidence.Authoritative);
+            return !manifestBuilder.Version.HasConfidence(Confidence.Authoritative);
         }
 
         public void Invoke(PackageManifestBuilder manifest)

@@ -96,8 +96,6 @@
     <Compile Include="Commands\Uninstall\UninstallOptions.cs" />
     <Compile Include="Commands\Install\InstallCommandHandler.cs" />
     <Compile Include="Commands\Install\InstallOptions.cs" />
-    <Compile Include="Commands\List\ListCommandHandler.cs" />
-    <Compile Include="Commands\List\ListOptions.cs" />
     <Compile Include="Commands\UnknownCommandException.cs" />
     <Compile Include="Commands\CreateManifest\CreateManifestCommandHandler.cs" />
     <Compile Include="Commands\CreateManifest\CreateManifestOptions.cs" />
@@ -194,7 +192,6 @@
     </Compile>
     <Compile Include="Http\HttpClient.cs" />
     <Compile Include="Infrastructure\Logging\LogConfigurator.cs" />
-    <Compile Include="InstalledPackages\InstalledPackage.cs" />
     <Compile Include="InstalledPackages\InstallTracker.cs" />
     <Compile Include="InstalledPackages\WindowsInstallRecord.cs" />
     <Compile Include="InstalledPackages\WindowsInstallerInventoryManager.cs" />
@@ -207,7 +204,6 @@
     <Compile Include="Installers\UninstallService.cs" />
     <Compile Include="Installers\InstallerWhispererBase.cs" />
     <Compile Include="Installers\Zip\ZipWhisperer.cs" />
-    <Compile Include="InstalledPackages\InventoryManager.cs" />
     <Compile Include="Commands\AppGetOption.cs" />
     <Compile Include="Commands\PackageCommandOptions.cs" />
     <Compile Include="Commands\OptionException.cs" />

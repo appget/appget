@@ -7,7 +7,7 @@ namespace AppGet.CreatePackage.Root.Prompts
     {
         public bool ShouldPrompt(PackageManifestBuilder manifestBuilder)
         {
-            return manifestBuilder.Version.HasConfidence(Confidence.Plausible);
+            return !manifestBuilder.InstallMethod.HasConfidence(Confidence.Plausible);
         }
 
         public void Invoke(PackageManifestBuilder manifest)

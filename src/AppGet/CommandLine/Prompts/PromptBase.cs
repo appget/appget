@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using WindowsInput;
 
 namespace AppGet.CommandLine.Prompts
@@ -56,6 +57,7 @@ namespace AppGet.CommandLine.Prompts
                 var defaultString = OptionString(defaultValue);
                 if (!string.IsNullOrWhiteSpace(defaultString))
                 {
+                    Thread.Sleep(50);
                     _keyboardSimulator.TextEntry(defaultString.Trim());
                 }
             }

@@ -8,7 +8,11 @@ namespace AppGet.CreatePackage.Root.Extractors
 
         public void Invoke(PackageManifestBuilder manifestBuilder)
         {
-            var id = _idRegex.Replace(manifestBuilder.Name.Value, "-").ToLowerInvariant().Trim('-');
+            var name = manifestBuilder.Name.Value;
+
+            if (string.IsNullOrWhiteSpace(name)) return;
+
+            var id = _idRegex.Replace(name, "-").ToLowerInvariant().Trim('-');
             manifestBuilder.Id.Add(id.Replace("+", "plus"), Confidence.Plausible, this);
         }
     }

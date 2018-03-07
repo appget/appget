@@ -15,21 +15,18 @@ namespace AppGet.Commands.Uninstall
         private readonly IWindowsInstallerInventoryManager _windowsInstallerInventoryManager;
 
         private readonly IUninstallService _uninstallService;
-        private readonly IInventoryManager _inventoryManager;
         private readonly Logger _logger;
 
         public UninstallCommandHandler(IPackageRepository packageRepository,
                                        IPackageManifestService packageManifestService,
                                        IWindowsInstallerInventoryManager windowsInstallerInventoryManager,
                                        IUninstallService uninstallService,
-                                       IInventoryManager inventoryManager,
                                        Logger logger)
         {
             _packageRepository = packageRepository;
             _packageManifestService = packageManifestService;
             _windowsInstallerInventoryManager = windowsInstallerInventoryManager;
             _uninstallService = uninstallService;
-            _inventoryManager = inventoryManager;
             _logger = logger;
         }
 
@@ -42,32 +39,11 @@ namespace AppGet.Commands.Uninstall
         {
             var uninstallOptions = (UninstallOptions)commandOptions;
 
-            var installedPackages = _inventoryManager.GetInstalledPackages(uninstallOptions.PackageId);
-            var windowsInventory = _windowsInstallerInventoryManager.GetInstalledApplications(uninstallOptions.PackageId).ToList();
+            var windowsInventory = _windowsInstallerInventoryManager.GetInstalledApplications().Where(c => c.Name.Contains(uninstallOptions.Package)).ToList();
+            _logger.Warn($"Package {uninstallOptions.PackageId} wasn't installed using AppGet. Searching Windows installer records");
 
-            if (installedPackages.Any())
-            {
-                foreach (var installedPackage in installedPackages)
-                {
-                    var package = await _packageRepository.Get(uninstallOptions.PackageId, uninstallOptions.PackageTag);
+            // TODO: Uninstall
 
-                    if (package == null)
-                    {
-                        throw new PackageNotFoundException(uninstallOptions.PackageId);
-                    }
-
-                    var manifest = await _packageManifestService.LoadManifest(package.ManifestPath);
-
-                    //TODO: Does the uninstall service know how to choose the correct package to remove?
-                    _uninstallService.Uninstall(manifest, uninstallOptions);
-                    _inventoryManager.RemovePackage(installedPackage);
-                }
-            }
-            else
-            {
-                _logger.Warn($"Package {uninstallOptions.PackageId} wasn't installed using AppGet. Searching Windows installer records");
-
-            }
         }
     }
 }

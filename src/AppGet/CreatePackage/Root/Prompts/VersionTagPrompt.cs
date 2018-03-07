@@ -14,14 +14,14 @@ namespace AppGet.CreatePackage.Root.Prompts
 
         public bool ShouldPrompt(PackageManifestBuilder manifestBuilder)
         {
-            return manifestBuilder.Version.HasConfidence(Confidence.Authoritative);
+            return true;
         }
 
         public void Invoke(PackageManifestBuilder manifest)
         {
-            var tag = _prompt.Request("Version Tag", LATEST).ToLowerInvariant();
+            var tag = _prompt.Request("Version Tag", LATEST)?.ToLowerInvariant();
 
-            if (tag == LATEST)
+            if (string.IsNullOrWhiteSpace(tag) || tag == LATEST)
             {
                 tag = null;
             }

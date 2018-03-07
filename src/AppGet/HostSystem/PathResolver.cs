@@ -7,7 +7,6 @@ namespace AppGet.HostSystem
     public interface IPathResolver
     {
         string AppDataDirectory { get; }
-        string InstalledPackageList { get; }
         string TempFolder { get; }
         string GetInstallerLogFile(string packageId);
         string GetInstallationPath(PackageManifest packageManifest);
@@ -27,7 +26,6 @@ namespace AppGet.HostSystem
 
         public string AppDataDirectory => Path.Combine(ProgramData, "AppGet");
 
-        public string InstalledPackageList => Path.Combine(AppDataDirectory, "packages.yaml");
 
         public string GetInstallerLogFile(string packageId)
         {

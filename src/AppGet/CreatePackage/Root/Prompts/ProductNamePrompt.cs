@@ -1,4 +1,5 @@
 using AppGet.CommandLine.Prompts;
+using AppGet.CreatePackage.Root.Extractors;
 
 namespace AppGet.CreatePackage.Root.Prompts
 {
@@ -13,12 +14,15 @@ namespace AppGet.CreatePackage.Root.Prompts
 
         public bool ShouldPrompt(PackageManifestBuilder manifestBuilder)
         {
-            return manifestBuilder.Version.HasConfidence(Confidence.Authoritative);
+            return !manifestBuilder.Name.HasConfidence(Confidence.Authoritative);
         }
 
         public void Invoke(PackageManifestBuilder manifest)
         {
-            manifest.Name.Add(_prompt.Request("Product Name", manifest.Name.Value), Confidence.Authoritative, this);
+            var name = _prompt.Request("Product Name", manifest.Name.Value);
+
+            manifest.Name.Add(name, Confidence.Authoritative, this);
+            new NameExtractor().Invoke(manifest);
         }
     }
 }

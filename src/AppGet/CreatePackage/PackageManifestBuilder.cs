@@ -71,8 +71,10 @@ namespace AppGet.CreatePackage
         private ManifestAttributeCandidate<T> GetTop()
         {
             return Values
-                 .OrderByDescending(c => c.Confidence).ThenByDescending(c => _secondarySort(c.Value))
-                 .FirstOrDefault(c => c.Confidence > Confidence.None);
+                .OrderByDescending(c => c.Confidence)
+                .ThenBy(c => c.Value == null)
+                .ThenByDescending(c => _secondarySort(c.Value))
+                .FirstOrDefault(c => c.Confidence > Confidence.None);
         }
 
         public T Value
