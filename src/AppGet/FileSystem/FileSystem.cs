@@ -14,6 +14,8 @@ namespace AppGet.FileSystem
         void CreateDirectory(string path);
         void DeleteDirectory(string path);
         void SetPermissions(string path, WellKnownSidType accountSid, FileSystemRights rights, AccessControlType controlType);
+        void DeleteFile(string tempFile);
+        void Move(string sourceFile, string destinationFile);
     }
 
     public class FileSystem : IFileSystem
@@ -65,6 +67,16 @@ namespace AppGet.FileSystem
 
             directorySecurity.AddAccessRule(accessRule);
             directoryInfo.SetAccessControl(directorySecurity);
+        }
+
+        public void DeleteFile(string filePath)
+        {
+            File.Delete(filePath);
+        }
+
+        public void Move(string sourceFile, string destinationFile)
+        {
+            File.Move(sourceFile, destinationFile);
         }
     }
 }

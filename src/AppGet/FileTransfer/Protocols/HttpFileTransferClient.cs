@@ -7,6 +7,7 @@ using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using AppGet.FileSystem;
 using AppGet.Http;
 using AppGet.ProgressTracker;
 
@@ -15,18 +16,19 @@ namespace AppGet.FileTransfer.Protocols
     public class HttpFileTransferClient : IFileTransferClient
     {
         private readonly IHttpClient _httpClient;
+        private readonly IFileSystem _fileSystem;
         private static readonly Regex HttpRegex = new Regex(@"^https?\:\/\/", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static readonly Regex FileNameRegex = new Regex(@"\.(zip|7zip|7z|rar|msi|exe)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        private static readonly Regex ContentDepositionRegex = new Regex(@"filename=\W*(?<fileName>.+\.\w{2,4})", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private bool _inTransit;
 
         private ProgressState _progress;
         private Exception _error;
 
 
-        public HttpFileTransferClient(IHttpClient httpClient)
+        public HttpFileTransferClient(IHttpClient httpClient, IFileSystem fileSystem)
         {
             _httpClient = httpClient;
+            _fileSystem = fileSystem;
         }
 
         public bool CanHandleProtocol(string source)
@@ -65,26 +67,40 @@ namespace AppGet.FileTransfer.Protocols
         public void TransferFile(string source, string destinationFile)
         {
             _error = null;
-            var webClient = new WebClient();
-
-            webClient.DownloadProgressChanged += TransferProgressCallback;
-            webClient.DownloadFileCompleted += TransferCompletedCallback;
-            webClient.DownloadFileAsync(new Uri(source), destinationFile);
-
-            _inTransit = true;
-            _progress = new ProgressState();
-
-            while (_inTransit)
+            string tempFile;
+            using (var webClient = new WebClient())
             {
-                Thread.Sleep(100);
+                tempFile = destinationFile + ".APPGET_DOWNLOAD";
+
+                webClient.DownloadProgressChanged += TransferProgressCallback;
+                webClient.DownloadFileCompleted += TransferCompletedCallback;
+                webClient.DownloadFileAsync(new Uri(source), tempFile);
+
+
+                _inTransit = true;
+                _progress = new ProgressState();
+
+                while (_inTransit)
+                {
+                    Thread.Sleep(100);
+                }
+
+                if (_error != null)
+                {
+                    if (_fileSystem.FileExists(tempFile))
+                    {
+                        _fileSystem.DeleteFile(tempFile);
+                    }
+
+                    var e = _error;
+                    _error = null;
+                    throw e;
+                }
             }
 
-            if (_error != null)
-            {
-                var e = _error;
-                _error = null;
-                throw e;
-            }
+
+            _fileSystem.Move(tempFile, destinationFile);
+            OnCompleted?.Invoke(_progress);
         }
 
         public async Task<string> ReadString(string source)
@@ -131,8 +147,6 @@ namespace AppGet.FileTransfer.Protocols
             {
                 _error = e.Error;
             }
-
-            OnCompleted?.Invoke(_progress);
         }
 
         public Action<ProgressState> OnStatusUpdated { get; set; }
