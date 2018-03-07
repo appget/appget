@@ -8,12 +8,7 @@ namespace AppGet.Serialization
 
         public bool Equals(T x, T y)
         {
-            if (object.Equals(x, y))
-            {
-                return true;
-            }
-
-            return Json.Serialize(x) == Json.Serialize(y);
+            return JsonEquality.Equal(x, y);
         }
 
         public int GetHashCode(T obj)

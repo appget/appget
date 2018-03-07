@@ -56,7 +56,7 @@ namespace AppGet.Tests.PackageRepository
 
             var results = await Subject.Search(term);
 
-            var found = results.Single();
+            var found = results.First();
 
             found.Should().NotBeNull();
             found.ManifestPath.Should().StartWith("https://raw.githubusercontent.com/appget/packages/master/manifests/");

@@ -165,7 +165,9 @@
     <Compile Include="FileTransfer\Protocols\WindowsPathFileTransferClient.cs" />
     <Compile Include="FileTransfer\ProtocolNotSupportedException.cs" />
     <Compile Include="FileTransfer\FileTransferService.cs" />
-    <Compile Include="FileTransfer\Protocols\HttpFileTransferClient.cs" />
+    <Compile Include="FileTransfer\Protocols\HttpFileTransferClient.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="FileTransfer\IFileTransferClient.cs" />
     <Compile Include="Infrastructure\Logging\SentryTarget.cs" />
     <Compile Include="Installers\IDetectInstallMethod.cs" />
@@ -230,6 +232,7 @@
     <Compile Include="Requirements\Specifications\OsArchitectureSpecification.cs" />
     <Compile Include="Serialization\Json.cs" />
     <Compile Include="Serialization\JsonComparator.cs" />
+    <Compile Include="Serialization\JsonEquality.cs" />
     <Compile Include="Serialization\VersionConverter.cs" />
     <Compile Include="Serialization\Yaml.cs" />
     <Compile Include="Requirements\IEnforceRequirements.cs" />

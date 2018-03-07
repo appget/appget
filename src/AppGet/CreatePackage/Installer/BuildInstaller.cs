@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AppGet.CreatePackage.Parsers;
 using AppGet.Crypto.Hash.Algorithms;
+using AppGet.Extensions;
 using AppGet.FileTransfer;
 using AppGet.HostSystem;
 using NLog;
@@ -44,18 +45,18 @@ namespace AppGet.CreatePackage.Installer
 
             if (uri.Scheme == Uri.UriSchemeHttp)
             {
-                //                _logger.Warn("Download link is using HTTP protocol. Checking HTTPS availability.");
-                //
-                //                try
-                //                {
-                //                    installer = await DownloadInstaller(uri.ToHttps());
-                //                    _logger.Info("Installer appears to be available using HTTPS. Using HTTPS instead.");
-                //
-                //                }
-                //                catch (Exception e)
-                //                {
-                //                    _logger.Warn(e, "HTTPS upgrade failed.");
-                //                }
+                _logger.Warn("Download link is using HTTP protocol. Checking HTTPS availability.");
+
+                try
+                {
+                    installer = await DownloadInstaller(uri.ToHttps());
+                    _logger.Info("Installer appears to be available using HTTPS. Using HTTPS instead.");
+
+                }
+                catch (Exception e)
+                {
+                    _logger.Warn(e, "HTTPS upgrade failed.");
+                }
             }
 
             if (installer == null)
@@ -84,10 +85,10 @@ namespace AppGet.CreatePackage.Installer
             var installer = new InstallerBuilder();
             var filePath = await _fileTransferService.TransferFile(uri.ToString(), _pathResolver.TempFolder, null);
 
-            var sha256 = _sha256.CalculateHash(filePath);
-            _logger.Info($"SHA-256: {sha256}");
             if (VersionParser.Parse(uri) != null)
             {
+                var sha256 = _sha256.CalculateHash(filePath);
+                _logger.Info($"SHA-256: {sha256}");
                 installer.Sha256 = sha256;
             }
             else

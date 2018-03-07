@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using AppGet.Extensions;
 using AppGet.Manifests;
+using AppGet.Serialization;
 
 namespace AppGet.CreatePackage
 {
@@ -118,7 +119,7 @@ namespace AppGet.CreatePackage
 
         public List<InstallerBuilder> Installers { get; }
 
-        public InstallArgs Args { get; }
+        public InstallArgs Args { get; private set; }
 
         public Uri Uri => new Uri(Installers.First().Location);
         public string FilePath => Installers.First().FilePath;
@@ -139,6 +140,11 @@ namespace AppGet.CreatePackage
 
         public PackageManifest Build()
         {
+            if (InstallMethod.Value == InstallMethodTypes.Squirrel || JsonEquality.Equal(Args, new InstallArgs()))
+            {
+                Args = null;
+            }
+
             return new PackageManifest
             {
                 Id = Id.Value,
@@ -151,7 +157,7 @@ namespace AppGet.CreatePackage
 
                 InstallMethod = InstallMethod.Value,
                 Installers = Installers.Select(c => c.Build()).OrderBy(c => c.Architecture).ToList(),
-                Args = InstallMethod.Value == InstallMethodTypes.Custom ? Args : null
+                Args = JsonEquality.Equal(Args, new InstallArgs()) ? null : Args
             };
         }
     }
