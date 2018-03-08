@@ -68,8 +68,13 @@ namespace AppGet.FileTransfer.Protocols
         {
             _error = null;
             string tempFile;
-            using (var webClient = new WebClient())
+            using (var webClient = new WebClientWithTimeout(TimeSpan.FromSeconds(1)))
             {
+                if (_fileSystem.FileExists(destinationFile))
+                {
+                    _fileSystem.DeleteFile(destinationFile);
+                }
+
                 tempFile = destinationFile + ".APPGET_DOWNLOAD";
 
                 webClient.DownloadProgressChanged += TransferProgressCallback;

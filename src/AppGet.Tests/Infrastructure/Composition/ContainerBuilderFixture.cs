@@ -34,7 +34,6 @@ namespace AppGet.Tests.Infrastructure.Composition
             Assert<ICheckSum>();
             Assert<IExtractToManifestRoot>();
             Assert<IManifestPrompt>();
-            Assert<IExtractToInstaller>();
             Assert<IInstallerPrompt>();
             Assert<IDetectInstallMethod>();
             Assert<IFileTransferClient>();

@@ -38,7 +38,15 @@ namespace AppGet.CreatePackage
                 value = (dynamic)str;
             }
 
-            Source = source.GetType().Name;
+            if (source is string)
+            {
+                Source = source.ToString();
+            }
+            else
+            {
+                Source = source.GetType().Name;
+            }
+
             Value = value;
             Confidence = confidence;
         }
@@ -69,7 +77,7 @@ namespace AppGet.CreatePackage
             return attr.Value;
         }
 
-        private ManifestAttributeCandidate<T> GetTop()
+        public ManifestAttributeCandidate<T> GetTop()
         {
             return Values
                 .OrderByDescending(c => c.Confidence)

@@ -25,5 +25,20 @@ namespace AppGet.Tests.Tools
             manifest.Should().Contain("assemblyIdentity");
             manifest.ToLowerInvariant().Should().NotContain(exe.ToLowerInvariant());
         }
+
+
+        [Test]
+        public void get_vlc()
+        {
+            Mocker.SetInstance<IEnvInfo>(new EnvInfo());
+            Mocker.SetInstance<IProcessController>(new ProcessController(logger));
+
+
+            var manifest = Subject.GetManifest("C:\\ProgramData\\AppGet\\Temp\\vlc-3.0.0-win32.exe");
+
+            manifest.Should().NotBeNullOrWhiteSpace();
+            manifest.Should().Contain("supportedOS");
+            manifest.Should().Contain("assemblyIdentity");
+        }
     }
 }

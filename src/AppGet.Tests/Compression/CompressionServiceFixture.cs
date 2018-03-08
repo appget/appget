@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using AppGet.Compression;
@@ -17,9 +18,19 @@ namespace AppGet.Tests.Compression
         {
             using (var zip = Subject.TryOpen(Path.Combine("C:\\ProgramData\\AppGet\\Temp\\", name)))
             {
+                Assert.Inconclusive(zip.Format.ToString());
                 zip.Should().NotBeNull();
             }
         }
+
+        //        [Test]
+        //        public void open()
+        //        {
+        //            using (var zip = Subject.TryOpen(@"C:\ProgramData\AppGet\Temp\android-studio-ide-171.4443003-windows.exe"))
+        //            {
+        //                zip.Should().NotBeNull();
+        //            }
+        //        }
 
 
         private static List<string> GetInstallers()

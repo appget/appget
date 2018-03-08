@@ -67,13 +67,10 @@ namespace AppGet.Infrastructure.Composition
             container.RegisterMultiple<IExtractToManifestRoot>(new[]
             {
                 typeof(FileVersionInfoExtractor),
-                typeof(GithubExtractor),
                 typeof(InstallMethodExtractor),
                 typeof(NameExtractor),
                 typeof(PackageIdExtractor),
-                typeof(SourceforgeExtractor),
                 typeof(SquirrelExtractor),
-                typeof(UrlExtractor),
             });
 
             container.RegisterMultiple<IManifestPrompt>(new[]
@@ -85,13 +82,6 @@ namespace AppGet.Infrastructure.Composition
                 typeof(LicensePrompt),
                 typeof(InstallMethodPrompt),
                 typeof(VersionTagPrompt),
-            });
-
-
-
-            container.RegisterMultiple<IExtractToInstaller>(new[]
-            {
-                typeof(CreatePackage.Installer.Extractors.UrlExtractor)
             });
 
             container.RegisterMultiple<IInstallerPrompt>(new[]

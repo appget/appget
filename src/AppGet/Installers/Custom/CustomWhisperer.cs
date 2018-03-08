@@ -1,5 +1,4 @@
-﻿using AppGet.Commands.Install;
-using AppGet.HostSystem;
+﻿using AppGet.HostSystem;
 using AppGet.Manifests;
 using AppGet.Processes;
 using NLog;

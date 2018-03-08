@@ -92,10 +92,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compression\CompressionServiceFixture.cs" />
-    <Compile Include="CreatePackage\Parsers\ArchitectureParserFixture.cs" />
     <Compile Include="CreatePackage\Parsers\VersionParserFixture.cs" />
     <Compile Include="CreatePackage\Root\Prompts\HomePagePromptFixture.cs" />
-    <Compile Include="CreatePackage\Parsers\GithubUrlFixture.cs" />
+    <Compile Include="CreatePackage\XRayClientFixture.cs" />
     <Compile Include="Crypto\Certificates\FileSignatureServiceFixture.cs" />
     <Compile Include="Crypto\Hash\Algorithms\Md5HashFixture.cs" />
     <Compile Include="Crypto\Hash\Algorithms\Sha1HashFixture.cs" />
@@ -105,7 +104,6 @@
     <Compile Include="Extensions\UriExtensionsFixture.cs" />
     <Compile Include="FileTransfer\Protocols\WindowsPathFileTransferClientFixture.cs" />
     <Compile Include="FileTransfer\TransferCacheServiceFixture.cs" />
-    <Compile Include="Github\Repository\GitHubRepositoryClientFixture.cs" />
     <Compile Include="HostSystem\EnvInfoFixture.cs" />
     <Compile Include="Http\UserAgentBuilderFixture.cs" />
     <Compile Include="Infrastructure\Composition\ContainerBuilderFixture.cs" />

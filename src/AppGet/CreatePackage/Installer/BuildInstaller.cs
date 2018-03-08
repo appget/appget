@@ -19,17 +19,14 @@ namespace AppGet.CreatePackage.Installer
     public class ComposeInstaller : IComposeInstaller
     {
         private readonly IFileTransferService _fileTransferService;
-        private readonly IEnumerable<IExtractToInstaller> _extractors;
         private readonly IEnumerable<IInstallerPrompt> _prompts;
         private readonly IPathResolver _pathResolver;
         private readonly Logger _logger;
         private readonly Sha256Hash _sha256 = new Sha256Hash();
 
-        public ComposeInstaller(IFileTransferService fileTransferService, IEnumerable<IExtractToInstaller> extractors,
-            IEnumerable<IInstallerPrompt> prompts, IPathResolver pathResolver, Logger logger)
+        public ComposeInstaller(IFileTransferService fileTransferService, IEnumerable<IInstallerPrompt> prompts, IPathResolver pathResolver, Logger logger)
         {
             _fileTransferService = fileTransferService;
-            _extractors = extractors;
             _prompts = prompts;
             _pathResolver = pathResolver;
             _logger = logger;
@@ -62,11 +59,6 @@ namespace AppGet.CreatePackage.Installer
             if (installer == null)
             {
                 installer = await DownloadInstaller(uri);
-            }
-
-            foreach (var populater in _extractors)
-            {
-                populater.Extract(installer);
             }
 
             if (interactive)
