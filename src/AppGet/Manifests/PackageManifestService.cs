@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using AppGet.AppData;
 using AppGet.CreatePackage;
 using AppGet.FileSystem;
 using AppGet.FileTransfer;
@@ -12,7 +13,7 @@ namespace AppGet.Manifests
     public interface IPackageManifestService
     {
         Task<PackageManifest> LoadManifest(string source);
-        string WriteManifest(PackageManifestBuilder manifestBuilder, string manifestRoot);
+        string WriteManifest(PackageManifestBuilder manifestBuilder);
         void PrintManifest(PackageManifest manifest);
     }
 
@@ -20,12 +21,14 @@ namespace AppGet.Manifests
     {
         private readonly IFileTransferService _fileTransferService;
         private readonly IFileSystem _fileSystem;
+        private readonly IConfig _config;
         private readonly Logger _logger;
 
-        public PackageManifestService(IFileTransferService fileTransferService, IFileSystem fileSystem, Logger logger)
+        public PackageManifestService(IFileTransferService fileTransferService, IFileSystem fileSystem, IConfig config, Logger logger)
         {
             _fileTransferService = fileTransferService;
             _fileSystem = fileSystem;
+            _config = config;
             _logger = logger;
         }
 
@@ -37,12 +40,12 @@ namespace AppGet.Manifests
             return Yaml.Deserialize<PackageManifest>(text);
         }
 
-        public string WriteManifest(PackageManifestBuilder manifestBuilder, string manifestRoot)
+        public string WriteManifest(PackageManifestBuilder manifestBuilder)
         {
             var manifest = manifestBuilder.Build();
             var manifestName = $"{manifest.Id}.{manifestBuilder.VersionTag}".Trim('.');
             var fileName = $"{manifestName}.yaml";
-            var applicationManifestDir = Path.Combine(manifestRoot, manifest.Id);
+            var applicationManifestDir = Path.Combine(_config.LocalRepository, manifest.Id);
             var manifestPath = Path.Combine(applicationManifestDir, fileName);
             _fileSystem.CreateDirectory(applicationManifestDir);
 

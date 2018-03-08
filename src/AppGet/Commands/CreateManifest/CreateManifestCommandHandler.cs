@@ -66,7 +66,7 @@ namespace AppGet.Commands.CreateManifest
             _packageManifestService.PrintManifest(manifestBuilder.Build());
 
 
-            _packageManifestService.WriteManifest(manifestBuilder, "C:\\git\\AppGet.Packages\\manifests");
+            _packageManifestService.WriteManifest(manifestBuilder);
         }
     }
 }
