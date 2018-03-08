@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using AppGet.ProgressTracker;
 using NLog;
@@ -39,7 +41,8 @@ namespace AppGet.Compression
             {
                 if (!entry.IsDirectory)
                 {
-                    entry.WriteToDirectory(destination, new ExtractionOptions { ExtractFullPath = true, Overwrite = true, PreserveFileTime = true });
+                    entry.WriteToDirectory(destination,
+                        new ExtractionOptions { ExtractFullPath = true, Overwrite = true, PreserveFileTime = true });
                 }
 
                 progress.Completed++;
@@ -51,7 +54,10 @@ namespace AppGet.Compression
 
         public SevenZipExtractor TryOpen(string path)
         {
-            foreach (var format in Enum.GetValues(typeof(InArchiveFormat)).Cast<InArchiveFormat>().Where(c=>c != InArchiveFormat.Msi))
+            var formats = GetCommonFormats(path)
+                .Concat(GetUnCommonFormats(path));
+
+            foreach (var format in formats)
             {
                 try
                 {
@@ -72,5 +78,44 @@ namespace AppGet.Compression
 
         public Action<ProgressState> OnStatusUpdated { get; set; }
         public Action<ProgressState> OnCompleted { get; set; }
+
+
+        private static IEnumerable<InArchiveFormat> GetCommonFormats(string path)
+        {
+            var extension = Path.GetExtension(path);
+
+            switch (extension)
+            {
+                case ".msi":
+                    {
+                        yield return InArchiveFormat.Compound;
+                        yield return InArchiveFormat.Cab;
+                        break;
+                    }
+                case ".exe":
+                    {
+                        yield return InArchiveFormat.PE;
+                        yield return InArchiveFormat.Nsis;
+                        yield return InArchiveFormat.Cab;
+                        break;
+                    }
+                case ".zip":
+                    {
+                        yield return InArchiveFormat.Zip;
+                        break;
+                    }
+                default:
+                    {
+                        throw new ArgumentException($"Invalid extension. {extension}");
+                    }
+            }
+        }
+
+
+        private static InArchiveFormat[] GetUnCommonFormats(string path)
+        {
+            var common = GetCommonFormats(path);
+            return Enum.GetValues(typeof(InArchiveFormat)).Cast<InArchiveFormat>().Except(common).ToArray();
+        }
     }
 }
