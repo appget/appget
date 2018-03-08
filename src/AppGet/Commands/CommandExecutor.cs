@@ -14,14 +14,12 @@ namespace AppGet.Commands
 
     public class CommandExecutor : ICommandExecutor
     {
-        private readonly AppGetOption _option;
         private readonly Logger _logger;
         private readonly List<ICommandHandler> _commandHandlers;
 
 
-        public CommandExecutor(IEnumerable<ICommandHandler> commandHandlers, AppGetOption option, Logger logger)
+        public CommandExecutor(IEnumerable<ICommandHandler> commandHandlers, Logger logger)
         {
-            _option = option;
             _logger = logger;
             _commandHandlers = commandHandlers.ToList();
         }

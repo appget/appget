@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 using AppGet.CommandLine.Prompts;
 using AppGet.CreatePackage;
@@ -12,15 +14,17 @@ namespace AppGet.Commands.CreateManifest
         private readonly IPackageManifestService _packageManifestService;
         private readonly IComposeManifest _composeManifest;
         private readonly IUrlPrompt _urlPrompt;
+        private readonly IXRayClient _xRayClient;
         private readonly BooleanPrompt _booleanPrompt;
 
         public CreateManifestCommandHandler(IComposeInstaller installerBuilder, IPackageManifestService packageManifestService,
-           IComposeManifest composeManifest, IUrlPrompt urlPrompt, BooleanPrompt booleanPrompt)
+           IComposeManifest composeManifest, IUrlPrompt urlPrompt, IXRayClient xRayClient, BooleanPrompt booleanPrompt)
         {
             _installerBuilder = installerBuilder;
             _packageManifestService = packageManifestService;
             _composeManifest = composeManifest;
             _urlPrompt = urlPrompt;
+            _xRayClient = xRayClient;
             _booleanPrompt = booleanPrompt;
         }
 
@@ -33,11 +37,16 @@ namespace AppGet.Commands.CreateManifest
         {
             var createOptions = (CreateManifestOptions)appGetOption;
 
-            var manifest = new PackageManifestBuilder();
-            var installer = await _installerBuilder.Compose(createOptions.DownloadUrl, true);
-            manifest.Installers.Add(installer);
+            if (!Uri.IsWellFormedUriString(createOptions.DownloadUrl, UriKind.Absolute))
+            {
+                throw new InvalidCommandParamaterException("Invalid URL", createOptions);
+            }
 
-            _composeManifest.Compose(manifest, true);
+            var manifestBuilder = await _xRayClient.GetBuilderAsync(new Uri(createOptions.DownloadUrl));
+
+            await _installerBuilder.Compose(manifestBuilder.Installers.Single(), true);
+
+            _composeManifest.Compose(manifestBuilder, true);
 
             while (_booleanPrompt.Request("Add an additional installer for different architecture or version of Windows?", false))
             {
@@ -46,14 +55,18 @@ namespace AppGet.Commands.CreateManifest
                 {
                     break;
                 }
-                manifest.Installers.Add(await _installerBuilder.Compose(url, true));
+
+                var manifestBuilder2 = await _xRayClient.GetBuilderAsync(new Uri(createOptions.DownloadUrl));
+                var installer = manifestBuilder2.Installers.Single();
+                await _installerBuilder.Compose(installer, true);
+                manifestBuilder.Installers.Add(installer);
             }
 
 
-            _packageManifestService.PrintManifest(manifest.Build());
+            _packageManifestService.PrintManifest(manifestBuilder.Build());
 
 
-            _packageManifestService.WriteManifest(manifest, "C:\\git\\AppGet.Packages\\manifests");
+            _packageManifestService.WriteManifest(manifestBuilder, "C:\\git\\AppGet.Packages\\manifests");
         }
     }
 }

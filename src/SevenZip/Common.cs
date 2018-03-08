@@ -18,7 +18,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Threading;
 using System.Windows.Threading;
 #if !WINCE
 using System.Runtime.Remoting.Messaging;

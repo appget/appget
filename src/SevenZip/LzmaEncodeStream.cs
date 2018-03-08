@@ -14,10 +14,6 @@
     along with SevenZipSharp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System;
-using System.IO;
-using SevenZip.Compression.LZMA;
-
 namespace SevenZip
 {
 #if LZMA_STREAM

@@ -2,7 +2,6 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using NLog;
 
 namespace AppGet.Http
 {
@@ -18,10 +17,9 @@ namespace AppGet.Http
     public class HttpClient : IHttpClient
     {
         private readonly IUserAgentBuilder _userAgentBuilder;
-        private readonly Logger _logger;
         private readonly System.Net.Http.HttpClient _client;
 
-        public HttpClient(IUserAgentBuilder userAgentBuilder, Logger logger)
+        public HttpClient(IUserAgentBuilder userAgentBuilder)
         {
             ServicePointManager.DefaultConnectionLimit = 12;
             ServicePointManager.Expect100Continue = true;
@@ -29,7 +27,6 @@ namespace AppGet.Http
                 SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 
             _userAgentBuilder = userAgentBuilder;
-            _logger = logger;
 
             _client = new System.Net.Http.HttpClient();
             _client.DefaultRequestHeaders.Add("User-Agent", userAgentBuilder.GetUserAgent(true));

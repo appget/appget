@@ -2,7 +2,6 @@
 using System.Linq;
 using AppGet.Extensions;
 using AppGet.Manifests;
-using AppGet.Serialization;
 using Microsoft.Win32;
 
 namespace AppGet.InstalledPackages

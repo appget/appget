@@ -13,7 +13,7 @@ namespace AppGet.CreatePackage.Installer
 {
     public interface IComposeInstaller
     {
-        Task<InstallerBuilder> Compose(string url, bool interactive);
+        Task Compose(InstallerBuilder installerBuilder, bool interactive);
     }
 
     public class ComposeInstaller : IComposeInstaller
@@ -33,12 +33,9 @@ namespace AppGet.CreatePackage.Installer
         }
 
 
-        public async Task<InstallerBuilder> Compose(string url, bool interactive)
+        public async Task Compose(InstallerBuilder installerBuilder, bool interactive)
         {
-            var uri = new Uri(url, UriKind.Absolute);
-
-
-            InstallerBuilder installer = null;
+            var uri = new Uri(installerBuilder.Location, UriKind.Absolute);
 
             if (uri.Scheme == Uri.UriSchemeHttp)
             {
@@ -46,7 +43,8 @@ namespace AppGet.CreatePackage.Installer
 
                 try
                 {
-                    installer = await DownloadInstaller(uri.ToHttps());
+                    installerBuilder.Location = uri.ToHttps().ToString();
+                    await DownloadInstaller(installerBuilder);
                     _logger.Info("Installer appears to be available using HTTPS. Using HTTPS instead.");
 
                 }
@@ -56,41 +54,37 @@ namespace AppGet.CreatePackage.Installer
                 }
             }
 
-            if (installer == null)
+            if (installerBuilder.FilePath == null)
             {
-                installer = await DownloadInstaller(uri);
+                installerBuilder.Location = uri.ToString();
+                await DownloadInstaller(installerBuilder);
             }
 
             if (interactive)
             {
-                foreach (var prompt in _prompts.Where(p => p.ShouldPrompt(installer)))
+                foreach (var prompt in _prompts.Where(p => p.ShouldPrompt(installerBuilder)))
                 {
-                    prompt.Invoke(installer);
+                    prompt.Invoke(installerBuilder);
                 }
             }
-
-            return installer;
         }
 
-        private async Task<InstallerBuilder> DownloadInstaller(Uri uri)
+        private async Task DownloadInstaller(InstallerBuilder installerBuilder)
         {
-            var installer = new InstallerBuilder();
-            var filePath = await _fileTransferService.TransferFile(uri.ToString(), _pathResolver.TempFolder, null);
+            var filePath = await _fileTransferService.TransferFile(installerBuilder.Location, _pathResolver.TempFolder, null);
 
-            if (VersionParser.Parse(uri) != null)
+            if (VersionParser.Parse(new Uri(installerBuilder.Location)) != null)
             {
                 var sha256 = _sha256.CalculateHash(filePath);
                 _logger.Info($"SHA-256: {sha256}");
-                installer.Sha256 = sha256;
+                installerBuilder.Sha256 = sha256;
             }
             else
             {
                 _logger.Warn("Download URL doesn't aprear to point to a specific version. WILL NOT assign a SHA-256 to this installer.");
             }
 
-            installer.Location = uri.ToString();
-            installer.FilePath = filePath;
-            return installer;
+            installerBuilder.FilePath = filePath;
         }
     }
 }
