@@ -28,6 +28,7 @@ namespace AppGet.Tests.Tools
 
 
         [Test]
+        [Explicit]
         public void get_vlc()
         {
             Mocker.SetInstance<IEnvInfo>(new EnvInfo());
