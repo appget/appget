@@ -113,7 +113,7 @@ namespace AppGet.FileTransfer.Protocols
 
                 webClient.DownloadFileAsync(new Uri(source), tempFile);
 
-                while (webClient.IsBusy || progress.PercentCompleted < 100)
+                while (webClient.IsBusy)
                 {
                     Thread.Sleep(500);
                 }
