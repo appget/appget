@@ -17,8 +17,9 @@ namespace AppGet.Tests.Compression
         {
             using (var zip = Subject.TryOpen(Path.Combine("C:\\ProgramData\\AppGet\\Temp\\", name)))
             {
-                Assert.Inconclusive(zip.Format.ToString());
                 zip.Should().NotBeNull();
+
+                File.AppendAllLines("C:\\Users\\me\\Desktop\\format.txt", new[] { $"{zip.Format}|{name}" });
             }
         }
 

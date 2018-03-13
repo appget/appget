@@ -71,7 +71,7 @@ namespace AppGet.CreatePackage.Installer
 
         private async Task DownloadInstaller(InstallerBuilder installerBuilder)
         {
-            var filePath = await _fileTransferService.TransferFile(installerBuilder.Location, _pathResolver.TempFolder, null);
+            var filePath = await _fileTransferService.TransferFile(installerBuilder.Location, _pathResolver.TempFolder, installerBuilder.FileVerificationInfo);
 
             if (VersionParser.Parse(new Uri(installerBuilder.Location)) != null)
             {

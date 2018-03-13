@@ -8,7 +8,7 @@ namespace AppGet.Crypto.Hash
 {
     public interface IChecksumService
     {
-        void ValidateHash(string path, FileHash fileHash);
+        void ValidateHash(string path, FileVerificationInfo fileVerificationInfo);
     }
 
     public class ChecksumService : IChecksumService
@@ -22,18 +22,18 @@ namespace AppGet.Crypto.Hash
             _logger = logger;
         }
 
-        public void ValidateHash(string path, FileHash fileHash)
+        public void ValidateHash(string path, FileVerificationInfo fileVerificationInfo)
         {
             _logger.Trace("Starting checksum verification");
 
-            var hashAlg = _checkSums.Single(c => c.HashType == fileHash.HashType);
+            var hashAlg = _checkSums.Single(c => c.HashType == fileVerificationInfo.HashType);
 
             var hash = hashAlg.CalculateHash(path);
 
-            if (!string.Equals(hash, fileHash.Value, StringComparison.OrdinalIgnoreCase))
+            if (!string.Equals(hash, fileVerificationInfo.HashValue, StringComparison.OrdinalIgnoreCase))
             {
-                _logger.Warn($"Checksum verification failed for {path}. File: {hash}  Manifest:{fileHash.Value}");
-                throw new ChecksumVerificationException($"${fileHash.HashType.ToString().ToUpperInvariant()} Checksum verification failed for {path}.");
+                _logger.Warn($"Checksum verification failed for {path}. File: {hash}  Manifest:{fileVerificationInfo.HashValue}");
+                throw new ChecksumVerificationException($"{fileVerificationInfo.HashType.ToString().ToUpperInvariant()} Checksum verification failed for {path}.");
             }
 
             _logger.Info("Checksum verification PASSED");

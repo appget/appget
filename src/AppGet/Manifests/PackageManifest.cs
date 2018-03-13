@@ -51,21 +51,21 @@ namespace AppGet.Manifests
 
         public List<string> ProductIds { get; set; }
 
-        public FileHash GetFileHash()
+        public FileVerificationInfo GetFileHash()
         {
             if (!string.IsNullOrEmpty(Sha256))
             {
-                return new FileHash { HashType = HashTypes.Sha256, Value = Sha256 };
+                return new FileVerificationInfo { HashType = HashTypes.Sha256, HashValue = Sha256 };
             }
 
             if (!string.IsNullOrEmpty(Sha1))
             {
-                return new FileHash { HashType = HashTypes.Sha1, Value = Sha1 };
+                return new FileVerificationInfo { HashType = HashTypes.Sha1, HashValue = Sha1 };
             }
 
             if (!string.IsNullOrEmpty(Md5))
             {
-                return new FileHash { HashType = HashTypes.Md5, Value = Md5 };
+                return new FileVerificationInfo { HashType = HashTypes.Md5, HashValue = Md5 };
             }
 
             return null;

@@ -12,7 +12,7 @@ namespace AppGet.FileTransfer
 {
     public interface IFileTransferService
     {
-        Task<string> TransferFile(string source, string destinationFolder, FileHash fileHash);
+        Task<string> TransferFile(string source, string destinationFolder, FileVerificationInfo fileVerificationInfo);
         Task<string> ReadContentAsync(string source);
     }
 
@@ -47,12 +47,12 @@ namespace AppGet.FileTransfer
             return client;
         }
 
-        public async Task<string> TransferFile(string source, string destinationFolder, FileHash fileHash)
+        public async Task<string> TransferFile(string source, string destinationFolder, FileVerificationInfo fileVerificationInfo)
         {
             var client = GetClient(source);
             var destinationPath = Path.Combine(destinationFolder, await client.GetFileName(source));
 
-            if (_transferCacheService.IsValid(destinationPath, fileHash))
+            if (_transferCacheService.IsValid(destinationPath, fileVerificationInfo))
             {
                 _logger.Info("Skipping download. Using already downloaded file.");
             }
@@ -63,16 +63,16 @@ namespace AppGet.FileTransfer
 
                 Console.WriteLine();
                 _logger.Info($"Downloading installer from {source}");
-                client.TransferFile(source, destinationPath);
+                client.TransferFile(source, destinationPath, fileVerificationInfo);
                 _logger.Debug($"Installer downloaded to {destinationPath}");
 
-                if (fileHash == null)
+                if (fileVerificationInfo == null)
                 {
                     _logger.Debug("No hash provided. skipping checksum validation");
                 }
                 else
                 {
-                    _checksumService.ValidateHash(destinationPath, fileHash);
+                    _checksumService.ValidateHash(destinationPath, fileVerificationInfo);
                 }
             }
 

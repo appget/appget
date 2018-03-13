@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace AppGet.Extensions
@@ -26,13 +27,12 @@ namespace AppGet.Extensions
 
         public static int CapitalLettersCount(this string value)
         {
-            var count = 0;
-            foreach (var t in value)
-            {
-                if (char.IsUpper(t)) count++;
-            }
+            return value.Count(char.IsUpper);
+        }
 
-            return count;
+        public static int PeriodCount(this string value)
+        {
+            return value.Count(c => c == '.');
         }
     }
 }

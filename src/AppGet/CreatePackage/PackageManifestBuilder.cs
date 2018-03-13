@@ -103,7 +103,7 @@ namespace AppGet.CreatePackage
         public override string ToString()
         {
             var top = GetTop();
-            return top?.Value.ToString() ?? "";
+            return top?.Value?.ToString() ?? "";
         }
 
     }
@@ -136,7 +136,7 @@ namespace AppGet.CreatePackage
         {
             Id = new ManifestAttribute<string>();
             Name = new ManifestAttribute<string>(m => m?.CapitalLettersCount());
-            Version = new ManifestAttribute<string>();
+            Version = new ManifestAttribute<string>(v => v?.PeriodCount());
             Home = new ManifestAttribute<string>();
             Repo = new ManifestAttribute<string>();
             Licence = new ManifestAttribute<string>();
@@ -179,6 +179,7 @@ namespace AppGet.CreatePackage
         public string Sha256 { get; set; }
         public ManifestAttribute<ArchitectureTypes> Architecture { get; }
         public ManifestAttribute<Version> MinWindowsVersion { get; }
+        public FileVerificationInfo FileVerificationInfo { get; set; }
 
         public InstallerBuilder()
         {

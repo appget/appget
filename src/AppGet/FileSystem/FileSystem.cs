@@ -16,6 +16,7 @@ namespace AppGet.FileSystem
         void SetPermissions(string path, WellKnownSidType accountSid, FileSystemRights rights, AccessControlType controlType);
         void DeleteFile(string tempFile);
         void Move(string sourceFile, string destinationFile);
+        long GetFileSize(string path);
     }
 
     public class FileSystem : IFileSystem
@@ -77,6 +78,11 @@ namespace AppGet.FileSystem
         public void Move(string sourceFile, string destinationFile)
         {
             File.Move(sourceFile, destinationFile);
+        }
+
+        public long GetFileSize(string path)
+        {
+            return new FileInfo(path).Length;
         }
     }
 }

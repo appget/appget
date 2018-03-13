@@ -10,7 +10,14 @@ namespace AppGet.ProgressTracker
         public long? Total { get; set; }
         public long Completed { get; set; }
 
-        public decimal PercentCompleted => Completed / ((decimal?)Total ?? 0) * (decimal)100.0;
+        public decimal PercentCompleted
+        {
+            get
+            {
+                if (!Total.HasValue || Total.Value == 0) return 0;
+                return Completed / ((decimal?)Total ?? 0) * (decimal)100.0;
+            }
+        }
 
         public override string ToString()
         {
@@ -22,10 +29,8 @@ namespace AppGet.ProgressTracker
 
                 return $"   {progress.PadRight(PROGRESS_LENGTH, '░')} {Math.Round(PercentCompleted)}%: {Completed:N0} / {Total:N0}";
             }
-            else
-            {
-                return $"   {Completed:N0} downloaded";
-            }
+
+            return $"   {Completed:N0} downloaded";
         }
     }
 }

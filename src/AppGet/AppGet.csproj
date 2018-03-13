@@ -176,7 +176,7 @@
     <Compile Include="Installers\Squirrel\SquirrelWhisperer.cs" />
     <Compile Include="Installers\Nsis\NsisDetector.cs" />
     <Compile Include="Manifests\ArchitectureTypes.cs" />
-    <Compile Include="Manifests\FileHash.cs" />
+    <Compile Include="Manifests\FileVerificationInfo.cs" />
     <Compile Include="Manifests\HashTypes.cs" />
     <Compile Include="Manifests\InstallMethodTypes.cs" />
     <Compile Include="Manifests\WindowsVersion.cs" />

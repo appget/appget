@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Net;
@@ -9,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AppGet.FileSystem;
 using AppGet.Http;
+using AppGet.Manifests;
 using AppGet.ProgressTracker;
 
 namespace AppGet.FileTransfer.Protocols
@@ -19,10 +21,10 @@ namespace AppGet.FileTransfer.Protocols
         private readonly IFileSystem _fileSystem;
         private static readonly Regex HttpRegex = new Regex(@"^https?\:\/\/", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static readonly Regex FileNameRegex = new Regex(@"\.(zip|7zip|7z|rar|msi|exe)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        private bool _inTransit;
 
-        private ProgressState _progress;
-        private Exception _error;
+
+
+        private static readonly Dictionary<string, WebHeaderCollection> HeaderCache = new Dictionary<string, WebHeaderCollection>();
 
 
         public HttpFileTransferClient(IHttpClient httpClient, IFileSystem fileSystem)
@@ -64,48 +66,73 @@ namespace AppGet.FileTransfer.Protocols
 
         }
 
-        public void TransferFile(string source, string destinationFile)
+        public void TransferFile(string source, string destinationFile, FileVerificationInfo fileVerificationInfo = null)
         {
-            _error = null;
-            string tempFile;
-            using (var webClient = new WebClientWithTimeout(TimeSpan.FromSeconds(1)))
+            Exception error = null;
+            var tempFile = $"{destinationFile}.APPGET_DOWNLOAD";
+            var progress = new ProgressState();
+
+            using (var webClient = new WebClientWithTimeout(TimeSpan.FromSeconds(10)))
             {
                 if (_fileSystem.FileExists(destinationFile))
                 {
                     _fileSystem.DeleteFile(destinationFile);
                 }
 
-                tempFile = destinationFile + ".APPGET_DOWNLOAD";
+                webClient.DownloadProgressChanged += (sender, e) =>
+                {
+                    progress.Completed = e.BytesReceived;
+                    var client = (WebClient)sender;
 
-                webClient.DownloadProgressChanged += TransferProgressCallback;
-                webClient.DownloadFileCompleted += TransferCompletedCallback;
+                    var contentType = client.ResponseHeaders["Content-Type"];
+                    if (contentType != null && contentType.Contains("text"))
+                    {
+                        error = new InvalidDownloadUrlException(client.BaseAddress, $"[ContentType={contentType}]");
+                        client.CancelAsync();
+                    }
+
+                    if (e.TotalBytesToReceive > 0)
+                    {
+                        progress.Total = e.TotalBytesToReceive;
+                    }
+                    else
+                    {
+                        progress.Total = null;
+                    }
+
+                    OnStatusUpdated?.Invoke(progress);
+                };
+
+                webClient.DownloadFileCompleted += (sender, e) =>
+                {
+                    if (error == null)
+                    {
+                        error = e.Error;
+                    }
+                };
+
                 webClient.DownloadFileAsync(new Uri(source), tempFile);
 
-
-                _inTransit = true;
-                _progress = new ProgressState();
-
-                while (_inTransit)
+                while (webClient.IsBusy || progress.PercentCompleted < 100)
                 {
-                    Thread.Sleep(100);
+                    Thread.Sleep(500);
                 }
 
-                if (_error != null)
+                if (error != null)
                 {
                     if (_fileSystem.FileExists(tempFile))
                     {
                         _fileSystem.DeleteFile(tempFile);
                     }
 
-                    var e = _error;
-                    _error = null;
-                    throw e;
+                    throw error;
                 }
+
+                HeaderCache[source] = webClient.ResponseHeaders;
             }
 
-
             _fileSystem.Move(tempFile, destinationFile);
-            OnCompleted?.Invoke(_progress);
+            OnCompleted?.Invoke(progress);
         }
 
         public async Task<string> ReadString(string source)
@@ -117,41 +144,10 @@ namespace AppGet.FileTransfer.Protocols
             return await resp.Content.ReadAsStringAsync();
         }
 
-        private void TransferProgressCallback(object sender, DownloadProgressChangedEventArgs e)
+
+        public static WebHeaderCollection GetTransferHeaders(string url)
         {
-            _progress.Completed = e.BytesReceived;
-
-            var client = (WebClient)sender;
-
-            var contentType = client.ResponseHeaders["Content-Type"];
-            if (contentType != null && contentType.Contains("text"))
-            {
-                _error = new InvalidDownloadUrlException(client.BaseAddress, $"[ContentType={contentType}]");
-                client.CancelAsync();
-            }
-
-            if (e.TotalBytesToReceive > 0)
-            {
-                _progress.Total = e.TotalBytesToReceive;
-            }
-            else
-            {
-                _progress.Total = null;
-            }
-
-            OnStatusUpdated?.Invoke(_progress);
-        }
-
-        private void TransferCompletedCallback(object sender, AsyncCompletedEventArgs e)
-        {
-            var webClient = (WebClient)sender;
-            webClient.DownloadProgressChanged -= TransferProgressCallback;
-            _inTransit = false;
-
-            if (_error == null)
-            {
-                _error = e.Error;
-            }
+            return HeaderCache.ContainsKey(url) ? HeaderCache[url] : null;
         }
 
         public Action<ProgressState> OnStatusUpdated { get; set; }

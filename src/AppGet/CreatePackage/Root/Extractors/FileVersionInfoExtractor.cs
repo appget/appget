@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 using AppGet.CreatePackage.Parsers;
+using AppGet.Extensions;
 
 namespace AppGet.CreatePackage.Root.Extractors
 {
@@ -33,14 +34,14 @@ namespace AppGet.CreatePackage.Root.Extractors
             var fileVersion = GetValues(fileVersionInfo.ProductVersion, fileVersionInfo.FileVersion)
                 .Select(c => c.Replace(",", "."))
                 .Select(VersionParser.Parse)
-                .OrderByDescending(c => c?.Split('.').Length)
+                .OrderByDescending(c => c?.PeriodCount())
                 .FirstOrDefault();
 
             manifest.Version.Add(fileVersion, Confidence.Plausible, this);
         }
 
 
-        private static readonly Regex NameCleanUp = new Regex("\\(.+\\)|_|\\.|setup|installer|update|\\.exe", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex NameCleanUp = new Regex("\\(.+\\)|_|\\.|setup|installer|update|x?64|x?32\\.exe", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static readonly Regex SpaceCleanUp = new Regex("\\s+|\\s\\W\\s", RegexOptions.Compiled);
 
         private void ExtractName(PackageManifestBuilder manifest, FileVersionInfo fileVersionInfo)

@@ -42,7 +42,7 @@ namespace AppGet.Commands.CreateManifest
                 throw new InvalidCommandParamaterException("Invalid URL", createOptions);
             }
 
-            var manifestBuilder = await _xRayClient.GetBuilderAsync(new Uri(createOptions.DownloadUrl));
+            var manifestBuilder = await _xRayClient.GetBuilder(new Uri(createOptions.DownloadUrl));
 
             await _installerBuilder.Compose(manifestBuilder.Installers.Single(), true);
 
@@ -56,16 +56,13 @@ namespace AppGet.Commands.CreateManifest
                     break;
                 }
 
-                var manifestBuilder2 = await _xRayClient.GetBuilderAsync(new Uri(createOptions.DownloadUrl));
-                var installer = manifestBuilder2.Installers.Single();
-                await _installerBuilder.Compose(installer, true);
-                manifestBuilder.Installers.Add(installer);
+                var manifestBuilder2 = await _xRayClient.GetInstallerBuilder(new Uri(url));
+                await _installerBuilder.Compose(manifestBuilder2, true);
+                manifestBuilder.Installers.Add(manifestBuilder2);
             }
 
 
             _packageManifestService.PrintManifest(manifestBuilder.Build());
-
-
             _packageManifestService.WriteManifest(manifestBuilder);
         }
     }

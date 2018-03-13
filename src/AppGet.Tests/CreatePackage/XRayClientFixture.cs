@@ -19,7 +19,7 @@ namespace AppGet.Tests.CreatePackage
         [Test]
         public async Task get_builder()
         {
-            var builder = await Subject.GetBuilderAsync(new Uri("https://dl.google.com/dl/android/studio/install/3.0.1.0/android-studio-ide-171.4443003-windows.exe"));
+            var builder = await Subject.GetBuilder(new Uri("https://dl.google.com/dl/android/studio/install/3.0.1.0/android-studio-ide-171.4443003-windows.exe"));
             builder.Should().NotBeNull();
             builder.Version.Value.Should().Be("3.0.1.0");
             builder.Version.GetTop().Source.Should().Be("Url");

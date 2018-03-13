@@ -7,7 +7,7 @@ namespace AppGet.FileTransfer
 {
     public interface ITransferCacheService
     {
-        bool IsValid(string path, FileHash hash);
+        bool IsValid(string path, FileVerificationInfo verificationInfo);
     }
 
     public class TransferCacheService : ITransferCacheService
@@ -23,16 +23,26 @@ namespace AppGet.FileTransfer
             _logger = logger;
         }
 
-        public bool IsValid(string path, FileHash hash)
+        public bool IsValid(string path, FileVerificationInfo verificationInfo)
         {
-            if (hash == null || !_fileSystem.FileExists(path))
+            if (verificationInfo == null || string.IsNullOrWhiteSpace(verificationInfo.HashValue) || !_fileSystem.FileExists(path))
             {
                 return false;
             }
 
+            if (verificationInfo.FileSize > 0)
+            {
+                var size = _fileSystem.GetFileSize(path);
+                if (size != verificationInfo.FileSize)
+                {
+                    _logger.Warn("File size miss-match. ignoring cache");
+                    return false;
+                }
+            }
+
             try
             {
-                _checksumService.ValidateHash(path, hash);
+                _checksumService.ValidateHash(path, verificationInfo);
                 _logger.Debug($"Installer is already downloaded: {path}");
                 return true;
             }
