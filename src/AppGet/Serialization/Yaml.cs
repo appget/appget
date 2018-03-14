@@ -1,5 +1,7 @@
 ﻿using System.Globalization;
 using System.IO;
+using System.Linq;
+using AppGet.Infrastructure.Composition;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
@@ -14,6 +16,7 @@ namespace AppGet.Serialization
                 var serializer = new SerializerBuilder()
                     .WithNamingConvention(new CamelCaseNamingConvention())
                     .WithTypeConverter(new VersionConverter())
+                    .WithEmissionPhaseObjectGraphVisitor(args => new JsonDefaultGraphVisitor(args.InnerVisitor))
                     .DisableAliases()
                     .Build();
 
@@ -32,6 +35,5 @@ namespace AppGet.Serialization
 
             return deserializer.Deserialize<T>(text);
         }
-
     }
 }

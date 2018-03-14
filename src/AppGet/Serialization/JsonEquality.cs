@@ -9,6 +9,16 @@
                 return true;
             }
 
+            if (obj1 == null && obj2 != null)
+            {
+                return false;
+            }
+
+            if (obj1 != null && obj2 == null)
+            {
+                return false;
+            }
+
             return Json.Serialize(obj1) == Json.Serialize(obj2);
         }
     }

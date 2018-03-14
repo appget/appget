@@ -225,6 +225,7 @@
     <Compile Include="Requirements\Specifications\OsArchitectureSpecification.cs" />
     <Compile Include="Serialization\Json.cs" />
     <Compile Include="Serialization\JsonComparator.cs" />
+    <Compile Include="Serialization\JsonDefaultGraphVisitor.cs" />
     <Compile Include="Serialization\JsonEquality.cs" />
     <Compile Include="Serialization\VersionConverter.cs" />
     <Compile Include="Serialization\Yaml.cs" />

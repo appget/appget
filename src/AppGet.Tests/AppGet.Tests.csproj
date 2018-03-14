@@ -125,6 +125,7 @@
     <Compile Include="ProgressTracker\ProgressStateFixture.cs" />
     <Compile Include="Requirements\Specifications\MinOsVersionSpecificationFixture.cs" />
     <Compile Include="Requirements\Specifications\OsArchitectureSpecificationFixture.cs" />
+    <Compile Include="Serialization\YamlFixture.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\SigCheckFixture.cs" />
