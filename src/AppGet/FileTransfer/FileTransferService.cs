@@ -63,10 +63,10 @@ namespace AppGet.FileTransfer
 
                 Console.WriteLine();
                 _logger.Info($"Downloading installer from {source}");
-                client.TransferFile(source, destinationPath, fileVerificationInfo);
+                client.TransferFile(source, destinationPath);
                 _logger.Debug($"Installer downloaded to {destinationPath}");
 
-                if (fileVerificationInfo == null)
+                if (fileVerificationInfo.HashValue == null)
                 {
                     _logger.Debug("No hash provided. skipping checksum validation");
                 }

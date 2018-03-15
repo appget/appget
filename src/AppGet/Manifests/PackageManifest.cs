@@ -68,7 +68,7 @@ namespace AppGet.Manifests
                 return new FileVerificationInfo { HashType = HashTypes.Md5, HashValue = Md5 };
             }
 
-            return null;
+            return new FileVerificationInfo();
         }
     }
 }

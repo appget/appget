@@ -25,7 +25,7 @@ namespace AppGet.FileTransfer
 
         public bool IsValid(string path, FileVerificationInfo verificationInfo)
         {
-            if (verificationInfo == null || string.IsNullOrWhiteSpace(verificationInfo.HashValue) || !_fileSystem.FileExists(path))
+            if (string.IsNullOrWhiteSpace(verificationInfo?.HashValue) || !_fileSystem.FileExists(path))
             {
                 return false;
             }

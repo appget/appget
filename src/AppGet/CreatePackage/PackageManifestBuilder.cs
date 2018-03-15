@@ -185,6 +185,7 @@ namespace AppGet.CreatePackage
         {
             Architecture = new ManifestAttribute<ArchitectureTypes>();
             MinWindowsVersion = new ManifestAttribute<Version>();
+            FileVerificationInfo = new FileVerificationInfo();
         }
 
 

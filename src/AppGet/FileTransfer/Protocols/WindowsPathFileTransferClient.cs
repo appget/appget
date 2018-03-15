@@ -2,7 +2,6 @@
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using AppGet.Manifests;
 using AppGet.ProgressTracker;
 
 namespace AppGet.FileTransfer.Protocols
@@ -16,7 +15,7 @@ namespace AppGet.FileTransfer.Protocols
             return WindowsPathRegex.IsMatch(source);
         }
 
-        public void TransferFile(string source, string destinationFile, FileVerificationInfo fileVerificationInfo)
+        public void TransferFile(string source, string destinationFile)
         {
             var progress = new ProgressState
             {

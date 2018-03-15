@@ -10,7 +10,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using AppGet.FileSystem;
 using AppGet.Http;
-using AppGet.Manifests;
 using AppGet.ProgressTracker;
 
 namespace AppGet.FileTransfer.Protocols
@@ -66,7 +65,7 @@ namespace AppGet.FileTransfer.Protocols
 
         }
 
-        public void TransferFile(string source, string destinationFile, FileVerificationInfo fileVerificationInfo = null)
+        public void TransferFile(string source, string destinationFile)
         {
             Exception error = null;
             var tempFile = $"{destinationFile}.APPGET_DOWNLOAD";
