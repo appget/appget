@@ -5,6 +5,7 @@ namespace AppGet.ProgressTracker
 {
     public class ProgressState
     {
+        private bool _isActive;
         const int PROGRESS_LENGTH = 20;
 
         public long? Total { get; set; }
@@ -21,8 +22,12 @@ namespace AppGet.ProgressTracker
 
         public override string ToString()
         {
+            if (!_isActive) return "";
+
             if (Total.HasValue)
             {
+                _isActive = Completed == Total;
+
                 var filled = (int)Math.Round(PROGRESS_LENGTH * PercentCompleted / 100);
 
                 var progress = new string('█', filled);

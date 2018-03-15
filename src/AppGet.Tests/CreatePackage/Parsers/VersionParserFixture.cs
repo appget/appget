@@ -30,6 +30,7 @@ namespace AppGet.Tests.CreatePackage.Parsers
         [TestCase("https://download.mozilla.org/?product=firefox-latest-ssl&os=win64&lang=en-US")]
         [TestCase("https://web.whatsapp.com/desktop/windows/release/ia32/WhatsAppSetup.exe")]
         [TestCase("https://c.1password.com/dist/1P/win4/1Password.exe")]
+        [TestCase("https://go.microsoft.com/fwlink/?LinkID=623230")]
         public void should_not_return_Version(string url)
         {
             VersionParser.Parse(new Uri(url)).Should().BeNull();
