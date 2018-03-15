@@ -9,19 +9,16 @@ namespace AppGet.ProgressTracker
         public static void HandleProgress(ProgressState state)
         {
             var newState = state.ToString();
-            lock (_lastState)
-            {
-                if (_lastState != newState)
-                {
-                    _lastState = newState;
-                    Console.Write("\r{0}", state);
-                }
-            }
+            if (_lastState == newState) return;
+
+            _lastState = newState;
+            Console.Write("\r{0}", state);
         }
 
 
         public static void HandleCompleted(ProgressState obj)
         {
+            HandleProgress(obj);
             Console.WriteLine();
             Console.WriteLine();
         }

@@ -73,6 +73,7 @@ namespace AppGet.FileTransfer.Protocols
 
             using (var webClient = new WebClientWithTimeout(TimeSpan.FromSeconds(10)))
             {
+
                 if (_fileSystem.FileExists(destinationFile))
                 {
                     _fileSystem.DeleteFile(destinationFile);
@@ -81,14 +82,6 @@ namespace AppGet.FileTransfer.Protocols
                 webClient.DownloadProgressChanged += (sender, e) =>
                 {
                     progress.Completed = e.BytesReceived;
-                    var client = (WebClient)sender;
-
-                    var contentType = client.ResponseHeaders["Content-Type"];
-                    if (contentType != null && contentType.Contains("text"))
-                    {
-                        error = new InvalidDownloadUrlException(client.BaseAddress, $"[ContentType={contentType}]");
-                        client.CancelAsync();
-                    }
 
                     if (e.TotalBytesToReceive > 0)
                     {
@@ -98,8 +91,6 @@ namespace AppGet.FileTransfer.Protocols
                     {
                         progress.Total = null;
                     }
-
-                    OnStatusUpdated?.Invoke(progress);
                 };
 
                 webClient.DownloadFileCompleted += (sender, e) =>
@@ -108,13 +99,24 @@ namespace AppGet.FileTransfer.Protocols
                     {
                         error = e.Error;
                     }
+
+                    if (error != null) return;
+
+                    var client = (WebClient)sender;
+
+                    var contentType = client.ResponseHeaders["Content-Type"];
+                    if (contentType != null && contentType.Contains("text"))
+                    {
+                        error = new InvalidDownloadUrlException(client.BaseAddress, $"[ContentType={contentType}]");
+                    }
                 };
 
                 webClient.DownloadFileAsync(new Uri(source), tempFile);
 
                 while (webClient.IsBusy)
                 {
-                    Thread.Sleep(500);
+                    Thread.Sleep(200);
+                    OnStatusUpdated?.Invoke(progress);
                 }
 
                 if (error != null)
@@ -130,8 +132,8 @@ namespace AppGet.FileTransfer.Protocols
                 HeaderCache[source] = webClient.ResponseHeaders;
             }
 
-            _fileSystem.Move(tempFile, destinationFile);
             OnCompleted?.Invoke(progress);
+            _fileSystem.Move(tempFile, destinationFile);
         }
 
         public async Task<string> ReadString(string source)
