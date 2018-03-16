@@ -48,7 +48,6 @@ namespace AppGet.Http
             return response;
         }
 
-
         public async Task<HttpResponseMessage> Get(string url)
         {
             return await Get(new Uri(url));

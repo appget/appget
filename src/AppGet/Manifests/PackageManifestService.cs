@@ -55,6 +55,12 @@ namespace AppGet.Manifests
             return manifestPath;
         }
 
+
+        public async Task Submit(PackageManifestBuilder builder)
+        {
+
+        }
+
         public void PrintManifest(PackageManifest manifest)
         {
             var text = Yaml.Serialize(manifest);
