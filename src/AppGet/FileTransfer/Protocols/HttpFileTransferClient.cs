@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -58,7 +57,7 @@ namespace AppGet.FileTransfer.Protocols
 
             if (resp.Content.Headers.ContentDisposition != null)
             {
-                return resp.Content.Headers.ContentDisposition.FileName;
+                return resp.Content.Headers.ContentDisposition.FileName.Trim('"', '\'', ' ');
             }
 
             throw new InvalidDownloadUrlException(source);

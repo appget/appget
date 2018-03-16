@@ -49,8 +49,10 @@ namespace AppGet.FileTransfer
 
         public async Task<string> TransferFile(string source, string destinationFolder, FileVerificationInfo fileVerificationInfo)
         {
+            _logger.Debug($"Transfering file from {source} to {destinationFolder}");
             var client = GetClient(source);
-            var destinationPath = Path.Combine(destinationFolder, await client.GetFileName(source));
+            var fileName = await client.GetFileName(source);
+            var destinationPath = Path.Combine(destinationFolder, fileName);
 
             if (_transferCacheService.IsValid(destinationPath, fileVerificationInfo))
             {
