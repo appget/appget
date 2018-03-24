@@ -68,6 +68,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
@@ -233,7 +234,7 @@
     <Compile Include="Serialization\Yaml.cs" />
     <Compile Include="Requirements\IEnforceRequirements.cs" />
     <Compile Include="Requirements\Specifications\MinOsVersionSpecification.cs" />
-    <Compile Include="Tools\SigCheck.cs" />
+    <Compile Include="Tools\PeManifestReader.cs" />
     <Compile Include="Update\AppGetRelease.cs" />
     <Compile Include="Update\AppGetUpdateService.cs" />
     <Compile Include="Github\Releases\GithubRelease.cs" />
@@ -245,10 +246,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Tools\sigcheck.exe">
-      <Link>sigcheck.exe</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="appet.ico" />
   </ItemGroup>
   <ItemGroup>

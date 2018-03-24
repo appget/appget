@@ -27,10 +27,10 @@ namespace AppGet.Tests.Installers
         public void should_match_correct_installers(string path)
         {
             var compression = Mocker.Resolve<CompressionService>();
-            var sigCheck = Mocker.Resolve<SigCheck>();
+            var manifestReader = Mocker.Resolve<PeManifestReader>();
             using (var zip = compression.TryOpen(path))
             {
-                Subject.GetConfidence(path, zip, sigCheck.GetManifest(path)).Should().NotBe(Confidence.None);
+                Subject.GetConfidence(path, zip, manifestReader.Read(path)).Should().NotBe(Confidence.None);
             }
 
         }
@@ -74,7 +74,13 @@ namespace AppGet.Tests.Installers
 
         protected static string[] GetMatchingInstallers()
         {
-            return Directory.GetFiles($"C:\\ProgramData\\AppGet\\Temp\\{Type()}\\");
+            var path = $"C:\\ProgramData\\AppGet\\Temp\\{Type()}\\";
+            if (Directory.Exists(path))
+            {
+                return Directory.GetFiles(path);
+            }
+
+            return new string[0];
         }
 
         protected static List<string> GetNonMatchingInstallers()

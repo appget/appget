@@ -11,14 +11,14 @@ namespace AppGet.CreatePackage.Root.Extractors
     {
         private readonly IEnumerable<IDetectInstallMethod> _installMethodDetectors;
         private readonly ICompressionService _compressionService;
-        private readonly ISigCheck _sigCheck;
+        private readonly IPeManifestReader _peManifestReader;
         private readonly Logger _logger;
 
-        public InstallMethodExtractor(IEnumerable<IDetectInstallMethod> installMethodDetectors, ICompressionService compressionService, ISigCheck sigCheck, Logger logger)
+        public InstallMethodExtractor(IEnumerable<IDetectInstallMethod> installMethodDetectors, ICompressionService compressionService, IPeManifestReader peManifestReader, Logger logger)
         {
             _installMethodDetectors = installMethodDetectors;
             _compressionService = compressionService;
-            _sigCheck = sigCheck;
+            _peManifestReader = peManifestReader;
             _logger = logger;
         }
 
@@ -28,7 +28,7 @@ namespace AppGet.CreatePackage.Root.Extractors
 
             using (var archive = _compressionService.TryOpen(manifest.FilePath))
             {
-                var exeManifest = _sigCheck.GetManifest(manifest.FilePath);
+                var exeManifest = _peManifestReader.Read(manifest.FilePath);
 
                 if (archive != null || !string.IsNullOrWhiteSpace(exeManifest))
                 {

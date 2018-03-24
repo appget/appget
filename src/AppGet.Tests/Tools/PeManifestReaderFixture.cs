@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using AppGet.HostSystem;
-using AppGet.Processes;
 using AppGet.Tools;
 using FluentAssertions;
 using NUnit.Framework;
@@ -8,17 +7,14 @@ using NUnit.Framework;
 namespace AppGet.Tests.Tools
 {
     [TestFixture]
-    public class SigCheckFixture : TestBase<SigCheck>
+    public class PeManifestReaderFixture : TestBase<PeManifestReader>
     {
         [Test]
         public void get_manifest()
         {
-            Mocker.SetInstance<IEnvInfo>(new EnvInfo());
-            Mocker.SetInstance<IProcessController>(new ProcessController(logger));
-
             var exe = Path.Combine(Mocker.Resolve<EnvInfo>().AppDir, "appget.exe");
 
-            var manifest = Subject.GetManifest(exe);
+            var manifest = Subject.Read(exe);
 
             manifest.Should().NotBeNullOrWhiteSpace();
             manifest.Should().Contain("supportedOS");
@@ -31,11 +27,7 @@ namespace AppGet.Tests.Tools
         [Explicit]
         public void get_vlc()
         {
-            Mocker.SetInstance<IEnvInfo>(new EnvInfo());
-            Mocker.SetInstance<IProcessController>(new ProcessController(logger));
-
-
-            var manifest = Subject.GetManifest("C:\\ProgramData\\AppGet\\Temp\\vlc-3.0.0-win32.exe");
+            var manifest = Subject.Read(@"C:\Users\me\Downloads\dotPeek64.2017.3.3.exe");
 
             manifest.Should().NotBeNullOrWhiteSpace();
             manifest.Should().Contain("supportedOS");

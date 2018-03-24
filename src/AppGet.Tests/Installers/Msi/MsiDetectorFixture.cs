@@ -15,10 +15,10 @@ namespace AppGet.Tests.Installers.Msi
         {
             const string path = @"C:\ProgramData\AppGet\Temp\ViberSetup.exe";
             var compression = Mocker.Resolve<CompressionService>();
-            var sigCheck = Mocker.Resolve<SigCheck>();
+            var manifestReader = Mocker.Resolve<PeManifestReader>();
             using (var zip = compression.TryOpen(path))
             {
-                Subject.GetConfidence(path, zip, sigCheck.GetManifest(path)).Should().NotBe(Confidence.None);
+                Subject.GetConfidence(path, zip, manifestReader.Read(path)).Should().NotBe(Confidence.None);
             }
         }
     }
