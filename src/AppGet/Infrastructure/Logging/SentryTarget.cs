@@ -17,7 +17,7 @@ namespace AppGet.Infrastructure.Logging
     {
         private readonly RavenClient _client;
 
-        private const string DSN = "https://25fa72d971b846d6996386a33c194943:9a0a287a550448e39343c31212c91902@sentry.io/293456";
+        private const string DSN = "https://49bc14b2d3484029adcf54e86d5055b0:885dd046962a49ca80064e9670719043@sentry.io/306545";
 
         private static readonly IDictionary<LogLevel, ErrorLevel> LoggingLevelMap = new Dictionary<LogLevel, ErrorLevel>
         {
@@ -74,11 +74,14 @@ namespace AppGet.Infrastructure.Logging
             {
                 var message = logEvent.FormattedMessage;
 
-                _client.AddTrail(new Breadcrumb("log", BreadcrumbType.Navigation)
+                if (!string.IsNullOrEmpty(message))
                 {
-                    Level = GetLevel(logEvent.Level),
-                    Message = message
-                });
+                    _client.AddTrail(new Breadcrumb("log", BreadcrumbType.Navigation)
+                    {
+                        Level = GetLevel(logEvent.Level),
+                        Message = message
+                    });
+                }
 
                 if (logEvent.Level.Ordinal < LogLevel.Error.Ordinal)
                 {

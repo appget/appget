@@ -7,11 +7,8 @@ namespace AppGet.Http
 {
     public interface IHttpClient
     {
-        Task<HttpResponseMessage> Send(HttpRequestMessage request);
-        Task<HttpResponseMessage> Get(string url);
-        Task<HttpResponseMessage> Get(Uri uri);
-        Task<HttpResponseMessage> Head(string url);
-        Task<HttpResponseMessage> Head(Uri uri);
+        Task<HttpResponseMessage> Send(HttpRequestMessage request, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead);
+        Task<HttpResponseMessage> Get(Uri uri, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead);
     }
 
     public class HttpClient : IHttpClient
@@ -32,14 +29,14 @@ namespace AppGet.Http
             _client.DefaultRequestHeaders.Add("User-Agent", userAgentBuilder.GetUserAgent(true));
         }
 
-        public async Task<HttpResponseMessage> Send(HttpRequestMessage request)
+        public async Task<HttpResponseMessage> Send(HttpRequestMessage request, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead)
         {
             if (request.RequestUri.Host.EndsWith(".appget.net"))
             {
                 request.Headers.Add("User-Agent", _userAgentBuilder.GetUserAgent());
             }
 
-            var response = await _client.SendAsync(request);
+            var response = await _client.SendAsync(request, completionOption);
             if (!response.IsSuccessStatusCode)
             {
                 throw new HttpException(response);
@@ -48,24 +45,9 @@ namespace AppGet.Http
             return response;
         }
 
-        public async Task<HttpResponseMessage> Get(string url)
+        public async Task<HttpResponseMessage> Get(Uri uri, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead)
         {
-            return await Get(new Uri(url));
-        }
-
-        public async Task<HttpResponseMessage> Get(Uri uri)
-        {
-            return await Send(new HttpRequestMessage(HttpMethod.Get, uri));
-        }
-
-        public async Task<HttpResponseMessage> Head(string url)
-        {
-            return await Head(new Uri(url));
-        }
-
-        public async Task<HttpResponseMessage> Head(Uri uri)
-        {
-            return await Send(new HttpRequestMessage(HttpMethod.Head, uri));
+            return await Send(new HttpRequestMessage(HttpMethod.Get, uri), completionOption);
         }
     }
 }

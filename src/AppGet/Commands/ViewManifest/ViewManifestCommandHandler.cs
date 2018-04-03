@@ -22,15 +22,8 @@ namespace AppGet.Commands.ViewManifest
 
         public async Task Execute(AppGetOption searchCommandOptions)
         {
-
             var viewOptions = (ViewManifestOptions)searchCommandOptions;
-
             var package = await _packageRepository.Get(viewOptions.PackageId, viewOptions.PackageTag);
-            if (package == null)
-            {
-                throw new PackageNotFoundException(viewOptions.PackageId);
-            }
-
             var manifest = await _packageManifestService.LoadManifest(package.ManifestPath);
             _packageManifestService.PrintManifest(manifest);
         }

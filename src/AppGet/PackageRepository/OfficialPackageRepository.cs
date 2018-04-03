@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using AppGet.Http;
@@ -32,8 +33,16 @@ namespace AppGet.PackageRepository
 
             try
             {
-                var package = await _httpClient.Get($"{API_ROOT}/packages/{id}/{tag}");
-                return await package.AsResource<PackageInfo>();
+                var packages = (await Search(id)).ToList();
+
+                var match = packages.FirstOrDefault(c => c.Id == id && c.Tag == tag);
+
+                if (match != null)
+                {
+                    return match;
+                }
+
+                throw new PackageNotFoundException(id, tag, packages);
             }
             catch (HttpException ex)
             {

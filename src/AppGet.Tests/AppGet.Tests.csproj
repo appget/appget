@@ -108,14 +108,6 @@
     <Compile Include="HostSystem\EnvInfoFixture.cs" />
     <Compile Include="Http\UserAgentBuilderFixture.cs" />
     <Compile Include="Infrastructure\Composition\ContainerBuilderFixture.cs" />
-    <Compile Include="Installers\DetectorTestBase.cs" />
-    <Compile Include="Installers\Inno\InnoDetectorFixture.cs" />
-    <Compile Include="Installers\InstallBuilder\InstallBuilderDetectorFixture.cs" />
-    <Compile Include="Installers\Msi\MsiDetectorFixture.cs" />
-    <Compile Include="Installers\Nsis\NsisDetectorFixture.cs" />
-    <Compile Include="Installers\Squirrel\SquirrelDetectorFixture.cs" />
-    <Compile Include="Installers\Squirrel\SquirrelReaderFixture.cs" />
-    <Compile Include="Installers\Wix\WixDetectorFixture.cs" />
     <Compile Include="Manifests\PackageManifestFixture.cs" />
     <Compile Include="InstalledPackages\WindowsInstallerInventoryManagerFixture.cs" />
     <Compile Include="Manifests\SubmissionClientFixture.cs" />
@@ -130,7 +122,6 @@
     <Compile Include="Serialization\YamlFixture.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tools\PeManifestReaderFixture.cs" />
     <Compile Include="Github\Releases\GitHubReleaseClientFixture.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -144,10 +135,6 @@
     <ProjectReference Include="..\AppGet\AppGet.csproj">
       <Project>{0DF5E722-8458-4963-9285-E80D0AD98027}</Project>
       <Name>AppGet</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SevenZip\SevenZip.csproj">
-      <Project>{4960dd14-3431-47ec-b9d9-9d2730a98dc3}</Project>
-      <Name>SevenZip</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

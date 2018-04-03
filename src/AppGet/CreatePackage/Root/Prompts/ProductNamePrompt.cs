@@ -1,5 +1,4 @@
 using AppGet.CommandLine.Prompts;
-using AppGet.CreatePackage.Root.Extractors;
 
 namespace AppGet.CreatePackage.Root.Prompts
 {
@@ -22,7 +21,6 @@ namespace AppGet.CreatePackage.Root.Prompts
             var name = _prompt.Request("Product Name", manifest.Name.Value);
 
             manifest.Name.Add(name, Confidence.Authoritative, this);
-            new NameExtractor().Invoke(manifest);
         }
     }
 }

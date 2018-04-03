@@ -35,9 +35,7 @@ namespace AppGet.Tests.Infrastructure.Composition
             Assert<IExtractToManifestRoot>();
             Assert<IManifestPrompt>();
             Assert<IInstallerPrompt>();
-            Assert<IDetectInstallMethod>();
             Assert<IFileTransferClient>();
-//            Assert<IPackageRepository>();
         }
     }
 }

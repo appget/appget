@@ -31,11 +31,6 @@ namespace AppGet.Commands.Install
 
             var package = await _packageRepository.Get(installOptions.PackageId, installOptions.PackageTag);
 
-            if (package == null)
-            {
-                throw new PackageNotFoundException(installOptions.PackageId);
-            }
-
             var manifest = await _packageManifestService.LoadManifest(package.ManifestPath);
 
             await _installService.Install(manifest, installOptions);

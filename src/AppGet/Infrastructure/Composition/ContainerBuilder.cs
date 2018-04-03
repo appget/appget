@@ -8,7 +8,6 @@ using AppGet.Commands.WindowsInstallerSearch;
 using AppGet.CreatePackage.Installer;
 using AppGet.CreatePackage.Installer.Prompts;
 using AppGet.CreatePackage.Root;
-using AppGet.CreatePackage.Root.Extractors;
 using AppGet.CreatePackage.Root.Prompts;
 using AppGet.Crypto.Hash;
 using AppGet.Crypto.Hash.Algorithms;
@@ -64,15 +63,6 @@ namespace AppGet.Infrastructure.Composition
                 typeof(Md5Hash),
             });
 
-            container.RegisterMultiple<IExtractToManifestRoot>(new[]
-            {
-                typeof(FileVersionInfoExtractor),
-                typeof(InstallMethodExtractor),
-                typeof(NameExtractor),
-                typeof(PackageIdExtractor),
-                typeof(SquirrelExtractor),
-            });
-
             container.RegisterMultiple<IManifestPrompt>(new[]
             {
                 typeof(ProductNamePrompt),
@@ -103,17 +93,6 @@ namespace AppGet.Infrastructure.Composition
                 typeof(ZipWhisperer),
             });
 
-            container.RegisterMultiple<IDetectInstallMethod>(new[]
-            {
-                typeof(MsiDetector),
-                typeof(SquirrelDetector),
-                typeof(NsisDetector),
-                typeof(InnoDetector),
-                typeof(WixDetector),
-                typeof(InstallBuilderDetector)
-            });
-
-
             container.RegisterMultiple<IFileTransferClient>(new[]
             {
                 typeof(HttpFileTransferClient),
@@ -123,7 +102,7 @@ namespace AppGet.Infrastructure.Composition
 
             container.RegisterMultiple<IPackageRepository>(new[]
             {
-                typeof(LocalPackageRepository),
+//                typeof(LocalPackageRepository),
                 typeof(OfficialPackageRepository)
             });
 

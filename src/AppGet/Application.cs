@@ -7,6 +7,7 @@ using AppGet.Commands;
 using AppGet.Exceptions;
 using AppGet.Infrastructure.Composition;
 using AppGet.Infrastructure.Logging;
+using AppGet.PackageRepository;
 using AppGet.Update;
 using NLog;
 
@@ -67,7 +68,23 @@ namespace AppGet
 
                 return 0;
             }
+            catch (PackageNotFoundException e)
+            {
+                Logger.Warn(e.Message);
 
+                if (e.Similar.Any())
+                {
+                    Console.WriteLine("");
+                    Console.WriteLine("Suggestions:");
+
+                    foreach (var pkg in e.Similar)
+                    {
+                        Console.WriteLine($"    {pkg}");
+                    }
+                }
+
+                return 1;
+            }
             catch (AppGetException ex)
             {
                 Logger.Error(ex, null);
@@ -87,6 +104,8 @@ namespace AppGet
 
         private static string[] TakeArgsFromInput()
         {
+            Console.WriteLine("");
+            Console.WriteLine("");
             Console.WriteLine("In debug mode. Please enter arguments");
             var input = Console.ReadLine();
             return input.Split(' ');

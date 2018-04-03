@@ -1,13 +1,14 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
+using AppGet.Exceptions;
 
 namespace AppGet.Http
 {
-    public class HttpException : Exception
+    public class HttpException : AppGetException
     {
         public HttpResponseMessage Response { get; }
 
         public HttpException(HttpResponseMessage response)
+            : base($"{response.RequestMessage.RequestUri} {response.StatusCode}")
         {
             Response = response;
         }

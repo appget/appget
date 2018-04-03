@@ -1,12 +1,16 @@
-﻿using AppGet.Exceptions;
+﻿using System.Collections.Generic;
+using AppGet.Exceptions;
 
 namespace AppGet.PackageRepository
 {
     public class PackageNotFoundException : AppGetException
     {
-        public PackageNotFoundException(string packageName)
-            : base($"Package [{packageName}] could not be found")
+        public List<PackageInfo> Similar { get; }
+
+        public PackageNotFoundException(string packageId, string tag, List<PackageInfo> similar)
+            : base($"Package [{packageId}] could not be found")
         {
+            Similar = similar;
         }
     }
 }

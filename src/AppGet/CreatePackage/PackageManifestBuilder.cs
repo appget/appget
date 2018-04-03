@@ -5,6 +5,7 @@ using System.Linq;
 using AppGet.Extensions;
 using AppGet.Manifests;
 using AppGet.Serialization;
+using Newtonsoft.Json;
 
 namespace AppGet.CreatePackage
 {
@@ -13,6 +14,7 @@ namespace AppGet.CreatePackage
         None,
         LastEffort,
         Plausible,
+        Confident,
         Authoritative
     }
 
@@ -38,15 +40,7 @@ namespace AppGet.CreatePackage
                 value = (dynamic)str;
             }
 
-            if (source is string)
-            {
-                Source = source.ToString();
-            }
-            else
-            {
-                Source = source.GetType().Name;
-            }
-
+            Source = source.GetType().Name.Replace("Extractor", "");
             Value = value;
             Confidence = confidence;
         }
@@ -73,19 +67,27 @@ namespace AppGet.CreatePackage
         public T Add(T value, Confidence confidence, object source)
         {
             var attr = new ManifestAttributeCandidate<T>(value, confidence, source);
-            Values.Add(attr);
+
+            if (attr.Confidence != Confidence.None)
+            {
+                Values.Add(attr);
+            }
             return attr.Value;
         }
 
         public ManifestAttributeCandidate<T> GetTop()
         {
             return Values
+                .AsEnumerable()
+                .Reverse()
                 .OrderByDescending(c => c.Confidence)
                 .ThenBy(c => c.Value == null)
                 .ThenByDescending(c => _secondarySort(c.Value))
                 .FirstOrDefault(c => c.Confidence > Confidence.None);
         }
 
+
+        [JsonIgnore]
         public T Value
         {
             get
@@ -100,14 +102,15 @@ namespace AppGet.CreatePackage
             return GetTop()?.Confidence >= confidence;
         }
 
+        public bool HasValue => HasConfidence(Confidence.LastEffort);
+
         public override string ToString()
         {
             var top = GetTop();
-            return top?.Value?.ToString() ?? "";
+            return top?.Value.ToString() ?? "";
         }
 
     }
-
 
     [DebuggerDisplay("{Id} {Version} [{Name}]")]
     public class PackageManifestBuilder
@@ -127,28 +130,25 @@ namespace AppGet.CreatePackage
 
         public List<InstallerBuilder> Installers { get; }
 
-        public InstallArgs Args { get; private set; }
-
-        public Uri Uri => new Uri(Installers.First().Location);
-        public string FilePath => Installers.First().FilePath;
+        public ManifestAttribute<InstallArgs> Args { get; private set; }
 
         public PackageManifestBuilder()
         {
             Id = new ManifestAttribute<string>();
             Name = new ManifestAttribute<string>(m => m?.CapitalLettersCount());
-            Version = new ManifestAttribute<string>(v => v?.PeriodCount());
+            Version = new ManifestAttribute<string>();
             Home = new ManifestAttribute<string>();
             Repo = new ManifestAttribute<string>();
             Licence = new ManifestAttribute<string>();
             InstallMethod = new ManifestAttribute<InstallMethodTypes>();
-            Args = new InstallArgs();
+            Args = new ManifestAttribute<InstallArgs>();
             Installers = new List<InstallerBuilder>();
         }
 
 
         public PackageManifest Build()
         {
-            if (InstallMethod.Value == InstallMethodTypes.Squirrel || JsonEquality.Equal(Args, new InstallArgs()))
+            if (InstallMethod.Value == InstallMethodTypes.Squirrel || JsonEquality.Equal(Args.Value, new InstallArgs()))
             {
                 Args = null;
             }
@@ -165,7 +165,7 @@ namespace AppGet.CreatePackage
 
                 InstallMethod = InstallMethod.Value,
                 Installers = Installers.Select(c => c.Build()).OrderBy(c => c.Architecture).ToList(),
-                Args = JsonEquality.Equal(Args, new InstallArgs()) ? null : Args
+                Args = Args?.Value
             };
         }
     }
@@ -174,20 +174,15 @@ namespace AppGet.CreatePackage
     public class InstallerBuilder
     {
         public string Location { get; set; }
-        public string FilePath { get; set; }
-
         public string Sha256 { get; set; }
         public ManifestAttribute<ArchitectureTypes> Architecture { get; }
         public ManifestAttribute<Version> MinWindowsVersion { get; }
-        public FileVerificationInfo FileVerificationInfo { get; set; }
 
         public InstallerBuilder()
         {
             Architecture = new ManifestAttribute<ArchitectureTypes>();
             MinWindowsVersion = new ManifestAttribute<Version>();
-            FileVerificationInfo = new FileVerificationInfo();
         }
-
 
         public Manifests.Installer Build()
         {
@@ -199,6 +194,5 @@ namespace AppGet.CreatePackage
                 MinWindowsVersion = MinWindowsVersion.Value
             };
         }
-
     }
 }

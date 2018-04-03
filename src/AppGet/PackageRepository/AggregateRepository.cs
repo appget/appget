@@ -13,10 +13,10 @@ namespace AppGet.PackageRepository
             _repositories = repositories;
         }
 
-        public Task<PackageInfo> Get(string id, string tag)
+        public async Task<PackageInfo> Get(string id, string tag)
         {
-            var task = _repositories.Select(c => c.Get(id, tag).Result).FirstOrDefault(c => c != null);
-            return Task.FromResult(task);
+            var task = _repositories.Select(c => c.Get(id, tag)).FirstOrDefault(c => c != null);
+            return task == null ? null : await task;
         }
 
         public async Task<List<PackageInfo>> Search(string term)

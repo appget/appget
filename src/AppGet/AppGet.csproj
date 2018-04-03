@@ -52,14 +52,14 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\..\appget.crawler\Crawler\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.4.13\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\..\..\appget.crawler\Crawler\packages\NLog.4.5.0\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
-    <Reference Include="SharpCompress, Version=0.19.2.0, Culture=neutral, PublicKeyToken=afb0a02973931d96, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpCompress.0.19.2\lib\net35\SharpCompress.dll</HintPath>
+    <Reference Include="SharpCompress, Version=0.20.0.0, Culture=neutral, PublicKeyToken=afb0a02973931d96, processorArchitecture=MSIL">
+      <HintPath>..\..\..\appget.crawler\Crawler\packages\SharpCompress.0.20.0\lib\net45\SharpCompress.dll</HintPath>
     </Reference>
     <Reference Include="SharpRaven, Version=2.3.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpRaven.2.3.2\lib\net45\SharpRaven.dll</HintPath>
@@ -69,7 +69,11 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="WindowsBase" />
@@ -106,17 +110,11 @@
     <Compile Include="Commands\WindowsInstallerSearch\WindowsInstallerSearchOptions.cs" />
     <Compile Include="Commands\ViewManifest\ViewManifestCommandHandler.cs" />
     <Compile Include="Commands\Uninstall\PackageNotInstalledException.cs" />
-    <Compile Include="Compression\SfxReader.cs" />
     <Compile Include="CreatePackage\Installer\IInstallerPrompt.cs" />
     <Compile Include="CreatePackage\Installer\Prompts\ArchitecturePrompt.cs" />
     <Compile Include="CreatePackage\ManifestComposer.cs" />
-    <Compile Include="CreatePackage\Root\Extractors\InstallMethodExtractor.cs" />
-    <Compile Include="CreatePackage\Root\Extractors\NameExtractor.cs" />
-    <Compile Include="CreatePackage\Root\Extractors\PackageIdExtractor.cs" />
     <Compile Include="CreatePackage\Installer\BuildInstaller.cs" />
     <Compile Include="CreatePackage\Installer\Prompts\MinWindowsVersionPrompt.cs" />
-    <Compile Include="CreatePackage\Root\Extractors\FileVersionInfoExtractor.cs" />
-    <Compile Include="CreatePackage\Root\Extractors\SquirrelExtractor.cs" />
     <Compile Include="CreatePackage\Root\IExtractToManifestRoot.cs" />
     <Compile Include="CreatePackage\Root\Prompts\InstallMethodPrompt.cs" />
     <Compile Include="CreatePackage\Root\Prompts\LicensePrompt.cs" />
@@ -143,7 +141,6 @@
     <Compile Include="Github\GithubKeys.cs" />
     <Compile Include="Installers\ExistReason.cs" />
     <Compile Include="Installers\ExitCodeTypes.cs" />
-    <Compile Include="Installers\InstallBuilder\InstallBuilderDetector.cs" />
     <Compile Include="Installers\InstallBuilder\InstallBuilderWhisperer.cs" />
     <Compile Include="Installers\InstallerException.cs" />
     <Compile Include="Extensions\UriExtensions.cs" />
@@ -165,18 +162,9 @@
     <Compile Include="FileTransfer\Protocols\HttpFileTransferClient.cs" />
     <Compile Include="FileTransfer\IFileTransferClient.cs" />
     <Compile Include="Infrastructure\Logging\SentryTarget.cs" />
-    <Compile Include="Installers\IDetectInstallMethod.cs" />
-    <Compile Include="Installers\Inno\InnoDetector.cs" />
-    <Compile Include="Installers\InstallerDetectorBase.cs" />
-    <Compile Include="Installers\Wix\WixDetector.cs" />
     <Compile Include="Installers\Wix\WixWhisperer.cs" />
-    <Compile Include="Installers\Msi\MsiDetector.cs" />
     <Compile Include="Installers\Custom\CustomWhisperer.cs" />
-    <Compile Include="Installers\Squirrel\NugetSpec.cs" />
-    <Compile Include="Installers\Squirrel\SquirrelDetector.cs" />
-    <Compile Include="Installers\Squirrel\SquirrelReader.cs" />
     <Compile Include="Installers\Squirrel\SquirrelWhisperer.cs" />
-    <Compile Include="Installers\Nsis\NsisDetector.cs" />
     <Compile Include="Manifests\ArchitectureTypes.cs" />
     <Compile Include="Manifests\FileVerificationInfo.cs" />
     <Compile Include="Manifests\HashTypes.cs" />
@@ -234,7 +222,6 @@
     <Compile Include="Serialization\Yaml.cs" />
     <Compile Include="Requirements\IEnforceRequirements.cs" />
     <Compile Include="Requirements\Specifications\MinOsVersionSpecification.cs" />
-    <Compile Include="Tools\PeManifestReader.cs" />
     <Compile Include="Update\AppGetRelease.cs" />
     <Compile Include="Update\AppGetUpdateService.cs" />
     <Compile Include="Github\Releases\GithubRelease.cs" />
@@ -247,12 +234,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="appet.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SevenZip\SevenZip.csproj">
-      <Project>{4960dd14-3431-47ec-b9d9-9d2730a98dc3}</Project>
-      <Name>SevenZip</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

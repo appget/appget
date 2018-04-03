@@ -44,7 +44,7 @@ namespace AppGet.Commands.CreateManifest
 
             var manifestBuilder = await _xRayClient.GetBuilder(new Uri(createOptions.DownloadUrl));
 
-            await _installerBuilder.Compose(manifestBuilder.Installers.Single(), true);
+            _installerBuilder.Compose(manifestBuilder.Installers.Single());
 
             _composeManifest.Compose(manifestBuilder, true);
 
@@ -57,10 +57,9 @@ namespace AppGet.Commands.CreateManifest
                 }
 
                 var manifestBuilder2 = await _xRayClient.GetInstallerBuilder(new Uri(url));
-                await _installerBuilder.Compose(manifestBuilder2, true);
+                _installerBuilder.Compose(manifestBuilder2);
                 manifestBuilder.Installers.Add(manifestBuilder2);
             }
-
 
             _packageManifestService.PrintManifest(manifestBuilder.Build());
             _packageManifestService.WriteManifest(manifestBuilder);
