@@ -49,7 +49,6 @@ namespace AppGet.Tests.FileTransfer.Protocols
         [TestCase("http://www.linqpad.net/GetFile.aspx?LINQPad4-AnyCPU.zip", "LINQPad4-AnyCPU.zip")]
         [TestCase("http://www.jtricks.com/download-unknown", "content.txt")]
         [TestCase("http://www.jtricks.com/download-text", "content.txt")]
-        [TestCase("https://get.popsql.io/download/windows", "PopSQL.Setup.0.5.4.exe")]
         public async Task should_get_file_name_from_nameless_url(string url, string expected)
         {
             var fileName = await Subject.GetFileName(url);

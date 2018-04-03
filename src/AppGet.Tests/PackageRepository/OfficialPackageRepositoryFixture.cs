@@ -46,7 +46,6 @@ namespace AppGet.Tests.PackageRepository
             latest.Should().BeNull();
         }
 
-
         [TestCase("vlc")]
         [TestCase("plus")]
         [TestCase("zip")]
