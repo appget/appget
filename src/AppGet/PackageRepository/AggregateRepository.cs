@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace AppGet.PackageRepository
 {
@@ -13,16 +12,16 @@ namespace AppGet.PackageRepository
             _repositories = repositories;
         }
 
-        public async Task<PackageInfo> Get(string id, string tag)
+        public PackageInfo Get(string id, string tag)
         {
             var task = _repositories.Select(c => c.Get(id, tag)).FirstOrDefault(c => c != null);
-            return task == null ? null : await task;
+            return task == null ? null : task;
         }
 
-        public async Task<List<PackageInfo>> Search(string term)
+        public List<PackageInfo> Search(string term)
         {
-            var task = Task.FromResult(_repositories.SelectMany(c => c.Search(term).Result).ToList());
-            return await task;
+            var task = (_repositories.SelectMany(c => c.Search(term)).ToList());
+            return task;
         }
     }
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 using AppGet.Http;
 using NLog;
 
@@ -22,7 +21,7 @@ namespace AppGet.PackageRepository
         }
 
 
-        public async Task<PackageInfo> Get(string id, string tag)
+        public  PackageInfo Get(string id, string tag)
         {
             if (string.IsNullOrWhiteSpace(tag))
             {
@@ -33,7 +32,7 @@ namespace AppGet.PackageRepository
 
             try
             {
-                var packages = (await Search(id)).ToList();
+                var packages = ( Search(id)).ToList();
 
                 var match = packages.FirstOrDefault(c => c.Id == id && c.Tag == tag);
 
@@ -54,15 +53,15 @@ namespace AppGet.PackageRepository
             }
         }
 
-        public async Task<List<PackageInfo>> Search(string term)
+        public  List<PackageInfo> Search(string term)
         {
             _logger.Debug($"Searching for '{term}' in {API_ROOT}");
 
             var uri = new Uri($"{API_ROOT}/packages")
                 .AddQuery("q", term.Trim());
 
-            var package = await _httpClient.Get(uri);
-            return await package.AsResource<List<PackageInfo>>();
+            var package =  _httpClient.Get(uri);
+            return  package.AsResource<List<PackageInfo>>();
         }
     }
 }

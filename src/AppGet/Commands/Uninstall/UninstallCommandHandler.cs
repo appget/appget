@@ -1,8 +1,5 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
 using AppGet.InstalledPackages;
-using AppGet.Installers;
-using AppGet.Manifests;
 using NLog;
 
 namespace AppGet.Commands.Uninstall
@@ -25,7 +22,7 @@ namespace AppGet.Commands.Uninstall
             return commandOptions is UninstallOptions;
         }
 
-        public async Task Execute(AppGetOption commandOptions)
+        public  void Execute(AppGetOption commandOptions)
         {
             var uninstallOptions = (UninstallOptions)commandOptions;
 

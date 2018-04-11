@@ -1092,14 +1092,14 @@ namespace AppGet.Infrastructure.Composition
                 CurrentDomain = new AppDomain();
             }
 
-			// @mbrit - 2012-05-30 - in WinRT, this should be done async...
-            public async Task<List<Assembly>> GetAssembliesAsync()
+			// @mbrit - 2012-05-30 - in WinRT, this should be done ...
+            public  void<List<Assembly>> GetAssembliesAsync()
             {
                 var folder = Windows.ApplicationModel.Package.Current.InstalledLocation;
 
                 List<Assembly> assemblies = new List<Assembly>();
 
-				var files = await folder.GetFilesAsync();
+				var files =  folder.GetFilesAsync().Result;
 
                 foreach (StorageFile file in files)
                 {

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using AppGet.Http;
 using AppGet.Update;
 using NLog;
@@ -10,7 +9,7 @@ namespace AppGet.Github.Releases
 {
     public interface IReleaseClient
     {
-        Task<List<AppGetRelease>> GetReleases();
+        List<AppGetRelease> GetReleases();
     }
 
     public class GitHubReleaseClient : IReleaseClient
@@ -24,12 +23,12 @@ namespace AppGet.Github.Releases
             _logger = logger;
         }
 
-        public async Task<List<AppGetRelease>> GetReleases()
+        public List<AppGetRelease> GetReleases()
         {
             _logger.Trace("Checking for AppGet updates...");
             var uri = new Uri($"https://api.github.com/repos/appget/appget/releases?{GithubKeys.AuthQuery}&no_cache={Guid.NewGuid()}");
-            var response = await _httpClient.Get(uri);
-            var releases = await response.AsResource<List<GithubRelease>>();
+            var response = _httpClient.Get(uri);
+            var releases = response.AsResource<List<GithubRelease>>();
             _logger.Trace($"Found {releases.Count} releases");
 
             return releases.Select(c => new AppGetRelease

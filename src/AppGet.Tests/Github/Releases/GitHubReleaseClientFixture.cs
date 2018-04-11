@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using AppGet.Github.Releases;
+﻿using AppGet.Github.Releases;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -9,11 +8,11 @@ namespace AppGet.Tests.Github.Releases
     public class GitHubReleaseClientFixture : TestBase<GitHubReleaseClient>
     {
         [Test]
-        public async Task get_releases()
+        public  void get_releases()
         {
             WithRealHttp();
 
-            var release = await Subject.GetReleases();
+            var release =  Subject.GetReleases();
 
             release.Should().NotBeEmpty();
             release[0].Version.Should().NotBeNull();

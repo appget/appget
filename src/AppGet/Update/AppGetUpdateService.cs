@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using AppGet.Commands.Install;
 using AppGet.Github.Releases;
 using AppGet.Installers;
@@ -13,7 +12,7 @@ namespace AppGet.Update
     public interface IAppGetUpdateService
     {
         void Start();
-        Task Commit();
+        void Commit();
     }
 
     public class AppGetUpdateService : IAppGetUpdateService
@@ -21,7 +20,7 @@ namespace AppGet.Update
         private readonly IReleaseClient _releaseClient;
         private readonly IInstallService _installService;
         private readonly Logger _logger;
-        private Task<List<AppGetRelease>> _releaseTask;
+        private List<AppGetRelease> _releaseTask;
 
         public AppGetUpdateService(IReleaseClient releaseClient, IInstallService installService, Logger logger)
         {
@@ -37,9 +36,9 @@ namespace AppGet.Update
         }
 
 
-        public async Task Commit()
+        public void Commit()
         {
-            var releases = await _releaseTask;
+            var releases = _releaseTask;
             var latest = releases.OrderByDescending(c => c.Version).First();
             var current = Assembly.GetEntryAssembly().GetName().Version;
 
@@ -65,7 +64,7 @@ namespace AppGet.Update
                 }
             };
 
-            await _installService.Install(manifest, new InstallOptions { Force = true, Package = manifest.Id });
+            _installService.Install(manifest, new InstallOptions { Force = true, Package = manifest.Id });
         }
     }
 }

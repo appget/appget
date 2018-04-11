@@ -51,7 +51,7 @@ namespace AppGet.HostSystem
 
                 FullName = Environment.OSVersion.VersionString;
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
         }

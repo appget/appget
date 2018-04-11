@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using AppGet.AppData;
 using AppGet.Commands;
 using AppGet.Exceptions;
@@ -19,18 +18,18 @@ namespace AppGet
 
         public static int Main(string[] args)
         {
-            var result = Run(args).Result;
+            var result = Run(args);
 
             while (Debugger.IsAttached)
             {
-                Run(new string[0]).Wait();
+                Run(new string[0]);
             }
 
             return result;
         }
 
 
-        private static async Task<int> Run(string[] args)
+        private static int Run(string[] args)
         {
             try
             {
@@ -62,9 +61,9 @@ namespace AppGet
                 container.Resolve<IAppDataService>().EnsureAppDataDirectoryExists();
 
                 var commandExecutor = container.Resolve<ICommandExecutor>();
-                await commandExecutor.ExecuteCommand(options);
+                commandExecutor.ExecuteCommand(options);
 
-                updatedService.Commit().Wait();
+                updatedService.Commit();
 
                 return 0;
             }

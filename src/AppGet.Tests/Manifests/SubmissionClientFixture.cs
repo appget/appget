@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using AppGet.Manifests;
+﻿using AppGet.Manifests;
 using NUnit.Framework;
 
 namespace AppGet.Tests.Manifests
@@ -8,10 +7,10 @@ namespace AppGet.Tests.Manifests
     public class SubmissionClientFixture : TestBase<SubmissionClient>
     {
         [Test]
-        public async Task submit()
+        public  void submit()
         {
             WithRealHttp();
-            await Subject.Submit(new PackageManifest
+             Subject.Submit(new PackageManifest
             {
                 Id = "unit-test",
             }, "unittest.yaml");

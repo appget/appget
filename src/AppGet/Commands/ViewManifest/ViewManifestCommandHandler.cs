@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using AppGet.Manifests;
 using AppGet.PackageRepository;
 
@@ -20,11 +19,11 @@ namespace AppGet.Commands.ViewManifest
             return commandOptions is ViewManifestOptions;
         }
 
-        public async Task Execute(AppGetOption searchCommandOptions)
+        public  void Execute(AppGetOption searchCommandOptions)
         {
             var viewOptions = (ViewManifestOptions)searchCommandOptions;
-            var package = await _packageRepository.Get(viewOptions.PackageId, viewOptions.PackageTag);
-            var manifest = await _packageManifestService.LoadManifest(package.ManifestPath);
+            var package =  _packageRepository.Get(viewOptions.PackageId, viewOptions.PackageTag);
+            var manifest =  _packageManifestService.LoadManifest(package.ManifestPath);
             _packageManifestService.PrintManifest(manifest);
         }
     }

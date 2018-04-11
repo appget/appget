@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using AppGet.CreatePackage;
 using FluentAssertions;
 using NUnit.Framework;
@@ -15,13 +14,12 @@ namespace AppGet.Tests.CreatePackage
             WithRealHttp();
         }
 
-
         [Test]
-        public async Task get_builder()
+        public  void get_builder()
         {
-            var builder = await Subject.GetBuilder(new Uri("https://dl.google.com/dl/android/studio/install/3.0.1.0/android-studio-ide-171.4443003-windows.exe"));
+            var builder =  Subject.GetBuilder(new Uri("https://github.com/git-for-windows/git/releases/download/v2.16.2.windows.1/Git-2.16.2-32-bit.exe"));
             builder.Should().NotBeNull();
-            builder.Version.Value.Should().Be("3.0.1.0");
+            builder.Version.Value.Should().Be("2.16.2");
             builder.Version.GetTop().Source.Should().Be("Url");
         }
     }

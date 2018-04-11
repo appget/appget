@@ -1,7 +1,5 @@
 ﻿using System.Globalization;
 using System.IO;
-using System.Linq;
-using AppGet.Infrastructure.Composition;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 

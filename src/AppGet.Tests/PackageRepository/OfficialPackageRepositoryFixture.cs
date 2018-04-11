@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
 using AppGet.PackageRepository;
 using FluentAssertions;
 using NUnit.Framework;
@@ -11,12 +10,12 @@ namespace AppGet.Tests.PackageRepository
     {
         [TestCase("vlc")]
         [TestCase("7-zip")]
-        public async Task should_get_package(string package)
+        public  void should_get_package(string package)
         {
 
             WithRealHttp();
 
-            var latest = await Subject.Get(package, null);
+            var latest =  Subject.Get(package, null);
 
             latest.Should().NotBeNull();
             latest.ManifestPath.Should().StartWith("https://raw.githubusercontent.com/appget/packages/master/manifests/");
@@ -25,23 +24,23 @@ namespace AppGet.Tests.PackageRepository
         }
 
         [Test]
-        public async Task should_get_null_for_unknown_id()
+        public  void should_get_null_for_unknown_id()
         {
 
             WithRealHttp();
 
-            var latest = await Subject.Get("bad-package-id", null);
+            var latest =  Subject.Get("bad-package-id", null);
 
             latest.Should().BeNull();
         }
 
         [Test]
-        public async Task should_get_null_for_unknown_tag()
+        public  void should_get_null_for_unknown_tag()
         {
 
             WithRealHttp();
 
-            var latest = await Subject.Get("vlc", "1");
+            var latest =  Subject.Get("vlc", "1");
 
             latest.Should().BeNull();
         }
@@ -49,11 +48,11 @@ namespace AppGet.Tests.PackageRepository
         [TestCase("vlc")]
         [TestCase("plus")]
         [TestCase("zip")]
-        public async Task should_search_package(string term)
+        public  void should_search_package(string term)
         {
             WithRealHttp();
 
-            var results = await Subject.Search(term);
+            var results =  Subject.Search(term);
 
             var found = results.First();
 
@@ -63,10 +62,10 @@ namespace AppGet.Tests.PackageRepository
         }
 
         [Test]
-        public async Task should_get_manifest()
+        public  void should_get_manifest()
         {
             WithRealHttp();
-            var c = await Subject.Get("postman", null);
+            var c =  Subject.Get("postman", null);
 
             c.Should().NotBeNull();
         }

@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 using AppGet.FileSystem;
 using AppGet.Http;
 using AppGet.ProgressTracker;
@@ -38,7 +37,7 @@ namespace AppGet.FileTransfer.Protocols
             return HttpRegex.IsMatch(source);
         }
 
-        public async Task<string> GetFileName(string source)
+        public  string GetFileName(string source)
         {
             var uri = new Uri(source);
 
@@ -46,10 +45,10 @@ namespace AppGet.FileTransfer.Protocols
 
             if (FileNameRegex.IsMatch(fileName)) return fileName;
 
-            var resp = await _httpClient.Get(uri, HttpCompletionOption.ResponseHeadersRead);
+            var resp =  _httpClient.Get(uri, HttpCompletionOption.ResponseHeadersRead);
 
             if (resp.RequestMessage.RequestUri != uri)
-                return await GetFileName(resp.RequestMessage.RequestUri.ToString());
+                return  GetFileName(resp.RequestMessage.RequestUri.ToString());
 
             if (resp.Content.Headers.ContentDisposition != null)
                 return resp.Content.Headers.ContentDisposition.FileName.Trim('"', '\'', ' ');
@@ -112,13 +111,13 @@ namespace AppGet.FileTransfer.Protocols
             _fileSystem.Move(tempFile, destinationFile);
         }
 
-        public async Task<string> ReadString(string source)
+        public  string ReadString(string source)
         {
             var req = new HttpRequestMessage(HttpMethod.Get, source);
             req.Headers.CacheControl = new CacheControlHeaderValue { NoCache = true, NoStore = true };
 
-            var resp = await _httpClient.Send(req);
-            return await resp.Content.ReadAsStringAsync();
+            var resp =  _httpClient.Send(req);
+            return  resp.Content.ReadAsStringAsync().Result;
         }
 
         public Action<ProgressState> OnStatusUpdated { get; set; }

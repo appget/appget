@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using AppGet.AppData;
 using AppGet.FileSystem;
 using AppGet.Manifests;
@@ -20,21 +19,21 @@ namespace AppGet.PackageRepository
             _config = config;
         }
 
-        public Task<PackageInfo> Get(string id, string tag)
+        public PackageInfo Get(string id, string tag)
         {
             if (string.IsNullOrWhiteSpace(_config.LocalRepository))
             {
-                return Task.FromResult<PackageInfo>(null);
+                return null;
             }
 
             var pkgDir = Path.Combine(_config.LocalRepository, id);
             if (!_fileSystem.DirectoryExists(pkgDir))
             {
-                return Task.FromResult<PackageInfo>(null);
+                return null;
             }
 
             var packages = _fileSystem.GetFiles(pkgDir, "*.yaml").Select(Read).Where(c => c.Tag == tag);
-            return Task.FromResult(packages.OrderByDescending(c => c.Tag).FirstOrDefault());
+            return (packages.OrderByDescending(c => c.Tag).FirstOrDefault());
         }
 
         private PackageInfo Read(string path)
@@ -60,10 +59,10 @@ namespace AppGet.PackageRepository
             };
         }
 
-        public Task<List<PackageInfo>> Search(string term)
+        public List<PackageInfo> Search(string term)
         {
             // TODO
-            return Task.FromResult(new List<PackageInfo>());
+            return (new List<PackageInfo>());
         }
     }
 }

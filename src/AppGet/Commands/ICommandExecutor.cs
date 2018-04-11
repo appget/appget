@@ -1,11 +1,9 @@
-﻿using System.Threading.Tasks;
-
-namespace AppGet.Commands
+﻿namespace AppGet.Commands
 {
     public interface ICommandHandler
     {
         bool CanExecute(AppGetOption commandOptions);
 
-        Task Execute(AppGetOption commandOptions);
+        void Execute(AppGetOption commandOptions);
     }
 }

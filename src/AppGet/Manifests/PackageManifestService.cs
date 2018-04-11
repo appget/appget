@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Threading.Tasks;
 using AppGet.AppData;
 using AppGet.CreatePackage;
 using AppGet.FileSystem;
@@ -12,7 +11,7 @@ namespace AppGet.Manifests
 {
     public interface IPackageManifestService
     {
-        Task<PackageManifest> LoadManifest(string source);
+        PackageManifest LoadManifest(string source);
         string WriteManifest(PackageManifestBuilder manifestBuilder);
         void PrintManifest(PackageManifest manifest);
     }
@@ -33,10 +32,10 @@ namespace AppGet.Manifests
         }
 
 
-        public async Task<PackageManifest> LoadManifest(string source)
+        public  PackageManifest LoadManifest(string source)
         {
             _logger.Info($"Loading package manifest from {source}");
-            var text = await _fileTransferService.ReadContentAsync(source);
+            var text =  _fileTransferService.ReadContentAsync(source);
             return Yaml.Deserialize<PackageManifest>(text);
         }
 
@@ -56,7 +55,7 @@ namespace AppGet.Manifests
         }
 
 
-        public async Task Submit(PackageManifestBuilder builder)
+        public  void Submit(PackageManifestBuilder builder)
         {
 
         }

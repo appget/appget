@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Threading.Tasks;
 using AppGet.Serialization;
 
 namespace AppGet.Http
 {
     public static class HttpExtension
     {
-        public static async Task<T> AsResource<T>(this HttpResponseMessage response)
+        public static T AsResource<T>(this HttpResponseMessage response)
         {
-            return Json.Deserialize<T>(await response.Content.ReadAsStreamAsync());
+            return Json.Deserialize<T>(response.Content.ReadAsStreamAsync().Result);
         }
 
         public static Uri AddQuery(this Uri uri, string name, string value)

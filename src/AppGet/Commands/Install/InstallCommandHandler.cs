@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using AppGet.Installers;
+﻿using AppGet.Installers;
 using AppGet.Manifests;
 using AppGet.PackageRepository;
 
@@ -25,15 +24,15 @@ namespace AppGet.Commands.Install
             return commandOptions is InstallOptions;
         }
 
-        public async Task Execute(AppGetOption commandOptions)
+        public  void Execute(AppGetOption commandOptions)
         {
             var installOptions = (InstallOptions)commandOptions;
 
-            var package = await _packageRepository.Get(installOptions.PackageId, installOptions.PackageTag);
+            var package =  _packageRepository.Get(installOptions.PackageId, installOptions.PackageTag);
 
-            var manifest = await _packageManifestService.LoadManifest(package.ManifestPath);
+            var manifest =  _packageManifestService.LoadManifest(package.ManifestPath);
 
-            await _installService.Install(manifest, installOptions);
+             _installService.Install(manifest, installOptions);
         }
     }
 }
