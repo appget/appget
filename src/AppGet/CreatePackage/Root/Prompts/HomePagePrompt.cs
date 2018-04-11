@@ -6,7 +6,6 @@ namespace AppGet.CreatePackage.Root.Prompts
     {
         private readonly IUrlPrompt _prompt;
 
-
         public HomePagePrompt(IUrlPrompt prompt)
         {
             _prompt = prompt;
@@ -24,4 +23,3 @@ namespace AppGet.CreatePackage.Root.Prompts
         }
     }
 }
-

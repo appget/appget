@@ -12,5 +12,4 @@ namespace AppGet.Crypto.Hash.Algorithms
             return new SHA1Managed();
         }
     }
-
 }

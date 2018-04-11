@@ -19,10 +19,10 @@ namespace AppGet.HostSystem
             get
             {
                 var fileLocation = Assembly.GetCallingAssembly().Location;
+
                 return new FileInfo(fileLocation).LastWriteTimeUtc;
             }
         }
-
 
         public static bool IsProduction
         {

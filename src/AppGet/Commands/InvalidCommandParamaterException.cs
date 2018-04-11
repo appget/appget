@@ -6,8 +6,8 @@ namespace AppGet.Commands
     {
         public AppGetOption Option { get; }
 
-        public InvalidCommandParamaterException(string message, AppGetOption option) :
-            base(message)
+        public InvalidCommandParamaterException(string message, AppGetOption option)
+            : base(message)
         {
             Option = option;
         }

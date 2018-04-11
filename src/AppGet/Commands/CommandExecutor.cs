@@ -16,14 +16,13 @@ namespace AppGet.Commands
         private readonly Logger _logger;
         private readonly List<ICommandHandler> _commandHandlers;
 
-
         public CommandExecutor(IEnumerable<ICommandHandler> commandHandlers, Logger logger)
         {
             _logger = logger;
             _commandHandlers = commandHandlers.ToList();
         }
 
-        public  void ExecuteCommand(AppGetOption option)
+        public void ExecuteCommand(AppGetOption option)
         {
             var commandHandler = _commandHandlers.FirstOrDefault(c => c.CanExecute(option));
 
@@ -34,7 +33,7 @@ namespace AppGet.Commands
 
             _logger.Debug("Starting command [{0}]", option.CommandName);
             var stopwatch = Stopwatch.StartNew();
-             commandHandler.Execute(option);
+            commandHandler.Execute(option);
             stopwatch.Stop();
             Console.WriteLine();
             _logger.Debug("Completed command [{0}]. took: {1:N}s", option.CommandName, stopwatch.Elapsed.TotalSeconds);

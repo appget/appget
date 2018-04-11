@@ -62,9 +62,8 @@ namespace AppGet.FileSystem
             var directoryInfo = new DirectoryInfo(path);
             var directorySecurity = directoryInfo.GetAccessControl();
 
-            var accessRule = new FileSystemAccessRule(sid, rights,
-                                                      InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit,
-                                                      PropagationFlags.None, controlType);
+            var accessRule = new FileSystemAccessRule(sid, rights, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None,
+                controlType);
 
             directorySecurity.AddAccessRule(accessRule);
             directoryInfo.SetAccessControl(directorySecurity);

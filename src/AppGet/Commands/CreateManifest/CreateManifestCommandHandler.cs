@@ -17,7 +17,7 @@ namespace AppGet.Commands.CreateManifest
         private readonly BooleanPrompt _booleanPrompt;
 
         public CreateManifestCommandHandler(IComposeInstaller installerBuilder, IPackageManifestService packageManifestService,
-           IComposeManifest composeManifest, IUrlPrompt urlPrompt, IXRayClient xRayClient, BooleanPrompt booleanPrompt)
+            IComposeManifest composeManifest, IUrlPrompt urlPrompt, IXRayClient xRayClient, BooleanPrompt booleanPrompt)
         {
             _installerBuilder = installerBuilder;
             _packageManifestService = packageManifestService;
@@ -32,7 +32,7 @@ namespace AppGet.Commands.CreateManifest
             return commandOptions is CreateManifestOptions;
         }
 
-        public  void Execute(AppGetOption appGetOption)
+        public void Execute(AppGetOption appGetOption)
         {
             var createOptions = (CreateManifestOptions)appGetOption;
 
@@ -41,7 +41,7 @@ namespace AppGet.Commands.CreateManifest
                 throw new InvalidCommandParamaterException("Invalid URL", createOptions);
             }
 
-            var manifestBuilder =  _xRayClient.GetBuilder(new Uri(createOptions.DownloadUrl));
+            var manifestBuilder = _xRayClient.GetBuilder(new Uri(createOptions.DownloadUrl));
 
             _installerBuilder.Compose(manifestBuilder.Installers.Single());
 
@@ -55,7 +55,7 @@ namespace AppGet.Commands.CreateManifest
                     break;
                 }
 
-                var manifestBuilder2 =  _xRayClient.GetInstallerBuilder(new Uri(url));
+                var manifestBuilder2 = _xRayClient.GetInstallerBuilder(new Uri(url));
                 _installerBuilder.Compose(manifestBuilder2);
                 manifestBuilder.Installers.Add(manifestBuilder2);
             }

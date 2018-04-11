@@ -7,6 +7,5 @@ namespace AppGet.Commands.CreateManifest
     {
         [Value(0, MetaName = "URL", HelpText = "Installer download URL", Required = true)]
         public string DownloadUrl { get; set; }
-
     }
 }

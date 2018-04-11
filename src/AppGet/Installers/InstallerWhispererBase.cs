@@ -18,7 +18,6 @@ namespace AppGet.Installers
 
         protected abstract InstallMethodTypes InstallMethod { get; }
 
-
         protected InstallerWhispererBase(IProcessController processController, IPathResolver pathResolver, Logger logger)
         {
             _processController = processController;
@@ -36,6 +35,7 @@ namespace AppGet.Installers
             {
                 var logFile = LogArgs == null ? null : _pathResolver.GetInstallerLogFile(packageManifest.Id);
                 ExitCodes.TryGetValue(process.ExitCode, out var exitReason);
+
                 throw new InstallerException(process, packageManifest, exitReason, logFile);
             }
         }
@@ -44,7 +44,6 @@ namespace AppGet.Installers
         {
             return _processController.Start(installerLocation, args);
         }
-
 
         public bool CanHandle(InstallMethodTypes installMethod)
         {
@@ -59,8 +58,7 @@ namespace AppGet.Installers
                 {
                     installOptions.Passive = true;
                     _logger.Warn("Silent install is not supported by installer. Falling back to Passive");
-                }
-                else
+                } else
                 {
                     installOptions.Interactive = true;
                     _logger.Warn("Silent or Passive install is not supported by installer. Falling back to Interactive");
@@ -73,25 +71,21 @@ namespace AppGet.Installers
                 {
                     installOptions.Silent = true;
                     _logger.Warn("Passive install is not supported by installer. Falling back to Silent.");
-                }
-                else
+                } else
                 {
                     installOptions.Interactive = true;
                     _logger.Warn("Silent or Passive install is not supported by installer. Falling back to Interactive");
                 }
             }
 
-
             string args;
             if (installOptions.Silent)
             {
                 args = $"{SilentArgs} {manifest.Args?.Silent}";
-            }
-            else if (installOptions.Interactive)
+            } else if (installOptions.Interactive)
             {
                 args = $"{InteractiveArgs} {manifest.Args?.Interactive}";
-            }
-            else
+            } else
             {
                 args = $"{PassiveArgs} {manifest.Args?.Passive}";
             }
@@ -126,6 +120,7 @@ namespace AppGet.Installers
         private string GetLoggingArgs(PackageManifest manifest, string path)
         {
             var template = manifest.Args?.Log ?? LogArgs;
+
             return template?.Replace("{path}", $"\"{path}\"");
         }
     }

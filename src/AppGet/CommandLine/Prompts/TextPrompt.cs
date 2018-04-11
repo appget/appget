@@ -7,7 +7,6 @@ namespace AppGet.CommandLine.Prompts
         T Request(string message, T defaultValue);
     }
 
-
     public class TextPrompt : PromptBase<string>
     {
         public bool Required { get; set; }
@@ -17,10 +16,12 @@ namespace AppGet.CommandLine.Prompts
             if (Required && input.IsNullOrWhiteSpace())
             {
                 result = null;
+
                 return false;
             }
 
             result = (input ?? "").Trim();
+
             return true;
         }
     }

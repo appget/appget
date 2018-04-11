@@ -36,7 +36,10 @@ namespace AppGet.Infrastructure.Composition
 
             var logger = LogManager.GetLogger("appget");
 
-            container.AutoRegister(new[] { typeof(ContainerBuilder).Assembly });
+            container.AutoRegister(new[]
+            {
+                typeof(ContainerBuilder).Assembly
+            });
             container.Register(logger);
 
             RegisterLists(container);
@@ -57,7 +60,7 @@ namespace AppGet.Infrastructure.Composition
             });
 
             container.RegisterMultiple<ICheckSum>(new[]
-              {
+            {
                 typeof(Sha256Hash),
                 typeof(Sha1Hash),
                 typeof(Md5Hash),
@@ -99,7 +102,6 @@ namespace AppGet.Infrastructure.Composition
                 typeof(WindowsPathFileTransferClient)
             });
 
-
             container.RegisterMultiple<IPackageRepository>(new[]
             {
 //                typeof(LocalPackageRepository),
@@ -108,6 +110,5 @@ namespace AppGet.Infrastructure.Composition
 
             container.Register<IPackageRepository, AggregateRepository>();
         }
-
     }
 }

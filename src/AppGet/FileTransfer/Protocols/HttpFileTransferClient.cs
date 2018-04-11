@@ -14,14 +14,11 @@ namespace AppGet.FileTransfer.Protocols
 {
     public class HttpFileTransferClient : IFileTransferClient
     {
-        private static readonly Regex HttpRegex =
-            new Regex(@"^https?\:\/\/", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex HttpRegex = new Regex(@"^https?\:\/\/", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-        private static readonly Regex FileNameRegex = new Regex(@"\.(zip|7zip|7z|rar|msi|exe)$",
-            RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex FileNameRegex = new Regex(@"\.(zip|7zip|7z|rar|msi|exe)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-        private static readonly Dictionary<string, WebHeaderCollection> HeaderCache =
-            new Dictionary<string, WebHeaderCollection>();
+        private static readonly Dictionary<string, WebHeaderCollection> HeaderCache = new Dictionary<string, WebHeaderCollection>();
 
         private readonly IFileSystem _fileSystem;
         private readonly IHttpClient _httpClient;
@@ -37,7 +34,7 @@ namespace AppGet.FileTransfer.Protocols
             return HttpRegex.IsMatch(source);
         }
 
-        public  string GetFileName(string source)
+        public string GetFileName(string source)
         {
             var uri = new Uri(source);
 
@@ -45,13 +42,11 @@ namespace AppGet.FileTransfer.Protocols
 
             if (FileNameRegex.IsMatch(fileName)) return fileName;
 
-            var resp =  _httpClient.Get(uri, HttpCompletionOption.ResponseHeadersRead);
+            var resp = _httpClient.Get(uri, HttpCompletionOption.ResponseHeadersRead);
 
-            if (resp.RequestMessage.RequestUri != uri)
-                return  GetFileName(resp.RequestMessage.RequestUri.ToString());
+            if (resp.RequestMessage.RequestUri != uri) return GetFileName(resp.RequestMessage.RequestUri.ToString());
 
-            if (resp.Content.Headers.ContentDisposition != null)
-                return resp.Content.Headers.ContentDisposition.FileName.Trim('"', '\'', ' ');
+            if (resp.Content.Headers.ContentDisposition != null) return resp.Content.Headers.ContentDisposition.FileName.Trim('"', '\'', ' ');
 
             throw new InvalidDownloadUrlException(source);
         }
@@ -70,10 +65,8 @@ namespace AppGet.FileTransfer.Protocols
                 {
                     progress.Completed = e.BytesReceived;
 
-                    if (e.TotalBytesToReceive > 0)
-                        progress.Total = e.TotalBytesToReceive;
-                    else
-                        progress.Total = null;
+                    if (e.TotalBytesToReceive > 0) progress.Total = e.TotalBytesToReceive;
+                    else progress.Total = null;
                 };
 
                 webClient.DownloadFileCompleted += (sender, e) =>
@@ -111,18 +104,22 @@ namespace AppGet.FileTransfer.Protocols
             _fileSystem.Move(tempFile, destinationFile);
         }
 
-        public  string ReadString(string source)
+        public string ReadString(string source)
         {
             var req = new HttpRequestMessage(HttpMethod.Get, source);
-            req.Headers.CacheControl = new CacheControlHeaderValue { NoCache = true, NoStore = true };
+            req.Headers.CacheControl = new CacheControlHeaderValue
+            {
+                NoCache = true,
+                NoStore = true
+            };
 
-            var resp =  _httpClient.Send(req);
-            return  resp.Content.ReadAsStringAsync().Result;
+            var resp = _httpClient.Send(req);
+
+            return resp.Content.ReadAsStringAsync().Result;
         }
 
         public Action<ProgressState> OnStatusUpdated { get; set; }
         public Action<ProgressState> OnCompleted { get; set; }
-
 
         public static WebHeaderCollection GetTransferHeaders(string url)
         {

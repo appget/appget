@@ -7,6 +7,7 @@ namespace AppGet.Http
     public interface IHttpClient
     {
         HttpResponseMessage Send(HttpRequestMessage request, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead);
+
         HttpResponseMessage Get(Uri uri, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead);
     }
 
@@ -19,8 +20,7 @@ namespace AppGet.Http
         {
             ServicePointManager.DefaultConnectionLimit = 12;
             ServicePointManager.Expect100Continue = true;
-            ServicePointManager.SecurityProtocol |=
-                SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+            ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 
             _userAgentBuilder = userAgentBuilder;
 
@@ -36,6 +36,7 @@ namespace AppGet.Http
             }
 
             var response = _client.SendAsync(request, completionOption).Result;
+
             if (!response.IsSuccessStatusCode)
             {
                 throw new HttpException(response);

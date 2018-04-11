@@ -22,7 +22,8 @@ namespace AppGet.FileTransfer
         private readonly IChecksumService _checksumService;
         private readonly Logger _logger;
 
-        public FileTransferService(IEnumerable<IFileTransferClient> transferClients, ITransferCacheService transferCacheService, IChecksumService checksumService, Logger logger)
+        public FileTransferService(IEnumerable<IFileTransferClient> transferClients, ITransferCacheService transferCacheService,
+            IChecksumService checksumService, Logger logger)
         {
             _transferClients = transferClients;
             _transferCacheService = transferCacheService;
@@ -30,7 +31,6 @@ namespace AppGet.FileTransfer
             _transferCacheService = transferCacheService;
             _logger = logger;
         }
-
 
         private IFileTransferClient GetClient(string source)
         {
@@ -46,18 +46,17 @@ namespace AppGet.FileTransfer
             return client;
         }
 
-        public  string TransferFile(string source, string destinationFolder, FileVerificationInfo fileVerificationInfo)
+        public string TransferFile(string source, string destinationFolder, FileVerificationInfo fileVerificationInfo)
         {
             _logger.Debug($"Transfering file from {source} to {destinationFolder}");
             var client = GetClient(source);
-            var fileName =  client.GetFileName(source);
+            var fileName = client.GetFileName(source);
             var destinationPath = Path.Combine(destinationFolder, fileName);
 
             if (_transferCacheService.IsValid(destinationPath, fileVerificationInfo))
             {
                 _logger.Info("Skipping download. Using already downloaded file.");
-            }
-            else
+            } else
             {
                 client.OnStatusUpdated = ConsoleProgressReporter.HandleProgress;
                 client.OnCompleted = ConsoleProgressReporter.HandleCompleted;
@@ -70,8 +69,7 @@ namespace AppGet.FileTransfer
                 if (fileVerificationInfo.HashValue == null)
                 {
                     _logger.Debug("No hash provided. skipping checksum validation");
-                }
-                else
+                } else
                 {
                     _checksumService.ValidateHash(destinationPath, fileVerificationInfo);
                 }
@@ -80,10 +78,11 @@ namespace AppGet.FileTransfer
             return destinationPath;
         }
 
-        public  string ReadContentAsync(string source)
+        public string ReadContentAsync(string source)
         {
             var client = GetClient(source);
-            return  client.ReadString(source);
+
+            return client.ReadString(source);
         }
     }
 }

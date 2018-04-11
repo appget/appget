@@ -10,7 +10,6 @@ namespace AppGet.Installers.Nsis
         public NsisWhisperer(IProcessController processController, IPathResolver pathResolver, Logger logger)
             : base(processController, pathResolver, logger)
         {
-
         }
 
         protected override InstallMethodTypes InstallMethod => InstallMethodTypes.NSIS;

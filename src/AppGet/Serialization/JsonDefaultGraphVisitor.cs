@@ -28,16 +28,13 @@ namespace AppGet.Serialization
 
         public override bool EnterMapping(IObjectDescriptor key, IObjectDescriptor value, IEmitter context)
         {
-            return !ObjectComparer.Equals(value, GetDefault(value.Type))
-                   && base.EnterMapping(key, value, context);
+            return !ObjectComparer.Equals(value, GetDefault(value.Type)) && base.EnterMapping(key, value, context);
         }
 
         public override bool EnterMapping(IPropertyDescriptor key, IObjectDescriptor value, IEmitter context)
         {
             var defaultValueAttribute = key.GetCustomAttribute<DefaultValueAttribute>();
-            var defaultValue = defaultValueAttribute != null
-                ? defaultValueAttribute.Value
-                : GetDefault(key.Type);
+            var defaultValue = defaultValueAttribute != null ? defaultValueAttribute.Value : GetDefault(key.Type);
 
             if (ObjectComparer.Equals(value.Value, defaultValue))
             {

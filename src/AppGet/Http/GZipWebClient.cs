@@ -9,6 +9,7 @@ namespace AppGet.Http
         {
             var request = (HttpWebRequest)base.GetWebRequest(address);
             request.AutomaticDecompression = DecompressionMethods.GZip;
+
             return request;
         }
     }

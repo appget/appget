@@ -20,22 +20,21 @@ namespace AppGet.InstalledPackages
             const string REGISTRY_KEY64 = @"SOFTWARE\WOW6432node\Microsoft\Windows\CurrentVersion\Uninstall";
 
             return GetInstallRecordsForLocalMachine(REGISTRY_KEY)
-                    .Concat(GetInstallRecordsForLocalMachine(REGISTRY_KEY64))
-                    .Concat(GetInstallRecordsForCurrentUser(REGISTRY_KEY))
-                    .Concat(GetInstallRecordsForCurrentUser(REGISTRY_KEY64))
-                    .GroupBy(r => r.Id)
-                    .Select(g => g.First())
-                    .ToList();
+                .Concat(GetInstallRecordsForLocalMachine(REGISTRY_KEY64))
+                .Concat(GetInstallRecordsForCurrentUser(REGISTRY_KEY))
+                .Concat(GetInstallRecordsForCurrentUser(REGISTRY_KEY64))
+                .GroupBy(r => r.Id)
+                .Select(g => g.First())
+                .ToList();
         }
-
 
         public IEnumerable<WindowsInstallRecord> GetInstalledApplications(string name)
         {
             var packages = GetInstalledApplications();
             var targetName = name.ToAlphaNumeric();
+
             return packages.Where(c => c.Name.ToAlphaNumeric().Contains(targetName));
         }
-
 
         private List<WindowsInstallRecord> GetInstallRecordsForLocalMachine(string path)
         {
@@ -107,20 +106,17 @@ namespace AppGet.InstalledPackages
                 QuietUninstallCommand = GetValue("QuietUninstallString"),
                 InstallSource = GetValue("InstallSource"),
                 InstallMethod = InstallMethodTypes.Custom
-
             };
 
             if (names.Any(c => c.StartsWith("Inno")))
             {
                 record.InstallMethod = InstallMethodTypes.Inno;
-            }
-            else if (record.UninstallCommand != null)
+            } else if (record.UninstallCommand != null)
             {
                 if (record.UninstallCommand.ToLowerInvariant().Contains("msiexec.exe"))
                 {
                     record.InstallMethod = InstallMethodTypes.MSI;
-                }
-                else if (record.UninstallCommand.Contains(" --uninstall") && record.UninstallCommand.Contains("Update.exe"))
+                } else if (record.UninstallCommand.Contains(" --uninstall") && record.UninstallCommand.Contains("Update.exe"))
                 {
                     record.InstallMethod = InstallMethodTypes.Squirrel;
                 }

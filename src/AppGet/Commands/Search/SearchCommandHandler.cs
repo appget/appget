@@ -6,7 +6,6 @@ namespace AppGet.Commands.Search
     {
         private readonly IPackageSearchService _packageSearchService;
 
-
         public SearchCommandHandler(IPackageSearchService packageSearchService)
         {
             _packageSearchService = packageSearchService;

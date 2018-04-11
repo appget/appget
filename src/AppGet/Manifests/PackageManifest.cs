@@ -55,17 +55,29 @@ namespace AppGet.Manifests
         {
             if (!string.IsNullOrEmpty(Sha256))
             {
-                return new FileVerificationInfo { HashType = HashTypes.Sha256, HashValue = Sha256 };
+                return new FileVerificationInfo
+                {
+                    HashType = HashTypes.Sha256,
+                    HashValue = Sha256
+                };
             }
 
             if (!string.IsNullOrEmpty(Sha1))
             {
-                return new FileVerificationInfo { HashType = HashTypes.Sha1, HashValue = Sha1 };
+                return new FileVerificationInfo
+                {
+                    HashType = HashTypes.Sha1,
+                    HashValue = Sha1
+                };
             }
 
             if (!string.IsNullOrEmpty(Md5))
             {
-                return new FileVerificationInfo { HashType = HashTypes.Md5, HashValue = Md5 };
+                return new FileVerificationInfo
+                {
+                    HashType = HashTypes.Md5,
+                    HashValue = Md5
+                };
             }
 
             return new FileVerificationInfo();

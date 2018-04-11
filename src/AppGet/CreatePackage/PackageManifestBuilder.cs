@@ -72,13 +72,13 @@ namespace AppGet.CreatePackage
             {
                 Values.Add(attr);
             }
+
             return attr.Value;
         }
 
         public ManifestAttributeCandidate<T> GetTop()
         {
-            return Values
-                .AsEnumerable()
+            return Values.AsEnumerable()
                 .Reverse()
                 .OrderByDescending(c => c.Confidence)
                 .ThenBy(c => c.Value == null)
@@ -86,13 +86,13 @@ namespace AppGet.CreatePackage
                 .FirstOrDefault(c => c.Confidence > Confidence.None);
         }
 
-
         [JsonIgnore]
         public T Value
         {
             get
             {
                 var topAttr = GetTop();
+
                 return topAttr == null ? default(T) : topAttr.Value;
             }
         }
@@ -107,9 +107,9 @@ namespace AppGet.CreatePackage
         public override string ToString()
         {
             var top = GetTop();
+
             return top?.Value.ToString() ?? "";
         }
-
     }
 
     [DebuggerDisplay("{Id} {Version} [{Name}]")]
@@ -124,7 +124,6 @@ namespace AppGet.CreatePackage
         public ManifestAttribute<string> Home { get; }
         public ManifestAttribute<string> Repo { get; }
         public ManifestAttribute<string> Licence { get; }
-
 
         public ManifestAttribute<InstallMethodTypes> InstallMethod { get; }
 
@@ -145,7 +144,6 @@ namespace AppGet.CreatePackage
             Installers = new List<InstallerBuilder>();
         }
 
-
         public PackageManifest Build()
         {
             if (InstallMethod.Value == InstallMethodTypes.Squirrel || JsonEquality.Equal(Args.Value, new InstallArgs()))
@@ -158,11 +156,9 @@ namespace AppGet.CreatePackage
                 Id = Id.Value,
                 Name = Name.Value,
                 Version = Version.Value,
-
                 Home = Home.Value,
                 Repo = Repo.Value,
                 Licence = Licence.Value,
-
                 InstallMethod = InstallMethod.Value,
                 Installers = Installers.Select(c => c.Build()).OrderBy(c => c.Architecture).ToList(),
                 Args = Args?.Value

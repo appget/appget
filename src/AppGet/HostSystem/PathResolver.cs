@@ -26,7 +26,6 @@ namespace AppGet.HostSystem
 
         public string AppDataDirectory => Path.Combine(ProgramData, "AppGet");
 
-
         public string GetInstallerLogFile(string packageId)
         {
             var installerLogDir = Path.Combine(AppDataDirectory, "Logs");
@@ -38,20 +37,20 @@ namespace AppGet.HostSystem
             return Path.Combine(installerLogDir, fileName);
         }
 
-
         public string GetInstallationPath(PackageManifest packageManifest)
         {
             switch (packageManifest.InstallMethod)
             {
                 case InstallMethodTypes.Zip:
-                    {
-                        var folderName = $"{packageManifest.Id}-{packageManifest.Version}";
-                        return Path.Combine(AppDataDirectory, folderName);
-                    }
+                {
+                    var folderName = $"{packageManifest.Id}-{packageManifest.Version}";
+
+                    return Path.Combine(AppDataDirectory, folderName);
+                }
                 default:
-                    {
-                        throw new NotImplementedException(packageManifest.InstallMethod + " is not supported yet.");
-                    }
+                {
+                    throw new NotImplementedException(packageManifest.InstallMethod + " is not supported yet.");
+                }
             }
         }
     }

@@ -32,11 +32,11 @@ namespace AppGet.Github.Releases
             _logger.Trace($"Found {releases.Count} releases");
 
             return releases.Select(c => new AppGetRelease
-            {
-                Url = c.Assets.Single(a => a.browser_download_url.EndsWith(".exe")).browser_download_url,
-                Version = new Version(c.tag_name)
-            }).ToList();
-
+                {
+                    Url = c.Assets.Single(a => a.browser_download_url.EndsWith(".exe")).browser_download_url,
+                    Version = new Version(c.tag_name)
+                })
+                .ToList();
         }
     }
 }

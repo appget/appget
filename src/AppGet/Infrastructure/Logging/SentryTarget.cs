@@ -21,12 +21,24 @@ namespace AppGet.Infrastructure.Logging
 
         private static readonly IDictionary<LogLevel, ErrorLevel> LoggingLevelMap = new Dictionary<LogLevel, ErrorLevel>
         {
-            {LogLevel.Debug, ErrorLevel.Debug},
-            {LogLevel.Error, ErrorLevel.Error},
-            {LogLevel.Fatal, ErrorLevel.Fatal},
-            {LogLevel.Info, ErrorLevel.Info},
-            {LogLevel.Trace, ErrorLevel.Debug},
-            {LogLevel.Warn, ErrorLevel.Warning},
+            {
+                LogLevel.Debug, ErrorLevel.Debug
+            },
+            {
+                LogLevel.Error, ErrorLevel.Error
+            },
+            {
+                LogLevel.Fatal, ErrorLevel.Fatal
+            },
+            {
+                LogLevel.Info, ErrorLevel.Info
+            },
+            {
+                LogLevel.Trace, ErrorLevel.Debug
+            },
+            {
+                LogLevel.Warn, ErrorLevel.Warning
+            },
         };
 
         public SentryTarget()
@@ -53,7 +65,6 @@ namespace AppGet.Infrastructure.Logging
         {
             InternalLogger.Error(ex, "Unable to send error to Sentry");
         }
-
 
         private static BreadcrumbLevel GetLevel(LogLevel level)
         {

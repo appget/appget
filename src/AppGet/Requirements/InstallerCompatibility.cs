@@ -6,16 +6,10 @@ namespace AppGet.Requirements
 {
     public class InstallerCompatibility
     {
-        public Installer Installer { get; set; }
-        public List<EnforcementResult> Results { get; set; }
+        public Installer Installer { get; }
+        public List<EnforcementResult> Results { get; }
 
-        public bool IsCompatible
-        {
-            get
-            {
-                return Results.All(r => r.Success);
-            }
-        }
+        public bool IsCompatible => Results.All(r => r.Success);
 
         public InstallerCompatibility(Installer installer)
         {
@@ -27,10 +21,10 @@ namespace AppGet.Requirements
         {
             if (IsCompatible)
             {
-                return "[OK] " + Installer;
+                return $"[OK] {Installer}";
             }
 
-            return "[Incompatible " + Results.Count(r => !r.Success) + "]" + Installer;
+            return $"[Incompatible {Results.Count(r => !r.Success)}]{Installer}";
         }
     }
 }

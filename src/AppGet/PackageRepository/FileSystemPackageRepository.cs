@@ -33,7 +33,8 @@ namespace AppGet.PackageRepository
             }
 
             var packages = _fileSystem.GetFiles(pkgDir, "*.yaml").Select(Read).Where(c => c.Tag == tag);
-            return (packages.OrderByDescending(c => c.Tag).FirstOrDefault());
+
+            return packages.OrderByDescending(c => c.Tag).FirstOrDefault();
         }
 
         private PackageInfo Read(string path)
@@ -50,7 +51,6 @@ namespace AppGet.PackageRepository
                 tag = fileName.Substring(indexOfTag).Trim('.', ' ');
             }
 
-
             return new PackageInfo
             {
                 Id = manifest.Id,
@@ -62,7 +62,7 @@ namespace AppGet.PackageRepository
         public List<PackageInfo> Search(string term)
         {
             // TODO
-            return (new List<PackageInfo>());
+            return new List<PackageInfo>();
         }
     }
 }

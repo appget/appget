@@ -17,21 +17,22 @@ namespace AppGet.Requirements.Specifications
             switch (installer.Architecture)
             {
                 case ArchitectureTypes.x86:
+                {
+                    return EnforcementResult.Pass();
+                }
+                case ArchitectureTypes.x64:
+                {
+                    if (_envInfo.Is64BitOperatingSystem)
                     {
                         return EnforcementResult.Pass();
                     }
-                case ArchitectureTypes.x64:
-                    {
-                        if (_envInfo.Is64BitOperatingSystem)
-                        {
-                            return EnforcementResult.Pass();
-                        }
-                        return EnforcementResult.Fail("x64 OS required for installation");
-                    }
+
+                    return EnforcementResult.Fail("x64 OS required for installation");
+                }
                 default:
-                    {
-                        return EnforcementResult.Fail("Unsupported architecture: " + installer.Architecture);
-                    }
+                {
+                    return EnforcementResult.Fail("Unsupported architecture: " + installer.Architecture);
+                }
             }
         }
     }

@@ -33,11 +33,12 @@ namespace AppGet.Crypto.Hash
             if (!string.Equals(hash, fileVerificationInfo.HashValue, StringComparison.OrdinalIgnoreCase))
             {
                 _logger.Warn($"Checksum verification failed for {path}. File: {hash}  Manifest:{fileVerificationInfo.HashValue}");
-                throw new ChecksumVerificationException($"{fileVerificationInfo.HashType.ToString().ToUpperInvariant()} Checksum verification failed for {path}.");
+
+                throw new ChecksumVerificationException(
+                    $"{fileVerificationInfo.HashType.ToString().ToUpperInvariant()} Checksum verification failed for {path}.");
             }
 
             _logger.Info("Checksum verification PASSED");
-
         }
     }
 }

@@ -12,7 +12,7 @@ namespace AppGet.Manifests
             new Version(6, 1),
             new Version(6, 2),
             new Version(6, 3),
-            new Version(10,0)
+            new Version(10, 0)
         };
 
         public static string ToServerName(Version version)
@@ -20,33 +20,33 @@ namespace AppGet.Manifests
             switch (version.ToString(2))
             {
                 case "0.0":
-                    {
-                        return "Any";
-                    }
+                {
+                    return "Any";
+                }
                 case "6.0":
-                    {
-                        return "Windows Server 2008";
-                    }
+                {
+                    return "Windows Server 2008";
+                }
                 case "6.1":
-                    {
-                        return "Windows Server 2008 R2";
-                    }
+                {
+                    return "Windows Server 2008 R2";
+                }
                 case "6.2":
-                    {
-                        return "Windows Server 2012";
-                    }
+                {
+                    return "Windows Server 2012";
+                }
                 case "6.3":
-                    {
-                        return "Windows Server 2012 R2";
-                    }
+                {
+                    return "Windows Server 2012 R2";
+                }
                 case "10.0":
-                    {
-                        return "Windows Server 2016";
-                    }
+                {
+                    return "Windows Server 2016";
+                }
                 default:
-                    {
-                        throw new ArgumentOutOfRangeException(nameof(version), $"Unknown or unsupported Windows Version. {version}");
-                    }
+                {
+                    throw new ArgumentOutOfRangeException(nameof(version), $"Unknown or unsupported Windows Version. {version}");
+                }
             }
         }
 
@@ -55,33 +55,33 @@ namespace AppGet.Manifests
             switch (version.ToString(2))
             {
                 case "0.0":
-                    {
-                        return "Any";
-                    }
+                {
+                    return "Any";
+                }
                 case "6.0":
-                    {
-                        return "Windows Vista";
-                    }
+                {
+                    return "Windows Vista";
+                }
                 case "6.1":
-                    {
-                        return "Windows 7";
-                    }
+                {
+                    return "Windows 7";
+                }
                 case "6.2":
-                    {
-                        return "Windows 8";
-                    }
+                {
+                    return "Windows 8";
+                }
                 case "6.3":
-                    {
-                        return "Windows 8.1";
-                    }
+                {
+                    return "Windows 8.1";
+                }
                 case "10.0":
-                    {
-                        return "Windows 10";
-                    }
+                {
+                    return "Windows 10";
+                }
                 default:
-                    {
-                        throw new ArgumentOutOfRangeException(nameof(version), $"Unknown or unsupported Windows Version. {version}");
-                    }
+                {
+                    throw new ArgumentOutOfRangeException(nameof(version), $"Unknown or unsupported Windows Version. {version}");
+                }
             }
         }
     }

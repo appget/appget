@@ -12,12 +12,12 @@ namespace AppGet.ProgressTracker
         private decimal GetPercentCompleted()
         {
             if (!Total.HasValue || Total.Value == 0) return 0;
+
             return Completed / ((decimal?)Total ?? 0) * (decimal)100.0;
         }
 
         public override string ToString()
         {
-
             if (Total.HasValue)
             {
                 var percentCompleted = GetPercentCompleted();

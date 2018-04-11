@@ -12,6 +12,7 @@ namespace AppGet.Crypto.Certificates
             {
                 var file = FileVersionInfo.GetVersionInfo(filePath);
                 var c = X509Certificate.CreateFromSignedFile(filePath);
+
                 return c;
             }
             catch (CryptographicException)

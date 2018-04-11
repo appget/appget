@@ -10,8 +10,7 @@ namespace AppGet.Commands.Uninstall
 
         private readonly Logger _logger;
 
-        public UninstallCommandHandler(IWindowsInstallerInventoryManager windowsInstallerInventoryManager,
-                                       Logger logger)
+        public UninstallCommandHandler(IWindowsInstallerInventoryManager windowsInstallerInventoryManager, Logger logger)
         {
             _windowsInstallerInventoryManager = windowsInstallerInventoryManager;
             _logger = logger;
@@ -22,7 +21,7 @@ namespace AppGet.Commands.Uninstall
             return commandOptions is UninstallOptions;
         }
 
-        public  void Execute(AppGetOption commandOptions)
+        public void Execute(AppGetOption commandOptions)
         {
             var uninstallOptions = (UninstallOptions)commandOptions;
 
@@ -30,7 +29,6 @@ namespace AppGet.Commands.Uninstall
             _logger.Warn($"Package {uninstallOptions.PackageId} wasn't installed using AppGet. Searching Windows installer records");
 
             // TODO: Uninstall
-
         }
     }
 }

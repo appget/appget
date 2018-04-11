@@ -17,4 +17,3 @@ namespace AppGet.CreatePackage.Root.Prompts
         }
     }
 }
-

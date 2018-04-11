@@ -26,16 +26,19 @@ namespace AppGet.CommandLine.Prompts
             if (Yes.Contains(input))
             {
                 result = true;
+
                 return true;
             }
 
             if (No.Contains(input))
             {
                 result = false;
+
                 return true;
             }
 
             result = false;
+
             return false;
         }
 

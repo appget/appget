@@ -11,22 +11,21 @@ namespace AppGet.Serialization
         {
             using (var textWriter = new StringWriter(CultureInfo.InvariantCulture))
             {
-                var serializer = new SerializerBuilder()
-                    .WithNamingConvention(new CamelCaseNamingConvention())
+                var serializer = new SerializerBuilder().WithNamingConvention(new CamelCaseNamingConvention())
                     .WithTypeConverter(new VersionConverter())
                     .WithEmissionPhaseObjectGraphVisitor(args => new JsonDefaultGraphVisitor(args.InnerVisitor))
                     .DisableAliases()
                     .Build();
 
                 serializer.Serialize(textWriter, obj);
+
                 return textWriter.ToString();
             }
         }
 
         public static T Deserialize<T>(string text)
         {
-            var deserializer = new DeserializerBuilder()
-                .WithNamingConvention(new CamelCaseNamingConvention())
+            var deserializer = new DeserializerBuilder().WithNamingConvention(new CamelCaseNamingConvention())
                 .WithTypeConverter(new VersionConverter())
                 .IgnoreUnmatchedProperties()
                 .Build();

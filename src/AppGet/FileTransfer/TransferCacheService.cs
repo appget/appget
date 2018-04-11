@@ -36,6 +36,7 @@ namespace AppGet.FileTransfer
                 if (size != verificationInfo.FileSize)
                 {
                     _logger.Warn("File size miss-match. ignoring cache");
+
                     return false;
                 }
             }
@@ -44,6 +45,7 @@ namespace AppGet.FileTransfer
             {
                 _checksumService.ValidateHash(path, verificationInfo);
                 _logger.Debug($"Installer is already downloaded: {path}");
+
                 return true;
             }
             catch (ChecksumVerificationException)

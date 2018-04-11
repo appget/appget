@@ -17,6 +17,7 @@ namespace AppGet.Crypto.Hash
             using (var algorithm = GetHashAlgorithm())
             {
                 var checksum = algorithm.ComputeHash(stream);
+
                 return BitConverter.ToString(checksum).ToLowerInvariant().Replace("-", string.Empty);
             }
         }

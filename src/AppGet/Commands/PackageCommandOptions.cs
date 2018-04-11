@@ -9,6 +9,7 @@ namespace AppGet.Commands
         public abstract string Package { get; set; }
 
         public string PackageId => Package.Split(':').FirstOrDefault();
+
         public string PackageTag
         {
             get

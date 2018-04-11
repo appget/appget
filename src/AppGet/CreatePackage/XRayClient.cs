@@ -22,10 +22,9 @@ namespace AppGet.CreatePackage
             _logger = logger;
         }
 
-        public  PackageManifestBuilder GetBuilder(Uri uri, string name = null)
+        public PackageManifestBuilder GetBuilder(Uri uri, string name = null)
         {
             var url = $"https://fn.appget.net/api/xray?url={WebUtility.UrlEncode(uri.ToString())}";
-
 
             if (name != null)
             {
@@ -34,20 +33,21 @@ namespace AppGet.CreatePackage
 
             _logger.Info($"Requesting analysis on {uri}. This might take a couple of minutes.");
 
-            var resp =  _httpClient.Get(new Uri(url));
-            var builder =  resp.AsResource<PackageManifestBuilder>();
+            var resp = _httpClient.Get(new Uri(url));
+            var builder = resp.AsResource<PackageManifestBuilder>();
 
             _logger.Info($"Received results for {uri}");
 
             return builder;
         }
 
-        public  InstallerBuilder GetInstallerBuilder(Uri uri)
+        public InstallerBuilder GetInstallerBuilder(Uri uri)
         {
             var url = $"https://fn.appget.net/api/xray/installer?url={WebUtility.UrlEncode(uri.ToString())}";
 
-            var resp =  _httpClient.Get(new Uri(url));
-            var builder =  resp.AsResource<InstallerBuilder>();
+            var resp = _httpClient.Get(new Uri(url));
+            var builder = resp.AsResource<InstallerBuilder>();
+
             return builder;
         }
     }

@@ -31,17 +31,17 @@ namespace AppGet.FileTransfer.Protocols
             OnCompleted?.Invoke(progress);
         }
 
-        public  string ReadString(string source)
+        public string ReadString(string source)
         {
             using (var reader = File.OpenText(source))
             {
-                return  reader.ReadToEndAsync().Result;
+                return reader.ReadToEndAsync().Result;
             }
         }
 
         public string GetFileName(string source)
         {
-            return (new FileInfo(source).Name);
+            return new FileInfo(source).Name;
         }
 
         public Action<ProgressState> OnStatusUpdated { get; set; }

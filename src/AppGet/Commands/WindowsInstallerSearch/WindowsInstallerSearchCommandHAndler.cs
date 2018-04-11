@@ -21,7 +21,6 @@ namespace AppGet.Commands.WindowsInstallerSearch
 
         public void Execute(AppGetOption commandOptions)
         {
-
             var searchOptions = (WindowsInstallerSearchOptions)commandOptions;
 
             var packages = _windowsInstallerInventoryManager.GetInstalledApplications();

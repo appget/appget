@@ -19,6 +19,7 @@ namespace AppGet.Serialization
             var version = new Version(value);
 
             parser.MoveNext();
+
             return version;
         }
 

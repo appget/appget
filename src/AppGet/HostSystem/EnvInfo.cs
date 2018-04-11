@@ -23,13 +23,13 @@ namespace AppGet.HostSystem
         public bool UserInteractive => Environment.UserInteractive;
         public string AppDir { get; }
 
-
         [DllImport("shlwapi.dll", SetLastError = true, EntryPoint = "#437")]
         private static extern bool IsOS(int os);
 
         private static bool IsWindowsServer()
         {
             const int OS_ANYSERVER = 29;
+
             return IsOS(OS_ANYSERVER);
         }
 
@@ -55,6 +55,5 @@ namespace AppGet.HostSystem
             {
             }
         }
-
     }
 }

@@ -12,7 +12,6 @@ namespace AppGet.Compression
         void Decompress(string sourcePath, string destination);
     }
 
-
     public class CompressionService : ICompressionService
     {
         private readonly Logger _logger;
@@ -21,7 +20,6 @@ namespace AppGet.Compression
         {
             _logger = logger;
         }
-
 
         public void Decompress(string sourcePath, string destination)
         {
@@ -37,8 +35,12 @@ namespace AppGet.Compression
             {
                 if (!entry.IsDirectory)
                 {
-                    entry.WriteToDirectory(destination,
-                        new ExtractionOptions { ExtractFullPath = true, Overwrite = true, PreserveFileTime = true });
+                    entry.WriteToDirectory(destination, new ExtractionOptions
+                    {
+                        ExtractFullPath = true,
+                        Overwrite = true,
+                        PreserveFileTime = true
+                    });
                 }
 
                 progress.Completed++;

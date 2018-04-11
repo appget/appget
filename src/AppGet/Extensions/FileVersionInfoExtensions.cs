@@ -9,8 +9,13 @@ namespace AppGet.Extensions
         {
             if (fileVersionInfo != null)
             {
-                return new[] { fileVersionInfo.ProductName, fileVersionInfo.InternalName, fileVersionInfo.CompanyName }
-                    .FirstOrDefault(c => !string.IsNullOrWhiteSpace(c))?.Trim();
+                return new[]
+                    {
+                        fileVersionInfo.ProductName,
+                        fileVersionInfo.InternalName,
+                        fileVersionInfo.CompanyName
+                    }.FirstOrDefault(c => !string.IsNullOrWhiteSpace(c))
+                    ?.Trim();
             }
 
             return null;

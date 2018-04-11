@@ -20,21 +20,25 @@
                     case ExitCodeTypes.Failed:
                     {
                         Message = ERROR;
+
                         break;
                     }
                     case ExitCodeTypes.UserCanceled:
                     {
                         Message = CANCELED;
+
                         break;
                     }
                     case ExitCodeTypes.RestartRequired:
                     {
                         Message = success ? RESTART_REQUIRED_SUCCESS : RESTART_REQUIRED_FAILED;
+
                         break;
                     }
                     case ExitCodeTypes.RequirementUnmet:
                     {
                         Message = ERROR;
+
                         break;
                     }
                 }
@@ -44,6 +48,5 @@
         public bool Success { get; }
         public string Message { get; }
         public ExitCodeTypes Category { get; }
-
     }
 }

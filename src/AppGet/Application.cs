@@ -28,7 +28,6 @@ namespace AppGet
             return result;
         }
 
-
         private static int Run(string[] args)
         {
             try
@@ -87,16 +86,19 @@ namespace AppGet
             catch (AppGetException ex)
             {
                 Logger.Error(ex, null);
+
                 return 1;
             }
             catch (NotImplementedException ex)
             {
                 Logger.Error(ex, null);
+
                 return 1;
             }
             catch (Exception ex)
             {
                 Logger.Fatal(ex, null);
+
                 return 1;
             }
         }
@@ -107,6 +109,7 @@ namespace AppGet
             Console.WriteLine("");
             Console.WriteLine("In debug mode. Please enter arguments");
             var input = Console.ReadLine();
+
             return input.Split(' ');
         }
     }

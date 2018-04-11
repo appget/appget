@@ -34,21 +34,19 @@ namespace AppGet.Installers
             _installWhisperers = installWhisperers;
         }
 
-        public  void Install(PackageManifest packageManifest, InstallOptions installOptions)
+        public void Install(PackageManifest packageManifest, InstallOptions installOptions)
         {
             _logger.Info("Beginning installation of [{0}] {1}", packageManifest.Id, packageManifest.Name);
 
             var whisperer = _installWhisperers.Single(c => c.CanHandle(packageManifest.InstallMethod));
 
             var installer = _findInstaller.GetBestInstaller(packageManifest.Installers);
-            var installerPath =  _fileTransferService.TransferFile(installer.Location, _pathResolver.TempFolder, installer.GetFileHash());
+            var installerPath = _fileTransferService.TransferFile(installer.Location, _pathResolver.TempFolder, installer.GetFileHash());
             _installTracker.TakeSnapshot();
 
             whisperer.Install(installerPath, packageManifest, installOptions);
 
             _logger.Info("Installation completed for [{0}] {1}", packageManifest.Id, packageManifest.Name);
         }
-
-
     }
 }

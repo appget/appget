@@ -15,7 +15,6 @@ namespace AppGet.AppData
     {
         public string LocalRepository { get; }
 
-
         public Config(IFileSystem fileSystem, IPathResolver pathResolver)
         {
             var fileSystem1 = fileSystem;
@@ -28,8 +27,7 @@ namespace AppGet.AppData
                 var text = fileSystem1.ReadAllText(configFile);
                 var settings = Json.Deserialize<dynamic>(text);
                 LocalRepository = settings.localRepository;
-            }
-            else
+            } else
             {
                 fileSystem1.WriteAllText(configFile, Json.Serialize(this, Formatting.Indented));
             }

@@ -4,7 +4,8 @@ namespace AppGet.Commands
 {
     public abstract class OptionException : AppGetException
     {
-        protected OptionException(string message) : base(message)
+        protected OptionException(string message)
+            : base(message)
         {
         }
     }

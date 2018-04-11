@@ -20,7 +20,6 @@ namespace AppGet.Infrastructure.Logging
                 BuildSentryTarget();
             }
 
-
             LogManager.ReconfigExistingLoggers();
         }
 
@@ -33,7 +32,6 @@ namespace AppGet.Infrastructure.Logging
 
             LogManager.Configuration.LoggingRules.Add(rule);
         }
-
 
         private static ColoredConsoleTarget BuildConsoleTarget()
         {
@@ -49,7 +47,6 @@ namespace AppGet.Infrastructure.Logging
                 IgnoreCase = true,
                 ForegroundColor = ConsoleOutputColor.DarkCyan
             });
-
 
             consoleTarget.WordHighlightingRules.Add(new ConsoleWordHighlightingRule
             {
@@ -76,7 +73,8 @@ namespace AppGet.Infrastructure.Logging
                 ForegroundColor = ConsoleOutputColor.DarkRed
             });
 
-            consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Info", ConsoleOutputColor.NoChange, ConsoleOutputColor.NoChange));
+            consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Info", ConsoleOutputColor.NoChange,
+                ConsoleOutputColor.NoChange));
 
             _consoleRule = new LoggingRule("*", LogLevel.Info, consoleTarget);
             LogManager.Configuration.AddTarget("console", consoleTarget);

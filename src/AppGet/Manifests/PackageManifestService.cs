@@ -31,11 +31,11 @@ namespace AppGet.Manifests
             _logger = logger;
         }
 
-
-        public  PackageManifest LoadManifest(string source)
+        public PackageManifest LoadManifest(string source)
         {
             _logger.Info($"Loading package manifest from {source}");
-            var text =  _fileTransferService.ReadContentAsync(source);
+            var text = _fileTransferService.ReadContentAsync(source);
+
             return Yaml.Deserialize<PackageManifest>(text);
         }
 
@@ -51,13 +51,12 @@ namespace AppGet.Manifests
             _fileSystem.WriteAllText(manifestPath, Yaml.Serialize(manifest));
 
             _logger.Info($"Package manifest was saved to {manifestPath}");
+
             return manifestPath;
         }
 
-
-        public  void Submit(PackageManifestBuilder builder)
+        public void Submit(PackageManifestBuilder builder)
         {
-
         }
 
         public void PrintManifest(PackageManifest manifest)

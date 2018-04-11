@@ -15,8 +15,8 @@ namespace AppGet.Extensions
             }
 
             var httpsUrl = HttpsRegex.Replace(uri.ToString(), "https://");
+
             return new Uri(httpsUrl);
         }
-
     }
 }

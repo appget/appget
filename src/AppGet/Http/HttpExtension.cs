@@ -26,7 +26,10 @@ namespace AppGet.Http
 
             var query = content.ReadAsStringAsync().Result;
 
-            var builder = new UriBuilder(uri) { Query = query };
+            var builder = new UriBuilder(uri)
+            {
+                Query = query
+            };
 
             return builder.Uri;
         }

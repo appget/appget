@@ -20,8 +20,7 @@ namespace AppGet.PackageRepository
             _logger = logger;
         }
 
-
-        public  PackageInfo Get(string id, string tag)
+        public PackageInfo Get(string id, string tag)
         {
             if (string.IsNullOrWhiteSpace(tag))
             {
@@ -32,7 +31,7 @@ namespace AppGet.PackageRepository
 
             try
             {
-                var packages = ( Search(id)).ToList();
+                var packages = Search(id).ToList();
 
                 var match = packages.FirstOrDefault(c => c.Id == id && c.Tag == tag);
 
@@ -49,19 +48,20 @@ namespace AppGet.PackageRepository
                 {
                     return null;
                 }
+
                 throw;
             }
         }
 
-        public  List<PackageInfo> Search(string term)
+        public List<PackageInfo> Search(string term)
         {
             _logger.Debug($"Searching for '{term}' in {API_ROOT}");
 
-            var uri = new Uri($"{API_ROOT}/packages")
-                .AddQuery("q", term.Trim());
+            var uri = new Uri($"{API_ROOT}/packages").AddQuery("q", term.Trim());
 
-            var package =  _httpClient.Get(uri);
-            return  package.AsResource<List<PackageInfo>>();
+            var package = _httpClient.Get(uri);
+
+            return package.AsResource<List<PackageInfo>>();
         }
     }
 }

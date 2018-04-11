@@ -12,7 +12,6 @@ namespace AppGet.Installers
         public string LogPath { get; }
         public ExistReason ExitReason { get; }
 
-
         public InstallerException(Process installerProcess, PackageManifest packageManifest, ExistReason exitReason, string logPath)
             : base(GetMessage(installerProcess, packageManifest, exitReason, logPath))
         {

@@ -29,12 +29,10 @@ namespace AppGet.Update
             _logger = logger;
         }
 
-
         public void Start()
         {
             _releaseTask = _releaseClient.GetReleases();
         }
-
 
         public void Commit()
         {
@@ -64,7 +62,11 @@ namespace AppGet.Update
                 }
             };
 
-            _installService.Install(manifest, new InstallOptions { Force = true, Package = manifest.Id });
+            _installService.Install(manifest, new InstallOptions
+            {
+                Force = true,
+                Package = manifest.Id
+            });
         }
     }
 }

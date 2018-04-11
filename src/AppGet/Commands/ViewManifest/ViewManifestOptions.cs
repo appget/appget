@@ -7,6 +7,5 @@ namespace AppGet.Commands.ViewManifest
     {
         [Value(0, MetaName = PACKAGE_META_NAME, HelpText = "package to display", Required = true)]
         public override string Package { get; set; }
-
     }
 }

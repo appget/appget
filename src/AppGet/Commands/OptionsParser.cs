@@ -16,13 +16,7 @@ namespace AppGet.Commands
     {
         public AppGetOption Parse(params string[] args)
         {
-            var result = Parser.Default.ParseArguments<
-                InstallOptions,
-                SearchOptions,
-                UninstallOptions,
-                CreateManifestOptions,
-                ViewManifestOptions>
-                (args);
+            var result = Parser.Default.ParseArguments<InstallOptions, SearchOptions, UninstallOptions, CreateManifestOptions, ViewManifestOptions>(args);
 
             if (result.Tag == ParserResultType.Parsed)
             {
@@ -31,6 +25,5 @@ namespace AppGet.Commands
 
             return null;
         }
-
     }
 }

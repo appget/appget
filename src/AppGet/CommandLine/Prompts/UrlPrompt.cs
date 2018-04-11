@@ -20,7 +20,6 @@ namespace AppGet.CommandLine.Prompts
             result = input.Trim();
 
             return isValid;
-
         }
     }
 }

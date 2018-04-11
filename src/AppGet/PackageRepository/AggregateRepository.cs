@@ -15,12 +15,14 @@ namespace AppGet.PackageRepository
         public PackageInfo Get(string id, string tag)
         {
             var task = _repositories.Select(c => c.Get(id, tag)).FirstOrDefault(c => c != null);
+
             return task == null ? null : task;
         }
 
         public List<PackageInfo> Search(string term)
         {
-            var task = (_repositories.SelectMany(c => c.Search(term)).ToList());
+            var task = _repositories.SelectMany(c => c.Search(term)).ToList();
+
             return task;
         }
     }

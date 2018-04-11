@@ -19,6 +19,7 @@ namespace AppGet.FileTransfer.Protocols
             {
                 webRequest.Timeout = (int)_timeout.TotalMilliseconds;
             }
+
             return webRequest;
         }
     }

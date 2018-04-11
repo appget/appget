@@ -25,12 +25,12 @@ namespace AppGet.Commands.Install
                 {
                     Silent = false;
                 }
+
                 _interactive = value;
             }
         }
 
-        [Option('s', "silent", HelpText =
-            "Attempt to start the installer completely silently without showing any user dialogs")]
+        [Option('s', "silent", HelpText = "Attempt to start the installer completely silently without showing any user dialogs")]
         public bool Silent
         {
             get => _silent;
@@ -40,6 +40,7 @@ namespace AppGet.Commands.Install
                 {
                     Interactive = false;
                 }
+
                 _silent = value;
             }
         }

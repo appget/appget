@@ -21,7 +21,7 @@ namespace AppGet.Http
         {
             var bits = envInfo.Is64BitOperatingSystem ? "64" : "32";
 
-            _userAgent = $"AppGet/{BuildInfo.Version} ({ envInfo.Name} {envInfo.Version}; {bits})";
+            _userAgent = $"AppGet/{BuildInfo.Version} ({envInfo.Name} {envInfo.Version}; {bits})";
             _userAgentSimplified = $"AppGet/{BuildInfo.Version.ToString(2)}";
         }
     }

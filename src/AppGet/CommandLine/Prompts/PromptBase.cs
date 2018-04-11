@@ -21,7 +21,6 @@ namespace AppGet.CommandLine.Prompts
                 return default(T);
             }
 
-
             if (!TryParse(inputString, out var result))
             {
                 Console.WriteLine($"'{inputString}' is not a valid entry.");
@@ -46,8 +45,7 @@ namespace AppGet.CommandLine.Prompts
 
                 Console.WriteLine();
                 Console.Write("Selection: ");
-            }
-            else
+            } else
             {
                 Console.Write($"{message}: ");
             }
@@ -77,10 +75,10 @@ namespace AppGet.CommandLine.Prompts
                     if (index > 0 && index - 1 < options.Count)
                     {
                         result = options[index - 1];
+
                         return true;
                     }
-                }
-                else
+                } else
                 {
                     var found = options.Any(c => string.Equals(OptionString(c), input, StringComparison.CurrentCultureIgnoreCase));
                     if (found)
@@ -99,7 +97,6 @@ namespace AppGet.CommandLine.Prompts
         {
             return option.ToString().Trim();
         }
-
 
         protected abstract bool Convert(string input, out T result);
 

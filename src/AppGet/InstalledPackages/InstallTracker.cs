@@ -15,7 +15,7 @@ namespace AppGet.InstalledPackages
         private readonly IWindowsInstallerInventoryManager _windowsInstallerInventoryManager;
         private readonly Logger _logger;
 
-        private List<WindowsInstallRecord> _installedSnapshot; 
+        private List<WindowsInstallRecord> _installedSnapshot;
 
         public InstallTracker(IWindowsInstallerInventoryManager windowsInstallerInventoryManager, Logger logger)
         {
@@ -35,12 +35,14 @@ namespace AppGet.InstalledPackages
             if (productIds.Count == 0)
             {
                 _logger.Debug("No new installation records found");
+
                 return null;
             }
 
             if (productIds.Count > 0)
             {
                 _logger.Debug("More than one installation was detected, automatic removal is not possible");
+
                 return null;
             }
 
