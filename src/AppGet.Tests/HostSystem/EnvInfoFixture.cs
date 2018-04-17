@@ -14,7 +14,7 @@ namespace AppGet.Tests.HostSystem
         {
             Subject.Name.Should().Contain("Windows");
             Subject.Version.Major.Should().BeGreaterThan(7);
-            Subject.FullName.Should().Contain(Subject.Version.ToString());
+            Subject.FullName.Should().Contain("Windows NT");
             Subject.FullName.Should().Contain(Subject.Name);
 
             Subject.Is64BitOperatingSystem.Should().BeTrue();
