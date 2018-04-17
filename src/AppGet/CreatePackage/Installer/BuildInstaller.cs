@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using AppGet.CreatePackage.ManifestBuilder;
 
 namespace AppGet.CreatePackage.Installer
 {

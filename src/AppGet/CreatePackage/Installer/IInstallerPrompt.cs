@@ -1,3 +1,5 @@
+using AppGet.CreatePackage.ManifestBuilder;
+
 namespace AppGet.CreatePackage.Installer
 {
     public interface IInstallerPrompt

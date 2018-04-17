@@ -29,7 +29,7 @@ namespace AppGet.Tests.Serialization
         {
             var manifest = new PackageManifest
             {
-                Args = new InstallArgs{Silent = "/S"},
+                Args = new InstallArgs { Silent = "/S" },
                 Id = "test_manifest"
             };
 
@@ -38,6 +38,5 @@ namespace AppGet.Tests.Serialization
             yaml.Should().Contain("args");
             yaml.Should().Contain("/S");
         }
-
     }
 }

@@ -13,7 +13,7 @@ namespace AppGet.Manifests
 
         public string Home { get; set; }
         public string Repo { get; set; }
-        public string Licence { get; set; }
+        public string License { get; set; }
 
         public string[] Exe { get; set; }
 

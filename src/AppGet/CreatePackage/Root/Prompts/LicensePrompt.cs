@@ -1,4 +1,5 @@
 ﻿using AppGet.CommandLine.Prompts;
+using AppGet.CreatePackage.ManifestBuilder;
 
 namespace AppGet.CreatePackage.Root.Prompts
 {
@@ -13,12 +14,12 @@ namespace AppGet.CreatePackage.Root.Prompts
 
         public bool ShouldPrompt(PackageManifestBuilder manifestBuilder)
         {
-            return !manifestBuilder.Licence.HasConfidence(Confidence.Plausible);
+            return !manifestBuilder.License.HasConfidence(Confidence.Plausible);
         }
 
         public void Invoke(PackageManifestBuilder manifest)
         {
-            manifest.Licence.Add(_prompt.Request("License", manifest.Licence.Value), Confidence.Authoritative, this);
+            manifest.License.Add(_prompt.Request("License", manifest.License.Value), Confidence.Authoritative, this);
         }
     }
 }

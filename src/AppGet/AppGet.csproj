@@ -46,6 +46,27 @@
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>embedded</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommandLine, Version=2.2.1.0, Culture=neutral, PublicKeyToken=de6f01bd326f8c32, processorArchitecture=MSIL">
       <HintPath>..\packages\CommandLineParser.2.2.1\lib\net45\CommandLine.dll</HintPath>
@@ -113,6 +134,9 @@
     <Compile Include="Commands\Uninstall\PackageNotInstalledException.cs" />
     <Compile Include="CreatePackage\Installer\IInstallerPrompt.cs" />
     <Compile Include="CreatePackage\Installer\Prompts\ArchitecturePrompt.cs" />
+    <Compile Include="CreatePackage\ManifestBuilder\ManifestAttribute.cs" />
+    <Compile Include="CreatePackage\ManifestBuilder\ManifestAttributeCandidate.cs" />
+    <Compile Include="CreatePackage\ManifestBuilder\PackageManifestBuilder.cs" />
     <Compile Include="CreatePackage\ManifestComposer.cs" />
     <Compile Include="CreatePackage\Installer\BuildInstaller.cs" />
     <Compile Include="CreatePackage\Installer\Prompts\MinWindowsVersionPrompt.cs" />
@@ -123,7 +147,6 @@
     <Compile Include="CreatePackage\Root\Prompts\PackageIdPrompt.cs" />
     <Compile Include="CreatePackage\Root\Prompts\ProductNamePrompt.cs" />
     <Compile Include="CreatePackage\Root\Prompts\VersionPrompt.cs" />
-    <Compile Include="CreatePackage\PackageManifestBuilder.cs" />
     <Compile Include="CreatePackage\Parsers\VersionParser.cs" />
     <Compile Include="CreatePackage\Root\Prompts\HomePagePrompt.cs" />
     <Compile Include="CreatePackage\XRayClient.cs" />

@@ -1,4 +1,5 @@
 using AppGet.CommandLine.Prompts;
+using AppGet.CreatePackage.ManifestBuilder;
 
 namespace AppGet.CreatePackage.Root.Prompts
 {

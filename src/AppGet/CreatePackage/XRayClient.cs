@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using AppGet.CreatePackage.ManifestBuilder;
 using AppGet.Http;
 using NLog;
 

@@ -1,3 +1,5 @@
+using AppGet.CreatePackage.ManifestBuilder;
+
 namespace AppGet.CreatePackage.Root
 {
     public interface IExtractToManifestRoot

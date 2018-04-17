@@ -2,6 +2,7 @@
 using System.IO;
 using AppGet.AppData;
 using AppGet.CreatePackage;
+using AppGet.CreatePackage.ManifestBuilder;
 using AppGet.FileSystem;
 using AppGet.FileTransfer;
 using AppGet.Serialization;

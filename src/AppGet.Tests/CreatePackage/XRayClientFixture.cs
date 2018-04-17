@@ -20,7 +20,7 @@ namespace AppGet.Tests.CreatePackage
             var builder =  Subject.GetBuilder(new Uri("https://github.com/git-for-windows/git/releases/download/v2.16.2.windows.1/Git-2.16.2-32-bit.exe"));
             builder.Should().NotBeNull();
             builder.Version.Value.Should().Be("2.16.2");
-            builder.Version.GetTop().Source.Should().Be("Url");
+            builder.Version.GetTop().Source.Should().Be("DownloadUrl");
         }
     }
 }
