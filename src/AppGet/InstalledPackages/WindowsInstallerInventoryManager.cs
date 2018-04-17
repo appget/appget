@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AppGet.Extensions;
 using AppGet.Manifests;
@@ -16,15 +17,13 @@ namespace AppGet.InstalledPackages
     {
         public List<WindowsInstallRecord> GetInstalledApplications()
         {
-            const string REGISTRY_KEY = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
-            const string REGISTRY_KEY64 = @"SOFTWARE\WOW6432node\Microsoft\Windows\CurrentVersion\Uninstall";
-
-            return GetInstallRecordsForLocalMachine(REGISTRY_KEY)
-                .Concat(GetInstallRecordsForLocalMachine(REGISTRY_KEY64))
-                .Concat(GetInstallRecordsForCurrentUser(REGISTRY_KEY))
-                .Concat(GetInstallRecordsForCurrentUser(REGISTRY_KEY64))
+            return GetInstallRecords(RegistryHive.LocalMachine, RegistryView.Registry32)
+                .Concat(GetInstallRecords(RegistryHive.LocalMachine, RegistryView.Registry64))
+                .Concat(GetInstallRecords(RegistryHive.CurrentUser, RegistryView.Registry32))
+                .Concat(GetInstallRecords(RegistryHive.CurrentUser, RegistryView.Registry64))
                 .GroupBy(r => r.Id)
                 .Select(g => g.First())
+                .OrderBy(c => c.Name)
                 .ToList();
         }
 
@@ -36,22 +35,10 @@ namespace AppGet.InstalledPackages
             return packages.Where(c => c.Name.ToAlphaNumeric().Contains(targetName));
         }
 
-        private List<WindowsInstallRecord> GetInstallRecordsForLocalMachine(string path)
+        private List<WindowsInstallRecord> GetInstallRecords(RegistryHive hive, RegistryView view)
         {
-            using (var key = Registry.LocalMachine.OpenSubKey(path, false))
-            {
-                if (key != null)
-                {
-                    return GetRecords(key).ToList();
-                }
-            }
-
-            return new List<WindowsInstallRecord>(0);
-        }
-
-        private List<WindowsInstallRecord> GetInstallRecordsForCurrentUser(string registeryPath)
-        {
-            using (var key = Registry.CurrentUser.OpenSubKey(registeryPath, false))
+            using (var baseKey = RegistryKey.OpenBaseKey(hive, view))
+            using (var key = baseKey.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall", false))
             {
                 if (key != null)
                 {
@@ -111,12 +98,14 @@ namespace AppGet.InstalledPackages
             if (names.Any(c => c.StartsWith("Inno")))
             {
                 record.InstallMethod = InstallMethodTypes.Inno;
-            } else if (record.UninstallCommand != null)
+            }
+            else if (record.UninstallCommand != null)
             {
                 if (record.UninstallCommand.ToLowerInvariant().Contains("msiexec.exe"))
                 {
                     record.InstallMethod = InstallMethodTypes.MSI;
-                } else if (record.UninstallCommand.Contains(" --uninstall") && record.UninstallCommand.Contains("Update.exe"))
+                }
+                else if (record.UninstallCommand.Contains(" --uninstall") && record.UninstallCommand.Contains("Update.exe"))
                 {
                     record.InstallMethod = InstallMethodTypes.Squirrel;
                 }

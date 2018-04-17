@@ -35,7 +35,7 @@ namespace AppGet.Tests.InstalledPackages
             records.Should().NotBeEmpty();
         }
 
-        [TestCase("VLC", Category = "Local")]
+        [TestCase("VLC media player", Category = "Local")]
         [TestCase("slack", Category = "Local")]
         public void should_find_install_record(string name)
         {
