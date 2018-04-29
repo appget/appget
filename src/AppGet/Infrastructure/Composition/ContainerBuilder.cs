@@ -74,7 +74,7 @@ namespace AppGet.Infrastructure.Composition
                 typeof(HomePagePrompt),
                 typeof(LicensePrompt),
                 typeof(InstallMethodPrompt),
-                typeof(VersionTagPrompt),
+                typeof(TagPrompt),
             });
 
             container.RegisterMultiple<IInstallerPrompt>(new[]

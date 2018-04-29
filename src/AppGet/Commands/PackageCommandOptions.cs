@@ -10,7 +10,7 @@ namespace AppGet.Commands
 
         public string PackageId => Package.Split(':').FirstOrDefault();
 
-        public string PackageTag
+        public string Tag
         {
             get
             {

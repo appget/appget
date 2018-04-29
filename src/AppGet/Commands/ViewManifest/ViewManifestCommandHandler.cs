@@ -22,7 +22,7 @@ namespace AppGet.Commands.ViewManifest
         public void Execute(AppGetOption searchCommandOptions)
         {
             var viewOptions = (ViewManifestOptions)searchCommandOptions;
-            var package = _packageRepository.Get(viewOptions.PackageId, viewOptions.PackageTag);
+            var package = _packageRepository.Get(viewOptions.PackageId, viewOptions.Tag);
             var manifest = _packageManifestService.LoadManifest(package.ManifestPath);
             _packageManifestService.PrintManifest(manifest);
         }

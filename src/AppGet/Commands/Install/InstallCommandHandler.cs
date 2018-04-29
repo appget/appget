@@ -26,7 +26,7 @@ namespace AppGet.Commands.Install
         {
             var installOptions = (InstallOptions)commandOptions;
 
-            var package = _packageRepository.Get(installOptions.PackageId, installOptions.PackageTag);
+            var package = _packageRepository.Get(installOptions.PackageId, installOptions.Tag);
 
             var manifest = _packageManifestService.LoadManifest(package.ManifestPath);
 

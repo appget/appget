@@ -21,7 +21,7 @@ namespace AppGet.CreatePackage.ManifestBuilder
     [DebuggerDisplay("{Id} {Version} [{Name}]")]
     public class PackageManifestBuilder
     {
-        public string VersionTag { get; set; }
+        public string Tag { get; set; }
 
         public ManifestAttribute<string> Id { get; }
         public ManifestAttribute<string> Name { get; }

@@ -3,12 +3,12 @@ using AppGet.CreatePackage.ManifestBuilder;
 
 namespace AppGet.CreatePackage.Root.Prompts
 {
-    public class VersionTagPrompt : IManifestPrompt
+    public class TagPrompt : IManifestPrompt
     {
         private readonly TextPrompt _prompt;
         private const string LATEST = "latest";
 
-        public VersionTagPrompt(TextPrompt prompt)
+        public TagPrompt(TextPrompt prompt)
         {
             _prompt = prompt;
         }
@@ -20,14 +20,14 @@ namespace AppGet.CreatePackage.Root.Prompts
 
         public void Invoke(PackageManifestBuilder manifest)
         {
-            var tag = _prompt.Request("Version Tag", LATEST)?.ToLowerInvariant();
+            var tag = _prompt.Request("Tag", LATEST)?.ToLowerInvariant();
 
             if (string.IsNullOrWhiteSpace(tag) || tag == LATEST)
             {
                 tag = null;
             }
 
-            manifest.VersionTag = tag;
+            manifest.Tag = tag;
         }
     }
 }

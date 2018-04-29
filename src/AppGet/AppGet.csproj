@@ -143,7 +143,7 @@
     <Compile Include="CreatePackage\Root\IExtractToManifestRoot.cs" />
     <Compile Include="CreatePackage\Root\Prompts\InstallMethodPrompt.cs" />
     <Compile Include="CreatePackage\Root\Prompts\LicensePrompt.cs" />
-    <Compile Include="CreatePackage\Root\Prompts\VersionTagPrompt.cs" />
+    <Compile Include="CreatePackage\Root\Prompts\TagPrompt.cs" />
     <Compile Include="CreatePackage\Root\Prompts\PackageIdPrompt.cs" />
     <Compile Include="CreatePackage\Root\Prompts\ProductNamePrompt.cs" />
     <Compile Include="CreatePackage\Root\Prompts\VersionPrompt.cs" />
