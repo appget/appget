@@ -78,8 +78,9 @@ namespace AppGet.Commands.CreateManifest
                 try
                 {
                     var resp = _submissionClient.Submit(manifestBuilder);
-                    Console.WriteLine("Thank you for your submission.");
-                    Console.WriteLine("Your pull-request: " + resp.PullRequest);
+                    _logger.Info("Thank you for your submission.");
+                    _logger.Info("");
+                    _logger.Info("Your pull-request: " + resp.PullRequest);
                 }
                 catch (Exception e)
                 {
