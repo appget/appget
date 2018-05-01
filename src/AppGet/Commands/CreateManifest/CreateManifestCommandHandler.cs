@@ -4,6 +4,8 @@ using AppGet.CommandLine.Prompts;
 using AppGet.CreatePackage;
 using AppGet.CreatePackage.Installer;
 using AppGet.Manifests;
+using AppGet.Manifests.Submission;
+using NLog;
 
 namespace AppGet.Commands.CreateManifest
 {
@@ -15,9 +17,12 @@ namespace AppGet.Commands.CreateManifest
         private readonly IUrlPrompt _urlPrompt;
         private readonly IXRayClient _xRayClient;
         private readonly BooleanPrompt _booleanPrompt;
+        private readonly ISubmissionClient _submissionClient;
+        private readonly Logger _logger;
 
         public CreateManifestCommandHandler(IComposeInstaller installerBuilder, IPackageManifestService packageManifestService,
-            IComposeManifest composeManifest, IUrlPrompt urlPrompt, IXRayClient xRayClient, BooleanPrompt booleanPrompt)
+            IComposeManifest composeManifest, IUrlPrompt urlPrompt, IXRayClient xRayClient, BooleanPrompt booleanPrompt, ISubmissionClient submissionClient,
+            Logger logger)
         {
             _installerBuilder = installerBuilder;
             _packageManifestService = packageManifestService;
@@ -25,6 +30,8 @@ namespace AppGet.Commands.CreateManifest
             _urlPrompt = urlPrompt;
             _xRayClient = xRayClient;
             _booleanPrompt = booleanPrompt;
+            _submissionClient = submissionClient;
+            _logger = logger;
         }
 
         public bool CanExecute(AppGetOption commandOptions)
@@ -60,8 +67,25 @@ namespace AppGet.Commands.CreateManifest
                 manifestBuilder.Installers.Add(manifestBuilder2);
             }
 
+
             _packageManifestService.PrintManifest(manifestBuilder.Build());
             _packageManifestService.WriteManifest(manifestBuilder);
+
+            var submit = _booleanPrompt.Request("Submit manifest to be reviewed and added to official repository?", true);
+
+            if (submit)
+            {
+                try
+                {
+                    var resp = _submissionClient.Submit(manifestBuilder);
+                    Console.WriteLine("Thank you for your submission.");
+                    Console.WriteLine("Your pull-request: " + resp.PullRequest);
+                }
+                catch (Exception e)
+                {
+                    _logger.Error(e, "Couldn't submit manifest");
+                }
+            }
         }
     }
 }

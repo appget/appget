@@ -73,7 +73,6 @@
     <Compile Include="Infrastructure\Composition\ContainerBuilderFixture.cs" />
     <Compile Include="Manifests\PackageManifestFixture.cs" />
     <Compile Include="InstalledPackages\WindowsInstallerInventoryManagerFixture.cs" />
-    <Compile Include="Manifests\SubmissionClientFixture.cs" />
     <Compile Include="Options\OptionsParserFixture.cs" />
     <Compile Include="Manifests\FindInstallerFixture.cs" />
     <Compile Include="PackageRepository\OfficialPackageRepositoryFixture.cs" />

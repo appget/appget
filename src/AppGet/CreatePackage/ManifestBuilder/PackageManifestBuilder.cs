@@ -60,7 +60,7 @@ namespace AppGet.CreatePackage.ManifestBuilder
 
         public PackageManifest Build()
         {
-            if (InstallMethod.Value == InstallMethodTypes.Squirrel || JsonEquality.Equal(Args.Value, new InstallArgs()))
+            if (Args == null || InstallMethod.Value == InstallMethodTypes.Squirrel || JsonEquality.Equal(Args.Value, new InstallArgs()))
             {
                 Args = null;
             }

@@ -220,7 +220,7 @@
     <Compile Include="Commands\OptionException.cs" />
     <Compile Include="Commands\OptionsParser.cs" />
     <Compile Include="Commands\ViewManifest\ViewManifestOptions.cs" />
-    <Compile Include="Manifests\SubmissionClient.cs" />
+    <Compile Include="Manifests\Submission\SubmissionClient.cs" />
     <Compile Include="PackageRepository\AggregateRepository.cs" />
     <Compile Include="PackageRepository\FileSystemPackageRepository.cs" />
     <Compile Include="PackageRepository\OfficialPackageRepository.cs" />

@@ -32,12 +32,13 @@ namespace AppGet.CreatePackage
                 url += $"&id={WebUtility.UrlEncode(name)}";
             }
 
-            _logger.Info($"Requesting analysis on {uri}. This might take a couple of minutes.");
+            _logger.Info($"Requesting analysis on {uri}");
+            _logger.Info("This could take a couple of minutes...");
 
             var resp = _httpClient.Get(new Uri(url));
             var builder = resp.AsResource<PackageManifestBuilder>();
 
-            _logger.Info($"Received results for {uri}");
+            _logger.Debug($"Received results for {uri}");
 
             return builder;
         }
