@@ -15,6 +15,7 @@ namespace AppGet.Serialization
         static Json()
         {
             Settings.Converters.Add(new StringEnumConverter(false));
+            Settings.Converters.Add(new Newtonsoft.Json.Converters.VersionConverter());
             Settings.NullValueHandling = NullValueHandling.Ignore;
         }
 

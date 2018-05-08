@@ -45,7 +45,7 @@ namespace AppGet.Commands.CreateManifest
 
             if (!Uri.IsWellFormedUriString(createOptions.DownloadUrl, UriKind.Absolute))
             {
-                throw new InvalidCommandParamaterException("Invalid URL", createOptions);
+                throw new InvalidCommandParamaterException("Invalid download URL. Make sure you enter a valid fully qualified download URL.", createOptions);
             }
 
             var manifestBuilder = _xRayClient.GetBuilder(new Uri(createOptions.DownloadUrl));
