@@ -1,9 +1,7 @@
 ﻿using System;
-using AppGet.Manifests;
 using AppGet.Serialization;
 using FluentAssertions;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace AppGet.Tests.Serialization
 {
