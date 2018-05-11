@@ -13,7 +13,7 @@ namespace AppGet.PackageRepository
         private readonly IHttpClient _httpClient;
         private readonly Logger _logger;
 
-        private const string API_ROOT = "https://fn.appget.net/api/";
+        private const string API_ROOT = "https://fn.appget.net/api";
 
         public OfficialPackageRepository(IHttpClient httpClient, Logger logger)
         {
@@ -23,18 +23,20 @@ namespace AppGet.PackageRepository
 
         public PackageInfo Get(string id, string tag)
         {
-            if (string.IsNullOrWhiteSpace(tag))
-            {
-                tag = PackageManifest.LATEST_TAG;
-            }
-
-            _logger.Info("Getting package " + id);
+            _logger.Info($"Getting package {id}:{tag ?? PackageManifest.LATEST_TAG}");
 
             try
             {
-                var packages = Search(id).ToList();
+                var term = $"{id}";
 
-                var match = packages.FirstOrDefault(c => c.Id == id && c.Tag == tag);
+                if (!string.IsNullOrWhiteSpace(tag))
+                {
+                    term += $":{tag}";
+                }
+
+                var packages = Search(term, true).ToList();
+
+                var match = packages.FirstOrDefault(c => c.Selected);
 
                 if (match != null)
                 {
@@ -54,11 +56,16 @@ namespace AppGet.PackageRepository
             }
         }
 
-        public List<PackageInfo> Search(string term)
+        public List<PackageInfo> Search(string term, bool select = false)
         {
             _logger.Debug($"Searching for '{term}' in {API_ROOT}");
 
-            var uri = new Uri($"{API_ROOT}/packages").AddQuery("q", term.Trim());
+            var uri = new Uri($"{API_ROOT}/packages?q={term}");
+
+            if (select)
+            {
+                uri = new Uri($"{uri}&s=1");
+            }
 
             var package = _httpClient.Get(uri);
 

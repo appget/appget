@@ -13,6 +13,7 @@ namespace AppGet.PackageRepository
         public string Tag { get; set; }
         public string Version { get; set; }
         public string ManifestPath { get; set; }
+        public bool Selected { get; set; }
 
         public override string ToString()
         {

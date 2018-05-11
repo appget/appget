@@ -23,6 +23,20 @@ namespace AppGet.Tests.PackageRepository
             latest.Tag.Should().Be("latest");
         }
 
+
+        [TestCase("linqpad","5")]
+        public void should_default_to_highest_tag(string package, string tag)
+        {
+            WithRealHttp();
+
+            var latest = Subject.Get(package, null);
+
+            latest.Should().NotBeNull();
+            latest.ManifestPath.Should().StartWith("https://raw.githubusercontent.com/appget/packages/master/manifests/");
+            latest.Id.Should().Be(package);
+            latest.Tag.Should().Be(tag);
+        }
+
         [Test]
         public void should_throw_unknown_id()
         {

@@ -19,7 +19,7 @@ namespace AppGet.PackageRepository
             return task == null ? null : task;
         }
 
-        public List<PackageInfo> Search(string term)
+        public List<PackageInfo> Search(string term, bool select = false)
         {
             var task = _repositories.SelectMany(c => c.Search(term)).ToList();
 

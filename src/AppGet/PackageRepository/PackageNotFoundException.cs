@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using AppGet.Exceptions;
+using AppGet.Manifests;
 
 namespace AppGet.PackageRepository
 {
@@ -8,7 +9,7 @@ namespace AppGet.PackageRepository
         public List<PackageInfo> Similar { get; }
 
         public PackageNotFoundException(string packageId, string tag, List<PackageInfo> similar)
-            : base($"Package [{packageId}] could not be found")
+            : base($"Package [{packageId}:{tag ?? PackageManifest.LATEST_TAG}] could not be found")
         {
             Similar = similar;
         }

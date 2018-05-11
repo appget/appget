@@ -59,7 +59,7 @@ namespace AppGet.PackageRepository
             };
         }
 
-        public List<PackageInfo> Search(string term)
+        public List<PackageInfo> Search(string term, bool select = false)
         {
             // TODO
             return new List<PackageInfo>();
