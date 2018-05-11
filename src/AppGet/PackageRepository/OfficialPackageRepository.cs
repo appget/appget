@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using AppGet.Http;
+using AppGet.Manifests;
 using NLog;
 
 namespace AppGet.PackageRepository
@@ -24,7 +25,7 @@ namespace AppGet.PackageRepository
         {
             if (string.IsNullOrWhiteSpace(tag))
             {
-                tag = "latest";
+                tag = PackageManifest.LATEST_TAG;
             }
 
             _logger.Info("Getting package " + id);

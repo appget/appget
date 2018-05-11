@@ -7,7 +7,6 @@ namespace AppGet.Http
     public interface IHttpClient
     {
         HttpResponseMessage Send(HttpRequestMessage request, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead);
-
         HttpResponseMessage Get(Uri uri, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead);
     }
 

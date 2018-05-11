@@ -52,7 +52,7 @@ namespace AppGet.Update
                 InstallMethod = InstallMethodTypes.Inno,
                 Name = "AppGet",
                 Version = latest.Version.ToString(),
-                Home = "https://appget.net",
+                Home = "https://appget.net/",
                 Installers = new List<Installer>
                 {
                     new Installer

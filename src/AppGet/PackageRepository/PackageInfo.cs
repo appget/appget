@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using AppGet.Manifests;
 using Newtonsoft.Json;
 
 namespace AppGet.PackageRepository
@@ -7,7 +8,7 @@ namespace AppGet.PackageRepository
     {
         public string Id { get; set; }
 
-        [DefaultValue("latest")]
+        [DefaultValue(PackageManifest.LATEST_TAG)]
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Populate)]
         public string Tag { get; set; }
         public string Version { get; set; }

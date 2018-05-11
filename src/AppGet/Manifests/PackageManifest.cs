@@ -7,6 +7,8 @@ namespace AppGet.Manifests
     [DebuggerDisplay("{" + nameof(Id) + "} " + "{" + nameof(Version) + "}")]
     public class PackageManifest
     {
+        public const string LATEST_TAG = "latest";
+        
         public string Id { get; set; }
         public string Name { get; set; }
         public string Version { get; set; }
