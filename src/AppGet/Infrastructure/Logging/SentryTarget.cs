@@ -17,8 +17,6 @@ namespace AppGet.Infrastructure.Logging
     {
         private readonly RavenClient _client;
 
-        private const string DSN = "https://49bc14b2d3484029adcf54e86d5055b0:885dd046962a49ca80064e9670719043@sentry.io/306545";
-
         private static readonly IDictionary<LogLevel, ErrorLevel> LoggingLevelMap = new Dictionary<LogLevel, ErrorLevel>
         {
             {
@@ -43,7 +41,12 @@ namespace AppGet.Infrastructure.Logging
 
         public SentryTarget()
         {
-            _client = new RavenClient(new Dsn(DSN), new JsonPacketFactory(), new SentryRequestFactory(), new SentryUserFactory())
+            var dsn = BuildInfo.IsProduction ?
+                "https://79eabeab1aa84c8db73ee2675c5bce7d@sentry.io/306545" :
+                "https://c5e5b9675d7b4a45b35e0adc4799b110@sentry.io/1208731";
+
+
+            _client = new RavenClient(new Dsn(dsn), new JsonPacketFactory(), new SentryRequestFactory(), new SentryUserFactory())
             {
                 Compression = true,
                 ErrorOnCapture = OnError,
@@ -54,11 +57,7 @@ namespace AppGet.Infrastructure.Logging
             var osInfo = new EnvInfo();
 
             _client.Tags.Add("culture", Thread.CurrentThread.CurrentCulture.Name);
-            _client.Tags.Add("os_name", osInfo.Name);
-            _client.Tags.Add("os_version", osInfo.Version.ToString());
-            _client.Tags.Add("os_bit", osInfo.Is64BitOperatingSystem ? "64" : "32");
             _client.Tags.Add("args", Environment.CommandLine);
-            _client.Tags.Add("runtime", Environment.Version.ToString());
         }
 
         private void OnError(Exception ex)
@@ -87,7 +86,7 @@ namespace AppGet.Infrastructure.Logging
 
                 if (!string.IsNullOrEmpty(message))
                 {
-                    _client.AddTrail(new Breadcrumb("log", BreadcrumbType.Navigation)
+                    _client.AddTrail(new Breadcrumb(logEvent.LoggerName, BreadcrumbType.Navigation)
                     {
                         Level = GetLevel(logEvent.Level),
                         Message = message
@@ -123,7 +122,12 @@ namespace AppGet.Infrastructure.Logging
                     }
                 }
 
-                _client.Capture(sentryEvent);
+                lock (_client)
+                {
+                    _client.Logger = logEvent.LoggerName;
+                    _client.Capture(sentryEvent);
+                    _client.Logger = "root";
+                }
             }
             catch (Exception e)
             {
