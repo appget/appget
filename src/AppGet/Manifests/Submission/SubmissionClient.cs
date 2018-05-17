@@ -27,7 +27,7 @@ namespace AppGet.Manifests.Submission
 
         public SubmissionResponse Submit(PackageManifestBuilder builder)
         {
-            var req = new HttpRequestMessage(HttpMethod.Post, "https://fn.appget.net/api/packages")
+            var req = new HttpRequestMessage(HttpMethod.Post, "https://api.appget.net/packages")
             {
                 Content = new StringContent(Json.Serialize(builder), Encoding.UTF8, "application/json")
             };
