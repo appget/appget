@@ -60,8 +60,6 @@
     <Compile Include="CreatePackage\Root\Prompts\HomePagePromptFixture.cs" />
     <Compile Include="CreatePackage\XRayClientFixture.cs" />
     <Compile Include="Crypto\Certificates\FileSignatureServiceFixture.cs" />
-    <Compile Include="Crypto\Hash\Algorithms\Md5HashFixture.cs" />
-    <Compile Include="Crypto\Hash\Algorithms\Sha1HashFixture.cs" />
     <Compile Include="Crypto\Hash\Algorithms\Sha256HashFixture.cs" />
     <Compile Include="FileTransfer\Protocols\HttpFileTransferClientFixture.cs" />
     <Compile Include="Extensions\StringExtensionsFixture.cs" />

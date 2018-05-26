@@ -138,13 +138,8 @@
     <Compile Include="CreatePackage\Root\Prompts\HomePagePrompt.cs" />
     <Compile Include="CreatePackage\XRayClient.cs" />
     <Compile Include="Crypto\Certificates\FileSignatureService.cs" />
-    <Compile Include="Crypto\Hash\CheckSumBase.cs" />
     <Compile Include="Crypto\Hash\ChecksumVerificationException.cs" />
     <Compile Include="Crypto\Hash\ChecksumService.cs" />
-    <Compile Include="Crypto\Hash\ICheckSum.cs" />
-    <Compile Include="Crypto\Hash\Algorithms\Sha1Hash.cs" />
-    <Compile Include="Crypto\Hash\Algorithms\Md5Hash.cs" />
-    <Compile Include="Crypto\Hash\Algorithms\Sha256Hash.cs" />
     <Compile Include="Extensions\FileVersionInfoExtensions.cs" />
     <Compile Include="FileTransfer\Protocols\WebClientWithTimeout.cs">
       <SubType>Component</SubType>

@@ -7,9 +7,9 @@ using YamlDotNet.Serialization.ObjectGraphVisitors;
 
 namespace AppGet.Manifest.Serialization
 {
-    public sealed class JsonDefaultGraphVisitor : ChainedObjectGraphVisitor
+    public sealed class YamlDefaultGraphVisitor : ChainedObjectGraphVisitor
     {
-        public JsonDefaultGraphVisitor(IObjectGraphVisitor<IEmitter> nextVisitor)
+        public YamlDefaultGraphVisitor(IObjectGraphVisitor<IEmitter> nextVisitor)
             : base(nextVisitor)
         {
         }

@@ -1,24 +1,17 @@
 ﻿using System;
 using System.IO;
 using System.Security.Cryptography;
-using AppGet.Manifest;
-using AppGet.Manifests;
 
-namespace AppGet.Crypto.Hash
+namespace AppGet.Manifest.Hash
 {
-    public abstract class CheckSumBase : ICheckSum
+    public class Sha256 : ICalculateHash
     {
-        public abstract HashTypes HashType { get; }
-
-        protected abstract HashAlgorithm GetHashAlgorithm();
-
         public string CalculateHash(string file)
         {
             using (var stream = File.OpenRead(file))
-            using (var algorithm = GetHashAlgorithm())
+            using (var algorithm = new SHA256Managed())
             {
                 var checksum = algorithm.ComputeHash(stream);
-
                 return BitConverter.ToString(checksum).ToLowerInvariant().Replace("-", string.Empty);
             }
         }

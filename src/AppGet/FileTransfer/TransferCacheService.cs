@@ -1,7 +1,5 @@
 ﻿using AppGet.Crypto.Hash;
 using AppGet.FileSystem;
-using AppGet.Manifest;
-using AppGet.Manifests;
 using NLog;
 
 namespace AppGet.FileTransfer

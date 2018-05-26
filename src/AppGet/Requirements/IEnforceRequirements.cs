@@ -1,5 +1,4 @@
 ﻿using AppGet.Manifest;
-using AppGet.Manifests;
 
 namespace AppGet.Requirements
 {

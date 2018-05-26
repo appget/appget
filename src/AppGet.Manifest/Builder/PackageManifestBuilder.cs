@@ -40,7 +40,9 @@ namespace AppGet.Manifest.Builder
         public Uri Uri => new Uri(Installers.First().Location);
 
         [JsonIgnore]
-        public string FilePath { get; set; }
+        public string FilePath => Installers.Select(c => c.FilePath).First();
+
+        public PackageManifest Existing { get; set; }
 
         public PackageManifestBuilder()
         {
@@ -68,9 +70,11 @@ namespace AppGet.Manifest.Builder
 
         public PackageManifest Build()
         {
-            if (Args == null || InstallMethod.Value == InstallMethodTypes.Squirrel || JsonEquality.Equal(Args.Value, new InstallArgs()))
+            var args = Args.Value;
+
+            if (InstallMethod.Value == InstallMethodTypes.Squirrel || JsonEquality.Equal(args, new InstallArgs()))
             {
-                Args = null;
+                args = null;
             }
 
             return new PackageManifest
@@ -85,7 +89,7 @@ namespace AppGet.Manifest.Builder
 
                 InstallMethod = InstallMethod.Value,
                 Installers = Installers.Select(c => c.Build()).OrderBy(c => c.Architecture).ToList(),
-                Args = Args?.Value
+                Args = args
             };
         }
     }
@@ -98,15 +102,18 @@ namespace AppGet.Manifest.Builder
         public ManifestAttribute<ArchitectureTypes> Architecture { get; }
         public ManifestAttribute<Version> MinWindowsVersion { get; }
 
+        [JsonIgnore]
+        public string FilePath { get; set; }
+
         public InstallerBuilder()
         {
             Architecture = new ManifestAttribute<ArchitectureTypes>();
             MinWindowsVersion = new ManifestAttribute<Version>();
         }
 
-        public Manifest.Installer Build()
+        public Installer Build()
         {
-            return new Manifest.Installer
+            return new Installer
             {
                 Location = Location,
                 Sha256 = Sha256,

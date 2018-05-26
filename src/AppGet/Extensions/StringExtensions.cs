@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-using System.Linq;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace AppGet.Extensions
 {

@@ -7,9 +7,12 @@ namespace AppGet.Manifest.Serialization
 {
     public static class Json
     {
-        private static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
+        public static readonly JsonSerializer Serializer;
+
+        public static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
         {
             ContractResolver = new CamelCasePropertyNamesContractResolver(),
+
         };
 
         static Json()
@@ -17,6 +20,10 @@ namespace AppGet.Manifest.Serialization
             Settings.Converters.Add(new StringEnumConverter(false));
             Settings.Converters.Add(new Newtonsoft.Json.Converters.VersionConverter());
             Settings.NullValueHandling = NullValueHandling.Ignore;
+            Settings.DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate;
+            Settings.NullValueHandling = NullValueHandling.Ignore;
+            Settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            Serializer = JsonSerializer.Create(Settings);
         }
 
         public static string Serialize(object obj, Formatting formatting = Formatting.None)

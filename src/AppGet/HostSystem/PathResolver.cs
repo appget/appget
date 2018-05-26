@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using AppGet.Manifest;
-using AppGet.Manifests;
 
 namespace AppGet.HostSystem
 {

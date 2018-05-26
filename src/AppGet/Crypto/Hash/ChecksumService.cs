@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AppGet.Manifest;
-using AppGet.Manifests;
+using AppGet.Manifest.Hash;
 using NLog;
 
 namespace AppGet.Crypto.Hash
@@ -14,12 +11,12 @@ namespace AppGet.Crypto.Hash
 
     public class ChecksumService : IChecksumService
     {
-        private readonly IEnumerable<ICheckSum> _checkSums;
+        private readonly ICalculateHash _calculateHash;
         private readonly Logger _logger;
 
-        public ChecksumService(IEnumerable<ICheckSum> checkSums, Logger logger)
+        public ChecksumService(ICalculateHash calculateHash, Logger logger)
         {
-            _checkSums = checkSums;
+            _calculateHash = calculateHash;
             _logger = logger;
         }
 
@@ -27,9 +24,8 @@ namespace AppGet.Crypto.Hash
         {
             _logger.Trace("Starting checksum verification");
 
-            var hashAlg = _checkSums.Single(c => c.HashType == HashTypes.Sha256);
 
-            var hash = hashAlg.CalculateHash(path);
+            var hash = _calculateHash.CalculateHash(path);
 
             if (!string.Equals(hash, sha256, StringComparison.OrdinalIgnoreCase))
             {

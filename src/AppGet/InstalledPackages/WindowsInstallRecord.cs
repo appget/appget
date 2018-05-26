@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using AppGet.Manifest;
-using AppGet.Manifests;
 using Microsoft.Win32;
 
 namespace AppGet.InstalledPackages

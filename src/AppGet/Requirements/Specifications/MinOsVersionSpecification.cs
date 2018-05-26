@@ -1,6 +1,5 @@
 ﻿using AppGet.HostSystem;
 using AppGet.Manifest;
-using AppGet.Manifests;
 
 namespace AppGet.Requirements.Specifications
 {

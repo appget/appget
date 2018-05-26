@@ -2,7 +2,6 @@
 using System.Linq;
 using AppGet.Commands.Uninstall;
 using AppGet.Manifest;
-using AppGet.Manifests;
 using NLog;
 
 namespace AppGet.Installers

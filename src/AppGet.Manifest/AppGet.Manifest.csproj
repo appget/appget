@@ -46,13 +46,14 @@
     <Compile Include="Builder\ManifestAttribute.cs" />
     <Compile Include="Builder\ManifestAttributeCandidate.cs" />
     <Compile Include="Builder\PackageManifestBuilder.cs" />
-    <Compile Include="HashTypes.cs" />
+    <Compile Include="Hash\ICalculateHash.cs" />
+    <Compile Include="Hash\Sha256.cs" />
     <Compile Include="InstallMethodTypes.cs" />
     <Compile Include="PackageManifest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\Json.cs" />
     <Compile Include="Serialization\JsonComparator.cs" />
-    <Compile Include="Serialization\JsonDefaultGraphVisitor.cs" />
+    <Compile Include="Serialization\YamlDefaultGraphVisitor.cs" />
     <Compile Include="Serialization\JsonEquality.cs" />
     <Compile Include="Serialization\VersionConverter.cs" />
     <Compile Include="Serialization\Yaml.cs" />

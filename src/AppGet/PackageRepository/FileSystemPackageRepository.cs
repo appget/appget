@@ -5,7 +5,6 @@ using AppGet.AppData;
 using AppGet.FileSystem;
 using AppGet.Manifest;
 using AppGet.Manifest.Serialization;
-using AppGet.Manifests;
 
 namespace AppGet.PackageRepository
 {

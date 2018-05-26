@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using AppGet.Manifest;
 using AppGet.Manifest.Serialization;
-using AppGet.Manifests;
 using NUnit.Framework;
 
 namespace AppGet.Tests.Manifests

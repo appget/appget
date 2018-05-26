@@ -2,7 +2,6 @@
 using AppGet.Compression;
 using AppGet.HostSystem;
 using AppGet.Manifest;
-using AppGet.Manifests;
 
 namespace AppGet.Installers.Zip
 {

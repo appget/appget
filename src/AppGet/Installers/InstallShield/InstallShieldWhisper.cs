@@ -1,7 +1,6 @@
 ﻿using AppGet.HostSystem;
 using AppGet.Installers.Msi;
 using AppGet.Manifest;
-using AppGet.Manifests;
 using AppGet.Processes;
 using NLog;
 

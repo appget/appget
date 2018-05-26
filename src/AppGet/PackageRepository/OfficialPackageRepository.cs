@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using AppGet.Http;
 using AppGet.Manifest;
-using AppGet.Manifests;
 using NLog;
 
 namespace AppGet.PackageRepository

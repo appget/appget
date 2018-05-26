@@ -2,7 +2,6 @@
 using System.IO;
 using AppGet.Infrastructure.Logging;
 using NLog;
-using NLog.Common;
 using NUnit.Framework;
 
 namespace AppGet.Tests.Infrastructure.Logging

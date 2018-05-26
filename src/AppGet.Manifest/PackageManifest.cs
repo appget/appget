@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using YamlDotNet.Serialization;
 
 namespace AppGet.Manifest
 {
@@ -24,9 +25,32 @@ namespace AppGet.Manifest
 
         public List<Installer> Installers { get; set; }
 
+        [YamlIgnore]
+        public string Tag { get; set; }
+
+        [YamlIgnore]
+        public string Path { get; set; }
+
         public PackageManifest()
         {
             InstallMethod = InstallMethodTypes.Custom;
+        }
+
+        public override string ToString()
+        {
+            return $"{Id} {Version}".Trim();
+        }
+
+
+        public string GetFileName()
+        {
+            var tag = Tag?.Trim().ToLower();
+            if (string.IsNullOrWhiteSpace(tag) || tag == LATEST_TAG)
+            {
+                return $"{Id}";
+            }
+
+            return $"{Id}_{tag}";
         }
     }
 

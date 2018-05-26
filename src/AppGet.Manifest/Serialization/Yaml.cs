@@ -7,30 +7,35 @@ namespace AppGet.Manifest.Serialization
 {
     public static class Yaml
     {
+        private static readonly Deserializer Deserializer = new DeserializerBuilder()
+            .WithNamingConvention(new CamelCaseNamingConvention())
+            .WithTypeConverter(new VersionConverter())
+            .IgnoreUnmatchedProperties()
+            .Build();
+
         public static string Serialize(object obj)
         {
             using (var textWriter = new StringWriter(CultureInfo.InvariantCulture))
             {
-                var serializer = new SerializerBuilder().WithNamingConvention(new CamelCaseNamingConvention())
+                new SerializerBuilder()
+                    .WithNamingConvention(new CamelCaseNamingConvention())
                     .WithTypeConverter(new VersionConverter())
-                    .WithEmissionPhaseObjectGraphVisitor(args => new JsonDefaultGraphVisitor(args.InnerVisitor))
+                    .WithEmissionPhaseObjectGraphVisitor(args => new YamlDefaultGraphVisitor(args.InnerVisitor))
                     .DisableAliases()
-                    .Build();
-
-                serializer.Serialize(textWriter, obj);
-
+                    .Build().Serialize(textWriter, obj);
                 return textWriter.ToString();
             }
         }
 
         public static T Deserialize<T>(string text)
         {
-            var deserializer = new DeserializerBuilder().WithNamingConvention(new CamelCaseNamingConvention())
-                .WithTypeConverter(new VersionConverter())
-                .IgnoreUnmatchedProperties()
-                .Build();
+            return Deserializer.Deserialize<T>(text);
+        }
 
-            return deserializer.Deserialize<T>(text);
+        public static T Deserialize<T>(Stream stream)
+        {
+            var tr = new StreamReader(stream);
+            return Deserializer.Deserialize<T>(tr);
         }
     }
 }

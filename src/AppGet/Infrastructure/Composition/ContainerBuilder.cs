@@ -9,8 +9,6 @@ using AppGet.CreatePackage.Installer;
 using AppGet.CreatePackage.Installer.Prompts;
 using AppGet.CreatePackage.Root;
 using AppGet.CreatePackage.Root.Prompts;
-using AppGet.Crypto.Hash;
-using AppGet.Crypto.Hash.Algorithms;
 using AppGet.FileTransfer;
 using AppGet.FileTransfer.Protocols;
 using AppGet.Installers;
@@ -23,6 +21,7 @@ using AppGet.Installers.Nsis;
 using AppGet.Installers.Squirrel;
 using AppGet.Installers.Wix;
 using AppGet.Installers.Zip;
+using AppGet.Manifest;
 using AppGet.PackageRepository;
 using NLog;
 
@@ -38,7 +37,8 @@ namespace AppGet.Infrastructure.Composition
 
             container.AutoRegister(new[]
             {
-                typeof(ContainerBuilder).Assembly
+                typeof(ContainerBuilder).Assembly,
+                typeof(PackageManifest).Assembly
             });
             container.Register(logger);
 
@@ -57,13 +57,6 @@ namespace AppGet.Infrastructure.Composition
                 typeof(WindowsInstallerSearchCommandHandler),
                 typeof(UninstallCommandHandler),
                 typeof(CreateManifestCommandHandler)
-            });
-
-            container.RegisterMultiple<ICheckSum>(new[]
-            {
-                typeof(Sha256Hash),
-                typeof(Sha1Hash),
-                typeof(Md5Hash),
             });
 
             container.RegisterMultiple<IManifestPrompt>(new[]

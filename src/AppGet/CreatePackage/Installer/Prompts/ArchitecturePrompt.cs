@@ -1,7 +1,6 @@
 using AppGet.CommandLine.Prompts;
 using AppGet.Manifest;
 using AppGet.Manifest.Builder;
-using AppGet.Manifests;
 
 namespace AppGet.CreatePackage.Installer.Prompts
 {

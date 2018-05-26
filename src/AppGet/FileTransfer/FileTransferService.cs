@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using AppGet.Crypto.Hash;
-using AppGet.Manifest;
-using AppGet.Manifests;
 using AppGet.ProgressTracker;
 using NLog;
 

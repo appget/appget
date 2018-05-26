@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using AppGet.AppData;
-using AppGet.CreatePackage;
 using AppGet.FileSystem;
 using AppGet.FileTransfer;
 using AppGet.Manifest;

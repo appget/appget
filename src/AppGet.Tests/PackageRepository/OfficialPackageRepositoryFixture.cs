@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using AppGet.Manifest;
 using AppGet.PackageRepository;
 using FluentAssertions;
 using NUnit.Framework;
@@ -20,7 +21,7 @@ namespace AppGet.Tests.PackageRepository
             latest.Should().NotBeNull();
             latest.ManifestPath.Should().StartWith("https://raw.githubusercontent.com/appget/packages/master/manifests/");
             latest.Id.Should().Be(package);
-            latest.Tag.Should().Be("latest");
+            latest.Tag.Should().Be(PackageManifest.LATEST_TAG);
         }
 
 

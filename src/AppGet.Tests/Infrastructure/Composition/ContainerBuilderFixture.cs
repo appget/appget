@@ -3,7 +3,6 @@ using System.Linq;
 using AppGet.Commands;
 using AppGet.CreatePackage.Installer;
 using AppGet.CreatePackage.Root;
-using AppGet.Crypto.Hash;
 using AppGet.FileTransfer;
 using AppGet.Infrastructure.Composition;
 using AppGet.Installers;
@@ -31,7 +30,6 @@ namespace AppGet.Tests.Infrastructure.Composition
 
             Assert<ICommandHandler>();
             Assert<IInstallerWhisperer>();
-            Assert<ICheckSum>();
             Assert<IExtractToManifestRoot>();
             Assert<IManifestPrompt>();
             Assert<IInstallerPrompt>();
