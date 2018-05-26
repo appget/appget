@@ -1,4 +1,4 @@
-﻿namespace AppGet.Serialization
+﻿namespace AppGet.Manifest.Serialization
 {
     public static class JsonEquality
     {

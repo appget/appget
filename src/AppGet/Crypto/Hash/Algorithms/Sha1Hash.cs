@@ -1,4 +1,5 @@
 ﻿using System.Security.Cryptography;
+using AppGet.Manifest;
 using AppGet.Manifests;
 
 namespace AppGet.Crypto.Hash.Algorithms

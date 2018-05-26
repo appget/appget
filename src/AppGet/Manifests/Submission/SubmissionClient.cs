@@ -1,8 +1,8 @@
 ﻿using System.Net.Http;
 using System.Text;
-using AppGet.CreatePackage.ManifestBuilder;
 using AppGet.Http;
-using AppGet.Serialization;
+using AppGet.Manifest.Builder;
+using AppGet.Manifest.Serialization;
 
 namespace AppGet.Manifests.Submission
 {

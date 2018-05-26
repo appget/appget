@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Security.Cryptography;
+using AppGet.Manifest;
 using AppGet.Manifests;
 
 namespace AppGet.Crypto.Hash

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using AppGet.Crypto.Hash;
+using AppGet.Manifest;
 using AppGet.Manifests;
 using AppGet.ProgressTracker;
 using NLog;
@@ -11,7 +12,7 @@ namespace AppGet.FileTransfer
 {
     public interface IFileTransferService
     {
-        string TransferFile(string source, string destinationFolder, FileVerificationInfo fileVerificationInfo);
+        string TransferFile(string source, string destinationFolder, string sha256);
         string ReadContentAsync(string source);
     }
 
@@ -46,14 +47,14 @@ namespace AppGet.FileTransfer
             return client;
         }
 
-        public string TransferFile(string source, string destinationFolder, FileVerificationInfo fileVerificationInfo)
+        public string TransferFile(string source, string destinationFolder, string sha256)
         {
             _logger.Debug($"Transfering file from {source} to {destinationFolder}");
             var client = GetClient(source);
             var fileName = client.GetFileName(source);
             var destinationPath = Path.Combine(destinationFolder, fileName);
 
-            if (_transferCacheService.IsValid(destinationPath, fileVerificationInfo))
+            if (_transferCacheService.IsValid(destinationPath, sha256))
             {
                 _logger.Info("Skipping download. Using already downloaded file.");
             } else
@@ -66,12 +67,12 @@ namespace AppGet.FileTransfer
                 client.TransferFile(source, destinationPath);
                 _logger.Debug($"Installer downloaded to {destinationPath}");
 
-                if (fileVerificationInfo.HashValue == null)
+                if (sha256 == null)
                 {
                     _logger.Debug("No hash provided. skipping checksum validation");
                 } else
                 {
-                    _checksumService.ValidateHash(destinationPath, fileVerificationInfo);
+                    _checksumService.ValidateHash(destinationPath, sha256);
                 }
             }
 

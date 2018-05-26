@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using AppGet.Extensions;
-using AppGet.Manifests;
-using AppGet.Serialization;
+using AppGet.Manifest.Serialization;
 using Newtonsoft.Json;
 
-namespace AppGet.CreatePackage.ManifestBuilder
+namespace AppGet.Manifest.Builder
 {
     public enum Confidence
     {
@@ -47,14 +45,24 @@ namespace AppGet.CreatePackage.ManifestBuilder
         public PackageManifestBuilder()
         {
             Id = new ManifestAttribute<string>();
-            Name = new ManifestAttribute<string>(v => v?.CapitalLettersCount());
-            Version = new ManifestAttribute<string>(v => v?.PeriodCount());
+            Name = new ManifestAttribute<string>(v => CapitalLettersCount(v));
+            Version = new ManifestAttribute<string>(v => PeriodCount(v));
             Home = new ManifestAttribute<string>();
             Repo = new ManifestAttribute<string>();
             License = new ManifestAttribute<string>();
             InstallMethod = new ManifestAttribute<InstallMethodTypes>();
             Args = new ManifestAttribute<InstallArgs>();
             Installers = new List<InstallerBuilder>();
+        }
+
+        private static int CapitalLettersCount(string value = "")
+        {
+            return value.Count(char.IsUpper);
+        }
+
+        private static int PeriodCount(string value = "")
+        {
+            return value.Count(c => c == '.');
         }
 
 
@@ -96,9 +104,9 @@ namespace AppGet.CreatePackage.ManifestBuilder
             MinWindowsVersion = new ManifestAttribute<Version>();
         }
 
-        public Manifests.Installer Build()
+        public Manifest.Installer Build()
         {
-            return new Manifests.Installer
+            return new Manifest.Installer
             {
                 Location = Location,
                 Sha256 = Sha256,

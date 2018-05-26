@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 
-namespace AppGet.Serialization
+namespace AppGet.Manifest.Serialization
 {
     public static class Json
     {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using AppGet.CreatePackage.ManifestBuilder;
+using AppGet.Manifest.Builder;
 
 namespace AppGet.CreatePackage.Installer
 {

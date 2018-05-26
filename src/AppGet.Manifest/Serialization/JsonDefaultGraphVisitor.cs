@@ -5,7 +5,7 @@ using YamlDotNet.Core;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.ObjectGraphVisitors;
 
-namespace AppGet.Serialization
+namespace AppGet.Manifest.Serialization
 {
     public sealed class JsonDefaultGraphVisitor : ChainedObjectGraphVisitor
     {

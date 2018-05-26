@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using AppGet.Manifest;
 using AppGet.Manifests;
 using Newtonsoft.Json;
 

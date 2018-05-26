@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using AppGet.HostSystem;
+using AppGet.Manifest;
 using AppGet.Manifests;
 using AppGet.Processes;
 using NLog;

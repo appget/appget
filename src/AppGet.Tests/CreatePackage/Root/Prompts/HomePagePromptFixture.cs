@@ -1,7 +1,7 @@
 ﻿using AppGet.CommandLine.Prompts;
 using AppGet.CreatePackage;
-using AppGet.CreatePackage.ManifestBuilder;
 using AppGet.CreatePackage.Root.Prompts;
+using AppGet.Manifest.Builder;
 using FluentAssertions;
 using NUnit.Framework;
 

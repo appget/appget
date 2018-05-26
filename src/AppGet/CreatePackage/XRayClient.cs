@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
-using AppGet.CreatePackage.ManifestBuilder;
 using AppGet.Http;
+using AppGet.Manifest.Builder;
 using NLog;
 
 namespace AppGet.CreatePackage

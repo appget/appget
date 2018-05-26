@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using AppGet.Serialization;
+using AppGet.Manifest.Serialization;
 
 namespace AppGet.Http
 {

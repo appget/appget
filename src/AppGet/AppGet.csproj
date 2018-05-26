@@ -86,27 +86,14 @@
       <HintPath>..\packages\SharpRaven.2.4.0\lib\net45\SharpRaven.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Transactions" />
-    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="WindowsInput, Version=1.0.6.0, Culture=neutral, PublicKeyToken=de2685b4776e9c2e, processorArchitecture=MSIL">
       <HintPath>..\packages\InputSimulatorPlus.1.0.7\lib\net20\WindowsInput.dll</HintPath>
-    </Reference>
-    <Reference Include="YamlDotNet, Version=4.3.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\YamlDotNet.4.3.1\lib\net45\YamlDotNet.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -137,9 +124,6 @@
     <Compile Include="Commands\Uninstall\PackageNotInstalledException.cs" />
     <Compile Include="CreatePackage\Installer\IInstallerPrompt.cs" />
     <Compile Include="CreatePackage\Installer\Prompts\ArchitecturePrompt.cs" />
-    <Compile Include="CreatePackage\ManifestBuilder\ManifestAttribute.cs" />
-    <Compile Include="CreatePackage\ManifestBuilder\ManifestAttributeCandidate.cs" />
-    <Compile Include="CreatePackage\ManifestBuilder\PackageManifestBuilder.cs" />
     <Compile Include="CreatePackage\ManifestComposer.cs" />
     <Compile Include="CreatePackage\Installer\BuildInstaller.cs" />
     <Compile Include="CreatePackage\Installer\Prompts\MinWindowsVersionPrompt.cs" />
@@ -192,14 +176,7 @@
     <Compile Include="Installers\Wix\WixWhisperer.cs" />
     <Compile Include="Installers\Custom\CustomWhisperer.cs" />
     <Compile Include="Installers\Squirrel\SquirrelWhisperer.cs" />
-    <Compile Include="Manifests\ArchitectureTypes.cs" />
-    <Compile Include="Manifests\FileVerificationInfo.cs" />
-    <Compile Include="Manifests\HashTypes.cs" />
-    <Compile Include="Manifests\InstallMethodTypes.cs" />
-    <Compile Include="Manifests\WindowsVersion.cs" />
-    <Compile Include="Manifests\PackageManifestService.cs" />
     <Compile Include="Exceptions\AppGetException.cs" />
-    <Compile Include="Manifests\PackageManifest.cs" />
     <Compile Include="HostSystem\PathResolver.cs" />
     <Compile Include="Http\GZipWebClient.cs">
       <SubType>Component</SubType>
@@ -223,13 +200,14 @@
     <Compile Include="Commands\OptionException.cs" />
     <Compile Include="Commands\OptionsParser.cs" />
     <Compile Include="Commands\ViewManifest\ViewManifestOptions.cs" />
+    <Compile Include="Manifests\FindInstaller.cs" />
+    <Compile Include="Manifests\PackageManifestService.cs" />
     <Compile Include="Manifests\Submission\SubmissionClient.cs" />
     <Compile Include="PackageRepository\AggregateRepository.cs" />
     <Compile Include="PackageRepository\FileSystemPackageRepository.cs" />
     <Compile Include="PackageRepository\OfficialPackageRepository.cs" />
     <Compile Include="PackageRepository\IPackageRepository.cs" />
     <Compile Include="PackageRepository\PackageInfo.cs" />
-    <Compile Include="Manifests\FindInstaller.cs" />
     <Compile Include="PackageRepository\PackageNotFoundException.cs" />
     <Compile Include="PackageSearch\PackageSearchService.cs" />
     <Compile Include="Processes\ProcessController.cs" />
@@ -241,12 +219,6 @@
     <Compile Include="Infrastructure\Composition\TinyIoC.cs" />
     <Compile Include="Requirements\InstallerCompatibility.cs" />
     <Compile Include="Requirements\Specifications\OsArchitectureSpecification.cs" />
-    <Compile Include="Serialization\Json.cs" />
-    <Compile Include="Serialization\JsonComparator.cs" />
-    <Compile Include="Serialization\JsonDefaultGraphVisitor.cs" />
-    <Compile Include="Serialization\JsonEquality.cs" />
-    <Compile Include="Serialization\VersionConverter.cs" />
-    <Compile Include="Serialization\Yaml.cs" />
     <Compile Include="Requirements\IEnforceRequirements.cs" />
     <Compile Include="Requirements\Specifications\MinOsVersionSpecification.cs" />
     <Compile Include="Update\AppGetRelease.cs" />
@@ -264,7 +236,15 @@
   <ItemGroup>
     <Content Include="appet.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\AppGet.Manifest\AppGet.Manifest.csproj">
+      <Project>{ac981e7d-75f6-4fad-8f99-de0a66cce463}</Project>
+      <Name>AppGet.Manifest</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CreatePackage\ManifestBuilder\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

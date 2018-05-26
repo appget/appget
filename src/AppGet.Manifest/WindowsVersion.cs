@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AppGet.Manifests
+namespace AppGet.Manifest
 {
     public static class WindowsVersion
     {

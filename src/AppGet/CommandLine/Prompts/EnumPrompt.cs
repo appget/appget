@@ -8,7 +8,8 @@ namespace AppGet.CommandLine.Prompts
     {
         protected override bool Convert(string input, out T result)
         {
-            throw new NotImplementedException();
+            result = default(T);
+            return false;
         }
 
         protected override List<T> Options => Enum.GetValues(typeof(T)).Cast<T>().ToList();

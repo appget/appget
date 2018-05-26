@@ -1,4 +1,4 @@
-﻿namespace AppGet.Manifests
+﻿namespace AppGet.Manifest
 {
     public enum ArchitectureTypes
     {

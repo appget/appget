@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 
-namespace AppGet.Serialization
+namespace AppGet.Manifest.Serialization
 {
     public class JsonComparator<T> : IEqualityComparer<T>
     {
-        public static readonly IEqualityComparer<T> Comparator = new JsonComparator<T>();
-
         public bool Equals(T x, T y)
         {
             return JsonEquality.Equal(x, y);

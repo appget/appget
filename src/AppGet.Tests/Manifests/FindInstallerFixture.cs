@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using AppGet.Manifest;
 using AppGet.Manifests;
 using AppGet.Requirements;
 using FluentAssertions;

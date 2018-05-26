@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using AppGet.Exceptions;
+using AppGet.Manifest;
 using AppGet.Manifests;
 
 namespace AppGet.Installers

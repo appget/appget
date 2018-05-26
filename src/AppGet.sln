@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppGet", "AppGet\AppGet.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppGet.Tests", "AppGet.Tests\AppGet.Tests.csproj", "{1BC812FD-E91C-4278-9224-3678DAEB66AA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppGet.Manifest", "AppGet.Manifest\AppGet.Manifest.csproj", "{AC981E7D-75F6-4FAD-8F99-DE0A66CCE463}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,14 @@ Global
 		{1BC812FD-E91C-4278-9224-3678DAEB66AA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1BC812FD-E91C-4278-9224-3678DAEB66AA}.Release|x86.ActiveCfg = Release|x86
 		{1BC812FD-E91C-4278-9224-3678DAEB66AA}.Release|x86.Build.0 = Release|x86
+		{AC981E7D-75F6-4FAD-8F99-DE0A66CCE463}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC981E7D-75F6-4FAD-8F99-DE0A66CCE463}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC981E7D-75F6-4FAD-8F99-DE0A66CCE463}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AC981E7D-75F6-4FAD-8F99-DE0A66CCE463}.Debug|x86.Build.0 = Debug|Any CPU
+		{AC981E7D-75F6-4FAD-8F99-DE0A66CCE463}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC981E7D-75F6-4FAD-8F99-DE0A66CCE463}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC981E7D-75F6-4FAD-8F99-DE0A66CCE463}.Release|x86.ActiveCfg = Release|Any CPU
+		{AC981E7D-75F6-4FAD-8F99-DE0A66CCE463}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

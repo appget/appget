@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using AppGet.FileSystem;
 using AppGet.HostSystem;
-using AppGet.Serialization;
+using AppGet.Manifest.Serialization;
 using Newtonsoft.Json;
 
 namespace AppGet.AppData

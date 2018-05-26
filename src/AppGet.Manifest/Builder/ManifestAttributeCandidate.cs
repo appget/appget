@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace AppGet.CreatePackage.ManifestBuilder
+namespace AppGet.Manifest.Builder
 {
     [DebuggerDisplay("{Value} [{Source}:{Confidence}]")]
     public class ManifestAttributeCandidate<T>

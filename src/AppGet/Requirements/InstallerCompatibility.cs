@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using AppGet.Manifest;
 using AppGet.Manifests;
 
 namespace AppGet.Requirements

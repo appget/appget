@@ -3,7 +3,7 @@ using System.IO;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace AppGet.Serialization
+namespace AppGet.Manifest.Serialization
 {
     public static class Yaml
     {

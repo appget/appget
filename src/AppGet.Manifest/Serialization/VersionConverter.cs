@@ -4,7 +4,7 @@ using YamlDotNet.Core.Events;
 using YamlDotNet.Serialization;
 using Version = System.Version;
 
-namespace AppGet.Serialization
+namespace AppGet.Manifest.Serialization
 {
     public class VersionConverter : IYamlTypeConverter
     {

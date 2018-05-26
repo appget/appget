@@ -96,6 +96,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AppGet.Manifest\AppGet.Manifest.csproj">
+      <Project>{AC981E7D-75F6-4FAD-8F99-DE0A66CCE463}</Project>
+      <Name>AppGet.Manifest</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AppGet\AppGet.csproj">
       <Project>{0DF5E722-8458-4963-9285-E80D0AD98027}</Project>
       <Name>AppGet</Name>

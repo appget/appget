@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using Newtonsoft.Json;
 
-namespace AppGet.CreatePackage.ManifestBuilder
+namespace AppGet.Manifest.Builder
 {
     [DebuggerDisplay("{Value} [{Values.Count}]")]
     public class ManifestAttribute<T>

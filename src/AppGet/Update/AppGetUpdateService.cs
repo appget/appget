@@ -4,6 +4,7 @@ using System.Reflection;
 using AppGet.Commands.Install;
 using AppGet.Github.Releases;
 using AppGet.Installers;
+using AppGet.Manifest;
 using AppGet.Manifests;
 using NLog;
 

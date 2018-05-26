@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using AppGet.Exceptions;
+using AppGet.Manifest;
 using AppGet.Manifests;
 
 namespace AppGet.PackageRepository

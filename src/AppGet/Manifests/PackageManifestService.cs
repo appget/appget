@@ -2,10 +2,11 @@
 using System.IO;
 using AppGet.AppData;
 using AppGet.CreatePackage;
-using AppGet.CreatePackage.ManifestBuilder;
 using AppGet.FileSystem;
 using AppGet.FileTransfer;
-using AppGet.Serialization;
+using AppGet.Manifest;
+using AppGet.Manifest.Builder;
+using AppGet.Manifest.Serialization;
 using NLog;
 
 namespace AppGet.Manifests

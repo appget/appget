@@ -4,6 +4,7 @@ using AppGet.Commands.Install;
 using AppGet.FileTransfer;
 using AppGet.HostSystem;
 using AppGet.InstalledPackages;
+using AppGet.Manifest;
 using AppGet.Manifests;
 using NLog;
 
@@ -41,7 +42,7 @@ namespace AppGet.Installers
             var whisperer = _installWhisperers.Single(c => c.CanHandle(packageManifest.InstallMethod));
 
             var installer = _findInstaller.GetBestInstaller(packageManifest.Installers);
-            var installerPath = _fileTransferService.TransferFile(installer.Location, _pathResolver.TempFolder, installer.GetFileHash());
+            var installerPath = _fileTransferService.TransferFile(installer.Location, _pathResolver.TempFolder, installer.Sha256);
             _installTracker.TakeSnapshot();
 
             whisperer.Install(installerPath, packageManifest, installOptions);

@@ -1,5 +1,6 @@
 ﻿using AppGet.Crypto.Hash;
 using AppGet.FileSystem;
+using AppGet.Manifest;
 using AppGet.Manifests;
 using NLog;
 
@@ -7,7 +8,7 @@ namespace AppGet.FileTransfer
 {
     public interface ITransferCacheService
     {
-        bool IsValid(string path, FileVerificationInfo verificationInfo);
+        bool IsValid(string path, string sha256);
     }
 
     public class TransferCacheService : ITransferCacheService
@@ -23,27 +24,16 @@ namespace AppGet.FileTransfer
             _logger = logger;
         }
 
-        public bool IsValid(string path, FileVerificationInfo verificationInfo)
+        public bool IsValid(string path, string sha256)
         {
-            if (string.IsNullOrWhiteSpace(verificationInfo?.HashValue) || !_fileSystem.FileExists(path))
+            if (string.IsNullOrWhiteSpace(sha256))
             {
                 return false;
             }
 
-            if (verificationInfo.FileSize > 0)
-            {
-                var size = _fileSystem.GetFileSize(path);
-                if (size != verificationInfo.FileSize)
-                {
-                    _logger.Warn("File size miss-match. ignoring cache");
-
-                    return false;
-                }
-            }
-
             try
             {
-                _checksumService.ValidateHash(path, verificationInfo);
+                _checksumService.ValidateHash(path, sha256);
                 _logger.Debug($"Installer is already downloaded: {path}");
 
                 return true;

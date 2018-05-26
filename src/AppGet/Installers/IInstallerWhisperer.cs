@@ -1,4 +1,5 @@
 using AppGet.Commands.Install;
+using AppGet.Manifest;
 using AppGet.Manifests;
 
 namespace AppGet.Installers

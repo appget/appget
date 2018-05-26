@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AppGet.Manifest;
 using AppGet.Manifests;
 
 namespace AppGet.CommandLine.Prompts
@@ -11,12 +12,13 @@ namespace AppGet.CommandLine.Prompts
 
         protected override bool Convert(string input, out Version result)
         {
-            throw new NotImplementedException();
+            result = null;
+            return false;
         }
 
         protected override string OptionString(Version option)
         {
-            return WindowsVersion.ToDesktopName(option);
+            return $"{WindowsVersion.ToDesktopName(option)} / {WindowsVersion.ToServerName(option)}";
         }
     }
 }

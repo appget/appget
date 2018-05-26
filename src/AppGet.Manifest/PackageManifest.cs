@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace AppGet.Manifests
+namespace AppGet.Manifest
 {
     [DebuggerDisplay("{" + nameof(Id) + "} " + "{" + nameof(Version) + "}")]
     public class PackageManifest
@@ -41,48 +41,9 @@ namespace AppGet.Manifests
     public class Installer
     {
         public string Location { get; set; }
-        public string ZipSubDir { get; set; }
-
-        public string Sha1 { get; set; }
         public string Sha256 { get; set; }
-        public string Md5 { get; set; }
-
         public ArchitectureTypes Architecture { get; set; }
 
         public Version MinWindowsVersion { get; set; }
-
-        public List<string> ProductIds { get; set; }
-
-        public FileVerificationInfo GetFileHash()
-        {
-            if (!string.IsNullOrEmpty(Sha256))
-            {
-                return new FileVerificationInfo
-                {
-                    HashType = HashTypes.Sha256,
-                    HashValue = Sha256
-                };
-            }
-
-            if (!string.IsNullOrEmpty(Sha1))
-            {
-                return new FileVerificationInfo
-                {
-                    HashType = HashTypes.Sha1,
-                    HashValue = Sha1
-                };
-            }
-
-            if (!string.IsNullOrEmpty(Md5))
-            {
-                return new FileVerificationInfo
-                {
-                    HashType = HashTypes.Md5,
-                    HashValue = Md5
-                };
-            }
-
-            return new FileVerificationInfo();
-        }
     }
 }

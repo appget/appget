@@ -3,8 +3,9 @@ using System.IO;
 using System.Linq;
 using AppGet.AppData;
 using AppGet.FileSystem;
+using AppGet.Manifest;
+using AppGet.Manifest.Serialization;
 using AppGet.Manifests;
-using AppGet.Serialization;
 
 namespace AppGet.PackageRepository
 {

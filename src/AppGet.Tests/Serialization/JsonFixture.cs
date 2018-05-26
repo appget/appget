@@ -1,5 +1,5 @@
 ﻿using System;
-using AppGet.Serialization;
+using AppGet.Manifest.Serialization;
 using FluentAssertions;
 using NUnit.Framework;
 

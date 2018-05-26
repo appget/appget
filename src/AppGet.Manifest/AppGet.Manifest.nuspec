@@ -1,0 +1,12 @@
+﻿<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>AppGet.Manifest</id>
+    <version>$version$</version>
+    <title>AppGet.Manifest</title>
+    <projectUrl>https://github.com/appget/appget</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <language>en-US</language>
+    <copyright>Copyright © 2018</copyright>
+  </metadata>
+</package>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AppGet.Manifest;
 using AppGet.Manifests;
 using NLog;
 
@@ -8,7 +9,7 @@ namespace AppGet.Crypto.Hash
 {
     public interface IChecksumService
     {
-        void ValidateHash(string path, FileVerificationInfo fileVerificationInfo);
+        void ValidateHash(string path, string sha256);
     }
 
     public class ChecksumService : IChecksumService
@@ -22,20 +23,20 @@ namespace AppGet.Crypto.Hash
             _logger = logger;
         }
 
-        public void ValidateHash(string path, FileVerificationInfo fileVerificationInfo)
+        public void ValidateHash(string path, string sha256)
         {
             _logger.Trace("Starting checksum verification");
 
-            var hashAlg = _checkSums.Single(c => c.HashType == fileVerificationInfo.HashType);
+            var hashAlg = _checkSums.Single(c => c.HashType == HashTypes.Sha256);
 
             var hash = hashAlg.CalculateHash(path);
 
-            if (!string.Equals(hash, fileVerificationInfo.HashValue, StringComparison.OrdinalIgnoreCase))
+            if (!string.Equals(hash, sha256, StringComparison.OrdinalIgnoreCase))
             {
-                _logger.Warn($"Checksum verification failed for {path}. File: {hash}  Manifest:{fileVerificationInfo.HashValue}");
+                _logger.Warn($"Checksum verification failed for {path}. File: {hash}  Manifest:{sha256}");
 
                 throw new ChecksumVerificationException(
-                    $"{fileVerificationInfo.HashType.ToString().ToUpperInvariant()} Checksum verification failed for {path}.");
+                    $"SHA256 Checksum verification failed for {path}.");
             }
 
             _logger.Info("Checksum verification PASSED");
