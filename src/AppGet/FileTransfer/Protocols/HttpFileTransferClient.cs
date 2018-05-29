@@ -106,7 +106,7 @@ namespace AppGet.FileTransfer.Protocols
 
         public string ReadString(string source)
         {
-            var req = new HttpRequestMessage(HttpMethod.Get, source);
+            var req = new HttpRequestMessage(HttpMethod.Get, $"{source}?cache={DateTime.Now.Ticks}");
             req.Headers.CacheControl = new CacheControlHeaderValue
             {
                 NoCache = true,
