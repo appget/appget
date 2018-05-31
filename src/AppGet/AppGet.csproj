@@ -153,6 +153,7 @@
     <Compile Include="Github\GithubKeys.cs" />
     <Compile Include="Installers\ExistReason.cs" />
     <Compile Include="Installers\ExitCodeTypes.cs" />
+    <Compile Include="Installers\AdvancedInstaller\AdvancedInstallerWhisperer.cs" />
     <Compile Include="Installers\InstallBuilder\InstallBuilderWhisperer.cs" />
     <Compile Include="Installers\InstallerException.cs" />
     <Compile Include="Extensions\UriExtensions.cs" />

@@ -11,6 +11,7 @@
         InstallShield,
         NSIS,
         InstallBuilder,
+        AdvancedInstaller,
         Squirrel
     }
 }
