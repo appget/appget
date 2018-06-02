@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AppGet.Http;
 using AppGet.Update;
+using CommandLine;
 using NLog;
 
 namespace AppGet.Github.Releases
 {
     public interface IReleaseClient
     {
-        List<AppGetRelease> GetReleases();
+        Task<List<AppGetRelease>> GetReleases();
     }
 
     public class GitHubReleaseClient : IReleaseClient
@@ -23,20 +25,29 @@ namespace AppGet.Github.Releases
             _logger = logger;
         }
 
-        public List<AppGetRelease> GetReleases()
+        public async Task<List<AppGetRelease>> GetReleases()
         {
-            _logger.Trace("Checking for AppGet updates...");
-            var uri = new Uri($"https://api.github.com/repos/appget/appget/releases?{GithubKeys.AuthQuery}&no_cache={Guid.NewGuid()}");
-            var response = _httpClient.Get(uri);
-            var releases = response.AsResource<List<GithubRelease>>();
-            _logger.Trace($"Found {releases.Count} releases");
+            try
+            {
+                _logger.Trace("Checking for AppGet updates...");
+                var uri = new Uri($"https://api.github.com/repos/appget/appget/releases?{GithubKeys.AuthQuery}&no_cache={Guid.NewGuid()}");
+                var response = await _httpClient.GetAsync(uri);
+                var releases = response.AsResource<List<GithubRelease>>();
+                _logger.Trace($"Found {releases.Count} releases");
 
-            return releases.Select(c => new AppGetRelease
+                return releases.Select(c => new AppGetRelease
                 {
                     Url = c.Assets.Single(a => a.browser_download_url.EndsWith(".exe")).browser_download_url,
                     Version = new Version(c.tag_name)
                 })
-                .ToList();
+                    .ToList();
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, "Update check failed.");
+            }
+
+            return new List<AppGetRelease>();
         }
     }
 }

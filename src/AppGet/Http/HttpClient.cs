@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace AppGet.Http
 {
     public interface IHttpClient
     {
         HttpResponseMessage Send(HttpRequestMessage request, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead);
+        Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead);
         HttpResponseMessage Get(Uri uri, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead);
+        Task<HttpResponseMessage> GetAsync(Uri uri, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead);
     }
 
     public class HttpClient : IHttpClient
@@ -29,12 +32,18 @@ namespace AppGet.Http
 
         public HttpResponseMessage Send(HttpRequestMessage request, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead)
         {
+            return SendAsync(request, completionOption).Result;
+        }
+
+
+        public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead)
+        {
             if (request.RequestUri.Host.EndsWith(".appget.net"))
             {
                 request.Headers.Add("User-Agent", _userAgentBuilder.GetUserAgent());
             }
 
-            var response = _client.SendAsync(request, completionOption).Result;
+            var response = await _client.SendAsync(request, completionOption);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -47,6 +56,11 @@ namespace AppGet.Http
         public HttpResponseMessage Get(Uri uri, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead)
         {
             return Send(new HttpRequestMessage(HttpMethod.Get, uri), completionOption);
+        }
+
+        public Task<HttpResponseMessage> GetAsync(Uri uri, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead)
+        {
+            return SendAsync(new HttpRequestMessage(HttpMethod.Get, uri), completionOption);
         }
     }
 }

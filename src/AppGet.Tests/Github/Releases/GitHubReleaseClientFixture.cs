@@ -12,7 +12,7 @@ namespace AppGet.Tests.Github.Releases
         {
             WithRealHttp();
 
-            var release =  Subject.GetReleases();
+            var release =  Subject.GetReleases().Result;
 
             release.Should().NotBeEmpty();
             release[0].Version.Should().NotBeNull();

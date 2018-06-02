@@ -12,6 +12,7 @@ using AppGet.CreatePackage.Root.Prompts;
 using AppGet.FileTransfer;
 using AppGet.FileTransfer.Protocols;
 using AppGet.Installers;
+using AppGet.Installers.AdvancedInstaller;
 using AppGet.Installers.Custom;
 using AppGet.Installers.Inno;
 using AppGet.Installers.InstallBuilder;
@@ -86,6 +87,7 @@ namespace AppGet.Infrastructure.Composition
                 typeof(WixWhisperer),
                 typeof(NsisWhisperer),
                 typeof(SquirrelWhisperer),
+                typeof(AdvancedInstallerWhisperer),
                 typeof(ZipWhisperer),
             });
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using AppGet.Commands.Install;
 using AppGet.Github.Releases;
 using AppGet.Installers;
@@ -20,7 +21,7 @@ namespace AppGet.Update
         private readonly IReleaseClient _releaseClient;
         private readonly IInstallService _installService;
         private readonly Logger _logger;
-        private List<AppGetRelease> _releaseTask;
+        private Task<List<AppGetRelease>> _releaseTask;
 
         public AppGetUpdateService(IReleaseClient releaseClient, IInstallService installService, Logger logger)
         {
@@ -36,7 +37,7 @@ namespace AppGet.Update
 
         public void Commit()
         {
-            var releases = _releaseTask;
+            var releases = _releaseTask.Result;
             var latest = releases.OrderByDescending(c => c.Version).First();
             var current = Assembly.GetEntryAssembly().GetName().Version;
 
