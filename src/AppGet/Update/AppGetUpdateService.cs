@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -37,37 +38,44 @@ namespace AppGet.Update
 
         public void Commit()
         {
-            var releases = _releaseTask.Result;
-            var latest = releases.OrderByDescending(c => c.Version).First();
-            var current = Assembly.GetEntryAssembly().GetName().Version;
-
-            _logger.Trace($"AppGet update status:  Current: {current}    Latest: {latest.Version}");
-
-            if (latest.Version <= current) return;
-
-            _logger.Info("There is an update avilable for AppGet client. Applying update...");
-
-            var manifest = new PackageManifest
+            try
             {
-                Id = "AppGet",
-                InstallMethod = InstallMethodTypes.Inno,
-                Name = "AppGet",
-                Version = latest.Version.ToString(),
-                Home = "https://appget.net/",
-                Installers = new List<Installer>
+                var releases = _releaseTask.Result;
+                var latest = releases.OrderByDescending(c => c.Version).First();
+                var current = Assembly.GetEntryAssembly().GetName().Version;
+
+                _logger.Trace($"AppGet update status:  Current: {current}    Latest: {latest.Version}");
+
+                if (latest.Version <= current) return;
+
+                _logger.Info("There is an update avilable for AppGet client. Applying update...");
+
+                var manifest = new PackageManifest
                 {
-                    new Installer
+                    Id = "AppGet",
+                    InstallMethod = InstallMethodTypes.Inno,
+                    Name = "AppGet",
+                    Version = latest.Version.ToString(),
+                    Home = "https://appget.net/",
+                    Installers = new List<Installer>
                     {
-                        Location = latest.Url
+                        new Installer
+                        {
+                            Location = latest.Url
+                        }
                     }
-                }
-            };
+                };
 
-            _installService.Install(manifest, new InstallOptions
+                _installService.Install(manifest, new InstallOptions
+                {
+                    Force = true,
+                    Package = manifest.Id
+                });
+            }
+            catch (Exception e)
             {
-                Force = true,
-                Package = manifest.Id
-            });
+                _logger.Fatal(e, "AppGet update failed");
+            }
         }
     }
 }

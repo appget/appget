@@ -30,6 +30,7 @@ namespace AppGet
 
         private static int Run(string[] args)
         {
+            IAppGetUpdateService updatedService = null;
             try
             {
                 if (Debugger.IsAttached && !args.Any())
@@ -41,7 +42,7 @@ namespace AppGet
 
                 var container = ContainerBuilder.Build();
 
-                var updatedService = container.Resolve<IAppGetUpdateService>();
+                updatedService = container.Resolve<IAppGetUpdateService>();
                 updatedService.Start();
 
                 var optionsService = container.Resolve<IParseOptions>();
@@ -61,8 +62,6 @@ namespace AppGet
 
                 var commandExecutor = container.Resolve<ICommandExecutor>();
                 commandExecutor.ExecuteCommand(options);
-
-                updatedService.Commit();
 
                 return 0;
             }
@@ -100,6 +99,10 @@ namespace AppGet
                 Logger.Fatal(ex, null);
 
                 return 1;
+            }
+            finally
+            {
+                updatedService?.Commit();
             }
         }
 
