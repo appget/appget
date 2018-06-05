@@ -29,6 +29,12 @@ namespace AppGet.FileTransfer
                 return false;
             }
 
+            if (!_fileSystem.FileExists(path))
+            {
+                _logger.Debug($"No existing download was found");
+                return false;
+            }
+
             try
             {
                 _checksumService.ValidateHash(path, sha256);

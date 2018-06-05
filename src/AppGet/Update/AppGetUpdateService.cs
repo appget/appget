@@ -41,7 +41,7 @@ namespace AppGet.Update
             var latest = releases.OrderByDescending(c => c.Version).First();
             var current = Assembly.GetEntryAssembly().GetName().Version;
 
-            _logger.Trace($"Update Status.  Current: {current}    Latest: {latest.Version}");
+            _logger.Trace($"AppGet update status:  Current: {current}    Latest: {latest.Version}");
 
             if (latest.Version <= current) return;
 

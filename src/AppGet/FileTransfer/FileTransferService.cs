@@ -55,7 +55,8 @@ namespace AppGet.FileTransfer
             if (_transferCacheService.IsValid(destinationPath, sha256))
             {
                 _logger.Info("Skipping download. Using already downloaded file.");
-            } else
+            }
+            else
             {
                 client.OnStatusUpdated = ConsoleProgressReporter.HandleProgress;
                 client.OnCompleted = ConsoleProgressReporter.HandleCompleted;
@@ -68,7 +69,8 @@ namespace AppGet.FileTransfer
                 if (sha256 == null)
                 {
                     _logger.Debug("No hash provided. skipping checksum validation");
-                } else
+                }
+                else
                 {
                     _checksumService.ValidateHash(destinationPath, sha256);
                 }

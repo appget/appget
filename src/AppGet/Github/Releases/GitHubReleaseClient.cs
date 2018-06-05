@@ -33,7 +33,7 @@ namespace AppGet.Github.Releases
                 var uri = new Uri($"https://api.github.com/repos/appget/appget/releases?{GithubKeys.AuthQuery}&no_cache={Guid.NewGuid()}");
                 var response = await _httpClient.GetAsync(uri);
                 var releases = response.AsResource<List<GithubRelease>>();
-                _logger.Trace($"Found {releases.Count} releases");
+                _logger.Trace($"Found {releases.Count} AppGet releases");
 
                 return releases.Select(c => new AppGetRelease
                 {
