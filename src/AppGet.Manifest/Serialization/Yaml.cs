@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.IO;
+using System.Text.RegularExpressions;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
@@ -13,7 +14,10 @@ namespace AppGet.Manifest.Serialization
             .IgnoreUnmatchedProperties()
             .Build();
 
-        public static string Serialize(object obj)
+
+        private static readonly Regex YamlEmptyArray = new Regex(@"\W*\w+:\W*\[\]\W*$", RegexOptions.Compiled);
+
+        public static string Serialize(object obj, bool ignoreEmptyArrays = false)
         {
             using (var textWriter = new StringWriter(CultureInfo.InvariantCulture))
             {
@@ -23,7 +27,14 @@ namespace AppGet.Manifest.Serialization
                     .WithEmissionPhaseObjectGraphVisitor(args => new YamlDefaultGraphVisitor(args.InnerVisitor))
                     .DisableAliases()
                     .Build().Serialize(textWriter, obj);
-                return textWriter.ToString();
+                var yaml = textWriter.ToString();
+
+                if (ignoreEmptyArrays)
+                {
+                    yaml = YamlEmptyArray.Replace(yaml, "");
+                }
+
+                return yaml;
             }
         }
 
