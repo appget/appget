@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using AppGet.ProgressTracker;
 
@@ -35,7 +36,14 @@ namespace AppGet.FileTransfer.Protocols
         {
             using (var reader = File.OpenText(source))
             {
-                return reader.ReadToEndAsync().Result;
+                try
+                {
+                    return reader.ReadToEndAsync().Result;
+                }
+                catch (AggregateException e)
+                {
+                    throw e.Flatten().InnerExceptions.First();
+                }
             }
         }
 

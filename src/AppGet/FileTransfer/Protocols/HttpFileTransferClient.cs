@@ -115,7 +115,7 @@ namespace AppGet.FileTransfer.Protocols
 
             var resp = _httpClient.Send(req);
 
-            return resp.Content.ReadAsStringAsync().Result;
+            return resp.Content.ReadAsString();
         }
 
         public Action<ProgressState> OnStatusUpdated { get; set; }
