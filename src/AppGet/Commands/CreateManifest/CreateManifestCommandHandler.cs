@@ -82,7 +82,6 @@ namespace AppGet.Commands.CreateManifest
                     _logger.Info("Thank you for your submission.");
                     _logger.Info("");
                     _logger.Info("Your pull-request: " + resp.PullRequestUrl);
-                    _logger.Info(Yaml.Serialize(resp, true));
                 }
                 catch (Exception e)
                 {

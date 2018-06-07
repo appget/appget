@@ -89,7 +89,8 @@ namespace AppGet.Manifest.Builder
 
                 InstallMethod = InstallMethod.Value,
                 Installers = Installers.Select(c => c.Build()).OrderBy(c => c.Architecture).ToList(),
-                Args = args
+                Args = args,
+                Tag = Tag
             };
         }
     }
