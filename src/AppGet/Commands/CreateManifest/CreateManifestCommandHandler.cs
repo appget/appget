@@ -3,6 +3,7 @@ using System.Linq;
 using AppGet.CommandLine.Prompts;
 using AppGet.CreatePackage;
 using AppGet.CreatePackage.Installer;
+using AppGet.Manifest.Serialization;
 using AppGet.Manifests;
 using AppGet.Manifests.Submission;
 using NLog;
@@ -80,7 +81,8 @@ namespace AppGet.Commands.CreateManifest
                     var resp = _submissionClient.Submit(manifestBuilder);
                     _logger.Info("Thank you for your submission.");
                     _logger.Info("");
-                    _logger.Info("Your pull-request: " + resp.PullRequest);
+                    _logger.Info("Your pull-request: " + resp.PullRequestUrl);
+                    _logger.Info(Yaml.Serialize(resp, true));
                 }
                 catch (Exception e)
                 {
