@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using AppGet.AppData;
+using AppGet.CommandLine;
 using AppGet.Commands;
 using AppGet.Exceptions;
 using AppGet.Infrastructure.Composition;
@@ -73,11 +74,8 @@ namespace AppGet
                 {
                     Console.WriteLine("");
                     Console.WriteLine("Suggestions:");
-
-                    foreach (var pkg in e.Similar)
-                    {
-                        Console.WriteLine($"    {pkg}");
-                    }
+                    Console.WriteLine("");
+                    Printers.Print(e.Similar);
                 }
 
                 return 1;

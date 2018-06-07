@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using AppGet.CommandLine;
 using AppGet.PackageRepository;
 using NLog;
 
@@ -25,12 +27,12 @@ namespace AppGet.PackageSearch
             var results = _packageRepository.Search(query);
 
             _logger.Info("Found {0} package(s)", results.Count);
+
+            if (!results.Any()) return;
+
             Console.WriteLine();
 
-            foreach (var package in results)
-            {
-                Console.WriteLine($" {package}");
-            }
+            Printers.Print(results);
         }
     }
 }
