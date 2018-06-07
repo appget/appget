@@ -73,6 +73,16 @@ namespace AppGet.Infrastructure.Logging
                 ForegroundColor = ConsoleOutputColor.DarkRed
             });
 
+            // package:tag
+            consoleTarget.WordHighlightingRules.Add(new ConsoleWordHighlightingRule
+            {
+                Regex = @"[a-z0-9]{2,}\:[a-z0-9\.]+",
+                WholeWords = true,
+                CompileRegex = true,
+                IgnoreCase = false,
+                ForegroundColor = ConsoleOutputColor.Green
+            });
+
             consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Info", ConsoleOutputColor.NoChange,
                 ConsoleOutputColor.NoChange));
 

@@ -37,7 +37,7 @@ namespace AppGet.Installers
 
         public void Install(PackageManifest packageManifest, InstallOptions installOptions)
         {
-            _logger.Info("Beginning installation of [{0}] {1}", packageManifest.Id, packageManifest.Name);
+            _logger.Info("Beginning installation of '{0}'", packageManifest.Name ?? packageManifest.Id);
 
             var whisperer = _installWhisperers.Single(c => c.CanHandle(packageManifest.InstallMethod));
 
@@ -47,7 +47,7 @@ namespace AppGet.Installers
 
             whisperer.Install(installerPath, packageManifest, installOptions);
 
-            _logger.Info("Installation completed for [{0}] {1}", packageManifest.Id, packageManifest.Name);
+            _logger.Info("Installation completed for '{0}'", packageManifest.Name ?? packageManifest.Id);
         }
     }
 }
