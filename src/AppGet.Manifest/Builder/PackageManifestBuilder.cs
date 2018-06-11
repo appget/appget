@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Policy;
 using AppGet.Manifest.Serialization;
 using Newtonsoft.Json;
 
@@ -110,6 +111,16 @@ namespace AppGet.Manifest.Builder
         {
             Architecture = new ManifestAttribute<ArchitectureTypes>();
             MinWindowsVersion = new ManifestAttribute<Version>();
+        }
+
+        public InstallerBuilder(string location) : this()
+        {
+            Location = location;
+        }
+
+        public InstallerBuilder(Url url) : this()
+        {
+            Location = url.ToString();
         }
 
         public Installer Build()
