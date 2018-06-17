@@ -76,7 +76,7 @@ namespace AppGet.Infrastructure.Logging
             // package:tag
             consoleTarget.WordHighlightingRules.Add(new ConsoleWordHighlightingRule
             {
-                Regex = @"[a-z0-9]{2,}\:[a-z0-9\.]+",
+                Regex = @"[a-z0-9-]{2,}\:[a-z0-9\.]+",
                 WholeWords = true,
                 CompileRegex = true,
                 IgnoreCase = false,

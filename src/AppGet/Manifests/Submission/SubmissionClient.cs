@@ -10,6 +10,7 @@ namespace AppGet.Manifests.Submission
     public class SubmissionResponse
     {
         public string PullRequestUrl { get; set; }
+        public string Branch { get; set; }
         public bool ExistingPullRequest { get; set; }
         public string Message { get; set; }
 

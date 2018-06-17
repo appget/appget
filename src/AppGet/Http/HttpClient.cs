@@ -27,7 +27,12 @@ namespace AppGet.Http
 
             _userAgentBuilder = userAgentBuilder;
 
-            _client = new System.Net.Http.HttpClient();
+            var handler = new HttpClientHandler
+            {
+                AllowAutoRedirect = true,
+            };
+
+            _client = new System.Net.Http.HttpClient(handler);
             _client.DefaultRequestHeaders.Add("User-Agent", userAgentBuilder.GetUserAgent(true));
         }
 

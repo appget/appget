@@ -13,7 +13,7 @@ namespace AppGet.PackageRepository
         private readonly IHttpClient _httpClient;
         private readonly Logger _logger;
 
-        private const string API_ROOT = "https://api.appget.net/";
+        private const string API_ROOT = "https://api.appget.net";
 
         public OfficialPackageRepository(IHttpClient httpClient, Logger logger)
         {
