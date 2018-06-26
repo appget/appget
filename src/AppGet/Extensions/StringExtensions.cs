@@ -15,5 +15,11 @@ namespace AppGet.Extensions
         {
             return AlphanumericRegex.Replace(value, "").ToLowerInvariant();
         }
+
+        public static string OrBlank(this string value)
+        {
+            if (value == null) return string.Empty;
+            return value;
+        }
     }
 }

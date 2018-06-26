@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AppGet.Extensions;
 using AppGet.PackageRepository;
 
 namespace AppGet.CommandLine
@@ -21,7 +22,13 @@ namespace AppGet.CommandLine
 
             foreach (var package in packages)
             {
-                Console.WriteLine($"{package.Id.PadRight(idColumnWidth)} {package.Name.PadRight(nameColumnWidth)} {package.Version.PadRight(versionColumnWidth)} {package.Tag.PadRight(tagColumnWidth)}");
+                var id = package.Id.PadRight(idColumnWidth);
+                var name = package.Name.OrBlank().PadRight(nameColumnWidth);
+                var version = package.Version.OrBlank().PadRight(versionColumnWidth);
+                var tag = package.Tag.OrBlank().PadRight(tagColumnWidth);
+
+
+                Console.WriteLine($"{id} {name} {version} {tag}");
             }
         }
 
