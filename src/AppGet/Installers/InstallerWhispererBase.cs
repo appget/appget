@@ -36,7 +36,7 @@ namespace AppGet.Installers
                 var logFile = LogArgs == null ? null : _pathResolver.GetInstallerLogFile(packageManifest.Id);
                 ExitCodes.TryGetValue(process.ExitCode, out var exitReason);
 
-                throw new InstallerException(process, packageManifest, exitReason, logFile);
+                throw new InstallerException(process.ExitCode, packageManifest, exitReason, logFile);
             }
         }
 
@@ -58,7 +58,8 @@ namespace AppGet.Installers
                 {
                     installOptions.Passive = true;
                     _logger.Warn("Silent install is not supported by installer. Falling back to Passive");
-                } else
+                }
+                else
                 {
                     installOptions.Interactive = true;
                     _logger.Warn("Silent or Passive install is not supported by installer. Falling back to Interactive");
@@ -71,7 +72,8 @@ namespace AppGet.Installers
                 {
                     installOptions.Silent = true;
                     _logger.Warn("Passive install is not supported by installer. Falling back to Silent.");
-                } else
+                }
+                else
                 {
                     installOptions.Interactive = true;
                     _logger.Warn("Silent or Passive install is not supported by installer. Falling back to Interactive");
@@ -82,10 +84,12 @@ namespace AppGet.Installers
             if (installOptions.Silent)
             {
                 args = $"{SilentArgs} {manifest.Args?.Silent}";
-            } else if (installOptions.Interactive)
+            }
+            else if (installOptions.Interactive)
             {
                 args = $"{InteractiveArgs} {manifest.Args?.Interactive}";
-            } else
+            }
+            else
             {
                 args = $"{PassiveArgs} {manifest.Args?.Passive}";
             }

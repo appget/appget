@@ -7,23 +7,23 @@ namespace AppGet.Installers
 {
     public class InstallerException : AppGetException
     {
-        public Process InstallerProcess { get; }
         public PackageManifest PackageManifest { get; }
         public string LogPath { get; }
         public ExistReason ExitReason { get; }
+        public int ExitCode{ get; }
 
-        public InstallerException(Process installerProcess, PackageManifest packageManifest, ExistReason exitReason, string logPath)
-            : base(GetMessage(installerProcess, packageManifest, exitReason, logPath))
+        public InstallerException(int exitCode, PackageManifest packageManifest, ExistReason exitReason, string logPath)
+            : base(GetMessage(exitCode, packageManifest, exitReason, logPath))
         {
-            InstallerProcess = installerProcess;
             PackageManifest = packageManifest;
             LogPath = logPath;
             ExitReason = exitReason;
+            ExitCode = exitCode;
         }
 
-        private static string GetMessage(Process installerProcess, PackageManifest packageManifest, ExistReason existReason, string logPath)
+        private static string GetMessage(int exitCode, PackageManifest packageManifest, ExistReason existReason, string logPath)
         {
-            var msg = $"Installer for {packageManifest.Name} {packageManifest.Version} returned with a non-zero exit code: {installerProcess.ExitCode}.";
+            var msg = $"Installer for {packageManifest.Name} {packageManifest.Version} returned with a non-zero exit code: {exitCode}.";
 
             if (existReason != null)
             {

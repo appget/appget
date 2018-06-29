@@ -70,6 +70,7 @@
     <Compile Include="Http\UserAgentBuilderFixture.cs" />
     <Compile Include="Infrastructure\Composition\ContainerBuilderFixture.cs" />
     <Compile Include="Infrastructure\Logging\SentryTargetFixture.cs" />
+    <Compile Include="Installers\InstallerExceptionFixture.cs" />
     <Compile Include="Manifests\PackageManifestFixture.cs" />
     <Compile Include="InstalledPackages\WindowsInstallerInventoryManagerFixture.cs" />
     <Compile Include="Options\OptionsParserFixture.cs" />
