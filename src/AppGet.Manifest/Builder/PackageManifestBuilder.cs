@@ -107,6 +107,9 @@ namespace AppGet.Manifest.Builder
         [JsonIgnore]
         public string FilePath { get; set; }
 
+        [JsonIgnore]
+        public string SourceFileName { get; set; }
+
         public InstallerBuilder()
         {
             Architecture = new ManifestAttribute<ArchitectureTypes>();
