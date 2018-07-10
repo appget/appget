@@ -19,6 +19,7 @@ using AppGet.Installers.InstallBuilder;
 using AppGet.Installers.InstallShield;
 using AppGet.Installers.Msi;
 using AppGet.Installers.Nsis;
+using AppGet.Installers.SetupFactory;
 using AppGet.Installers.Squirrel;
 using AppGet.Installers.Wix;
 using AppGet.Installers.Zip;
@@ -88,6 +89,7 @@ namespace AppGet.Infrastructure.Composition
                 typeof(NsisWhisperer),
                 typeof(SquirrelWhisperer),
                 typeof(AdvancedInstallerWhisperer),
+                typeof(SetupFactoryWhisperer),
                 typeof(ZipWhisperer),
             });
 
