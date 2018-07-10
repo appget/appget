@@ -12,6 +12,7 @@
         NSIS,
         InstallBuilder,
         AdvancedInstaller,
-        Squirrel
+        Squirrel,
+        SetupFactory
     }
 }

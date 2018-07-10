@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using AppGet.Manifest.Builder;
-using YamlDotNet.Serialization;
 
 namespace AppGet.Manifest
 {
