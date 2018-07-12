@@ -80,8 +80,7 @@ namespace AppGet.Commands.CreateManifest
                 {
                     var resp = _submissionClient.Submit(manifestBuilder);
                     _logger.Info("Thank you for your submission.");
-                    _logger.Info("");
-                    _logger.Info("Your pull-request: " + resp.PullRequestUrl);
+                    _logger.Info(resp.Message);
                 }
                 catch (Exception e)
                 {
