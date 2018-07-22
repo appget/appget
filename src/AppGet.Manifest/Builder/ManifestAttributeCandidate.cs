@@ -6,8 +6,13 @@ namespace AppGet.Manifest.Builder
     public class ManifestAttributeCandidate<T>
     {
         public T Value { get; }
-        public Confidence Confidence { get; }
+        public Confidence Confidence { get; private set; }
         public string Source { get; }
+
+        public void Remove()
+        {
+            Confidence = Confidence.None;
+        }
 
         public ManifestAttributeCandidate(T value, Confidence confidence, object source)
         {
