@@ -4,7 +4,6 @@ using AppGet.Commands.Install;
 using AppGet.Commands.Search;
 using AppGet.Commands.Uninstall;
 using AppGet.Commands.ViewManifest;
-using AppGet.Commands.WindowsInstallerSearch;
 using AppGet.CreatePackage.Installer;
 using AppGet.CreatePackage.Installer.Prompts;
 using AppGet.CreatePackage.Root;
@@ -55,7 +54,6 @@ namespace AppGet.Infrastructure.Composition
                 typeof(ViewManifestCommandHandler),
                 typeof(SearchCommandHandler),
                 typeof(InstallCommandHandler),
-                typeof(WindowsInstallerSearchCommandHandler),
                 typeof(UninstallCommandHandler),
                 typeof(CreateManifestCommandHandler)
             });

@@ -106,8 +106,6 @@
     <Compile Include="Commands\UnknownCommandException.cs" />
     <Compile Include="Commands\CreateManifest\CreateManifestCommandHandler.cs" />
     <Compile Include="Commands\CreateManifest\CreateManifestOptions.cs" />
-    <Compile Include="Commands\WindowsInstallerSearch\WindowsInstallerSearchCommandHandler.cs" />
-    <Compile Include="Commands\WindowsInstallerSearch\WindowsInstallerSearchOptions.cs" />
     <Compile Include="Commands\ViewManifest\ViewManifestCommandHandler.cs" />
     <Compile Include="Commands\Uninstall\PackageNotInstalledException.cs" />
     <Compile Include="CreatePackage\Installer\IInstallerPrompt.cs" />
@@ -168,9 +166,7 @@
     </Compile>
     <Compile Include="Http\HttpClient.cs" />
     <Compile Include="Infrastructure\Logging\LogConfigurator.cs" />
-    <Compile Include="InstalledPackages\InstallTracker.cs" />
-    <Compile Include="InstalledPackages\WindowsInstallRecord.cs" />
-    <Compile Include="InstalledPackages\WindowsInstallerInventoryManager.cs" />
+    <Compile Include="WindowsInstaller\WindowsInstallerClient.cs" />
     <Compile Include="Installers\Inno\InnoWhisperer.cs" />
     <Compile Include="Installers\InstallService.cs" />
     <Compile Include="Installers\IInstallerWhisperer.cs" />
@@ -209,6 +205,7 @@
     <Compile Include="Update\AppGetUpdateService.cs" />
     <Compile Include="Github\Releases\GithubRelease.cs" />
     <Compile Include="Github\Releases\GitHubReleaseClient.cs" />
+    <Compile Include="WindowsInstaller\WindowsInstallerItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
