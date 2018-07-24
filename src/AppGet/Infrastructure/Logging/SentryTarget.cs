@@ -41,12 +41,9 @@ namespace AppGet.Infrastructure.Logging
 
         public SentryTarget()
         {
-            var dsn = BuildInfo.IsProduction ?
-                "https://79eabeab1aa84c8db73ee2675c5bce7d@sentry.io/306545" :
-                "https://c5e5b9675d7b4a45b35e0adc4799b110@sentry.io/1208731";
+            const string DSN = "https://79eabeab1aa84c8db73ee2675c5bce7d@sentry.io/306545";
 
-
-            _client = new RavenClient(new Dsn(dsn), new JsonPacketFactory(), new SentryRequestFactory(), new SentryUserFactory())
+            _client = new RavenClient(new Dsn(DSN), new JsonPacketFactory(), new SentryRequestFactory(), new SentryUserFactory())
             {
                 Compression = true,
                 ErrorOnCapture = OnError,
