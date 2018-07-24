@@ -34,7 +34,7 @@ namespace AppGet.Installers.Custom
         {
         }
 
-        protected override InstallMethodTypes InstallMethod => InstallMethodTypes.Custom;
+        public override InstallMethodTypes InstallMethod => InstallMethodTypes.Custom;
 
         protected override string InteractiveArgs => null;
         protected override string PassiveArgs => null;

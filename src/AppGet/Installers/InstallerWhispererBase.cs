@@ -16,7 +16,6 @@ namespace AppGet.Installers
 
         public virtual Dictionary<int, ExistReason> ExitCodes => new Dictionary<int, ExistReason>();
 
-        protected abstract InstallMethodTypes InstallMethod { get; }
 
         protected InstallerWhispererBase(IProcessController processController, IPathResolver pathResolver, Logger logger)
         {
@@ -49,6 +48,8 @@ namespace AppGet.Installers
         {
             return installMethod == InstallMethod;
         }
+
+        public abstract InstallMethodTypes InstallMethod { get; }
 
         private string GetInstallArguments(InstallOptions installOptions, PackageManifest manifest)
         {

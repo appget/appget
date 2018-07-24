@@ -28,7 +28,7 @@ namespace AppGet.Installers.SetupFactory
         {
         }
 
-        protected override InstallMethodTypes InstallMethod => InstallMethodTypes.SetupFactory;
+        public override InstallMethodTypes InstallMethod => InstallMethodTypes.SetupFactory;
 
         //Command line args: https://www.indigorose.com/webhelp/suf9/Program_Reference/Command_Line_Options.htm#Install_Command_Line_Options
         protected override string InteractiveArgs => "/W";

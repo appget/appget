@@ -12,7 +12,7 @@ namespace AppGet.Installers.Wix
         {
         }
 
-        protected override InstallMethodTypes InstallMethod => InstallMethodTypes.Wix;
+        public override InstallMethodTypes InstallMethod => InstallMethodTypes.Wix;
 
         // http://windows-installer-xml-wix-toolset.687559.n2.nabble.com/Running-Burn-driven-installer-in-quiet-mode-command-line-parameters-tp5913001p5913628.html
         protected override string InteractiveArgs => "";

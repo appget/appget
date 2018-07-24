@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using AppGet.Commands;
 using AppGet.CreatePackage.Installer;
 using AppGet.CreatePackage.Root;
@@ -19,7 +20,7 @@ namespace AppGet.Tests.Infrastructure.Composition
         {
             var container = ContainerBuilder.Build();
 
-            var allTypes = typeof(ContainerBuilder).Assembly.DefinedTypes.Where(c => !c.IsAbstract).ToList();
+            var allTypes = Assembly.Load("AppGet").DefinedTypes.Where(c => !c.IsAbstract).ToList();
 
             void Assert<T>()
             {
@@ -34,6 +35,17 @@ namespace AppGet.Tests.Infrastructure.Composition
             Assert<IManifestPrompt>();
             Assert<IInstallerPrompt>();
             Assert<IFileTransferClient>();
+        }
+
+
+        [Test]
+        public void installer_whisperer_check()
+        {
+            var container = ContainerBuilder.Build();
+
+            var whisperers = container.Resolve<IEnumerable<InstallerWhispererBase>>();
+
+            whisperers.Should().OnlyHaveUniqueItems(c => c.InstallMethod);
         }
     }
 }

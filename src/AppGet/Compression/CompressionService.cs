@@ -3,6 +3,7 @@ using System.Linq;
 using AppGet.ProgressTracker;
 using NLog;
 using SharpCompress.Archives;
+using SharpCompress.Common;
 using SharpCompress.Readers;
 
 namespace AppGet.Compression

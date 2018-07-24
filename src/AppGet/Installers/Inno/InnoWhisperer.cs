@@ -46,7 +46,7 @@ namespace AppGet.Installers.Inno
         {
         }
 
-        protected override InstallMethodTypes InstallMethod => InstallMethodTypes.Inno;
+        public override InstallMethodTypes InstallMethod => InstallMethodTypes.Inno;
 
         //Command line args: http://www.jrsoftware.org/ishelp/index.php?topic=setupcmdline
         protected override string InteractiveArgs => "";

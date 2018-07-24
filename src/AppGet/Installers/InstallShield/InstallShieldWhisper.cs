@@ -8,7 +8,7 @@ namespace AppGet.Installers.InstallShield
 {
     public class InstallShieldWhisperer : MsiWhisperer
     {
-        protected override InstallMethodTypes InstallMethod => InstallMethodTypes.InstallShield;
+        public override InstallMethodTypes InstallMethod => InstallMethodTypes.InstallShield;
 
         public InstallShieldWhisperer(IProcessController processController, IPathResolver pathResolver, Logger logger)
             : base(processController, pathResolver, logger)

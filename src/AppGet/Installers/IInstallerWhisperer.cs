@@ -7,5 +7,6 @@ namespace AppGet.Installers
     {
         void Install(string installerLocation, PackageManifest packageManifest, InstallOptions installOptions);
         bool CanHandle(InstallMethodTypes installMethod);
+        InstallMethodTypes InstallMethod { get; }
     }
 }

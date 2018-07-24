@@ -12,7 +12,7 @@ namespace AppGet.Installers.InstallBuilder
         {
         }
 
-        protected override InstallMethodTypes InstallMethod => InstallMethodTypes.InstallBuilder;
+        public override InstallMethodTypes InstallMethod => InstallMethodTypes.InstallBuilder;
 
         protected override string InteractiveArgs => "";
         protected override string PassiveArgs => "--mode unattended --unattendedmodeui minimal";

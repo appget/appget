@@ -17,6 +17,8 @@
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>AppGet.Application</StartupObject>
@@ -76,7 +78,7 @@
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.5.6\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.4.5.7\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="SharpCompress, Version=0.22.0.0, Culture=neutral, PublicKeyToken=afb0a02973931d96, processorArchitecture=MSIL">
@@ -198,7 +200,6 @@
     <Compile Include="Installers\Nsis\NsisWhisperer.cs" />
     <Compile Include="Installers\UninstallService.cs" />
     <Compile Include="Installers\InstallerWhispererBase.cs" />
-    <Compile Include="Installers\Zip\ZipWhisperer.cs" />
     <Compile Include="Commands\AppGetOption.cs" />
     <Compile Include="Commands\PackageCommandOptions.cs" />
     <Compile Include="Commands\OptionException.cs" />

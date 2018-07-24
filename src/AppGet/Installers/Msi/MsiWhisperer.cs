@@ -237,7 +237,7 @@ namespace AppGet.Installers.Msi
         {
         }
 
-        protected override InstallMethodTypes InstallMethod => InstallMethodTypes.MSI;
+        public override InstallMethodTypes InstallMethod => InstallMethodTypes.MSI;
 
         protected override Process StartProcess(string installerLocation, string args)
         {

@@ -22,7 +22,6 @@ using AppGet.Installers.Nsis;
 using AppGet.Installers.SetupFactory;
 using AppGet.Installers.Squirrel;
 using AppGet.Installers.Wix;
-using AppGet.Installers.Zip;
 using AppGet.Manifest;
 using AppGet.PackageRepository;
 using NLog;
@@ -90,7 +89,6 @@ namespace AppGet.Infrastructure.Composition
                 typeof(SquirrelWhisperer),
                 typeof(AdvancedInstallerWhisperer),
                 typeof(SetupFactoryWhisperer),
-                typeof(ZipWhisperer),
             });
 
             container.RegisterMultiple<IFileTransferClient>(new[]

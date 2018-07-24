@@ -12,7 +12,7 @@ namespace AppGet.Installers.AdvancedInstaller
         {
         }
 
-        protected override InstallMethodTypes InstallMethod => InstallMethodTypes.AdvancedInstaller;
+        public override InstallMethodTypes InstallMethod => InstallMethodTypes.AdvancedInstaller;
 
         protected override string InteractiveArgs => "";
         protected override string PassiveArgs => "/exebasicui";
