@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 
 namespace AppGet.WindowsInstaller
 {
-    public class WindowsInstallerItem
+    public class WindowsInstallerRecord
     {
         public bool Is64 { get; set; }
         public string Id { get; set; }

@@ -1,6 +1,7 @@
 ﻿using AppGet.Commands;
 using AppGet.Commands.CreateManifest;
 using AppGet.Commands.Install;
+using AppGet.Commands.Outdated;
 using AppGet.Commands.Search;
 using AppGet.Commands.Uninstall;
 using AppGet.Commands.ViewManifest;
@@ -55,7 +56,8 @@ namespace AppGet.Infrastructure.Composition
                 typeof(SearchCommandHandler),
                 typeof(InstallCommandHandler),
                 typeof(UninstallCommandHandler),
-                typeof(CreateManifestCommandHandler)
+                typeof(CreateManifestCommandHandler),
+                typeof(OutdatedCommandHandler)
             });
 
             container.RegisterMultiple<IManifestPrompt>(new[]

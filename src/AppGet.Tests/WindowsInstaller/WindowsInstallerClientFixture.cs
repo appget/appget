@@ -1,6 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using AppGet.Manifest.Serialization;
 using AppGet.WindowsInstaller;
 using FluentAssertions;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace AppGet.Tests.WindowsInstaller
@@ -11,7 +14,10 @@ namespace AppGet.Tests.WindowsInstaller
         [Test]
         public void should_get_records()
         {
-            var keys = Subject.GetKeys().ToList();
+            var keys = Subject.GetRecords().ToList();
+
+            Console.WriteLine(Json.Serialize(keys, Formatting.Indented));
+
 
             keys.Should().HaveCountGreaterThan(200);
 

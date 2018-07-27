@@ -1,5 +1,6 @@
 ﻿using AppGet.Commands.CreateManifest;
 using AppGet.Commands.Install;
+using AppGet.Commands.Outdated;
 using AppGet.Commands.Search;
 using AppGet.Commands.Uninstall;
 using AppGet.Commands.ViewManifest;
@@ -16,7 +17,7 @@ namespace AppGet.Commands
     {
         public AppGetOption Parse(params string[] args)
         {
-            var result = Parser.Default.ParseArguments<InstallOptions, SearchOptions, UninstallOptions, CreateManifestOptions, ViewManifestOptions>(args);
+            var result = Parser.Default.ParseArguments<InstallOptions, SearchOptions, UninstallOptions, CreateManifestOptions, ViewManifestOptions, OutdatedOptions>(args);
 
             if (result.Tag == ParserResultType.Parsed)
             {

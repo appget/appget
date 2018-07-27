@@ -40,7 +40,7 @@ namespace AppGet.Manifests.Submission
             };
 
             var resp = _httpClient.Send(req);
-            return resp.AsResource<SubmissionResponse>();
+            return resp.Deserialize<SubmissionResponse>();
         }
     };
 }

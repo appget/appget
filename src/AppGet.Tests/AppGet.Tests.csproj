@@ -68,6 +68,7 @@
     <Compile Include="FileTransfer\Protocols\WindowsPathFileTransferClientFixture.cs" />
     <Compile Include="FileTransfer\TransferCacheServiceFixture.cs" />
     <Compile Include="HostSystem\EnvInfoFixture.cs" />
+    <Compile Include="Http\HttpClientFixture.cs" />
     <Compile Include="Http\UserAgentBuilderFixture.cs" />
     <Compile Include="Infrastructure\Composition\ContainerBuilderFixture.cs" />
     <Compile Include="Infrastructure\Logging\SentryTargetFixture.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="TestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Github\Releases\GitHubReleaseClientFixture.cs" />
+    <Compile Include="Update\NovoClientFixture.cs" />
     <Compile Include="WindowsInstaller\WindowsInstallerClientFixture.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -106,9 +108,7 @@
       <Name>AppGet</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Update\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>

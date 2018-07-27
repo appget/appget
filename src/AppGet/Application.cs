@@ -74,8 +74,7 @@ namespace AppGet
                 {
                     Console.WriteLine("");
                     Console.WriteLine("Suggestions:");
-                    Console.WriteLine("");
-                    Printers.Print(e.Similar);
+                    e.Similar.ShowTable();
                 }
 
                 return 1;

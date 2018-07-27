@@ -86,7 +86,8 @@
   <ItemGroup>
     <Compile Include="AppData\AppDataService.cs" />
     <Compile Include="AppData\Config.cs" />
-    <Compile Include="CommandLine\Printers.cs" />
+    <Compile Include="CommandLine\ConsoleTable.cs" />
+    <Compile Include="CommandLine\TableHelper.cs" />
     <Compile Include="CommandLine\Prompts\BooleanPrompt.cs" />
     <Compile Include="CommandLine\Prompts\WindowsVersionPrompt.cs" />
     <Compile Include="CommandLine\Prompts\PromptBase.cs" />
@@ -97,6 +98,8 @@
     <Compile Include="Commands\ICommandExecutor.cs" />
     <Compile Include="Commands\Install\PackageAlreadyInstalledException.cs" />
     <Compile Include="Commands\InvalidCommandParamaterException.cs" />
+    <Compile Include="Commands\Outdated\OutdatedOptions.cs" />
+    <Compile Include="Commands\Outdated\OutdatedCommandHandler.cs" />
     <Compile Include="Commands\Search\SearchCommandHandler.cs" />
     <Compile Include="Commands\Search\SearchOptions.cs" />
     <Compile Include="Commands\Uninstall\UninstallCommandHandler.cs" />
@@ -130,6 +133,7 @@
     <Compile Include="FileTransfer\Protocols\WebClientWithTimeout.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Update\NovoClient.cs" />
     <Compile Include="Github\GithubKeys.cs" />
     <Compile Include="Installers\ExistReason.cs" />
     <Compile Include="Installers\ExitCodeTypes.cs" />
@@ -166,6 +170,8 @@
     </Compile>
     <Compile Include="Http\HttpClient.cs" />
     <Compile Include="Infrastructure\Logging\LogConfigurator.cs" />
+    <Compile Include="Update\PackageUpdate.cs" />
+    <Compile Include="Update\UpdateService.cs" />
     <Compile Include="WindowsInstaller\WindowsInstallerClient.cs" />
     <Compile Include="Installers\Inno\InnoWhisperer.cs" />
     <Compile Include="Installers\InstallService.cs" />
@@ -205,7 +211,7 @@
     <Compile Include="Update\AppGetUpdateService.cs" />
     <Compile Include="Github\Releases\GithubRelease.cs" />
     <Compile Include="Github\Releases\GitHubReleaseClient.cs" />
-    <Compile Include="WindowsInstaller\WindowsInstallerItem.cs" />
+    <Compile Include="WindowsInstaller\WindowsInstallerRecord.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

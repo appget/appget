@@ -29,10 +29,7 @@ namespace AppGet.PackageSearch
             _logger.Info("Found {0} package(s)", results.Count);
 
             if (!results.Any()) return;
-
-            Console.WriteLine();
-
-            Printers.Print(results);
+            results.ShowTable();
         }
     }
 }

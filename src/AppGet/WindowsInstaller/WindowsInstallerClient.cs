@@ -15,9 +15,9 @@ namespace AppGet.WindowsInstaller
             @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall",
         };
 
-        public IEnumerable<WindowsInstallerItem> GetKeys()
+        public IEnumerable<WindowsInstallerRecord> GetRecords()
         {
-            var keys = new List<WindowsInstallerItem>();
+            var keys = new List<WindowsInstallerRecord>();
 
             foreach (var hive in Hives)
             {
@@ -33,7 +33,7 @@ namespace AppGet.WindowsInstaller
             return keys;
         }
 
-        private IEnumerable<WindowsInstallerItem> GetInstallRecords(string keyName, RegistryHive hive, RegistryView view)
+        private IEnumerable<WindowsInstallerRecord> GetInstallRecords(string keyName, RegistryHive hive, RegistryView view)
         {
             using (var baseKey = RegistryKey.OpenBaseKey(hive, view))
             using (var key = baseKey.OpenSubKey(keyName, false))
@@ -52,7 +52,7 @@ namespace AppGet.WindowsInstaller
                 }
             }
 
-            WindowsInstallerItem GetKeyDictionary(RegistryKey registryKey, string id)
+            WindowsInstallerRecord GetKeyDictionary(RegistryKey registryKey, string id)
             {
                 var names = registryKey.GetValueNames().ToList();
 
@@ -63,7 +63,7 @@ namespace AppGet.WindowsInstaller
 
                 var values = names.ToDictionary(c => c, key => JToken.FromObject(registryKey.GetValue(key)));
 
-                return new WindowsInstallerItem
+                return new WindowsInstallerRecord
                 {
                     Id = id,
                     Is64 = registryKey.View == RegistryView.Registry64,

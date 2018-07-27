@@ -36,7 +36,7 @@ namespace AppGet.CreatePackage
             _logger.Info("This could take a couple of minutes...");
 
             var resp = _httpClient.Get(new Uri(url));
-            var builder = resp.AsResource<PackageManifestBuilder>();
+            var builder = resp.Deserialize<PackageManifestBuilder>();
 
             _logger.Debug($"Received results for {uri}");
 
@@ -48,7 +48,7 @@ namespace AppGet.CreatePackage
             var url = $"https://api.appget.net/xray/installer?url={WebUtility.UrlEncode(uri.ToString())}";
 
             var resp = _httpClient.Get(new Uri(url));
-            var builder = resp.AsResource<InstallerBuilder>();
+            var builder = resp.Deserialize<InstallerBuilder>();
 
             return builder;
         }

@@ -69,7 +69,7 @@ namespace AppGet.PackageRepository
 
             var package = _httpClient.Get(uri);
 
-            return package.AsResource<List<PackageInfo>>();
+            return package.Deserialize<List<PackageInfo>>();
         }
     }
 }

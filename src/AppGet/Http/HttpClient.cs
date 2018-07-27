@@ -30,10 +30,12 @@ namespace AppGet.Http
             var handler = new HttpClientHandler
             {
                 AllowAutoRedirect = true,
+                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
             };
 
             _client = new System.Net.Http.HttpClient(handler);
             _client.DefaultRequestHeaders.Add("User-Agent", userAgentBuilder.GetUserAgent(true));
+            _client.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate");
         }
 
         public HttpResponseMessage Send(HttpRequestMessage request, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead)

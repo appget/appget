@@ -20,7 +20,7 @@ namespace AppGet.Http
             }
         }
 
-        public static T AsResource<T>(this HttpResponseMessage response)
+        public static T Deserialize<T>(this HttpResponseMessage response)
         {
             return Json.Deserialize<T>(response.Content.ReadAsString());
         }
