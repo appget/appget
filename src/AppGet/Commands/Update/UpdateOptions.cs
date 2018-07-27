@@ -1,21 +1,17 @@
 using CommandLine;
 
-namespace AppGet.Commands.Install
+namespace AppGet.Commands.Update
 {
-    [Verb("install", HelpText = "Install a package")]
-    public class InstallOptions : PackageCommandOptions
+    [Verb("update", HelpText = "Update one or more of installed applications")]
+    public class UpdateOptions : PackageCommandOptions
     {
         private bool _interactive;
         private bool _silent;
 
-        [Value(0, MetaName = PACKAGE_META_NAME, HelpText = "Package to install", Required = true)]
+        [Value(0, MetaName = PACKAGE_META_NAME, HelpText = "Package to update", Required = false)]
         public override string Package { get; set; }
 
-        [Option('f', "force", HelpText = "Force the operation")]
-        public bool Force { get; set; }
-
-        [Option('i', "interactive", HelpText =
-            "Start the installer in interactive mode. This allows the user to step through the installer manually.")]
+        [Option('i', "interactive", HelpText = "Start the installer in interactive mode. This allows the user to step through the installer manually.")]
         public bool Interactive
         {
             get => _interactive;

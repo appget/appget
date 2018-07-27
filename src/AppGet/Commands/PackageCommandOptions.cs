@@ -1,4 +1,4 @@
-using System.Linq;
+using AppGet.Manifest;
 
 namespace AppGet.Commands
 {
@@ -8,16 +8,8 @@ namespace AppGet.Commands
 
         public abstract string Package { get; set; }
 
-        public string PackageId => Package.Split(':').FirstOrDefault();
+        public string PackageId => TagHelper.ParseId(Package);
 
-        public string Tag
-        {
-            get
-            {
-                var parts = Package.Split(':');
-
-                return parts.Length > 1 ? parts[1] : null;
-            }
-        }
+        public string Tag => TagHelper.ParseTag(Package);
     }
 }

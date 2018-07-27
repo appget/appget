@@ -4,6 +4,7 @@ using AppGet.Commands.Install;
 using AppGet.Commands.Outdated;
 using AppGet.Commands.Search;
 using AppGet.Commands.Uninstall;
+using AppGet.Commands.Update;
 using AppGet.Commands.ViewManifest;
 using AppGet.CreatePackage.Installer;
 using AppGet.CreatePackage.Installer.Prompts;
@@ -57,6 +58,7 @@ namespace AppGet.Infrastructure.Composition
                 typeof(InstallCommandHandler),
                 typeof(UninstallCommandHandler),
                 typeof(CreateManifestCommandHandler),
+                typeof(UpdateCommandHandler),
                 typeof(OutdatedCommandHandler)
             });
 

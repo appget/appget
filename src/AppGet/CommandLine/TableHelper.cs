@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AppGet.PackageRepository;
 using AppGet.Update;
 
@@ -24,7 +25,7 @@ namespace AppGet.CommandLine
         {
             var table = new ConsoleTable("Package ID", "Installed Version", "Available Version");
 
-            foreach (var update in updates)
+            foreach (var update in updates.OrderBy(c => c.PackageId))
             {
                 table.AddRow(update.PackageId, update.InstalledVersion, update.AvailableVersion);
             }

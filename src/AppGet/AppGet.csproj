@@ -96,6 +96,8 @@
     <Compile Include="CommandLine\Prompts\UrlPrompt.cs" />
     <Compile Include="Commands\CommandExecutor.cs" />
     <Compile Include="Commands\ICommandExecutor.cs" />
+    <Compile Include="Commands\Update\UpdateCommandHandler.cs" />
+    <Compile Include="Commands\Update\UpdateOptions.cs" />
     <Compile Include="Commands\Install\PackageAlreadyInstalledException.cs" />
     <Compile Include="Commands\InvalidCommandParamaterException.cs" />
     <Compile Include="Commands\Outdated\OutdatedOptions.cs" />
