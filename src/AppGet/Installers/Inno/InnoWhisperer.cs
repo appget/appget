@@ -49,9 +49,11 @@ namespace AppGet.Installers.Inno
         public override InstallMethodTypes InstallMethod => InstallMethodTypes.Inno;
 
         //Command line args: http://www.jrsoftware.org/ishelp/index.php?topic=setupcmdline
+
+        private const string BASE_ARG = "/NOCANCEL /SUPPRESSMSGBOXES /NORESTART /CLOSEAPPLICATIONS /FORCECLOSEAPPLICATIONS /NORESTARTAPPLICATIONS /RESTARTEXITCODE=3010";
         protected override string InteractiveArgs => "";
-        protected override string PassiveArgs => "/SILENT /SUPPRESSMSGBOXES /NORESTART /CLOSEAPPLICATIONS /FORCECLOSEAPPLICATIONS /RESTARTEXITCODE=3010";
-        protected override string SilentArgs => "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /CLOSEAPPLICATIONS /FORCECLOSEAPPLICATIONS /RESTARTEXITCODE=3010";
+        protected override string PassiveArgs => $"/SILENT {BASE_ARG}";
+        protected override string SilentArgs => $"/VERYSILENT {BASE_ARG}";
         protected override string LogArgs => "/LOG={path}";
     }
 }
