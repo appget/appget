@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using AppGet.HostSystem;
 using AppGet.Manifest;
-using AppGet.Processes;
+using AppGet.Windows;
 using NLog;
 
 namespace AppGet.Installers.Msi

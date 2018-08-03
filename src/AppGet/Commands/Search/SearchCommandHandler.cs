@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using AppGet.PackageSearch;
 
 namespace AppGet.Commands.Search
@@ -16,7 +17,7 @@ namespace AppGet.Commands.Search
             return commandOptions is SearchOptions;
         }
 
-        public void Execute(AppGetOption commandOptions)
+        public async Task Execute(AppGetOption commandOptions)
         {
             var searchOptions = (SearchOptions)commandOptions;
             _packageSearchService.DisplayResults(searchOptions.Query);

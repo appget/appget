@@ -77,6 +77,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
@@ -174,7 +175,10 @@
     <Compile Include="Infrastructure\Logging\LogConfigurator.cs" />
     <Compile Include="Update\PackageUpdate.cs" />
     <Compile Include="Update\UpdateService.cs" />
-    <Compile Include="WindowsInstaller\WindowsInstallerClient.cs" />
+    <Compile Include="Windows\Unlocker.cs" />
+    <Compile Include="Windows\FileLockFinder.cs" />
+    <Compile Include="Windows\ManagementObject.cs" />
+    <Compile Include="Windows\WindowsInstaller\WindowsInstallerClient.cs" />
     <Compile Include="Installers\Inno\InnoWhisperer.cs" />
     <Compile Include="Installers\InstallService.cs" />
     <Compile Include="Installers\IInstallerWhisperer.cs" />
@@ -198,7 +202,7 @@
     <Compile Include="PackageRepository\PackageInfo.cs" />
     <Compile Include="PackageRepository\PackageNotFoundException.cs" />
     <Compile Include="PackageSearch\PackageSearchService.cs" />
-    <Compile Include="Processes\ProcessController.cs" />
+    <Compile Include="Windows\ProcessController.cs" />
     <Compile Include="ProgressTracker\ConsoleProgressReporter.cs" />
     <Compile Include="ProgressTracker\IReportProgress.cs" />
     <Compile Include="ProgressTracker\ProgressState.cs" />
@@ -213,7 +217,7 @@
     <Compile Include="Update\AppGetUpdateService.cs" />
     <Compile Include="Github\Releases\GithubRelease.cs" />
     <Compile Include="Github\Releases\GitHubReleaseClient.cs" />
-    <Compile Include="WindowsInstaller\WindowsInstallerRecord.cs" />
+    <Compile Include="Windows\WindowsInstaller\WindowsInstallerRecord.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -234,6 +238,9 @@
     <Folder Include="CreatePackage\ManifestBuilder\" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Colorful.Console">
+      <Version>1.2.9</Version>
+    </PackageReference>
     <PackageReference Include="CommandLineParser">
       <Version>2.2.1</Version>
     </PackageReference>

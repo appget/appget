@@ -1,4 +1,6 @@
-﻿namespace AppGet.Commands.Uninstall
+﻿using System.Threading.Tasks;
+
+namespace AppGet.Commands.Uninstall
 {
     public class UninstallCommandHandler : ICommandHandler
     {
@@ -7,7 +9,7 @@
             return commandOptions is UninstallOptions;
         }
 
-        public void Execute(AppGetOption commandOptions)
+        public async Task Execute(AppGetOption commandOptions)
         {
         }
     }

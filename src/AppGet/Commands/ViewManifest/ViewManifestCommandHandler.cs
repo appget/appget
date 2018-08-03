@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using AppGet.Manifests;
 using AppGet.PackageRepository;
 
@@ -19,7 +20,7 @@ namespace AppGet.Commands.ViewManifest
             return commandOptions is ViewManifestOptions;
         }
 
-        public void Execute(AppGetOption searchCommandOptions)
+        public async Task Execute(AppGetOption searchCommandOptions)
         {
             var viewOptions = (ViewManifestOptions)searchCommandOptions;
             var package = _packageRepository.Get(viewOptions.PackageId, viewOptions.Tag);

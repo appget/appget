@@ -1,13 +1,17 @@
 ﻿using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using NLog;
 
-namespace AppGet.Processes
+namespace AppGet.Windows
 {
     public interface IProcessController
     {
-        void WaitForExit(Process process);
         Process Start(string path, string args = null, bool useShellExecute = true);
+        Process GetProcess(int processId);
+        void Kill(Process process, int timeout);
+        void WaitForExit(Process process, int? timeout = null);
+        Process TryGetRunningProcess(int processId);
     }
 
     public class ProcessController : IProcessController
@@ -43,11 +47,35 @@ namespace AppGet.Processes
             return process;
         }
 
-        public void WaitForExit(Process process)
+        public Process GetProcess(int processId)
         {
-            _logger.Debug("Waiting for process {0} to exit", process.ProcessName);
+            return Process.GetProcessById(processId);
+        }
 
-            process.WaitForExit();
+        public Process TryGetRunningProcess(int processId)
+        {
+            return Process.GetProcesses().FirstOrDefault(c => c.Id == processId && !c.HasExited);
+        }
+
+        public void Kill(Process process, int timeout)
+        {
+            _logger.Info("Terminating process '{0}'", process.ProcessName);
+            process.Kill();
+            WaitForExit(process, timeout);
+        }
+
+        public void WaitForExit(Process process, int? timeout)
+        {
+            _logger.Debug("Waiting for process '{0}' to exit", process.ProcessName);
+
+            if (timeout.HasValue)
+            {
+                process.WaitForExit(timeout.Value);
+            }
+            else
+            {
+                process.WaitForExit();
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using AppGet.AppData;
 using AppGet.CommandLine;
 using AppGet.Commands;
@@ -30,6 +31,11 @@ namespace AppGet
         }
 
         private static int Run(string[] args)
+        {
+            return Execute(args).Result;
+        }
+
+        private static async Task<int> Execute(string[] args)
         {
             IAppGetUpdateService updatedService = null;
             try
@@ -62,7 +68,7 @@ namespace AppGet
                 container.Resolve<IAppDataService>().EnsureAppDataDirectoryExists();
 
                 var commandExecutor = container.Resolve<ICommandExecutor>();
-                commandExecutor.ExecuteCommand(options);
+                await commandExecutor.ExecuteCommand(options);
 
                 return 0;
             }

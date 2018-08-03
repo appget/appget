@@ -1,5 +1,4 @@
-﻿using AppGet.Crypto.Hash;
-using AppGet.Manifest.Hash;
+﻿using AppGet.Manifest.Hash;
 using FluentAssertions;
 using NUnit.Framework;
 

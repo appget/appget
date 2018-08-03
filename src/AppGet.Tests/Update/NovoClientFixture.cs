@@ -1,9 +1,8 @@
 ﻿using System.Threading.Tasks;
 using AppGet.Update;
-using AppGet.WindowsInstaller;
+using AppGet.Windows.WindowsInstaller;
 using FluentAssertions;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace AppGet.Tests.Update
 {

@@ -1,4 +1,5 @@
-﻿using AppGet.Commands.Install;
+﻿using System.Threading.Tasks;
+using AppGet.Commands.Install;
 using AppGet.Installers;
 using AppGet.Manifests;
 using AppGet.PackageRepository;
@@ -23,7 +24,7 @@ namespace AppGet.Commands.Update
             return commandOptions is UpdateOptions;
         }
 
-        public void Execute(AppGetOption commandOptions)
+        public async Task Execute(AppGetOption commandOptions)
         {
             var updateOptions = (UpdateOptions)commandOptions;
 
@@ -38,7 +39,7 @@ namespace AppGet.Commands.Update
                 Silent = updateOptions.Silent,
             };
 
-            _installService.Install(manifest, installOptions);
+            await _installService.Install(manifest, installOptions);
         }
     }
 }

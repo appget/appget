@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using AppGet.WindowsInstaller;
+using AppGet.Windows.WindowsInstaller;
 using NLog;
 
 namespace AppGet.Update
@@ -28,6 +26,15 @@ namespace AppGet.Update
 
             _logger.Info("Getting list of available updates...");
             return await _novoClient.GetUpdates(records);
+        }
+
+
+        public async Task<PackageUpdate> GetUpdate(string packageId)
+        {
+            _logger.Debug("Getting list of installed application");
+            var records = _windowsInstallerClient.GetRecords();
+            var result = await _novoClient.GetUpdate(records, packageId);
+            return result.SingleOrDefault();
         }
     }
 }

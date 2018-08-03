@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AppGet.Http;
 using AppGet.Manifest.Serialization;
-using AppGet.WindowsInstaller;
+using AppGet.Windows.WindowsInstaller;
 
 namespace AppGet.Update
 {
@@ -26,6 +26,19 @@ namespace AppGet.Update
 
             var resp = await _httpClient.SendAsync(request);
 
+
+            return resp.Deserialize<List<PackageUpdate>>();
+        }
+
+
+        public async Task<List<PackageUpdate>> GetUpdate(IEnumerable<WindowsInstallerRecord> records, string packageId)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Post, $"http://localhost:7071/updates?pkg={packageId}")
+            {
+                Content = new StringContent(Json.Serialize(records), Encoding.Default, "application/json")
+            };
+
+            var resp = await _httpClient.SendAsync(request);
 
             return resp.Deserialize<List<PackageUpdate>>();
         }

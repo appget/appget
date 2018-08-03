@@ -3,7 +3,7 @@ using System.Diagnostics;
 using AppGet.Commands.Install;
 using AppGet.HostSystem;
 using AppGet.Manifest;
-using AppGet.Processes;
+using AppGet.Windows;
 using NLog;
 
 namespace AppGet.Installers

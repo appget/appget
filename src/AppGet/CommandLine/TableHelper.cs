@@ -37,7 +37,7 @@ namespace AppGet.CommandLine
         private static void Print(ConsoleTable table)
         {
             Console.WriteLine();
-            Console.WriteLine(table.ToMarkDownString());
+            table.Write(Format.MarkDown);
             Console.WriteLine();
         }
     }

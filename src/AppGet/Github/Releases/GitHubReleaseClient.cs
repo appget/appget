@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AppGet.Http;
 using AppGet.Update;
-using CommandLine;
 using NLog;
 
 namespace AppGet.Github.Releases

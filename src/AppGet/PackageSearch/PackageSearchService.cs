@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using AppGet.CommandLine;
 using AppGet.PackageRepository;
 using NLog;

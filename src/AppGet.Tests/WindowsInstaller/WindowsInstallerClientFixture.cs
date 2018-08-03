@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using AppGet.Manifest.Serialization;
-using AppGet.WindowsInstaller;
+using AppGet.Windows.WindowsInstaller;
 using FluentAssertions;
 using Newtonsoft.Json;
 using NUnit.Framework;

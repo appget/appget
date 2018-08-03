@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace AppGet.WindowsInstaller
+namespace AppGet.Windows.WindowsInstaller
 {
     public class WindowsInstallerRecord
     {

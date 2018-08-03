@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
 
-namespace AppGet.WindowsInstaller
+namespace AppGet.Windows.WindowsInstaller
 {
     public class WindowsInstallerClient
     {

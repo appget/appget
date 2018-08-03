@@ -1,9 +1,9 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using AppGet.CommandLine.Prompts;
 using AppGet.CreatePackage;
 using AppGet.CreatePackage.Installer;
-using AppGet.Manifest.Serialization;
 using AppGet.Manifests;
 using AppGet.Manifests.Submission;
 using NLog;
@@ -40,7 +40,7 @@ namespace AppGet.Commands.CreateManifest
             return commandOptions is CreateManifestOptions;
         }
 
-        public void Execute(AppGetOption appGetOption)
+        public async Task Execute(AppGetOption appGetOption)
         {
             var createOptions = (CreateManifestOptions)appGetOption;
 

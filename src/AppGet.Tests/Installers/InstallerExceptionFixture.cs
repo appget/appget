@@ -1,9 +1,7 @@
-﻿using System.Diagnostics;
-using AppGet.Installers;
+﻿using AppGet.Installers;
 using AppGet.Manifest;
 using FluentAssertions;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace AppGet.Tests.Installers
 {
