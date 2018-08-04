@@ -12,6 +12,8 @@ namespace AppGet.Update
     {
         private readonly IHttpClient _httpClient;
 
+        private const string NOVO_ROOT = "https://appget-novo.azurewebsites.net";
+
         public NovoClient(IHttpClient httpClient)
         {
             _httpClient = httpClient;
@@ -19,7 +21,7 @@ namespace AppGet.Update
 
         public async Task<List<PackageUpdate>> GetUpdates(IEnumerable<WindowsInstallerRecord> records)
         {
-            var request = new HttpRequestMessage(HttpMethod.Post, "https://appget-novo.azurewebsites.net/updates")
+            var request = new HttpRequestMessage(HttpMethod.Post, $"{NOVO_ROOT}/updates")
             {
                 Content = new StringContent(Json.Serialize(records), Encoding.Default, "application/json")
             };
@@ -33,7 +35,7 @@ namespace AppGet.Update
 
         public async Task<List<PackageUpdate>> GetUpdate(IEnumerable<WindowsInstallerRecord> records, string packageId)
         {
-            var request = new HttpRequestMessage(HttpMethod.Post, $"http://localhost:7071/updates?pkg={packageId}")
+            var request = new HttpRequestMessage(HttpMethod.Post, $"{NOVO_ROOT}/updates?pkg={packageId}")
             {
                 Content = new StringContent(Json.Serialize(records), Encoding.Default, "application/json")
             };
