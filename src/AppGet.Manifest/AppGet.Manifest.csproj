@@ -60,6 +60,7 @@
     <Compile Include="Builder\PackageManifestBuilder.cs" />
     <Compile Include="Hash\ICalculateHash.cs" />
     <Compile Include="Hash\Sha256.cs" />
+    <Compile Include="IdHelper.cs" />
     <Compile Include="InstallMethodTypes.cs" />
     <Compile Include="PackageManifestExt.cs" />
     <Compile Include="PackageManifest.cs" />

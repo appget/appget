@@ -1,4 +1,5 @@
 using AppGet.CommandLine.Prompts;
+using AppGet.Manifest;
 using AppGet.Manifest.Builder;
 
 namespace AppGet.CreatePackage.Root.Prompts
@@ -19,7 +20,9 @@ namespace AppGet.CreatePackage.Root.Prompts
 
         public void Invoke(PackageManifestBuilder manifestBuilder)
         {
-            manifestBuilder.Id.Add(_prompt.Request("Package ID", manifestBuilder.Id.Value), Confidence.Authoritative, this);
+            var suggestion = manifestBuilder.Name.Value.ToPackageId();
+            var id = _prompt.Request("Package ID", suggestion);
+            manifestBuilder.Id.Add(id.ToPackageId(), Confidence.Authoritative, this);
         }
     }
 }
