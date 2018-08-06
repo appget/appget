@@ -25,7 +25,7 @@ namespace AppGet.CreatePackage
 
         public PackageManifestBuilder GetBuilder(Uri uri, string name = null)
         {
-            var url = $"https://api.appget.net/xray?url={WebUtility.UrlEncode(uri.ToString())}";
+            var url = $"https://xray.appget.net/xray?url={WebUtility.UrlEncode(uri.ToString())}";
 
             if (name != null)
             {
@@ -45,7 +45,7 @@ namespace AppGet.CreatePackage
 
         public InstallerBuilder GetInstallerBuilder(Uri uri)
         {
-            var url = $"https://api.appget.net/xray/installer?url={WebUtility.UrlEncode(uri.ToString())}";
+            var url = $"https://xray.appget.net/xray/installer?url={WebUtility.UrlEncode(uri.ToString())}";
 
             var resp = _httpClient.Get(new Uri(url));
             var builder = resp.Deserialize<InstallerBuilder>();

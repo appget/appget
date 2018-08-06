@@ -63,9 +63,16 @@ namespace AppGet.Commands.CreateManifest
                     break;
                 }
 
-                var manifestBuilder2 = _xRayClient.GetInstallerBuilder(new Uri(url));
-                _installerBuilder.Compose(manifestBuilder2);
-                manifestBuilder.Installers.Add(manifestBuilder2);
+                try
+                {
+                    var manifestBuilder2 = _xRayClient.GetInstallerBuilder(new Uri(url));
+                    _installerBuilder.Compose(manifestBuilder2);
+                    manifestBuilder.Installers.Add(manifestBuilder2);
+                }
+                catch (Exception e)
+                {
+                    _logger.Error(e, "Couldn't process installer URL");
+                }
             }
 
 
