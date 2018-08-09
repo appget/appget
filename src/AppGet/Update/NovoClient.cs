@@ -12,7 +12,7 @@ namespace AppGet.Update
     {
         private readonly IHttpClient _httpClient;
 
-        private const string NOVO_ROOT = "https://appget-novo.azurewebsites.net";
+        private const string NOVO_ROOT = "https://novo.appget.net";
 
         public NovoClient(IHttpClient httpClient)
         {

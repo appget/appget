@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using AppGet.Crypto.Hash;
 using AppGet.ProgressTracker;
 using NLog;
@@ -10,8 +11,8 @@ namespace AppGet.FileTransfer
 {
     public interface IFileTransferService
     {
-        string TransferFile(string source, string destinationFolder, string sha256);
-        string ReadContentAsync(string source);
+        Task<string> TransferFile(string source, string destinationFolder, string sha256);
+        Task<string> ReadContentAsync(string source);
     }
 
     public class FileTransferService : IFileTransferService
@@ -45,11 +46,11 @@ namespace AppGet.FileTransfer
             return client;
         }
 
-        public string TransferFile(string source, string destinationFolder, string sha256)
+        public async Task<string> TransferFile(string source, string destinationFolder, string sha256)
         {
             _logger.Debug($"Transfering file from {source} to {destinationFolder}");
             var client = GetClient(source);
-            var fileName = client.GetFileName(source);
+            var fileName = await client.GetFileName(source);
             var destinationPath = Path.Combine(destinationFolder, fileName);
 
             if (_transferCacheService.IsValid(destinationPath, sha256))
@@ -79,11 +80,11 @@ namespace AppGet.FileTransfer
             return destinationPath;
         }
 
-        public string ReadContentAsync(string source)
+        public async Task<string> ReadContentAsync(string source)
         {
             var client = GetClient(source);
 
-            return client.ReadString(source);
+            return await client.ReadString(source);
         }
     }
 }

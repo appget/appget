@@ -49,7 +49,7 @@ namespace AppGet.Commands.CreateManifest
                 throw new InvalidCommandParamaterException("Invalid download URL. Make sure you enter a valid fully qualified download URL.", createOptions);
             }
 
-            var manifestBuilder = _xRayClient.GetBuilder(new Uri(createOptions.DownloadUrl));
+            var manifestBuilder = await _xRayClient.GetBuilder(new Uri(createOptions.DownloadUrl));
 
             _installerBuilder.Compose(manifestBuilder.Installers.Single());
 
@@ -65,7 +65,7 @@ namespace AppGet.Commands.CreateManifest
 
                 try
                 {
-                    var manifestBuilder2 = _xRayClient.GetInstallerBuilder(new Uri(url));
+                    var manifestBuilder2 = await _xRayClient.GetInstallerBuilder(new Uri(url));
                     _installerBuilder.Compose(manifestBuilder2);
                     manifestBuilder.Installers.Add(manifestBuilder2);
                 }
@@ -85,7 +85,7 @@ namespace AppGet.Commands.CreateManifest
             {
                 try
                 {
-                    var resp = _submissionClient.Submit(manifestBuilder);
+                    var resp = await _submissionClient.Submit(manifestBuilder);
                     _logger.Info("Thank you for your submission.");
                     _logger.Info(resp.Message);
                 }

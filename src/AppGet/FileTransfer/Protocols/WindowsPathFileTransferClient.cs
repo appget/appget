@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using AppGet.ProgressTracker;
 
 namespace AppGet.FileTransfer.Protocols
@@ -32,13 +33,13 @@ namespace AppGet.FileTransfer.Protocols
             OnCompleted?.Invoke(progress);
         }
 
-        public string ReadString(string source)
+        public async Task<string> ReadString(string source)
         {
             using (var reader = File.OpenText(source))
             {
                 try
                 {
-                    return reader.ReadToEndAsync().Result;
+                    return await reader.ReadToEndAsync();
                 }
                 catch (AggregateException e)
                 {
@@ -47,9 +48,9 @@ namespace AppGet.FileTransfer.Protocols
             }
         }
 
-        public string GetFileName(string source)
+        public Task<string> GetFileName(string source)
         {
-            return new FileInfo(source).Name;
+            return Task.FromResult(new FileInfo(source).Name);
         }
 
         public Action<ProgressState> OnStatusUpdated { get; set; }

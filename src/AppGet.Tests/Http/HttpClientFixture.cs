@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using AppGet.HostSystem;
 using AppGet.Http;
 using FluentAssertions;
@@ -10,10 +11,10 @@ namespace AppGet.Tests.Http
     public class HttpClientFixture : TestBase<HttpClient>
     {
         [Test]
-        public void should_send_gzip_headers()
+        public async Task should_send_gzip_headers()
         {
             Mocker.SetInstance<IUserAgentBuilder>(new UserAgentBuilder(new EnvInfo()));
-            var res = Subject.Get(new Uri("https://api.appget.net/packages?q=vlc"));
+            var res = await Subject.GetAsync(new Uri("https://nex.appget.net/packages?q=vlc"));
 
             res.EnsureSuccessStatusCode();
             res.RequestMessage.Headers.AcceptEncoding.ToString().Should().Contain("gzip");

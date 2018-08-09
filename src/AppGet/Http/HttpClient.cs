@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -8,9 +7,7 @@ namespace AppGet.Http
 {
     public interface IHttpClient
     {
-        HttpResponseMessage Send(HttpRequestMessage request, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead);
         Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead);
-        HttpResponseMessage Get(Uri uri, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead);
         Task<HttpResponseMessage> GetAsync(Uri uri, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead);
     }
 
@@ -38,18 +35,6 @@ namespace AppGet.Http
             _client.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate");
         }
 
-        public HttpResponseMessage Send(HttpRequestMessage request, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead)
-        {
-            try
-            {
-                return SendAsync(request, completionOption).Result;
-            }
-            catch (AggregateException ex)
-            {
-                throw ex.Flatten().InnerExceptions.First();
-            }
-        }
-
 
         public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead)
         {
@@ -66,11 +51,6 @@ namespace AppGet.Http
             }
 
             return response;
-        }
-
-        public HttpResponseMessage Get(Uri uri, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead)
-        {
-            return Send(new HttpRequestMessage(HttpMethod.Get, uri), completionOption);
         }
 
         public Task<HttpResponseMessage> GetAsync(Uri uri, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead)

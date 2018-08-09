@@ -1,4 +1,5 @@
-﻿using AppGet.ProgressTracker;
+﻿using System.Threading.Tasks;
+using AppGet.ProgressTracker;
 
 namespace AppGet.FileTransfer
 {
@@ -6,7 +7,7 @@ namespace AppGet.FileTransfer
     {
         bool CanHandleProtocol(string source);
         void TransferFile(string source, string destinationFile);
-        string ReadString(string source);
-        string GetFileName(string source);
+        Task<string> ReadString(string source);
+        Task<string> GetFileName(string source);
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using AppGet.Http;
 using AppGet.Manifest;
 using NLog;
@@ -13,7 +14,7 @@ namespace AppGet.PackageRepository
         private readonly IHttpClient _httpClient;
         private readonly Logger _logger;
 
-        private const string API_ROOT = "https://api.appget.net";
+        private const string API_ROOT = "https://nex.appget.net";
 
         public OfficialPackageRepository(IHttpClient httpClient, Logger logger)
         {
@@ -21,7 +22,7 @@ namespace AppGet.PackageRepository
             _logger = logger;
         }
 
-        public PackageInfo Get(string id, string tag)
+        public async Task<PackageInfo> GetAsync(string id, string tag)
         {
             _logger.Info($"Getting package {id}:{tag ?? PackageManifest.LATEST_TAG}");
 
@@ -34,7 +35,7 @@ namespace AppGet.PackageRepository
                     term += $":{tag}";
                 }
 
-                var packages = Search(term, true).ToList();
+                var packages = await Search(term, true);
 
                 var match = packages.FirstOrDefault(c => c.Selected);
 
@@ -56,7 +57,7 @@ namespace AppGet.PackageRepository
             }
         }
 
-        public List<PackageInfo> Search(string term, bool select = false)
+        public async Task<List<PackageInfo>> Search(string term, bool @select = false)
         {
             _logger.Debug($"Searching for '{term}' in {API_ROOT}");
 
@@ -67,7 +68,7 @@ namespace AppGet.PackageRepository
                 uri = new Uri($"{uri}&s=1");
             }
 
-            var package = _httpClient.Get(uri);
+            var package = await _httpClient.GetAsync(uri);
 
             return package.Deserialize<List<PackageInfo>>();
         }

@@ -28,8 +28,8 @@ namespace AppGet.Commands.Update
         {
             var updateOptions = (UpdateOptions)commandOptions;
 
-            var package = _packageRepository.Get(updateOptions.PackageId, updateOptions.Tag);
-            var manifest = _packageManifestService.LoadManifest(package.ManifestPath);
+            var package = await _packageRepository.GetAsync(updateOptions.PackageId, updateOptions.Tag);
+            var manifest = await _packageManifestService.LoadManifest(package.ManifestPath);
 
             var installOptions = new InstallOptions
             {

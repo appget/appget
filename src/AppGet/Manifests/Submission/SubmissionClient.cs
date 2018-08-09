@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using AppGet.Http;
 using AppGet.Manifest.Builder;
 using AppGet.Manifest.Serialization;
@@ -20,7 +21,7 @@ namespace AppGet.Manifests.Submission
 
     public interface ISubmissionClient
     {
-        SubmissionResponse Submit(PackageManifestBuilder builder);
+        Task<SubmissionResponse> Submit(PackageManifestBuilder builder);
     }
 
     public class SubmissionClient : ISubmissionClient
@@ -32,14 +33,14 @@ namespace AppGet.Manifests.Submission
             _httpClient = httpClient;
         }
 
-        public SubmissionResponse Submit(PackageManifestBuilder builder)
+        public async Task<SubmissionResponse> Submit(PackageManifestBuilder builder)
         {
-            var req = new HttpRequestMessage(HttpMethod.Post, "https://api.appget.net/github/pr")
+            var req = new HttpRequestMessage(HttpMethod.Post, "https://octobot.appget.net/pr")
             {
                 Content = new StringContent(Json.Serialize(builder), Encoding.UTF8, "application/json")
             };
 
-            var resp = _httpClient.Send(req);
+            var resp = await _httpClient.SendAsync(req);
             return resp.Deserialize<SubmissionResponse>();
         }
     };

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Threading.Tasks;
 using AppGet.Http;
 using AppGet.Manifest.Builder;
 using NLog;
@@ -8,8 +9,8 @@ namespace AppGet.CreatePackage
 {
     public interface IXRayClient
     {
-        PackageManifestBuilder GetBuilder(Uri uri, string name = null);
-        InstallerBuilder GetInstallerBuilder(Uri uri);
+        Task<PackageManifestBuilder> GetBuilder(Uri uri, string name = null);
+        Task<InstallerBuilder> GetInstallerBuilder(Uri uri);
     }
 
     public class XRayClient : IXRayClient
@@ -23,7 +24,7 @@ namespace AppGet.CreatePackage
             _logger = logger;
         }
 
-        public PackageManifestBuilder GetBuilder(Uri uri, string name = null)
+        public async Task<PackageManifestBuilder> GetBuilder(Uri uri, string name = null)
         {
             var url = $"https://xray.appget.net/xray?url={WebUtility.UrlEncode(uri.ToString())}";
 
@@ -35,7 +36,7 @@ namespace AppGet.CreatePackage
             _logger.Info($"Requesting analysis on {uri}");
             _logger.Info("This could take a couple of minutes...");
 
-            var resp = _httpClient.Get(new Uri(url));
+            var resp = await _httpClient.GetAsync(new Uri(url));
             var builder = resp.Deserialize<PackageManifestBuilder>();
 
             _logger.Debug($"Received results for {uri}");
@@ -43,11 +44,11 @@ namespace AppGet.CreatePackage
             return builder;
         }
 
-        public InstallerBuilder GetInstallerBuilder(Uri uri)
+        public async Task<InstallerBuilder> GetInstallerBuilder(Uri uri)
         {
             var url = $"https://xray.appget.net/xray/installer?url={WebUtility.UrlEncode(uri.ToString())}";
 
-            var resp = _httpClient.Get(new Uri(url));
+            var resp = await _httpClient.GetAsync(new Uri(url));
             var builder = resp.Deserialize<InstallerBuilder>();
 
             return builder;

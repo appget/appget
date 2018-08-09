@@ -43,7 +43,7 @@ namespace AppGet.Installers
             var whisperer = _installWhisperers.Single(c => c.CanHandle(packageManifest.InstallMethod));
 
             var installer = _findInstaller.GetBestInstaller(packageManifest.Installers);
-            var installerPath = _fileTransferService.TransferFile(installer.Location, _pathResolver.TempFolder, installer.Sha256);
+            var installerPath = await _fileTransferService.TransferFile(installer.Location, _pathResolver.TempFolder, installer.Sha256);
 
 
             await _unlocker.UnlockFolder(packageManifest);

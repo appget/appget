@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using AppGet.Manifest;
 using AppGet.PackageRepository;
 using FluentAssertions;
@@ -11,12 +12,12 @@ namespace AppGet.Tests.PackageRepository
     {
         [TestCase("vlc")]
         [TestCase("7zip")]
-        public void should_get_package(string package)
+        public async Task should_get_package(string package)
         {
 
             WithRealHttp();
 
-            var latest = Subject.Get(package, null);
+            var latest = await Subject.GetAsync(package, null);
 
             latest.Should().NotBeNull();
             latest.ManifestPath.Should().StartWith("https://raw.githubusercontent.com/appget/packages/master/manifests/");
@@ -25,12 +26,12 @@ namespace AppGet.Tests.PackageRepository
         }
 
 
-        [TestCase("linqpad","5")]
-        public void should_default_to_highest_tag(string package, string tag)
+        [TestCase("linqpad", "5")]
+        public async Task should_default_to_highest_tag(string package, string tag)
         {
             WithRealHttp();
 
-            var latest = Subject.Get(package, null);
+            var latest = await Subject.GetAsync(package, null);
 
             latest.Should().NotBeNull();
             latest.ManifestPath.Should().StartWith("https://raw.githubusercontent.com/appget/packages/master/manifests/");
@@ -43,24 +44,24 @@ namespace AppGet.Tests.PackageRepository
         {
             WithRealHttp();
 
-            Assert.Throws<PackageNotFoundException>(() => Subject.Get("bad-package-id", null));
+            Assert.ThrowsAsync<PackageNotFoundException>(() => Subject.GetAsync("bad-package-id", null));
         }
 
         [Test]
         public void should_get_null_for_unknown_tag()
         {
             WithRealHttp();
-            Assert.Throws<PackageNotFoundException>(() => Subject.Get("vlc", "1"));
+            Assert.ThrowsAsync<PackageNotFoundException>(() => Subject.GetAsync("vlc", "1"));
         }
 
         [TestCase("vlc")]
         [TestCase("plus")]
         [TestCase("zip")]
-        public void should_search_package(string term)
+        public async Task should_search_package(string term)
         {
             WithRealHttp();
 
-            var results = Subject.Search(term);
+            var results = await Subject.Search(term);
 
             var found = results.First();
 
@@ -73,7 +74,7 @@ namespace AppGet.Tests.PackageRepository
         public void should_get_manifest()
         {
             WithRealHttp();
-            var c = Subject.Get("postman", null);
+            var c = Subject.GetAsync("postman", null);
 
             c.Should().NotBeNull();
         }

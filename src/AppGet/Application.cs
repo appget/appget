@@ -105,7 +105,10 @@ namespace AppGet
             }
             finally
             {
-                updatedService?.Commit();
+                if (updatedService != null)
+                {
+                    await updatedService.Commit();
+                }
             }
         }
 

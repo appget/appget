@@ -20,7 +20,7 @@ namespace AppGet.Commands.Search
         public async Task Execute(AppGetOption commandOptions)
         {
             var searchOptions = (SearchOptions)commandOptions;
-            _packageSearchService.DisplayResults(searchOptions.Query);
+            await _packageSearchService.DisplayResults(searchOptions.Query);
         }
     }
 }

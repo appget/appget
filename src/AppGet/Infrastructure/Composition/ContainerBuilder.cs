@@ -105,7 +105,7 @@ namespace AppGet.Infrastructure.Composition
                 typeof(OfficialPackageRepository)
             });
 
-            container.Register<IPackageRepository, AggregateRepository>();
+            container.Register<IPackageRepository, OfficialPackageRepository>();
         }
     }
 }

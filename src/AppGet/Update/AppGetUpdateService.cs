@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AppGet.Commands.Install;
 using AppGet.Github.Releases;
 using AppGet.Installers;
+using AppGet.Installers.Inno;
 using AppGet.Manifest;
 using NLog;
 
@@ -14,7 +15,7 @@ namespace AppGet.Update
     public interface IAppGetUpdateService
     {
         void Start();
-        void Commit();
+        Task Commit();
     }
 
     public class AppGetUpdateService : IAppGetUpdateService
@@ -36,7 +37,7 @@ namespace AppGet.Update
             _releaseTask = _releaseClient.GetReleases();
         }
 
-        public void Commit()
+        public async Task Commit()
         {
             try
             {
@@ -66,7 +67,7 @@ namespace AppGet.Update
                     }
                 };
 
-                _installService.Install(manifest, new InstallOptions
+                await _installService.Install(manifest, new InstallOptions
                 {
                     Force = true,
                     Package = manifest.Id
