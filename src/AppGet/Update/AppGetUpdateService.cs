@@ -41,7 +41,7 @@ namespace AppGet.Update
         {
             try
             {
-                var releases = _releaseTask.Result;
+                var releases = await _releaseTask;
                 var latest = releases.OrderByDescending(c => c.Version).First();
                 var current = Assembly.GetEntryAssembly().GetName().Version;
 

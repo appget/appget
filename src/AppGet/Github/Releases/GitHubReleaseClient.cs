@@ -31,7 +31,7 @@ namespace AppGet.Github.Releases
                 _logger.Trace("Checking for AppGet updates...");
                 var uri = new Uri($"https://api.github.com/repos/appget/appget/releases?{GithubKeys.AuthQuery}&no_cache={Guid.NewGuid()}");
                 var response = await _httpClient.GetAsync(uri);
-                var releases = response.Deserialize<List<GithubRelease>>();
+                var releases = await response.Deserialize<List<GithubRelease>>();
                 _logger.Trace($"Found {releases.Count} AppGet releases");
 
                 return releases.Select(c => new AppGetRelease

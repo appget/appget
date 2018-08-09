@@ -70,7 +70,7 @@ namespace AppGet.PackageRepository
 
             var package = await _httpClient.GetAsync(uri);
 
-            return package.Deserialize<List<PackageInfo>>();
+            return await package.Deserialize<List<PackageInfo>>();
         }
     }
 }

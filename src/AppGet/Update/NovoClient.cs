@@ -29,7 +29,7 @@ namespace AppGet.Update
             var resp = await _httpClient.SendAsync(request);
 
 
-            return resp.Deserialize<List<PackageUpdate>>();
+            return await resp.Deserialize<List<PackageUpdate>>();
         }
 
 
@@ -42,7 +42,7 @@ namespace AppGet.Update
 
             var resp = await _httpClient.SendAsync(request);
 
-            return resp.Deserialize<List<PackageUpdate>>();
+            return await resp.Deserialize<List<PackageUpdate>>();
         }
     }
 }

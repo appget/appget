@@ -1,27 +1,20 @@
-﻿using System;
-using System.Linq;
-using System.Net.Http;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
 using AppGet.Manifest.Serialization;
 
 namespace AppGet.Http
 {
     public static class HttpExtension
     {
-        public static string ReadAsString(this HttpContent content)
+        public static async Task<string> ReadAsString(this HttpContent content)
         {
-            try
-            {
-                return content.ReadAsStringAsync().Result;
-            }
-            catch (AggregateException ex)
-            {
-                throw ex.Flatten().InnerExceptions.First();
-            }
+            return await content.ReadAsStringAsync();
         }
 
-        public static T Deserialize<T>(this HttpResponseMessage response)
+        public static async Task<T> Deserialize<T>(this HttpResponseMessage response)
         {
-            return Json.Deserialize<T>(response.Content.ReadAsString());
+            var json = await response.Content.ReadAsStringAsync();
+            return Json.Deserialize<T>(json);
         }
     }
 }
