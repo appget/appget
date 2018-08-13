@@ -51,7 +51,7 @@ namespace AppGet.Tests.Update
         {
             var updates = await Subject.GetUninstall(_installerRecords, "python");
             updates.Should().NotBeEmpty();
-            updates.Should().HaveCount(1);
+            updates.Should().NotBeEmpty();
             updates[0].InstallMethod.Should().Be(InstallMethodTypes.Wix);
             updates[0].PackageId.Should().Be("python");
         }
