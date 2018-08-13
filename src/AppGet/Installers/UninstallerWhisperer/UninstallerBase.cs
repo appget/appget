@@ -60,7 +60,12 @@ namespace AppGet.Installers.UninstallerWhisperer
             {
                 uninstallString = uninstallString.Trim('"');
                 var index = uninstallString.IndexOf(@"""");
-                return Path.GetFullPath(uninstallString.Substring(0, index)).Trim('"');
+                if (index > 0)
+                {
+                    uninstallString = Path.GetFullPath(uninstallString.Substring(0, index)).Trim('"');
+                }
+
+                return uninstallString;
             }
 
             return null;

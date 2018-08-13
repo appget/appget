@@ -23,10 +23,18 @@ namespace AppGet.Commands.Outdated
 
         public async Task Execute(AppGetOption commandOptions)
         {
-            var updates = await _updateService.GetUpdates();
+            var matches = await _updateService.GetUpdates();
 
-            Console.WriteLine("Available Updates:");
-            updates.Where(c => c.Status == UpdateStatus.Available).ShowTable();
+            var updates = matches.Where(c => c.Status == UpdateStatus.Available).ToList();
+            if (updates.Any())
+            {
+                Console.WriteLine("{0} Available Updates:", updates.Count);
+                updates.ShowTable();
+            }
+            else
+            {
+                Console.WriteLine("No updates were found.");
+            }
 
 
             if (commandOptions.Verbose)
@@ -34,7 +42,7 @@ namespace AppGet.Commands.Outdated
                 Console.WriteLine("");
                 Console.WriteLine("Latest Version Already Installed:", Color.Green);
 
-                var upToDate = updates.Where(c => c.Status == UpdateStatus.UpToDate);
+                var upToDate = matches.Where(c => c.Status == UpdateStatus.UpToDate);
 
                 upToDate.ShowTable();
             }
