@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
@@ -15,7 +16,7 @@ namespace AppGet.Windows.WindowsInstaller
             @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall",
         };
 
-        public IEnumerable<WindowsInstallerRecord> GetRecords()
+        public List<WindowsInstallerRecord> GetRecords()
         {
             var keys = new List<WindowsInstallerRecord>();
 
@@ -72,6 +73,29 @@ namespace AppGet.Windows.WindowsInstaller
                     Values = values,
                 };
             }
+        }
+
+
+        public Dictionary<string, string> GetKey(string id)
+        {
+            var path = $@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{id}";
+            foreach (var hive in Hives)
+            {
+                foreach (var view in Views)
+                {
+                    using (var baseKey = RegistryKey.OpenBaseKey(hive, view))
+                    {
+                        var key = baseKey.OpenSubKey(path);
+                        if (key != null)
+                        {
+                            var names = key.GetValueNames().ToList();
+                            return names.ToDictionary(c => c, c => key.GetValue(c).ToString());
+                        }
+                    }
+                }
+            }
+
+            throw new InvalidOperationException($"Registry key {id} not found");
         }
 
     }

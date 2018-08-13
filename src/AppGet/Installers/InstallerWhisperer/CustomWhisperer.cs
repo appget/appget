@@ -1,12 +1,9 @@
 ﻿using System.Collections.Generic;
-using AppGet.HostSystem;
 using AppGet.Manifest;
-using AppGet.Windows;
-using NLog;
 
-namespace AppGet.Installers.Custom
+namespace AppGet.Installers.InstallerWhisperer
 {
-    public class CustomWhisperer : InstallerWhispererBase
+    public class CustomWhisperer : InstallerBase
     {
 
         public override Dictionary<int, ExistReason> ExitCodes => new Dictionary<int, ExistReason>
@@ -29,16 +26,11 @@ namespace AppGet.Installers.Custom
             },
         };
 
-        public CustomWhisperer(IProcessController processController, IPathResolver pathResolver, Logger logger)
-            : base(processController, pathResolver, logger)
-        {
-        }
 
         public override InstallMethodTypes InstallMethod => InstallMethodTypes.Custom;
 
-        protected override string InteractiveArgs => null;
-        protected override string PassiveArgs => null;
-        protected override string SilentArgs => null;
-        protected override string LogArgs => null;
+        public override string PassiveArgs => null;
+        public override string SilentArgs => null;
+        public override string LogArgs => null;
     }
 }

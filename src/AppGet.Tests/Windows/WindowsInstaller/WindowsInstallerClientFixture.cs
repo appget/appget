@@ -6,7 +6,7 @@ using FluentAssertions;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
-namespace AppGet.Tests.WindowsInstaller
+namespace AppGet.Tests.Windows.WindowsInstaller
 {
     [TestFixture]
     public class WindowsInstallerClientFixture : TestBase<WindowsInstallerClient>
@@ -30,6 +30,19 @@ namespace AppGet.Tests.WindowsInstaller
             keys.Should().OnlyHaveUniqueItems(c => c.Id + c.Is64);
 
             keys.Should().OnlyContain(c => c.Values.Any());
+        }
+
+
+        [Test]
+        public void should_get_key_by_id()
+        {
+            var installerRecords = Subject.GetRecords().Where(c => !c.IsUpgradeNode).ToList();
+
+            foreach (var record in installerRecords)
+            {
+                var keys = Subject.GetKey(record.Id);
+                keys.Should().NotBeNull();
+            }
 
         }
     }

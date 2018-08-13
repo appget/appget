@@ -1202,6 +1202,9 @@ namespace AppGet.Infrastructure.Composition
 #if EXPRESSIONS
             public RegisterOptions UsingConstructor<RegisterType>(Expression<Func<RegisterType>> constructor)
             {
+                if(!IsValidAssignment(_Registration.Type, typeof(RegisterType)))
+                    throw new TinyIoCConstructorResolutionException(typeof(RegisterType));
+
                 var lambda = constructor as LambdaExpression;
                 if (lambda == null)
                     throw new TinyIoCConstructorResolutionException(typeof(RegisterType));

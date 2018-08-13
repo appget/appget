@@ -2,6 +2,7 @@
 using System.Security.Principal;
 using AppGet.FileSystem;
 using AppGet.HostSystem;
+using JetBrains.Annotations;
 
 namespace AppGet.AppData
 {
@@ -10,6 +11,7 @@ namespace AppGet.AppData
         void EnsureAppDataDirectoryExists();
     }
 
+    [UsedImplicitly]
     public class AppDataService : IAppDataService
     {
         private readonly IPathResolver _pathResolver;

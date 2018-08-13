@@ -1,12 +1,9 @@
 ﻿using System.Collections.Generic;
-using AppGet.HostSystem;
 using AppGet.Manifest;
-using AppGet.Windows;
-using NLog;
 
-namespace AppGet.Installers.Inno
+namespace AppGet.Installers.InstallerWhisperer
 {
-    public class InnoWhisperer : InstallerWhispererBase
+    public class InnoWhisperer : InstallerBase
     {
         // http://www.jrsoftware.org/ishelp/index.php?topic=setupexitcodes
         public override Dictionary<int, ExistReason> ExitCodes => new Dictionary<int, ExistReason>
@@ -41,19 +38,13 @@ namespace AppGet.Installers.Inno
             },
         };
 
-        public InnoWhisperer(IProcessController processController, IPathResolver pathResolver, Logger logger)
-            : base(processController, pathResolver, logger)
-        {
-        }
-
         public override InstallMethodTypes InstallMethod => InstallMethodTypes.Inno;
 
         //Command line args: http://www.jrsoftware.org/ishelp/index.php?topic=setupcmdline
 
         private const string BASE_ARG = "/NOCANCEL /SUPPRESSMSGBOXES /NORESTART /CLOSEAPPLICATIONS /FORCECLOSEAPPLICATIONS /NORESTARTAPPLICATIONS /RESTARTEXITCODE=3010";
-        protected override string InteractiveArgs => "";
-        protected override string PassiveArgs => $"/SILENT {BASE_ARG}";
-        protected override string SilentArgs => $"/VERYSILENT {BASE_ARG}";
-        protected override string LogArgs => "/LOG={path}";
+        public override string PassiveArgs => $"/SILENT {BASE_ARG}";
+        public override string SilentArgs => $"/VERYSILENT {BASE_ARG}";
+        public override string LogArgs => "/LOG={path}";
     }
 }

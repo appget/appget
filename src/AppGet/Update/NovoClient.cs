@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using AppGet.Http;
-using AppGet.Manifest.Serialization;
 using AppGet.Windows.WindowsInstaller;
 
 namespace AppGet.Update
@@ -23,7 +21,7 @@ namespace AppGet.Update
         {
             var request = new HttpRequestMessage(HttpMethod.Post, $"{NOVO_ROOT}/updates")
             {
-                Content = new StringContent(Json.Serialize(records), Encoding.Default, "application/json")
+                Content = new JsonContent(records)
             };
 
             var resp = await _httpClient.SendAsync(request);
@@ -37,12 +35,24 @@ namespace AppGet.Update
         {
             var request = new HttpRequestMessage(HttpMethod.Post, $"{NOVO_ROOT}/updates?pkg={packageId}")
             {
-                Content = new StringContent(Json.Serialize(records), Encoding.Default, "application/json")
+                Content = new JsonContent(records)
             };
 
             var resp = await _httpClient.SendAsync(request);
 
             return await resp.Deserialize<List<PackageUpdate>>();
+        }
+
+        public async Task<List<UninstallData>> GetUninstall(IEnumerable<WindowsInstallerRecord> records, string packageId)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Post, $"{NOVO_ROOT}/uninstall?pkg={packageId}")
+            {
+                Content = new JsonContent(records)
+            };
+
+            var resp = await _httpClient.SendAsync(request);
+
+            return await resp.Deserialize<List<UninstallData>>();
         }
     }
 }

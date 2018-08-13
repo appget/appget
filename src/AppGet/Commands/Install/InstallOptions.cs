@@ -1,3 +1,4 @@
+using AppGet.Installers;
 using CommandLine;
 
 namespace AppGet.Commands.Install
@@ -30,7 +31,7 @@ namespace AppGet.Commands.Install
             }
         }
 
-        [Option('s', "silent", HelpText = "Attempt to start the installer completely silently without showing any user dialogs")]
+        [Option('s', "silent", HelpText = "Attempt to start the installer completely silently without showing any dialogs")]
         public bool Silent
         {
             get => _silent;
@@ -52,6 +53,38 @@ namespace AppGet.Commands.Install
             {
                 Silent = false;
                 Interactive = false;
+            }
+        }
+
+        public InstallInteractivityLevels InteractivityLevel
+        {
+            get
+            {
+                if (Interactive) return InstallInteractivityLevels.Interactive;
+                if (Silent) return InstallInteractivityLevels.Silent;
+                return InstallInteractivityLevels.Passive;
+            }
+
+            set
+            {
+                switch (value)
+                {
+                    case InstallInteractivityLevels.Interactive:
+                        {
+                            Interactive = true;
+                            break;
+                        }
+                    case InstallInteractivityLevels.Passive:
+                        {
+                            Passive = true;
+                            break;
+                        }
+                    case InstallInteractivityLevels.Silent:
+                        {
+                            Silent = true;
+                            break;
+                        }
+                }
             }
         }
     }

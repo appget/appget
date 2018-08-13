@@ -18,29 +18,29 @@
                 switch (category)
                 {
                     case ExitCodeTypes.Failed:
-                    {
-                        Message = ERROR;
+                        {
+                            Message = ERROR;
 
-                        break;
-                    }
+                            break;
+                        }
                     case ExitCodeTypes.UserCanceled:
-                    {
-                        Message = CANCELED;
+                        {
+                            Message = CANCELED;
 
-                        break;
-                    }
+                            break;
+                        }
                     case ExitCodeTypes.RestartRequired:
-                    {
-                        Message = success ? RESTART_REQUIRED_SUCCESS : RESTART_REQUIRED_FAILED;
+                        {
+                            Message = success ? RESTART_REQUIRED_SUCCESS : RESTART_REQUIRED_FAILED;
 
-                        break;
-                    }
+                            break;
+                        }
                     case ExitCodeTypes.RequirementUnmet:
-                    {
-                        Message = ERROR;
+                        {
+                            Message = ERROR;
 
-                        break;
-                    }
+                            break;
+                        }
                 }
             }
         }

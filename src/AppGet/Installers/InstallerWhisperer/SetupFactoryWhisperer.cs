@@ -1,12 +1,9 @@
 ﻿using System.Collections.Generic;
-using AppGet.HostSystem;
 using AppGet.Manifest;
-using AppGet.Windows;
-using NLog;
 
-namespace AppGet.Installers.SetupFactory
+namespace AppGet.Installers.InstallerWhisperer
 {
-    public class SetupFactoryWhisperer : InstallerWhispererBase
+    public class SetupFactoryWhisperer : InstallerBase
     {
         // https://www.indigorose.com/webhelp/suf9/Program_Reference/Setup_Return_Codes.htm
         public override Dictionary<int, ExistReason> ExitCodes => new Dictionary<int, ExistReason>
@@ -23,16 +20,12 @@ namespace AppGet.Installers.SetupFactory
 
         };
 
-        public SetupFactoryWhisperer(IProcessController processController, IPathResolver pathResolver, Logger logger)
-            : base(processController, pathResolver, logger)
-        {
-        }
-
         public override InstallMethodTypes InstallMethod => InstallMethodTypes.SetupFactory;
 
         //Command line args: https://www.indigorose.com/webhelp/suf9/Program_Reference/Command_Line_Options.htm#Install_Command_Line_Options
-        protected override string InteractiveArgs => "/W";
-        protected override string PassiveArgs => null;
-        protected override string SilentArgs => "/W /S";
+        public override string InteractiveArgs => "/W";
+        public override string PassiveArgs => null;
+        public override string SilentArgs => "/W /S";
+        public override string LogArgs { get; }
     }
 }

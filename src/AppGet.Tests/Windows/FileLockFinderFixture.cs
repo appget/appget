@@ -7,6 +7,7 @@ using NUnit.Framework;
 namespace AppGet.Tests.Windows
 {
     [TestFixture]
+    [Explicit]
     public class FileLockFinderFixture
     {
         [Test]

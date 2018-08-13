@@ -129,20 +129,28 @@
     <Compile Include="CreatePackage\Parsers\VersionParser.cs" />
     <Compile Include="CreatePackage\Root\Prompts\HomePagePrompt.cs" />
     <Compile Include="CreatePackage\XRayClient.cs" />
-    <Compile Include="Crypto\Certificates\FileSignatureService.cs" />
     <Compile Include="Crypto\Hash\ChecksumVerificationException.cs" />
     <Compile Include="Crypto\Hash\ChecksumService.cs" />
     <Compile Include="Extensions\FileVersionInfoExtensions.cs" />
     <Compile Include="FileTransfer\Protocols\WebClientWithTimeout.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Http\JsonContent.cs" />
+    <Compile Include="Installers\InstallerWhisperer\InstallerBase.cs" />
+    <Compile Include="Installers\UninstallerWhisperer\InnoUninstaller.cs" />
+    <Compile Include="Installers\UninstallerWhisperer\MsiUninstaller.cs" />
+    <Compile Include="Installers\UninstallerWhisperer\NsisUninstaller.cs" />
+    <Compile Include="Installers\UninstallerWhisperer\SquirrelUninstaller.cs" />
+    <Compile Include="Installers\InstallInteractivityLevels.cs" />
+    <Compile Include="Installers\UninstallerWhisperer\UninstallerBase.cs" />
+    <Compile Include="Installers\UninstallerWhisperer\WixWhisperer.cs" />
     <Compile Include="Update\NovoClient.cs" />
     <Compile Include="Github\GithubKeys.cs" />
     <Compile Include="Installers\ExistReason.cs" />
     <Compile Include="Installers\ExitCodeTypes.cs" />
-    <Compile Include="Installers\AdvancedInstaller\AdvancedInstallerWhisperer.cs" />
-    <Compile Include="Installers\SetupFactory\SetupFactoryWhisperer.cs" />
-    <Compile Include="Installers\InstallBuilder\InstallBuilderWhisperer.cs" />
+    <Compile Include="Installers\InstallerWhisperer\AdvancedInstallerWhisperer.cs" />
+    <Compile Include="Installers\InstallerWhisperer\SetupFactoryWhisperer.cs" />
+    <Compile Include="Installers\InstallerWhisperer\InstallBuilderWhisperer.cs" />
     <Compile Include="Installers\InstallerException.cs" />
     <Compile Include="Extensions\UriExtensions.cs" />
     <Compile Include="FileTransfer\InvalidDownloadUrlException.cs" />
@@ -163,9 +171,9 @@
     <Compile Include="FileTransfer\Protocols\HttpFileTransferClient.cs" />
     <Compile Include="FileTransfer\IFileTransferClient.cs" />
     <Compile Include="Infrastructure\Logging\SentryTarget.cs" />
-    <Compile Include="Installers\Wix\WixWhisperer.cs" />
-    <Compile Include="Installers\Custom\CustomWhisperer.cs" />
-    <Compile Include="Installers\Squirrel\SquirrelWhisperer.cs" />
+    <Compile Include="Installers\InstallerWhisperer\WixWhisperer.cs" />
+    <Compile Include="Installers\InstallerWhisperer\CustomWhisperer.cs" />
+    <Compile Include="Installers\InstallerWhisperer\SquirrelWhisperer.cs" />
     <Compile Include="Exceptions\AppGetException.cs" />
     <Compile Include="HostSystem\PathResolver.cs" />
     <Compile Include="Http\GZipWebClient.cs">
@@ -174,19 +182,17 @@
     <Compile Include="Http\HttpClient.cs" />
     <Compile Include="Infrastructure\Logging\LogConfigurator.cs" />
     <Compile Include="Update\PackageUpdate.cs" />
+    <Compile Include="Update\UninstallData.cs" />
     <Compile Include="Update\UpdateService.cs" />
     <Compile Include="Windows\Unlocker.cs" />
     <Compile Include="Windows\FileLockFinder.cs" />
     <Compile Include="Windows\ManagementObject.cs" />
     <Compile Include="Windows\WindowsInstaller\WindowsInstallerClient.cs" />
-    <Compile Include="Installers\Inno\InnoWhisperer.cs" />
+    <Compile Include="Installers\InstallerWhisperer\InnoWhisperer.cs" />
     <Compile Include="Installers\InstallService.cs" />
-    <Compile Include="Installers\IInstallerWhisperer.cs" />
-    <Compile Include="Installers\InstallShield\InstallShieldWhisper.cs" />
-    <Compile Include="Installers\Msi\MsiWhisperer.cs" />
-    <Compile Include="Installers\Nsis\NsisWhisperer.cs" />
-    <Compile Include="Installers\UninstallService.cs" />
-    <Compile Include="Installers\InstallerWhispererBase.cs" />
+    <Compile Include="Installers\InstallerWhisperer\InstallShieldWhisper.cs" />
+    <Compile Include="Installers\InstallerWhisperer\MsiWhisperer.cs" />
+    <Compile Include="Installers\InstallerWhisperer\NsisWhisperer.cs" />
     <Compile Include="Commands\AppGetOption.cs" />
     <Compile Include="Commands\PackageCommandOptions.cs" />
     <Compile Include="Commands\OptionException.cs" />
@@ -236,6 +242,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CreatePackage\ManifestBuilder\" />
+    <Folder Include="Uninstaller\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Colorful.Console">
@@ -246,6 +253,9 @@
     </PackageReference>
     <PackageReference Include="InputSimulatorPlus">
       <Version>1.0.7</Version>
+    </PackageReference>
+    <PackageReference Include="JetBrains.Annotations">
+      <Version>2018.2.1</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>9.0.1</Version>

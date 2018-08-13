@@ -7,7 +7,7 @@ namespace AppGet.Windows
 {
     public interface IProcessController
     {
-        Process Start(string path, string args = null, bool useShellExecute = true);
+        Process Start(string fileName, string args = null, bool useShellExecute = true);
         Process GetProcess(int processId);
         void Kill(Process process, int timeout);
         void WaitForExit(Process process, int? timeout = null);
@@ -23,11 +23,11 @@ namespace AppGet.Windows
             _logger = logger;
         }
 
-        public Process Start(string path, string args = null, bool useShellExecute = true)
+        public Process Start(string fileName, string args = null, bool useShellExecute = true)
         {
-            var logger = LogManager.GetLogger(new FileInfo(path).Name);
+            var logger = LogManager.GetLogger(new FileInfo(fileName).Name);
 
-            var startInfo = new ProcessStartInfo(path, args)
+            var startInfo = new ProcessStartInfo(fileName, args)
             {
                 CreateNoWindow = true,
                 UseShellExecute = useShellExecute,
@@ -35,7 +35,7 @@ namespace AppGet.Windows
                 RedirectStandardError = !useShellExecute
             };
 
-            logger.Debug("Starting {0} {1}", path, args);
+            logger.Debug("Starting {0} {1}", fileName, args);
 
             var process = new Process
             {

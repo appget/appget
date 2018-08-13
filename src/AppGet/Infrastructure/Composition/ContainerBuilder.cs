@@ -13,19 +13,14 @@ using AppGet.CreatePackage.Root.Prompts;
 using AppGet.FileTransfer;
 using AppGet.FileTransfer.Protocols;
 using AppGet.Installers;
-using AppGet.Installers.AdvancedInstaller;
-using AppGet.Installers.Custom;
-using AppGet.Installers.Inno;
-using AppGet.Installers.InstallBuilder;
-using AppGet.Installers.InstallShield;
-using AppGet.Installers.Msi;
-using AppGet.Installers.Nsis;
-using AppGet.Installers.SetupFactory;
-using AppGet.Installers.Squirrel;
-using AppGet.Installers.Wix;
+using AppGet.Installers.InstallerWhisperer;
+using AppGet.Installers.UninstallerWhisperer;
 using AppGet.Manifest;
 using AppGet.PackageRepository;
 using NLog;
+using InnoWhisperer = AppGet.Installers.InstallerWhisperer.InnoWhisperer;
+using NsisWhisperer = AppGet.Installers.InstallerWhisperer.NsisWhisperer;
+using SquirrelWhisperer = AppGet.Installers.InstallerWhisperer.SquirrelWhisperer;
 
 namespace AppGet.Infrastructure.Composition
 {
@@ -79,7 +74,7 @@ namespace AppGet.Infrastructure.Composition
                 typeof(MinWindowsVersionPrompt)
             });
 
-            container.RegisterMultiple<IInstallerWhisperer>(new[]
+            container.RegisterMultiple<InstallerBase>(new[]
             {
                 typeof(CustomWhisperer),
                 typeof(InnoWhisperer),
@@ -91,6 +86,15 @@ namespace AppGet.Infrastructure.Composition
                 typeof(SquirrelWhisperer),
                 typeof(AdvancedInstallerWhisperer),
                 typeof(SetupFactoryWhisperer),
+            });
+
+            container.RegisterMultiple<UninstallerBase>(new[]
+            {
+                typeof(SquirrelUninstaller),
+                typeof(WixUninstaller),
+                typeof(MsiUninstaller),
+                typeof(NsisUninstaller),
+                typeof(InnoUninstaller),
             });
 
             container.RegisterMultiple<IFileTransferClient>(new[]

@@ -1,14 +1,25 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
-using AppGet.HostSystem;
 using AppGet.Manifest;
-using AppGet.Windows;
-using NLog;
 
-namespace AppGet.Installers.Msi
+namespace AppGet.Installers.InstallerWhisperer
 {
-    public class MsiWhisperer : InstallerWhispererBase
+    public class MsiWhisperer : InstallerBase
     {
+        public override InstallMethodTypes InstallMethod => InstallMethodTypes.MSI;
+
+        private string BaseArg => $"/i \"{InstallerPath}\"";
+
+        public override string InteractiveArgs => $"{BaseArg} /qf";
+        public override string PassiveArgs => $"{BaseArg} /qb /norestart";
+        public override string SilentArgs => $"{BaseArg} /qn /norestart";
+        public override string LogArgs => "/L* {path}";
+
+        public override string GetProcessPath()
+        {
+            EnsureInstallerInit();
+            return "msiexec";
+        }
+
         // http://msdn.microsoft.com/library/aa368542.aspx
         public override Dictionary<int, ExistReason> ExitCodes => new Dictionary<int, ExistReason>
         {
@@ -231,22 +242,5 @@ namespace AppGet.Installers.Msi
                 5100, new ExistReason(ExitCodeTypes.RequirementUnmet, "The user's computer does not meet system requirements.")
             },
         };
-
-        public MsiWhisperer(IProcessController processController, IPathResolver pathResolver, Logger logger)
-            : base(processController, pathResolver, logger)
-        {
-        }
-
-        public override InstallMethodTypes InstallMethod => InstallMethodTypes.MSI;
-
-        protected override Process StartProcess(string installerLocation, string args)
-        {
-            return base.StartProcess("msiexec", $"/i \"{installerLocation}\" {args}");
-        }
-
-        protected override string InteractiveArgs => "/qf";
-        protected override string PassiveArgs => "/qb /norestart";
-        protected override string SilentArgs => "/qn /norestart";
-        protected override string LogArgs => "/L* {path}";
     }
 }

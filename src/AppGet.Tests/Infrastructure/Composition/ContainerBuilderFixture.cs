@@ -24,13 +24,14 @@ namespace AppGet.Tests.Infrastructure.Composition
 
             void Assert<T>()
             {
-                var commandHandler = allTypes.Where(c => c.ImplementedInterfaces.Any(i => i == typeof(T))).Select(x => x.Name).OrderBy(o => o).ToList();
+                var super = typeof(T);
+                var commandHandler = allTypes.Where(c => c.IsSubclassOf(super) || c.ImplementedInterfaces.Any(d => d == super)).Select(x => x.Name).OrderBy(o => o).ToList();
                 var registered = container.Resolve<IEnumerable<T>>().Select(e => e.GetType().Name).OrderBy(o => o).ToList();
                 commandHandler.Should().Equal(registered);
             }
 
             Assert<ICommandHandler>();
-            Assert<IInstallerWhisperer>();
+            Assert<InstallerBase>();
             Assert<IExtractToManifestRoot>();
             Assert<IManifestPrompt>();
             Assert<IInstallerPrompt>();
@@ -43,7 +44,7 @@ namespace AppGet.Tests.Infrastructure.Composition
         {
             var container = ContainerBuilder.Build();
 
-            var whisperers = container.Resolve<IEnumerable<InstallerWhispererBase>>();
+            var whisperers = container.Resolve<IEnumerable<InstallerBase>>();
 
             whisperers.Should().OnlyHaveUniqueItems(c => c.InstallMethod);
         }

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using AppGet.FileSystem;
 using AppGet.HostSystem;
 using AppGet.Manifest.Serialization;
@@ -9,27 +10,30 @@ namespace AppGet.AppData
     public interface IConfig
     {
         string LocalRepository { get; }
+        string ApiKey { get; }
     }
 
     public class Config : IConfig
     {
         public string LocalRepository { get; }
+        public string ApiKey { get; }
 
         public Config(IFileSystem fileSystem, IPathResolver pathResolver)
         {
-            var fileSystem1 = fileSystem;
-
             var configFile = Path.Combine(pathResolver.AppDataDirectory, "config.json");
             LocalRepository = Path.Combine(pathResolver.AppDataDirectory, "Repository\\");
 
-            if (fileSystem1.FileExists(configFile))
+            if (fileSystem.FileExists(configFile))
             {
-                var text = fileSystem1.ReadAllText(configFile);
+                var text = fileSystem.ReadAllText(configFile);
                 var settings = Json.Deserialize<dynamic>(text);
                 LocalRepository = settings.localRepository;
-            } else
+                ApiKey = settings.apiKey;
+            }
+            else
             {
-                fileSystem1.WriteAllText(configFile, Json.Serialize(this, Formatting.Indented));
+                ApiKey = Guid.NewGuid().ToString().Replace("-", "");
+                fileSystem.WriteAllText(configFile, Json.Serialize(this, Formatting.Indented));
             }
         }
     }

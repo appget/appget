@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace AppGet.PackageRepository
+﻿namespace AppGet.PackageRepository
 {
 //    public class AggregateRepository : IPackageRepository
 //    {

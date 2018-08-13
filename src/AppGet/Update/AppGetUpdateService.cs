@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using AppGet.Commands.Install;
 using AppGet.Github.Releases;
 using AppGet.Installers;
-using AppGet.Installers.Inno;
 using AppGet.Manifest;
 using NLog;
+using Installer = AppGet.Manifest.Installer;
 
 namespace AppGet.Update
 {

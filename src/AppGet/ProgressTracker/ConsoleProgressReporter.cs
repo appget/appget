@@ -13,7 +13,7 @@ namespace AppGet.ProgressTracker
             if (_lastState == newState) return;
 
             _lastState = newState;
-            Console.Write("\r{0}", state);
+            Console.Write("\r{0}", newState);
         }
 
         public static void HandleCompleted(ProgressState obj)
