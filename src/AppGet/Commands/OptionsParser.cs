@@ -75,7 +75,12 @@ namespace AppGet.Commands
                 }
 
                 return c;
-            });
+            }).ToList();
+
+            if (cleanArgs.Count() == 1 && cleanArgs[0].StartsWith("appget://"))
+            {
+                cleanArgs = ParseUrl(cleanArgs.Single());
+            }
 
             var parser = new Parser(c =>
             {
