@@ -56,6 +56,11 @@ Source: "..\src\AppGet\bin\x86\Release\*"; DestDir: "{app}"; Flags: ignoreversio
 [Registry]
 Root: HKCU; Subkey:"Environment"; ValueType:expandsz; ValueName:"Path"; ValueData:"{olddata};{app}"; Check:NeedsAddPath('{app}')
 
+Root: HKCU; Subkey: "SOFTWARE\Classes\appget"; ValueType: "string"; ValueData: "URL:AppGet Protocol"; Flags: uninsdeletekey
+Root: HKCU; Subkey: "SOFTWARE\Classes\appget"; ValueType: "string"; ValueName: "URL Protocol"; ValueData: ""
+Root: HKCU; Subkey: "SOFTWARE\Classes\appget\DefaultIcon"; ValueType: "string"; ValueData: "{app}\appget.exe,0"
+Root: HKCU; Subkey: "SOFTWARE\Classes\appget\shell\open\command"; ValueType: "string"; ValueData: """{app}\appget.exe"" ""%1"""
+
 [Code]
 function NeedsAddPath(Param: string): boolean;
 var

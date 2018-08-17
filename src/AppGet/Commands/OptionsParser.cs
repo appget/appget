@@ -1,8 +1,11 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Web;
 using AppGet.Commands.CreateManifest;
 using AppGet.Commands.Install;
 using AppGet.Commands.Outdated;
@@ -65,6 +68,20 @@ namespace AppGet.Commands
     [UsedImplicitly]
     public class OptionsParser : IParseOptions
     {
+        public List<string> ParseUrl(string url)
+        {
+            var uri = new Uri(url);
+            var queryString = HttpUtility.ParseQueryString(uri.Query);
+
+            var args = queryString.AllKeys.ToDictionary(k => k, k => queryString[k]).Select(c => $"-{c.Key} {c.Value}").ToList();
+
+            args.InsertRange(0, uri.Segments.Where(c => c != "/"));
+            args.Insert(0, uri.Host);
+
+            return args;
+        }
+
+
         public AppGetOption Parse(params string[] args)
         {
             var cleanArgs = args.Select(c =>

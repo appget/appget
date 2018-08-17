@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="AppGet.Gui.Views.InstallProgressView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:installProgressView="clr-namespace:AppGet.Gui.Views"
+             mc:Ignorable="d" d:DesignWidth="630" Height="230">
+    <Grid>
+        <StackPanel Margin="20">
+
+            <Label Name="ProgressStatus" Content="Installing Application..." HorizontalAlignment="Right" Width="590" FontSize="16" Height="44" />
+            <ProgressBar 
+                         Name="Progress" Height="28"
+                         IsIndeterminate="{Binding Path=(installProgressView:InstallProgressViewModel.ProgressIndeterminate)}" 
+                         Maximum="{Binding Path=(installProgressView:InstallProgressViewModel.ProgressMaximum)}" Foreground="{DynamicResource AppGetAccent}">
+            </ProgressBar>
+            <Expander Header="Expander" Height="100" IsExpanded="True" Margin="0,0,-34,0">
+                <Button Content="Button" HorizontalAlignment="Left" Margin="167,0,0,0" Width="75"/>
+            </Expander>
+        </StackPanel>
+    </Grid>
+</UserControl>
