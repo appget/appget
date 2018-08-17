@@ -12,7 +12,6 @@ using AppGet.CreatePackage.Root;
 using AppGet.CreatePackage.Root.Prompts;
 using AppGet.FileTransfer;
 using AppGet.FileTransfer.Protocols;
-using AppGet.Installers;
 using AppGet.Installers.InstallerWhisperer;
 using AppGet.Installers.UninstallerWhisperer;
 using AppGet.Manifest;
@@ -36,6 +35,13 @@ namespace AppGet.Infrastructure.Composition
             {
                 typeof(ContainerBuilder).Assembly,
                 typeof(PackageManifest).Assembly
+            }, DuplicateImplementationActions.RegisterSingle, t =>
+            {
+                if (t.IsAssignableFrom(typeof(AppGetOption)))
+                {
+                    return false;
+                }
+                return true;
             });
             container.Register(logger);
 

@@ -8,7 +8,6 @@ namespace AppGet.Windows
     public interface IProcessController
     {
         Process Start(string fileName, string args = null, bool useShellExecute = true);
-        Process GetProcess(int processId);
         void Kill(Process process, int timeout);
         void WaitForExit(Process process, int? timeout = null);
         Process TryGetRunningProcess(int processId);
@@ -45,11 +44,6 @@ namespace AppGet.Windows
             process.Start();
 
             return process;
-        }
-
-        public Process GetProcess(int processId)
-        {
-            return Process.GetProcessById(processId);
         }
 
         public Process TryGetRunningProcess(int processId)

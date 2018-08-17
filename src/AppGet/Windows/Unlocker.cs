@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using AppGet.Manifest;
+using JetBrains.Annotations;
 using NLog;
 
 namespace AppGet.Windows
@@ -10,6 +11,7 @@ namespace AppGet.Windows
         void UnlockFolder(string installationPath, InstallMethodTypes installMethod);
     }
 
+    [UsedImplicitly]
     public class Unlocker : IUnlocker
     {
         private readonly IProcessController _processController;

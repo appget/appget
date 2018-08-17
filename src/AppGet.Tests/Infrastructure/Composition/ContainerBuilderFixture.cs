@@ -7,6 +7,7 @@ using AppGet.CreatePackage.Root;
 using AppGet.FileTransfer;
 using AppGet.Infrastructure.Composition;
 using AppGet.Installers;
+using AppGet.Installers.InstallerWhisperer;
 using FluentAssertions;
 using NUnit.Framework;
 

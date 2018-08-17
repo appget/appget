@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using AppGet.Installers.UninstallerWhisperer;
 using AppGet.Manifest;
 
-namespace AppGet.Installers
+namespace AppGet.Installers.InstallerWhisperer
 {
     public abstract class InstallerBase : IInstaller
     {

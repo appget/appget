@@ -6,6 +6,7 @@ using AppGet.Commands.Install;
 using AppGet.Commands.Uninstall;
 using AppGet.FileTransfer;
 using AppGet.HostSystem;
+using AppGet.Installers.InstallerWhisperer;
 using AppGet.Installers.UninstallerWhisperer;
 using AppGet.Manifest;
 using AppGet.Manifests;
