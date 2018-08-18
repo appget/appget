@@ -21,7 +21,7 @@
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>AppGet.Application</StartupObject>
+    <StartupObject>AppGet.AppGetConsole</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -88,6 +88,7 @@
   <ItemGroup>
     <Compile Include="AppData\AppDataService.cs" />
     <Compile Include="AppData\Config.cs" />
+    <Compile Include="Application.cs" />
     <Compile Include="CommandLine\ConsoleTable.cs" />
     <Compile Include="CommandLine\TableHelper.cs" />
     <Compile Include="CommandLine\Prompts\BooleanPrompt.cs" />
@@ -163,7 +164,7 @@
     <Compile Include="Http\HttpExtension.cs" />
     <Compile Include="Infrastructure\Composition\ContainerBuilder.cs" />
     <Compile Include="Compression\CompressionService.cs" />
-    <Compile Include="Application.cs" />
+    <Compile Include="AppGetConsole.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="FileSystem\FileSystem.cs" />
     <Compile Include="FileTransfer\Protocols\WindowsPathFileTransferClient.cs" />

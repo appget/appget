@@ -1,35 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
-using AppGet.Commands;
-using AppGet.Commands.Install;
+using System.Windows.Threading;
+using AppGet.Gui.Views;
 using AppGet.Infrastructure.Composition;
 using Caliburn.Micro;
+using NLog;
+using LogManager = NLog.LogManager;
 
 namespace AppGet.Gui
 {
     public class GuiBootstrapper : BootstrapperBase
     {
+        private static readonly Logger Logger = LogManager.GetLogger(nameof(GuiBootstrapper));
         private readonly TinyIoCContainer _container;
 
         public GuiBootstrapper()
         {
-            Initialize();
-            _container = ContainerBuilder.Build();
-
-            var cc = _container.Resolve<InstallOptions>();
-
-            var parser = _container.Resolve<IParseOptions>();
-            var args = Environment.GetCommandLineArgs();
-            var option = parser.Parse(args.Last());
-
-            _container.Register((InstallOptions)option);
+            try
+            {
+                Initialize();
+                _container = ContainerBuilder.Container;
+                _container.RegisterMultiple<ICommandViewModel>(new[] { typeof(InstallProgressViewModel) });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), ex.Message);
+                throw;
+            }
         }
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
-            DisplayRootViewFor<ShellViewModel>();
+            try
+            {
+                DisplayRootViewFor<ShellViewModel>();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), ex.Message);
+                throw;
+            }
         }
 
         protected override object GetInstance(Type service, string key)
@@ -45,6 +56,12 @@ namespace AppGet.Gui
         protected override IEnumerable<object> GetAllInstances(Type service)
         {
             return _container.ResolveAll(service);
+        }
+
+        protected override void OnUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            Logger.Fatal(e.Exception);
+            base.OnUnhandledException(sender, e);
         }
     }
 }

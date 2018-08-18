@@ -115,12 +115,33 @@ namespace AppGet.Commands
                 OutdatedOptions,
                 UpdateOptions>(cleanArgs);
 
-            if (result.Tag == ParserResultType.Parsed)
-            {
-                return (AppGetOption)((Parsed<object>)result).Value;
-            }
 
-            return null;
+            switch (result.Tag)
+            {
+                case ParserResultType.Parsed:
+                    {
+                        return (AppGetOption)((Parsed<object>)result).Value;
+                    }
+                case ParserResultType.NotParsed:
+                    {
+                        var notParsed = (NotParsed<object>)result;
+                        throw new CommandLineParserException(notParsed.Errors);
+                    }
+                default:
+                    {
+                        throw new ArgumentOutOfRangeException(nameof(result.Tag), result.Tag, "Invalid Tag");
+                    }
+            }
+        }
+    }
+
+    public class CommandLineParserException : Exception
+    {
+        public List<Error> ParseErrors { get; }
+
+        public CommandLineParserException(IEnumerable<Error> parseErrors)
+        {
+            ParseErrors = parseErrors.ToList();
         }
     }
 }

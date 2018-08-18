@@ -19,7 +19,7 @@ namespace AppGet.Tests.Infrastructure.Composition
         [Test]
         public void check_multi_registration()
         {
-            var container = ContainerBuilder.Build();
+            var container = ContainerBuilder.Container;
 
             var allTypes = Assembly.Load("AppGet").DefinedTypes.Where(c => !c.IsAbstract).ToList();
 
@@ -43,7 +43,7 @@ namespace AppGet.Tests.Infrastructure.Composition
         [Test]
         public void installer_whisperer_check()
         {
-            var container = ContainerBuilder.Build();
+            var container = ContainerBuilder.Container;
 
             var whisperers = container.Resolve<IEnumerable<InstallerBase>>();
 

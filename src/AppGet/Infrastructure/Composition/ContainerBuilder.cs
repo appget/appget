@@ -1,4 +1,5 @@
-﻿using AppGet.Commands;
+﻿using AppGet.AppData;
+using AppGet.Commands;
 using AppGet.Commands.CreateManifest;
 using AppGet.Commands.Install;
 using AppGet.Commands.Outdated;
@@ -12,6 +13,7 @@ using AppGet.CreatePackage.Root;
 using AppGet.CreatePackage.Root.Prompts;
 using AppGet.FileTransfer;
 using AppGet.FileTransfer.Protocols;
+using AppGet.Infrastructure.Logging;
 using AppGet.Installers.InstallerWhisperer;
 using AppGet.Installers.UninstallerWhisperer;
 using AppGet.Manifest;
@@ -25,7 +27,16 @@ namespace AppGet.Infrastructure.Composition
 {
     public static class ContainerBuilder
     {
-        public static TinyIoCContainer Build()
+        static ContainerBuilder()
+        {
+            LogConfigurator.ConfigureLogger();  
+            Container = Build();
+            Container.Resolve<IAppDataService>().EnsureAppDataDirectoryExists();
+        }
+
+        public static TinyIoCContainer Container { get; private set; }
+
+        private static TinyIoCContainer Build()
         {
             var container = new TinyIoCContainer();
 

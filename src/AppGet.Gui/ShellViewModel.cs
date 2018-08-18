@@ -1,4 +1,8 @@
-﻿using AppGet.Commands;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+using AppGet.Commands;
 using AppGet.Gui.Views;
 using Caliburn.Micro;
 
@@ -6,14 +10,24 @@ namespace AppGet.Gui
 {
     public class ShellViewModel : Conductor<object>
     {
-        private readonly IParseOptions _optionsParser;
-        private readonly ICommandExecutor _commandExecutor;
 
-        public ShellViewModel(IParseOptions optionsParser, ICommandExecutor commandExecutor, InstallProgressViewModel installProgressViewModel)
+        public ShellViewModel(IParseOptions optionsParser, IEnumerable<ICommandViewModel> commandViewModels)
         {
-            _optionsParser = optionsParser;
-            _commandExecutor = commandExecutor;
-            ActivateItem(installProgressViewModel);
+            var args = Environment.GetCommandLineArgs();
+
+            try
+            {
+
+                var option = optionsParser.Parse(args.Last());
+
+
+                var viewModel = commandViewModels.First(c => c.CanHandle(option));
+                ActivateItem(viewModel);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         //        protected override void OnActivate()
