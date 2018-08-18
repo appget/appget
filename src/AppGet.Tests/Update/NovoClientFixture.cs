@@ -11,7 +11,7 @@ namespace AppGet.Tests.Update
     [TestFixture]
     public class NovoClientFixture : TestBase<NovoClient>
     {
-        readonly IEnumerable<WindowsInstallerRecord> _installerRecords;
+        private readonly IEnumerable<WindowsInstallerRecord> _installerRecords;
 
         [SetUp]
         public void Setup()

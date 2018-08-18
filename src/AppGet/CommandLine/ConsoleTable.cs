@@ -23,7 +23,7 @@ namespace AppGet.CommandLine
 
         public ConsoleTable(ConsoleTableOptions options)
         {
-            Options = options ?? throw new ArgumentNullException("options");
+            Options = options ?? throw new ArgumentNullException(nameof(options));
             Rows = new List<object[]>();
             Columns = new List<object>(options.Columns);
         }
