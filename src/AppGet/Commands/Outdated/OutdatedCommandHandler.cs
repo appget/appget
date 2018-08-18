@@ -16,10 +16,6 @@ namespace AppGet.Commands.Outdated
             _updateService = updateService;
         }
 
-        public bool CanExecute(AppGetOption commandOptions)
-        {
-            return commandOptions is OutdatedOptions;
-        }
 
         public async Task Execute(AppGetOption commandOptions)
         {

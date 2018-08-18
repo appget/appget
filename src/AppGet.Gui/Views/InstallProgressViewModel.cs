@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using AppGet.Commands;
+﻿using AppGet.Commands;
 using AppGet.Commands.Install;
 using Caliburn.Micro;
 

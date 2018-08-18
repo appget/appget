@@ -1,4 +1,5 @@
-﻿using AppGet.AppData;
+﻿using System;
+using AppGet.AppData;
 using AppGet.Commands;
 using AppGet.Commands.CreateManifest;
 using AppGet.Commands.Install;
@@ -29,7 +30,7 @@ namespace AppGet.Infrastructure.Composition
     {
         static ContainerBuilder()
         {
-            LogConfigurator.ConfigureLogger();  
+            LogConfigurator.ConfigureLogger();
             Container = Build();
             Container.Resolve<IAppDataService>().EnsureAppDataDirectoryExists();
         }
@@ -63,16 +64,14 @@ namespace AppGet.Infrastructure.Composition
 
         private static void RegisterLists(TinyIoCContainer container)
         {
-            container.RegisterMultiple<ICommandHandler>(new[]
-            {
-                typeof(ViewManifestCommandHandler),
-                typeof(SearchCommandHandler),
-                typeof(InstallCommandHandler),
-                typeof(UninstallCommandHandler),
-                typeof(CreateManifestCommandHandler),
-                typeof(UpdateCommandHandler),
-                typeof(OutdatedCommandHandler)
-            });
+
+            container.Register<ICommandHandler, ViewManifestCommandHandler>(typeof(ViewManifestOptions).FullName);
+            container.Register<ICommandHandler, SearchCommandHandler>(typeof(SearchOptions).FullName);
+            container.Register<ICommandHandler, InstallCommandHandler>(typeof(InstallCommandHandler).FullName);
+            container.Register<ICommandHandler, UninstallCommandHandler>(typeof(UninstallCommandHandler).FullName);
+            container.Register<ICommandHandler, CreateManifestCommandHandler>(typeof(CreateManifestOptions).FullName);
+            container.Register<ICommandHandler, UpdateCommandHandler>(typeof(UpdateCommandHandler).FullName);
+            container.Register<ICommandHandler, OutdatedCommandHandler>(typeof(OutdatedOptions).FullName);
 
             container.RegisterMultiple<IManifestPrompt>(new[]
             {

@@ -18,10 +18,6 @@ namespace AppGet.Commands.Install
             _installService = installService;
         }
 
-        public bool CanExecute(AppGetOption commandOptions)
-        {
-            return commandOptions is InstallOptions;
-        }
 
         public async Task Execute(AppGetOption commandOptions)
         {

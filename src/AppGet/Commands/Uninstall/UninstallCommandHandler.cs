@@ -7,10 +7,6 @@ namespace AppGet.Commands.Uninstall
     {
         private readonly IInstallService _installService;
 
-        public bool CanExecute(AppGetOption commandOptions)
-        {
-            return commandOptions is UninstallOptions;
-        }
 
         public UninstallCommandHandler(IInstallService installService)
         {

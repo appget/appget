@@ -19,10 +19,6 @@ namespace AppGet.Commands.Update
             _installService = installService;
         }
 
-        public bool CanExecute(AppGetOption commandOptions)
-        {
-            return commandOptions is UpdateOptions;
-        }
 
         public async Task Execute(AppGetOption commandOptions)
         {

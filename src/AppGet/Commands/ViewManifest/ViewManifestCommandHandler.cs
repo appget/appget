@@ -15,11 +15,6 @@ namespace AppGet.Commands.ViewManifest
             _packageManifestService = packageManifestService;
         }
 
-        public bool CanExecute(AppGetOption commandOptions)
-        {
-            return commandOptions is ViewManifestOptions;
-        }
-
         public async Task Execute(AppGetOption searchCommandOptions)
         {
             var viewOptions = (ViewManifestOptions)searchCommandOptions;

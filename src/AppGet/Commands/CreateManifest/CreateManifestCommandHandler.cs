@@ -35,10 +35,6 @@ namespace AppGet.Commands.CreateManifest
             _logger = logger;
         }
 
-        public bool CanExecute(AppGetOption commandOptions)
-        {
-            return commandOptions is CreateManifestOptions;
-        }
 
         public async Task Execute(AppGetOption appGetOption)
         {
