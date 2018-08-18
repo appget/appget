@@ -138,6 +138,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Http\JsonContent.cs" />
+    <Compile Include="Infrastructure\MessageBus\TinyMessenger.cs" />
     <Compile Include="Installers\InstallerWhisperer\InstallerBase.cs" />
     <Compile Include="Installers\UninstallerWhisperer\InnoUninstaller.cs" />
     <Compile Include="Installers\UninstallerWhisperer\MsiUninstaller.cs" />
