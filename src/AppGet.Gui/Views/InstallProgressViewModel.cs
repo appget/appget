@@ -40,11 +40,7 @@ namespace AppGet.Gui.Views
 
         private void OnProgressUpdated(GenericTinyMessage<ProgressState> obj)
         {
-            if (obj.Content.MaxValue.HasValue)
-            {
-                ProgressMaximum = obj.Content.MaxValue.Value;
-            }
-
+            ProgressMaximum = obj.Content.MaxValue;
             Progress = obj.Content.Value;
         }
 

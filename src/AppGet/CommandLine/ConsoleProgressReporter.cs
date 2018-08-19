@@ -1,7 +1,8 @@
 ﻿using System;
 using AppGet.Infrastructure.Events;
+using AppGet.ProgressTracker;
 
-namespace AppGet.ProgressTracker
+namespace AppGet.CommandLine
 {
     public class ConsoleProgressReporter : IStartupHandler
     {
@@ -17,7 +18,7 @@ namespace AppGet.ProgressTracker
 
         private string RenderBar(ProgressState state)
         {
-            if (state.MaxValue.HasValue)
+            if (state.MaxValue != 0)
             {
                 var percentCompleted = state.GetPercentCompleted();
                 var percent = Math.Round(percentCompleted);

@@ -58,19 +58,21 @@ namespace AppGet.FileTransfer.Protocols
 
                 if (_fileSystem.FileExists(destinationFile)) _fileSystem.DeleteFile(destinationFile);
 
+                var maxValue = resp.Content.Headers.ContentLength ?? 0;
+
                 var progress = new ProgressState
                 {
-                    MaxValue = resp.Content.Headers.ContentLength
+                    MaxValue = maxValue
                 };
 
                 using (var httpStream = await resp.Content.ReadAsStreamAsync())
                 {
                     var tempFile = $"{destinationFile}.APPGET_DOWNLOAD";
-                    int len;
 
                     using (var tempFileStream = _fileSystem.Open(tempFile, FileMode.Create, FileAccess.ReadWrite))
                     {
                         var buffer = new byte[BUFFER_LENGTH];
+                        int len;
                         while ((len = httpStream.Read(buffer, 0, BUFFER_LENGTH)) > 0)
                         {
                             tempFileStream.Write(buffer, 0, len);
