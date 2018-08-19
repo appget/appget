@@ -1,10 +1,8 @@
 ﻿using System;
 using System.IO;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using AppGet.FileSystem;
 using AppGet.Http;
@@ -14,6 +12,8 @@ namespace AppGet.FileTransfer.Protocols
 {
     public class HttpFileTransferClient : IFileTransferClient
     {
+        private const int BUFFER_LENGTH = 4 * 1024;
+
         private static readonly Regex HttpRegex = new Regex(@"^https?\:\/\/", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         private static readonly Regex FileNameRegex = new Regex(@"\.(zip|7zip|7z|rar|msi|exe)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
@@ -70,8 +70,8 @@ namespace AppGet.FileTransfer.Protocols
 
                     using (var tempFileStream = _fileSystem.Open(tempFile, FileMode.Create, FileAccess.ReadWrite))
                     {
-                        var buffer = new byte[8 * 1024];
-                        while ((len = httpStream.Read(buffer, 0, buffer.Length)) > 0)
+                        var buffer = new byte[BUFFER_LENGTH];
+                        while ((len = httpStream.Read(buffer, 0, BUFFER_LENGTH)) > 0)
                         {
                             tempFileStream.Write(buffer, 0, len);
                             progress.Value += len;

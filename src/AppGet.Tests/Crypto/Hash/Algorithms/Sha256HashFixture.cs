@@ -10,7 +10,7 @@ namespace AppGet.Tests.Crypto.Hash.Algorithms
         [Test]
         public void should_get_sha1()
         {
-            var path = this.GetType().Assembly.Location;
+            var path = GetType().Assembly.Location;
             var hash = Subject.CalculateHash(path);
             hash.Should().HaveLength(64);
         }

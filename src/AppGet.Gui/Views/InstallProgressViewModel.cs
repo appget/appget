@@ -1,5 +1,8 @@
-﻿using AppGet.Commands;
+﻿using System.Threading.Tasks;
+using AppGet.Commands;
 using AppGet.Commands.Install;
+using AppGet.Infrastructure.Events;
+using AppGet.ProgressTracker;
 using Caliburn.Micro;
 
 namespace AppGet.Gui.Views
@@ -9,30 +12,51 @@ namespace AppGet.Gui.Views
         bool CanHandle(AppGetOption options);
     }
 
-    public abstract class CommandViewModel<T> : Screen, ICommandViewModel where T : AppGetOption
-    {
-        public T Options { get; private set; }
-
-        public bool CanHandle(AppGetOption options)
-        {
-            Options = options as T;
-            return options != null;
-        }
-    }
-
     public class InstallProgressViewModel : CommandViewModel<InstallOptions>
     {
+        private readonly ICommandExecutor _executor;
+        private readonly ITinyMessengerHub _hub;
+        private TinyMessageSubscriptionToken _progressToken;
+
+        public InstallProgressViewModel(ICommandExecutor executor, ITinyMessengerHub hub)
+        {
+            _executor = executor;
+            _hub = hub;
+            Activated += InstallProgressViewModel_Activated;
+            Deactivated += InstallProgressViewModel_Deactivated;
+        }
+
+
+        private void InstallProgressViewModel_Deactivated(object sender, DeactivationEventArgs e)
+        {
+            _progressToken?.Dispose();
+        }
+
+        private void InstallProgressViewModel_Activated(object sender, ActivationEventArgs e)
+        {
+            _progressToken = _hub.Subscribe<GenericTinyMessage<ProgressState>>(OnProgressUpdated);
+            Task.Run(() => _executor.ExecuteCommand(Options));
+        }
+
+        private void OnProgressUpdated(GenericTinyMessage<ProgressState> obj)
+        {
+            if (obj.Content.MaxValue.HasValue)
+            {
+                ProgressMaximum = obj.Content.MaxValue.Value;
+            }
+
+            Progress = obj.Content.Value;
+        }
+
         protected override void OnInitialize()
         {
-            ProgressMaximum = 75;
-            //            Progress = 50;
             ProgressStatus = $"Installing {Options.Package}";
         }
 
         public string ProgressStatus { get; private set; }
 
-        public int Progress { get; private set; }
-        public int ProgressMaximum { get; private set; }
+        public long Progress { get; private set; }
+        public long ProgressMaximum { get; private set; }
 
         public bool ProgressIndeterminate => Progress == 0;
     }
