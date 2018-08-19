@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AppGet.Crypto.Hash;
+using AppGet.Infrastructure.Events;
 using AppGet.ProgressTracker;
 using NLog;
 
@@ -20,14 +21,16 @@ namespace AppGet.FileTransfer
         private readonly IEnumerable<IFileTransferClient> _transferClients;
         private readonly ITransferCacheService _transferCacheService;
         private readonly IChecksumService _checksumService;
+        private readonly ITinyMessengerHub _tinyMessengerHub;
         private readonly Logger _logger;
 
         public FileTransferService(IEnumerable<IFileTransferClient> transferClients, ITransferCacheService transferCacheService,
-            IChecksumService checksumService, Logger logger)
+            IChecksumService checksumService, ITinyMessengerHub tinyMessengerHub, Logger logger)
         {
             _transferClients = transferClients;
             _transferCacheService = transferCacheService;
             _checksumService = checksumService;
+            _tinyMessengerHub = tinyMessengerHub;
             _transferCacheService = transferCacheService;
             _logger = logger;
         }
@@ -59,12 +62,11 @@ namespace AppGet.FileTransfer
             }
             else
             {
-                client.OnStatusUpdated = ConsoleProgressReporter.HandleProgress;
-                client.OnCompleted = ConsoleProgressReporter.HandleCompleted;
+                client.OnStatusUpdated = p => _tinyMessengerHub.Publish(new GenericTinyMessage<ProgressState>(this, p));
 
                 Console.WriteLine();
                 _logger.Info($"Downloading installer from {source}");
-                client.TransferFile(source, destinationPath);
+                await client.TransferFile(source, destinationPath);
                 _logger.Debug($"Installer downloaded to {destinationPath}");
 
                 if (sha256 == null)

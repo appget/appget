@@ -16,7 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AppGet.Infrastructure.MessageBus
+namespace AppGet.Infrastructure.Events
 {
     #region Message Types / Interfaces
 
@@ -163,9 +163,10 @@ namespace AppGet.Infrastructure.MessageBus
 
                 if (hub != null)
                 {
-                    var unsubscribeMethod = typeof(ITinyMessengerHub).GetMethod("Unsubscribe", new Type[] { typeof(TinyMessageSubscriptionToken) });
-                    unsubscribeMethod = unsubscribeMethod.MakeGenericMethod(_MessageType);
-                    unsubscribeMethod.Invoke(hub, new object[] { this });
+                    hub.Unsubscribe(this);
+                    //                    var unsubscribeMethod = typeof(ITinyMessengerHub).GetMethod("Unsubscribe", new Type[] { typeof(TinyMessageSubscriptionToken) });
+                    //                    unsubscribeMethod = unsubscribeMethod.MakeGenericMethod(_MessageType);
+                    //                    unsubscribeMethod.Invoke(hub, new object[] { this });
                 }
             }
 

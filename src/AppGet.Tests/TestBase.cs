@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using AppGet.FileSystem;
 using AppGet.HostSystem;
 using AppGet.Http;
 using AutoMoq;
@@ -43,6 +44,11 @@ namespace AppGet.Tests
             Mocker.SetInstance<IEnvInfo>(Mocker.Resolve<EnvInfo>());
             Mocker.SetInstance<IUserAgentBuilder>(Mocker.Resolve<UserAgentBuilder>());
             Mocker.SetInstance<IHttpClient>(Mocker.Resolve<HttpClient>());
+        }
+
+        protected void WithRealFileSystem()
+        {
+            Mocker.SetInstance<IFileSystem>(Mocker.Resolve<FileSystem.FileSystem>());
         }
 
         protected string GetTestPath(string path)

@@ -7,16 +7,14 @@ namespace AppGet.FileSystem
     public interface IFileSystem
     {
         bool FileExists(string path);
-        bool DirectoryExists(string path);
-        string[] GetFiles(string path, string searchPattern = "*.*", SearchOption searchOption = SearchOption.AllDirectories);
         string ReadAllText(string path);
         void WriteAllText(string path, string content);
         void CreateDirectory(string path);
-        void DeleteDirectory(string path);
         void SetPermissions(string path, WellKnownSidType accountSid, FileSystemRights rights, AccessControlType controlType);
         void DeleteFile(string tempFile);
         void Move(string sourceFile, string destinationFile);
-        long GetFileSize(string path);
+
+        Stream Open(string path, FileMode fileMode, FileAccess fileAccess);
     }
 
     public class FileSystem : IFileSystem
@@ -24,16 +22,6 @@ namespace AppGet.FileSystem
         public bool FileExists(string path)
         {
             return File.Exists(path);
-        }
-
-        public bool DirectoryExists(string path)
-        {
-            return Directory.Exists(path);
-        }
-
-        public string[] GetFiles(string path, string searchPattern = "*.*", SearchOption searchOption = SearchOption.AllDirectories)
-        {
-            return Directory.GetFiles(path, searchPattern, searchOption);
         }
 
         public string ReadAllText(string path)
@@ -49,11 +37,6 @@ namespace AppGet.FileSystem
         public void CreateDirectory(string path)
         {
             Directory.CreateDirectory(path);
-        }
-
-        public void DeleteDirectory(string path)
-        {
-            Directory.Delete(path, true);
         }
 
         public void SetPermissions(string path, WellKnownSidType accountSid, FileSystemRights rights, AccessControlType controlType)
@@ -79,9 +62,9 @@ namespace AppGet.FileSystem
             File.Move(sourceFile, destinationFile);
         }
 
-        public long GetFileSize(string path)
+        public Stream Open(string path, FileMode fileMode, FileAccess fileAccess)
         {
-            return new FileInfo(path).Length;
+            return File.Open(path, fileMode, fileAccess);
         }
     }
 }

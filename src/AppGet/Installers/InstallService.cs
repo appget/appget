@@ -6,6 +6,7 @@ using AppGet.Commands.Install;
 using AppGet.Commands.Uninstall;
 using AppGet.FileTransfer;
 using AppGet.HostSystem;
+using AppGet.Infrastructure.Events;
 using AppGet.Installers.InstallerWhisperer;
 using AppGet.Installers.UninstallerWhisperer;
 using AppGet.Manifest;
@@ -23,6 +24,18 @@ namespace AppGet.Installers
         Task Uninstall(UninstallOptions uninstallOptions);
     }
 
+    public class StatusUpdateEvent : ITinyMessage
+    {
+        public StatusUpdateEvent(object sender, string message)
+        {
+            Sender = sender;
+            Message = message;
+        }
+
+        public object Sender { get; }
+        public string Message { get; }
+    }
+
     public class InstallService : IInstallService
     {
         private readonly Logger _logger;
@@ -33,6 +46,7 @@ namespace AppGet.Installers
         private readonly WindowsInstallerClient _windowsInstallerClient;
         private readonly List<InstallerBase> _installWhisperers;
         private readonly List<UninstallerBase> _uninstallers;
+        private readonly ITinyMessengerHub _hub;
         private readonly IUnlocker _unlocker;
         private readonly NovoClient _novoClient;
         private readonly UpdateService _updateService;
@@ -40,6 +54,7 @@ namespace AppGet.Installers
         public InstallService(Logger logger, IFindInstaller findInstaller, IPathResolver pathResolver, IProcessController processController,
             IFileTransferService fileTransferService, WindowsInstallerClient windowsInstallerClient, List<InstallerBase> installWhisperers,
             List<UninstallerBase> uninstallers,
+            ITinyMessengerHub hub,
             IUnlocker unlocker, NovoClient novoClient, UpdateService updateService)
         {
             _logger = logger;
@@ -50,6 +65,7 @@ namespace AppGet.Installers
             _windowsInstallerClient = windowsInstallerClient;
             _installWhisperers = installWhisperers;
             _uninstallers = uninstallers;
+            _hub = hub;
             _unlocker = unlocker;
             _novoClient = novoClient;
             _updateService = updateService;
@@ -58,7 +74,7 @@ namespace AppGet.Installers
         public async Task Install(PackageManifest packageManifest, InstallOptions installOptions)
         {
             _logger.Info("Beginning installation of '{0}'", packageManifest);
-
+            _hub.PublishAsync(new StatusUpdateEvent(this, $"Starting installation of {packageManifest}"));
 
             var installer = _findInstaller.GetBestInstaller(packageManifest.Installers);
             var installerPath = await _fileTransferService.TransferFile(installer.Location, _pathResolver.TempFolder, installer.Sha256);

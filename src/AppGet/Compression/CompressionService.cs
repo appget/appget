@@ -28,7 +28,7 @@ namespace AppGet.Compression
 
             var progress = new ProgressState
             {
-                Total = archive.Count
+                MaxValue = archive.Count
             };
 
             foreach (var entry in archive)
@@ -43,7 +43,7 @@ namespace AppGet.Compression
                     });
                 }
 
-                progress.Completed++;
+                progress.Value++;
 
                 OnStatusUpdated?.Invoke(progress);
                 OnCompleted?.Invoke(progress);

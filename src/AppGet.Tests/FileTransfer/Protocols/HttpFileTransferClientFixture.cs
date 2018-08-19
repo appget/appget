@@ -14,16 +14,30 @@ namespace AppGet.Tests.FileTransfer.Protocols
         public void Setup()
         {
             WithRealHttp();
+            WithRealFileSystem();
         }
 
         [TestCase("https://www.fosshub.com/ConEmu.html/ConEmuPack.161206.7z")]
-        public void should_throw_on_html_download_file(string url)
+        public void transfer_should_throw_on_html_download_file(string url)
         {
-            Assert.ThrowsAsync<InvalidDownloadUrlException>(() =>
+            Assert.ThrowsAsync<InvalidDownloadUrlException>(async () =>
             {
-                Subject.TransferFile(url, Path.Combine(Path.GetTempPath(), Subject.GetFileName(url).Result));
-                return null;
+                await Subject.TransferFile(url, Path.Combine(Path.GetTempPath(), Subject.GetFileName(url).Result));
             });
+        }
+
+        [TestCase("https://www.linqpad.net/GetFile.aspx?LINQPad4-AnyCPU.zip")]
+        public async Task transfer_file(string url)
+        {
+            var target = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
+
+            await Subject.TransferFile(url, target);
+
+
+            var fileInfo = new FileInfo(target);
+
+            fileInfo.Exists.Should().BeTrue();
+            fileInfo.Length.Should().BeGreaterThan(4000000);
         }
 
         [Test]

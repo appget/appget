@@ -12,8 +12,8 @@ namespace AppGet.Tests.ProgressTracker
         {
             var state = new ProgressState
             {
-                Completed = 10,
-                Total = 20
+                Value = 10,
+                MaxValue = 20
             };
 
             state.ToString().Should().Contain("50");

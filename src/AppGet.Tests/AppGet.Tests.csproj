@@ -64,7 +64,6 @@
     <Compile Include="FileTransfer\Protocols\HttpFileTransferClientFixture.cs" />
     <Compile Include="Extensions\StringExtensionsFixture.cs" />
     <Compile Include="Extensions\UriExtensionsFixture.cs" />
-    <Compile Include="FileTransfer\Protocols\WindowsPathFileTransferClientFixture.cs" />
     <Compile Include="FileTransfer\TransferCacheServiceFixture.cs" />
     <Compile Include="HostSystem\EnvInfoFixture.cs" />
     <Compile Include="Http\HttpClientFixture.cs" />

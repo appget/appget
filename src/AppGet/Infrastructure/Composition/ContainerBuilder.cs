@@ -1,5 +1,6 @@
 ﻿using System;
-using AppGet.AppData;
+using System.Collections.Generic;
+using System.Linq;
 using AppGet.Commands;
 using AppGet.Commands.CreateManifest;
 using AppGet.Commands.Install;
@@ -14,6 +15,7 @@ using AppGet.CreatePackage.Root;
 using AppGet.CreatePackage.Root.Prompts;
 using AppGet.FileTransfer;
 using AppGet.FileTransfer.Protocols;
+using AppGet.Infrastructure.Events;
 using AppGet.Infrastructure.Logging;
 using AppGet.Installers.InstallerWhisperer;
 using AppGet.Installers.UninstallerWhisperer;
@@ -28,11 +30,19 @@ namespace AppGet.Infrastructure.Composition
 {
     public static class ContainerBuilder
     {
+        private static readonly List<Type> AssemblyTypes;
+
         static ContainerBuilder()
         {
+            AssemblyTypes = AppDomain.CurrentDomain.GetAssemblies().SelectMany(c => c.ExportedTypes.Where(t => !t.IsAbstract && !t.IsInterface && !t.IsEnum && t.Namespace.StartsWith("AppGet."))).ToList();
+
             LogConfigurator.ConfigureLogger();
             Container = Build();
-            Container.Resolve<IAppDataService>().EnsureAppDataDirectoryExists();
+
+            foreach (var startupHandler in Container.ResolveAll<IStartupHandler>())
+            {
+                startupHandler.OnApplicationStartup();
+            }
         }
 
         public static TinyIoCContainer Container { get; private set; }
@@ -62,16 +72,25 @@ namespace AppGet.Infrastructure.Composition
             return container;
         }
 
+
+        private static void RegisterMultiple<T>(this TinyIoCContainer container)
+        {
+            var implementations = AssemblyTypes.Where(c => typeof(T).IsAssignableFrom(c));
+            container.RegisterMultiple<T>(implementations);
+        }
+
         private static void RegisterLists(TinyIoCContainer container)
         {
-
             container.Register<ICommandHandler, ViewManifestCommandHandler>(typeof(ViewManifestOptions).FullName);
             container.Register<ICommandHandler, SearchCommandHandler>(typeof(SearchOptions).FullName);
-            container.Register<ICommandHandler, InstallCommandHandler>(typeof(InstallCommandHandler).FullName);
-            container.Register<ICommandHandler, UninstallCommandHandler>(typeof(UninstallCommandHandler).FullName);
+            container.Register<ICommandHandler, InstallCommandHandler>(typeof(InstallOptions).FullName);
+            container.Register<ICommandHandler, UninstallCommandHandler>(typeof(UninstallOptions).FullName);
             container.Register<ICommandHandler, CreateManifestCommandHandler>(typeof(CreateManifestOptions).FullName);
-            container.Register<ICommandHandler, UpdateCommandHandler>(typeof(UpdateCommandHandler).FullName);
+            container.Register<ICommandHandler, UpdateCommandHandler>(typeof(UpdateOptions).FullName);
             container.Register<ICommandHandler, OutdatedCommandHandler>(typeof(OutdatedOptions).FullName);
+
+
+            container.RegisterMultiple<IStartupHandler>();
 
             container.RegisterMultiple<IManifestPrompt>(new[]
             {
@@ -116,7 +135,6 @@ namespace AppGet.Infrastructure.Composition
             container.RegisterMultiple<IFileTransferClient>(new[]
             {
                 typeof(HttpFileTransferClient),
-                typeof(WindowsPathFileTransferClient)
             });
 
             container.RegisterMultiple<IPackageRepository>(new[]

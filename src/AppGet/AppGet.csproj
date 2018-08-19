@@ -138,7 +138,8 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Http\JsonContent.cs" />
-    <Compile Include="Infrastructure\MessageBus\TinyMessenger.cs" />
+    <Compile Include="Infrastructure\Events\IStartupHandler.cs" />
+    <Compile Include="Infrastructure\Events\TinyMessenger.cs" />
     <Compile Include="Installers\InstallerWhisperer\InstallerBase.cs" />
     <Compile Include="Installers\UninstallerWhisperer\InnoUninstaller.cs" />
     <Compile Include="Installers\UninstallerWhisperer\MsiUninstaller.cs" />
@@ -168,7 +169,6 @@
     <Compile Include="AppGetConsole.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="FileSystem\FileSystem.cs" />
-    <Compile Include="FileTransfer\Protocols\WindowsPathFileTransferClient.cs" />
     <Compile Include="FileTransfer\ProtocolNotSupportedException.cs" />
     <Compile Include="FileTransfer\FileTransferService.cs" />
     <Compile Include="FileTransfer\Protocols\HttpFileTransferClient.cs" />

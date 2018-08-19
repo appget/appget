@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -18,8 +17,6 @@ namespace AppGet.FileTransfer.Protocols
         private static readonly Regex HttpRegex = new Regex(@"^https?\:\/\/", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         private static readonly Regex FileNameRegex = new Regex(@"\.(zip|7zip|7z|rar|msi|exe)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
-        private static readonly Dictionary<string, WebHeaderCollection> HeaderCache = new Dictionary<string, WebHeaderCollection>();
 
         private readonly IFileSystem _fileSystem;
         private readonly IHttpClient _httpClient;
@@ -52,57 +49,41 @@ namespace AppGet.FileTransfer.Protocols
             throw new InvalidDownloadUrlException(source);
         }
 
-        public void TransferFile(string source, string destinationFile)
+        public async Task TransferFile(string source, string destinationFile)
         {
-            Exception error = null;
-            var tempFile = $"{destinationFile}.APPGET_DOWNLOAD";
-            var progress = new ProgressState();
-
-            using (var webClient = new WebClientWithTimeout(TimeSpan.FromSeconds(10)))
+            using (var resp = await _httpClient.GetAsync(new Uri(source), HttpCompletionOption.ResponseHeadersRead))
             {
+                if (resp.Content.Headers.ContentType.MediaType.Contains("text"))
+                    throw new InvalidDownloadUrlException(source, $"[ContentType={resp.Content.Headers.ContentType.MediaType}]");
+
                 if (_fileSystem.FileExists(destinationFile)) _fileSystem.DeleteFile(destinationFile);
 
-                webClient.DownloadProgressChanged += (sender, e) =>
+                var progress = new ProgressState
                 {
-                    progress.Completed = e.BytesReceived;
-
-                    if (e.TotalBytesToReceive > 0) progress.Total = e.TotalBytesToReceive;
-                    else progress.Total = null;
+                    MaxValue = resp.Content.Headers.ContentLength
                 };
 
-                webClient.DownloadFileCompleted += (sender, e) =>
+                using (var httpStream = await resp.Content.ReadAsStreamAsync())
                 {
-                    if (error == null) error = e.Error;
+                    var tempFile = $"{destinationFile}.APPGET_DOWNLOAD";
+                    int len;
 
-                    if (error != null) return;
+                    using (var tempFileStream = _fileSystem.Open(tempFile, FileMode.Create, FileAccess.ReadWrite))
+                    {
+                        var buffer = new byte[8 * 1024];
+                        while ((len = httpStream.Read(buffer, 0, buffer.Length)) > 0)
+                        {
+                            tempFileStream.Write(buffer, 0, len);
+                            progress.Value += len;
+                            OnStatusUpdated(progress);
+                        }
+                    }
 
-                    var client = (WebClient)sender;
-
-                    var contentType = client.ResponseHeaders["Content-Type"];
-                    if (contentType != null && contentType.Contains("text"))
-                        error = new InvalidDownloadUrlException(client.BaseAddress, $"[ContentType={contentType}]");
-                };
-
-                webClient.DownloadFileAsync(new Uri(source), tempFile);
-
-                while (webClient.IsBusy)
-                {
-                    Thread.Sleep(200);
-                    OnStatusUpdated?.Invoke(progress);
+                    progress.IsCompleted = true;
+                    OnStatusUpdated(progress);
+                    _fileSystem.Move(tempFile, destinationFile);
                 }
-
-                if (error != null)
-                {
-                    if (_fileSystem.FileExists(tempFile)) _fileSystem.DeleteFile(tempFile);
-
-                    throw error;
-                }
-
-                HeaderCache[source] = webClient.ResponseHeaders;
             }
-
-            OnCompleted?.Invoke(progress);
-            _fileSystem.Move(tempFile, destinationFile);
         }
 
         public async Task<string> ReadString(string source)
@@ -120,11 +101,5 @@ namespace AppGet.FileTransfer.Protocols
         }
 
         public Action<ProgressState> OnStatusUpdated { get; set; }
-        public Action<ProgressState> OnCompleted { get; set; }
-
-        public static WebHeaderCollection GetTransferHeaders(string url)
-        {
-            return HeaderCache.ContainsKey(url) ? HeaderCache[url] : null;
-        }
     }
 }
