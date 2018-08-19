@@ -3,7 +3,7 @@ using Caliburn.Micro;
 
 namespace AppGet.Gui.Views
 {
-    public abstract class CommandViewModel<T> : Screen, ICommandViewModel where T : AppGetOption
+    public abstract class CommandViewModel<T> : Conductor<IScreen>, ICommandViewModel where T : AppGetOption
     {
         public T Options { get; private set; }
 

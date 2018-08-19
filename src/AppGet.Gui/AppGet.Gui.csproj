@@ -73,9 +73,17 @@
     </ApplicationDefinition>
     <Compile Include="GuiBootstrapper.cs" />
     <Compile Include="Views\CommandViewModel.cs" />
-    <Compile Include="Views\InstallProgressView.xaml.cs">
-      <DependentUpon>InstallProgressView.xaml</DependentUpon>
+    <Compile Include="Views\InitializingView.xaml.cs">
+      <DependentUpon>InitializingView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Installation\InstallCommandViewModel.cs" />
+    <Compile Include="Views\Installation\InstallCommandViewModel.xaml.cs">
+      <DependentUpon>InstallCommandViewModel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\InstallProgressViewModel.xaml.cs">
+      <DependentUpon>InstallProgressViewModel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\InitializingViewModel.cs" />
     <Compile Include="Views\InstallProgressViewModel.cs" />
     <Compile Include="ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
@@ -85,7 +93,15 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ShellViewModel.cs" />
-    <Page Include="Views\InstallProgressView.xaml">
+    <Page Include="Views\InitializingView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Installation\InstallCommandViewModel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\InstallProgressViewModel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -143,6 +159,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AppGet.Manifest\AppGet.Manifest.csproj">
+      <Project>{AC981E7D-75F6-4FAD-8F99-DE0A66CCE463}</Project>
+      <Name>AppGet.Manifest</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AppGet\AppGet.csproj">
       <Project>{0DF5E722-8458-4963-9285-E80D0AD98027}</Project>
       <Name>AppGet</Name>

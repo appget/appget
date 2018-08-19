@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Threading;
 using AppGet.Gui.Views;
+using AppGet.Gui.Views.Installation;
 using AppGet.Infrastructure.Composition;
 using Caliburn.Micro;
 using NLog;
@@ -17,17 +18,9 @@ namespace AppGet.Gui
 
         public GuiBootstrapper()
         {
-            try
-            {
-                Initialize();
-                _container = ContainerBuilder.Container;
-                _container.RegisterMultiple<ICommandViewModel>(new[] { typeof(InstallProgressViewModel) });
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), ex.Message);
-                throw;
-            }
+            Initialize();
+            _container = ContainerBuilder.Container;
+            _container.RegisterMultiple<ICommandViewModel>(new[] { typeof(InstallCommandViewModel) });
         }
 
         protected override void OnStartup(object sender, StartupEventArgs e)
