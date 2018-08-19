@@ -1,4 +1,4 @@
-﻿namespace AppGet.Requirements
+﻿namespace AppGet.Installers.Requirements
 {
     public class EnforcementResult
     {

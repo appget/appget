@@ -2,7 +2,7 @@
 using System.Linq;
 using AppGet.Manifest;
 
-namespace AppGet.Requirements
+namespace AppGet.Installers.Requirements
 {
     public class InstallerCompatibility
     {

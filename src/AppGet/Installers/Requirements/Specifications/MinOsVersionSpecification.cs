@@ -1,7 +1,7 @@
 ﻿using AppGet.HostSystem;
 using AppGet.Manifest;
 
-namespace AppGet.Requirements.Specifications
+namespace AppGet.Installers.Requirements.Specifications
 {
     public class MinOsVersionSpecification : IEnforceRequirements
     {

@@ -89,6 +89,7 @@
     <Compile Include="AppData\AppDataService.cs" />
     <Compile Include="AppData\Config.cs" />
     <Compile Include="Application.cs" />
+    <Compile Include="CommandLine\ConsoleEventReporter.cs" />
     <Compile Include="CommandLine\ConsoleTable.cs" />
     <Compile Include="CommandLine\TableHelper.cs" />
     <Compile Include="CommandLine\Prompts\BooleanPrompt.cs" />
@@ -136,7 +137,9 @@
     <Compile Include="Extensions\FileVersionInfoExtensions.cs" />
     <Compile Include="Http\JsonContent.cs" />
     <Compile Include="Infrastructure\Events\IStartupHandler.cs" />
+    <Compile Include="Infrastructure\Events\StatusUpdateEvent.cs" />
     <Compile Include="Infrastructure\Events\TinyMessenger.cs" />
+    <Compile Include="Installers\Events\InitializationInstallationEvent.cs" />
     <Compile Include="Installers\InstallerWhisperer\InstallerBase.cs" />
     <Compile Include="Installers\UninstallerWhisperer\InnoUninstaller.cs" />
     <Compile Include="Installers\UninstallerWhisperer\MsiUninstaller.cs" />
@@ -214,12 +217,12 @@
     <Compile Include="ProgressTracker\IReportProgress.cs" />
     <Compile Include="ProgressTracker\ProgressState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Requirements\EnforcementResult.cs" />
+    <Compile Include="Installers\Requirements\EnforcementResult.cs" />
     <Compile Include="Infrastructure\Composition\TinyIoC.cs" />
-    <Compile Include="Requirements\InstallerCompatibility.cs" />
-    <Compile Include="Requirements\Specifications\OsArchitectureSpecification.cs" />
-    <Compile Include="Requirements\IEnforceRequirements.cs" />
-    <Compile Include="Requirements\Specifications\MinOsVersionSpecification.cs" />
+    <Compile Include="Installers\Requirements\InstallerCompatibility.cs" />
+    <Compile Include="Installers\Requirements\Specifications\OsArchitectureSpecification.cs" />
+    <Compile Include="Installers\Requirements\IEnforceRequirements.cs" />
+    <Compile Include="Installers\Requirements\Specifications\MinOsVersionSpecification.cs" />
     <Compile Include="Update\AppGetRelease.cs" />
     <Compile Include="Update\AppGetUpdateService.cs" />
     <Compile Include="Github\Releases\GithubRelease.cs" />
@@ -243,7 +246,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CreatePackage\ManifestBuilder\" />
-    <Folder Include="Uninstaller\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Colorful.Console">

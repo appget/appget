@@ -17,13 +17,12 @@ namespace AppGet.Gui.Views
         private readonly ICommandExecutor _executor;
         private readonly ITinyMessengerHub _hub;
         private TinyMessageSubscriptionToken _progressToken;
+        private decimal _currentProgressState;
 
         public InstallProgressViewModel(ICommandExecutor executor, ITinyMessengerHub hub)
         {
             _executor = executor;
             _hub = hub;
-            Activated += InstallProgressViewModel_Activated;
-            Deactivated += InstallProgressViewModel_Deactivated;
         }
 
 
@@ -35,18 +34,36 @@ namespace AppGet.Gui.Views
         private void InstallProgressViewModel_Activated(object sender, ActivationEventArgs e)
         {
             _progressToken = _hub.Subscribe<GenericTinyMessage<ProgressState>>(OnProgressUpdated);
+            _progressToken = _hub.Subscribe<StatusUpdateEvent>(OnStatusUpdated);
             Task.Run(() => _executor.ExecuteCommand(Options));
         }
 
-        private void OnProgressUpdated(GenericTinyMessage<ProgressState> obj)
+        private void OnStatusUpdated(StatusUpdateEvent e)
         {
-            ProgressMaximum = obj.Content.MaxValue;
-            Progress = obj.Content.Value;
+            ProgressStatus = e.Message;
+        }
+
+        private void OnProgressUpdated(GenericTinyMessage<ProgressState> e)
+        {
+            var newPercent = e.Content.GetPercentCompleted();
+
+            if (newPercent < 99 && _currentProgressState + 1 > newPercent)
+            {
+                return;
+            }
+
+            ProgressStatus = $"Downloading Installer";
+
+            _currentProgressState = newPercent;
+            ProgressMaximum = 100;
+            Progress = (long)newPercent;
         }
 
         protected override void OnInitialize()
         {
-            ProgressStatus = $"Installing {Options.Package}";
+            ProgressStatus = $"Initializing";
+            Activated += InstallProgressViewModel_Activated;
+            Deactivated += InstallProgressViewModel_Deactivated;
         }
 
         public string ProgressStatus { get; private set; }

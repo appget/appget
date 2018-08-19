@@ -1,6 +1,6 @@
 ﻿using AppGet.HostSystem;
+using AppGet.Installers.Requirements.Specifications;
 using AppGet.Manifest;
-using AppGet.Requirements.Specifications;
 using FluentAssertions;
 using NUnit.Framework;
 

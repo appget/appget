@@ -1,6 +1,6 @@
 ﻿using AppGet.Manifest;
 
-namespace AppGet.Requirements
+namespace AppGet.Installers.Requirements
 {
     public interface IEnforceRequirements
     {

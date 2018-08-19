@@ -7,6 +7,7 @@ using AppGet.Commands.Uninstall;
 using AppGet.FileTransfer;
 using AppGet.HostSystem;
 using AppGet.Infrastructure.Events;
+using AppGet.Installers.Events;
 using AppGet.Installers.InstallerWhisperer;
 using AppGet.Installers.UninstallerWhisperer;
 using AppGet.Manifest;
@@ -22,18 +23,6 @@ namespace AppGet.Installers
     {
         Task Install(PackageManifest packageManifest, InstallOptions installOptions);
         Task Uninstall(UninstallOptions uninstallOptions);
-    }
-
-    public class StatusUpdateEvent : ITinyMessage
-    {
-        public StatusUpdateEvent(object sender, string message)
-        {
-            Sender = sender;
-            Message = message;
-        }
-
-        public object Sender { get; }
-        public string Message { get; }
     }
 
     public class InstallService : IInstallService
@@ -74,7 +63,7 @@ namespace AppGet.Installers
         public async Task Install(PackageManifest packageManifest, InstallOptions installOptions)
         {
             _logger.Info("Beginning installation of '{0}'", packageManifest);
-            _hub.PublishAsync(new StatusUpdateEvent(this, $"Starting installation of {packageManifest}"));
+            _hub.PublishAsync(new InitializationInstallationEvent(this, packageManifest));
 
             var installer = _findInstaller.GetBestInstaller(packageManifest.Installers);
             var installerPath = await _fileTransferService.TransferFile(installer.Location, _pathResolver.TempFolder, installer.Sha256);
@@ -92,6 +81,7 @@ namespace AppGet.Installers
             RunInstaller(installOptions.InteractivityLevel, packageManifest, whisperer);
 
             _logger.Info("Installation completed succesfully for '{0}'", packageManifest);
+            _hub.PublishAsync(new InstallationSuccessfulEvent(this, packageManifest));
         }
 
         public async Task Uninstall(UninstallOptions uninstallOptions)
@@ -139,6 +129,8 @@ namespace AppGet.Installers
 
         private void RunInstaller(InstallInteractivityLevels interactivity, PackageManifest packageManifest, IInstaller whisperer)
         {
+            _hub.PublishAsync(new ExecutingInstallerEvent(this, packageManifest));
+
             var logPath = _pathResolver.GetInstallerLogFile(packageManifest.Id);
 
             string GetLoggingArgs()

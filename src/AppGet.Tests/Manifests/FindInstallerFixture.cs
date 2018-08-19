@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using AppGet.Installers.Requirements;
 using AppGet.Manifest;
 using AppGet.Manifests;
-using AppGet.Requirements;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;
