@@ -71,7 +71,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Framework\CaliburnContentLoader.cs" />
     <Compile Include="Framework\GuiBootstrapper.cs" />
     <Compile Include="CaliburnShellViewModel.cs" />
     <Compile Include="CaliburnShellView.xaml.cs">

@@ -10,7 +10,7 @@
         WindowStartupLocation="CenterScreen"
         Width="630"
         Height="230"
-        ContentLoader="{StaticResource CaliburnContentLoader}"
-        ContentSource="/CaliburnShellView.xaml">
+        Style="{StaticResource BlankWindow}"
+        >
 </controls:ModernWindow>
 

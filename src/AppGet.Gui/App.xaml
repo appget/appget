@@ -6,12 +6,10 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
-                    <framework:CaliburnContentLoader x:Key="CaliburnContentLoader"/>
                     <framework:GuiBootstrapper x:Key="GuiBootstrapper" />
                 </ResourceDictionary>
                 <ResourceDictionary Source="/ModernUI;component/Assets/ModernUI.xaml" />
                 <ResourceDictionary Source="/ModernUI;component/Assets/ModernUI.Light.xaml" />
-
             </ResourceDictionary.MergedDictionaries>
             <SolidColorBrush x:Key="AppGetAccent" Color="#FF065BB0"/>
         </ResourceDictionary>
