@@ -74,22 +74,12 @@
     <Compile Include="Framework\AppSession.cs" />
     <Compile Include="Framework\CaliburnBootstrapper.cs" />
     <Compile Include="CaliburnShellViewModel.cs" />
-    <Compile Include="CaliburnShellView.xaml.cs">
-      <DependentUpon>CaliburnShellView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\CommandViewModel.cs" />
-    <Compile Include="Views\InitializingView.xaml.cs">
-      <DependentUpon>InitializingView.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Views\InstallationSuccessfulViewModel.cs" />
+    <Compile Include="Views\InstallingViewModel.cs" />
     <Compile Include="Views\Installation\InstallCommandViewModel.cs" />
-    <Compile Include="Views\Installation\InstallCommandViewModel.xaml.cs">
-      <DependentUpon>InstallCommandViewModel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\InstallProgressViewModel.xaml.cs">
-      <DependentUpon>InstallProgressViewModel.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\InitializingViewModel.cs" />
-    <Compile Include="Views\InstallProgressViewModel.cs" />
+    <Compile Include="Views\DownloadProgressViewModel.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -102,6 +92,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\InstallationSuccessfulView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\InstallingView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\InitializingView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -110,7 +108,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\InstallProgressViewModel.xaml">
+    <Page Include="Views\DownloadProgressView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

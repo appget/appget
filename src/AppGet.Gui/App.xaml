@@ -12,6 +12,8 @@
                 <ResourceDictionary Source="/ModernUI;component/Assets/ModernUI.Light.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <SolidColorBrush x:Key="AppGetAccent" Color="#FF065BB0"/>
+            <!-- https://material-ui.com/style/color/ -->
+            <SolidColorBrush x:Key="AccentSuccess" Color="#64dd17"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

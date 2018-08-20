@@ -1,18 +1,7 @@
-﻿//using System.Threading.Tasks;
-//using AppGet.Commands;
-//using AppGet.Commands.Install;
-//using AppGet.Infrastructure.Events;
-//using AppGet.ProgressTracker;
-//using Caliburn.Micro;
-//
-//namespace AppGet.Gui.Views
-//{
-
 using AppGet.Commands;
 using AppGet.Extensions;
 using AppGet.Gui.Framework;
 using AppGet.Infrastructure.Events;
-using AppGet.Manifest;
 using AppGet.ProgressTracker;
 using Caliburn.Micro;
 
@@ -23,13 +12,13 @@ namespace AppGet.Gui.Views
         bool CanHandle(AppGetOption options);
     }
 
-    public class InstallProgressViewModel : Screen
+    public class DownloadProgressViewModel : Screen
     {
         private readonly ITinyMessengerHub _hub;
         private TinyMessageSubscriptionToken _progressToken;
         private decimal _currentProgressState;
 
-        public InstallProgressViewModel(ITinyMessengerHub hub)
+        public DownloadProgressViewModel(ITinyMessengerHub hub)
         {
             _hub = hub;
         }

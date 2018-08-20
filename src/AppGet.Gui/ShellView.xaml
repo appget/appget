@@ -13,5 +13,12 @@
         MinHeight="200"
         Style="{StaticResource BlankWindow}"
         >
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo x:Name="taskBarItemInfo1" 
+                         ProgressState="Indeterminate"
+                         ProgressValue="0.5"
+                         Description="Taskbar Item Info Sample">
+        </TaskbarItemInfo>
+    </Window.TaskbarItemInfo>
 </controls:ModernWindow>
 

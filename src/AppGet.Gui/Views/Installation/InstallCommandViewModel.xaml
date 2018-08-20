@@ -8,7 +8,7 @@
              d:DesignHeight="230" 
              >
     <Grid>
-        <StackPanel Margin="20">
+        <StackPanel>
             <StackPanel>
                 <ContentControl x:Name="ActiveItem" />
             </StackPanel>
