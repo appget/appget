@@ -9,7 +9,8 @@
         ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen"
         Width="630"
-        Height="230"
+        Height="200"
+        MinHeight="200"
         Style="{StaticResource BlankWindow}"
         >
 </controls:ModernWindow>

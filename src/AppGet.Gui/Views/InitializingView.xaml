@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" 
              d:DesignWidth="630" 
-             Height="230">
+             d:DesignHeight="230">
     <Grid>
         <StackPanel>
             <Label Name="Message" 
@@ -15,7 +15,7 @@
                    Height="44" 
                    />
             <ProgressBar 
-                         Height="5"
+                         Height="50"
                          IsIndeterminate="true" 
                          Foreground="{DynamicResource AppGetAccent}">
             </ProgressBar>
