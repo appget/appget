@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using AppGet.Commands;
+﻿using AppGet.Commands;
 using AppGet.Commands.Install;
 using AppGet.Infrastructure.Events;
-using AppGet.ProgressTracker;
 using Caliburn.Micro;
 
 namespace AppGet.Gui.Views.Installation
@@ -20,6 +17,9 @@ namespace AppGet.Gui.Views.Installation
             _executor = executor;
             _hub = hub;
             _initializingViewModel = initializingViewModel;
+
+            ActivateItem(_initializingViewModel);
+
         }
 
 
@@ -30,13 +30,19 @@ namespace AppGet.Gui.Views.Installation
 
         private void OnActivated(object sender, ActivationEventArgs e)
         {
+        }
+
+        protected override void OnActivate()
+        {
             ActivateItem(_initializingViewModel);
+            base.OnActivate();
         }
 
         protected override void OnInitialize()
         {
             Activated += OnActivated;
             Deactivated += OnDeactivated;
+
         }
 
     }

@@ -9,7 +9,7 @@ using Caliburn.Micro;
 using NLog;
 using LogManager = NLog.LogManager;
 
-namespace AppGet.Gui
+namespace AppGet.Gui.Framework
 {
     public class GuiBootstrapper : BootstrapperBase
     {

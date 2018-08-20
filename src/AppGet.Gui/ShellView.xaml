@@ -1,21 +1,16 @@
-﻿<Window x:Class="AppGet.Gui.ShellView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             mc:Ignorable="d" 
-             ResizeMode="CanMinimize"
-             WindowStartupLocation="CenterScreen"
-             Width="630"
-             Height="230">
-    <StackPanel>
-        <ContentControl x:Name="ActiveItem" />
-    </StackPanel>
-    <Window.TaskbarItemInfo>
-        <TaskbarItemInfo x:Name="taskBarItemInfo1" 
-                         ProgressState="Indeterminate"
-                         ProgressValue="0.5"
-                         Description="Taskbar Item Info Sample">
-        </TaskbarItemInfo>
-    </Window.TaskbarItemInfo>
-</Window>
+﻿<controls:ModernWindow x:Class="AppGet.Gui.ShellView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="https://github.com/bakx/mui"
+        mc:Ignorable="d"                  
+        Title="AppGet"
+        IsTitleVisible="True"
+        ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterScreen"
+        Width="630"
+        Height="230"
+        ContentLoader="{StaticResource CaliburnContentLoader}"
+        ContentSource="/CaliburnShellView.xaml">
+</controls:ModernWindow>
+

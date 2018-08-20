@@ -34,7 +34,7 @@ namespace AppGet.Infrastructure.Composition
 
         static ContainerBuilder()
         {
-            AssemblyTypes = AppDomain.CurrentDomain.GetAssemblies().SelectMany(c => c.ExportedTypes.Where(t => !t.IsAbstract && !t.IsInterface && !t.IsEnum && t.Namespace.StartsWith("AppGet."))).ToList();
+            AssemblyTypes = AppDomain.CurrentDomain.GetAssemblies().SelectMany(c => c.ExportedTypes.Where(t => !t.IsAbstract && !t.IsInterface && !t.IsEnum && t.Namespace != null && t.Namespace.StartsWith("AppGet."))).ToList();
 
             LogConfigurator.ConfigureLogger();
             Container = Build();

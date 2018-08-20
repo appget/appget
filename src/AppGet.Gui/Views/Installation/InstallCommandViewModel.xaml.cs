@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace AppGet.Gui.Views
+namespace AppGet.Gui.Views.Installation
 {
     /// <summary>
     /// Interaction logic for ProgressView.xaml
@@ -9,7 +9,6 @@ namespace AppGet.Gui.Views
     {
         public InstallProgressView()
         {
-            InitializeComponent();
         }
     }
 }

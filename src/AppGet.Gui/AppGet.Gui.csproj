@@ -71,7 +71,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="GuiBootstrapper.cs" />
+    <Compile Include="Framework\CaliburnContentLoader.cs" />
+    <Compile Include="Framework\GuiBootstrapper.cs" />
+    <Compile Include="CaliburnShellViewModel.cs" />
+    <Compile Include="CaliburnShellView.xaml.cs">
+      <DependentUpon>CaliburnShellView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CommandViewModel.cs" />
     <Compile Include="Views\InitializingView.xaml.cs">
       <DependentUpon>InitializingView.xaml</DependentUpon>
@@ -85,14 +90,18 @@
     </Compile>
     <Compile Include="Views\InitializingViewModel.cs" />
     <Compile Include="Views\InstallProgressViewModel.cs" />
-    <Compile Include="ShellView.xaml.cs">
-      <DependentUpon>ShellView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ShellView.xaml.cs">
+      <DependentUpon>ShellView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ShellViewModel.cs" />
+    <Page Include="CaliburnShellView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\InitializingView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -106,8 +115,8 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ShellView.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -149,9 +158,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="FodyWeavers.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1</ProductName>
@@ -159,6 +165,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\mui\1.0\ModernUI\ModernUI\ModernUI.csproj">
+      <Project>{9A653A28-FE46-40E8-A14F-48B0E325165D}</Project>
+      <Name>ModernUI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AppGet.Manifest\AppGet.Manifest.csproj">
       <Project>{AC981E7D-75F6-4FAD-8F99-DE0A66CCE463}</Project>
       <Name>AppGet.Manifest</Name>
@@ -167,6 +177,9 @@
       <Project>{0DF5E722-8458-4963-9285-E80D0AD98027}</Project>
       <Name>AppGet</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="FodyWeavers.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
