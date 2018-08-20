@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Windows;
 using Caliburn.Micro;
+using JetBrains.Annotations;
 using ModernUI;
 
 namespace AppGet.Gui
 {
+    [UsedImplicitly]
     public partial class ShellView
     {
+        private readonly IScreen _viewModel;
+
         public ShellView()
         {
             InitializeComponent();
@@ -18,9 +22,20 @@ namespace AppGet.Gui
             }
 
             var view = (DependencyObject)System.Windows.Application.LoadComponent(new Uri(@"\CaliburnShellView.xaml", UriKind.Relative));
-            var viewModel = ViewModelLocator.LocateForView(view);
-            ViewModelBinder.Bind(viewModel, view, null);
+
             Content = view;
+
+            _viewModel = (IScreen)ViewModelLocator.LocateForView(view);
+            ViewModelBinder.Bind(_viewModel, view, null);
+            _viewModel.Activate();
+
+
+            Closing += ShellView_Closing;
+        }
+
+        private void ShellView_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            _viewModel.Deactivate(true);
         }
     }
 }

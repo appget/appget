@@ -6,7 +6,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
-                    <framework:GuiBootstrapper x:Key="GuiBootstrapper" />
+                    <framework:CaliburnBootstrapper x:Key="GuiBootstrapper" />
                 </ResourceDictionary>
                 <ResourceDictionary Source="/ModernUI;component/Assets/ModernUI.xaml" />
                 <ResourceDictionary Source="/ModernUI;component/Assets/ModernUI.Light.xaml" />

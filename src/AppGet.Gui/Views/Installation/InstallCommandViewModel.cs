@@ -17,31 +17,15 @@ namespace AppGet.Gui.Views.Installation
             _executor = executor;
             _hub = hub;
             _initializingViewModel = initializingViewModel;
-
-            ActivateItem(_initializingViewModel);
-
-        }
-
-
-        private void OnDeactivated(object sender, DeactivationEventArgs e)
-        {
-            _progressToken?.Dispose();
-        }
-
-        private void OnActivated(object sender, ActivationEventArgs e)
-        {
         }
 
         protected override void OnActivate()
         {
             ActivateItem(_initializingViewModel);
-            base.OnActivate();
         }
 
         protected override void OnInitialize()
         {
-            Activated += OnActivated;
-            Deactivated += OnDeactivated;
 
         }
 

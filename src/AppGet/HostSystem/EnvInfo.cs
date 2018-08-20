@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 
@@ -23,6 +24,8 @@ namespace AppGet.HostSystem
         public bool UserInteractive => Environment.UserInteractive;
         public string AppDir { get; }
 
+        public bool IsGui { get; }
+
         [DllImport("shlwapi.dll", SetLastError = true, EntryPoint = "#437")]
         private static extern bool IsOS(int os);
 
@@ -35,6 +38,8 @@ namespace AppGet.HostSystem
 
         public EnvInfo()
         {
+
+            IsGui = Process.GetCurrentProcess().ProcessName.Contains("gui");
             try
             {
                 Is64BitOperatingSystem = Environment.Is64BitOperatingSystem;

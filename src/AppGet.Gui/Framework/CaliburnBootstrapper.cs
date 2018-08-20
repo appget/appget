@@ -11,12 +11,12 @@ using LogManager = NLog.LogManager;
 
 namespace AppGet.Gui.Framework
 {
-    public class GuiBootstrapper : BootstrapperBase
+    public class CaliburnBootstrapper : BootstrapperBase
     {
-        private static readonly Logger Logger = LogManager.GetLogger(nameof(GuiBootstrapper));
+        private static readonly Logger Logger = LogManager.GetLogger(nameof(CaliburnBootstrapper));
         private readonly TinyIoCContainer _container;
 
-        public GuiBootstrapper()
+        public CaliburnBootstrapper()
         {
             Initialize();
             _container = ContainerBuilder.Container;
