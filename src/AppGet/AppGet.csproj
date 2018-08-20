@@ -135,6 +135,7 @@
     <Compile Include="Crypto\Hash\ChecksumVerificationException.cs" />
     <Compile Include="Crypto\Hash\ChecksumService.cs" />
     <Compile Include="Extensions\FileVersionInfoExtensions.cs" />
+    <Compile Include="Extensions\NumeralExtensions.cs" />
     <Compile Include="Http\JsonContent.cs" />
     <Compile Include="Infrastructure\Events\IStartupHandler.cs" />
     <Compile Include="Infrastructure\Events\ManifestLoadedEvent.cs" />

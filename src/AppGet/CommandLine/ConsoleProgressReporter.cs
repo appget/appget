@@ -1,4 +1,5 @@
 ﻿using System;
+using AppGet.Extensions;
 using AppGet.Infrastructure.Events;
 using AppGet.ProgressTracker;
 
@@ -26,7 +27,7 @@ namespace AppGet.CommandLine
 
                 var progress = new string('█', filled);
 
-                return $"   {progress.PadRight(PROGRESS_LENGTH, '░')} {percent}%: {state.Value:N0} / {state.MaxValue:N0}";
+                return $"   {progress.PadRight(PROGRESS_LENGTH, '░')} {percent}%: {state.Value.ToFileSize()} / {state.MaxValue.ToFileSize()}";
             }
 
             if (state.Value != 0)

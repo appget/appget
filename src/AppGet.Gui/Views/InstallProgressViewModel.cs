@@ -9,6 +9,7 @@
 //{
 
 using AppGet.Commands;
+using AppGet.Extensions;
 using AppGet.Gui.Framework;
 using AppGet.Infrastructure.Events;
 using AppGet.Manifest;
@@ -54,10 +55,12 @@ namespace AppGet.Gui.Views
                 return;
             }
 
-            ProgressStatus = $"Downloading Installer for {AppSession.CurrentManifest.Name} {AppSession.CurrentManifest.Version}";
+            ProgressStatus = $"Downloading {AppSession.CurrentManifest.Name} {AppSession.CurrentManifest.Version}";
 
             _currentProgressState = newPercent;
             Progress = (long)newPercent;
+
+            DetailedStatus = e.Content.Value.ToFileSize() + " / " + e.Content.MaxValue.ToFileSize();
         }
 
         protected override void OnInitialize()
@@ -68,7 +71,9 @@ namespace AppGet.Gui.Views
         }
 
         public string ProgressStatus { get; private set; }
-
         public long Progress { get; private set; }
+
+        public string DetailedStatus { get; private set; }
+
     }
 }

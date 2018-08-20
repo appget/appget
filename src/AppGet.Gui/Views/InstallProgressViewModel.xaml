@@ -4,12 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:installProgressView="clr-namespace:AppGet.Gui.Views"
-             mc:Ignorable="d" d:DesignWidth="630">
+             mc:Ignorable="d" d:DesignWidth="630" d:DesignHeight="300">
     <Grid>
         <StackPanel>
             <Label Name="ProgressStatus" Content="Starting..." HorizontalAlignment="Left" FontSize="16" Height="44" />
             <ProgressBar Name="Progress" Maximum="100" Height="10">
             </ProgressBar>
+            <Label x:Name="DetailedStatus" Content="32MB / 64MB" Margin="0,10,10,0" HorizontalAlignment="Right" FontSize="11"/>
         </StackPanel>
     </Grid>
 </UserControl>
