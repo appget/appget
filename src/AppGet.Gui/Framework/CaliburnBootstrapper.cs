@@ -21,6 +21,8 @@ namespace AppGet.Gui.Framework
             Initialize();
             _container = ContainerBuilder.Container;
             _container.RegisterMultiple<ICommandViewModel>(new[] { typeof(InstallCommandViewModel) });
+
+            _container.Register<AppSession>().AsSingleton();
         }
 
         protected override void OnStartup(object sender, StartupEventArgs e)

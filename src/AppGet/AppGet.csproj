@@ -137,6 +137,7 @@
     <Compile Include="Extensions\FileVersionInfoExtensions.cs" />
     <Compile Include="Http\JsonContent.cs" />
     <Compile Include="Infrastructure\Events\IStartupHandler.cs" />
+    <Compile Include="Infrastructure\Events\ManifestLoadedEvent.cs" />
     <Compile Include="Infrastructure\Events\StatusUpdateEvent.cs" />
     <Compile Include="Infrastructure\Events\TinyMessenger.cs" />
     <Compile Include="Installers\Events\InitializationInstallationEvent.cs" />

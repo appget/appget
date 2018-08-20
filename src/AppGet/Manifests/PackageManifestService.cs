@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AppGet.AppData;
 using AppGet.FileSystem;
 using AppGet.FileTransfer;
+using AppGet.Infrastructure.Events;
 using AppGet.Manifest;
 using AppGet.Manifest.Builder;
 using AppGet.Manifest.Serialization;
@@ -23,22 +24,26 @@ namespace AppGet.Manifests
         private readonly IFileTransferService _fileTransferService;
         private readonly IFileSystem _fileSystem;
         private readonly IConfig _config;
+        private readonly ITinyMessengerHub _hub;
         private readonly Logger _logger;
 
-        public PackageManifestService(IFileTransferService fileTransferService, IFileSystem fileSystem, IConfig config, Logger logger)
+        public PackageManifestService(IFileTransferService fileTransferService, IFileSystem fileSystem, IConfig config, ITinyMessengerHub hub, Logger logger)
         {
             _fileTransferService = fileTransferService;
             _fileSystem = fileSystem;
             _config = config;
+            _hub = hub;
             _logger = logger;
         }
 
         public async Task<PackageManifest> LoadManifest(string source)
         {
             _logger.Info($"Loading package manifest from {source}");
-            var text = await _fileTransferService.ReadContentAsync(source);
+            var text = await _fileTransferService.ReadContent(source);
 
-            return Yaml.Deserialize<PackageManifest>(text);
+            var manifest = Yaml.Deserialize<PackageManifest>(text);
+            _hub.Publish(new ManifestLoadedEvent(this, manifest));
+            return manifest;
         }
 
         public string WriteManifest(PackageManifestBuilder manifestBuilder)

@@ -1,4 +1,6 @@
-﻿using NLog;
+﻿using System;
+using AppGet.HostSystem;
+using NLog;
 using NLog.Config;
 using NLog.Layouts;
 using NLog.Targets;
@@ -13,7 +15,10 @@ namespace AppGet.Infrastructure.Logging
         {
             LogManager.Configuration = new LoggingConfiguration();
 
-            BuildConsoleTarget();
+            if (!new EnvInfo().IsGui)
+            {
+                BuildConsoleTarget();
+            }
 
             if (sentry)
             {

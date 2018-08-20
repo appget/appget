@@ -13,7 +13,33 @@ namespace AppGet.FileTransfer
     public interface IFileTransferService
     {
         Task<string> TransferFile(string source, string destinationFolder, string sha256);
-        Task<string> ReadContentAsync(string source);
+        Task<string> ReadContent(string source);
+    }
+
+    public class FileTransferStartedEvent : StatusUpdateEvent
+    {
+        public string Source { get; }
+        public string Destination { get; }
+
+        public FileTransferStartedEvent(object sender, string source, string destination)
+            : base(sender)
+        {
+            Source = source;
+            Destination = destination;
+        }
+    }
+
+    public class FileTransferCompletedEvent : StatusUpdateEvent
+    {
+        public string Source { get; }
+        public string Destination { get; }
+
+        public FileTransferCompletedEvent(object sender, string source, string destination)
+            : base(sender)
+        {
+            Source = source;
+            Destination = destination;
+        }
     }
 
     public class FileTransferService : IFileTransferService
@@ -51,6 +77,7 @@ namespace AppGet.FileTransfer
 
         public async Task<string> TransferFile(string source, string destinationFolder, string sha256)
         {
+            _tinyMessengerHub.PublishAsync(new FileTransferStartedEvent(this, source, destinationFolder));
             _logger.Debug($"Transfering file from {source} to {destinationFolder}");
             var client = GetClient(source);
             var fileName = await client.GetFileName(source);
@@ -79,13 +106,14 @@ namespace AppGet.FileTransfer
                 }
             }
 
+            _tinyMessengerHub.PublishAsync(new FileTransferCompletedEvent(this, source, destinationFolder));
+
             return destinationPath;
         }
 
-        public async Task<string> ReadContentAsync(string source)
+        public async Task<string> ReadContent(string source)
         {
             var client = GetClient(source);
-
             return await client.ReadString(source);
         }
     }

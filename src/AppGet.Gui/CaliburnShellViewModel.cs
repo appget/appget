@@ -6,14 +6,15 @@ using System.Windows;
 using AppGet.Commands;
 using AppGet.Gui.Views;
 using Caliburn.Micro;
+using JetBrains.Annotations;
 
 namespace AppGet.Gui
 {
-    public class CaliburnShellViewModel : Conductor<object>
+    [UsedImplicitly]
+    public class CaliburnShellViewModel : Conductor<IScreen>
     {
         public CaliburnShellViewModel(IParseOptions optionsParser, IEnumerable<ICommandViewModel> commandViewModels)
         {
-
             Task.Run(() =>
             {
                 var args = Environment.GetCommandLineArgs();
@@ -39,11 +40,6 @@ namespace AppGet.Gui
                     MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
-        }
-
-        protected override void OnActivate()
-        {
-            base.OnActivate();
         }
     }
 }

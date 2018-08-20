@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using AppGet.Commands;
 using AppGet.Commands.CreateManifest;
 using AppGet.Commands.Install;
@@ -34,7 +36,11 @@ namespace AppGet.Infrastructure.Composition
 
         static ContainerBuilder()
         {
-            AssemblyTypes = AppDomain.CurrentDomain.GetAssemblies().SelectMany(c => c.ExportedTypes.Where(t => !t.IsAbstract && !t.IsInterface && !t.IsEnum && t.Namespace != null && t.Namespace.StartsWith("AppGet."))).ToList();
+            var files = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "appget.*", SearchOption.TopDirectoryOnly).Where(c => c.EndsWith(".exe") || c.EndsWith(".dll"));
+
+            var ass = files.Select(Assembly.LoadFile);
+
+            AssemblyTypes = ass.SelectMany(c => c.ExportedTypes.Where(t => !t.IsAbstract && !t.IsInterface && !t.IsEnum && t.Namespace != null && t.Namespace.StartsWith("AppGet."))).ToList();
 
             LogConfigurator.ConfigureLogger();
             Container = Build();
@@ -50,6 +56,9 @@ namespace AppGet.Infrastructure.Composition
         private static TinyIoCContainer Build()
         {
             var container = new TinyIoCContainer();
+
+
+//            container.Register<ITinyMessengerHub>(new TinyMessengerHub(new DefaultSubscriberErrorHandler())).AsSingleton();
 
             var logger = LogManager.GetLogger("appget");
 
@@ -68,6 +77,8 @@ namespace AppGet.Infrastructure.Composition
             container.Register(logger);
 
             RegisterLists(container);
+
+            container.Unregister<TinyMessengerHub>();
 
             return container;
         }
