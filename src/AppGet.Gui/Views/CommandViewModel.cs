@@ -17,7 +17,7 @@ namespace AppGet.Gui.Views
 
         protected void ShowError(string title, string message)
         {
-            var headerVm = new DialogHeaderViewModel(title, message, "f2ed", Accents.Success);
+            var headerVm = new DialogHeaderViewModel(title, message, "sad-cry", Accents.Success);
             var dialog = new DialogViewModel(headerVm);
 
             ActivateItem(dialog);

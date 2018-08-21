@@ -73,6 +73,7 @@
     </ApplicationDefinition>
     <Compile Include="Controls\Accents.cs" />
     <Compile Include="Controls\DialogHeaderViewModel.cs" />
+    <Compile Include="FontAwesome\FaIcons.cs" />
     <Compile Include="Framework\AppSession.cs" />
     <Compile Include="Framework\CaliburnBootstrapper.cs" />
     <Compile Include="CaliburnShellViewModel.cs" />
@@ -92,7 +93,6 @@
     <Compile Include="ShellViewModel.cs" />
     <Compile Include="Views\Shared\DialogViewModel.cs" />
     <Compile Include="Views\Shared\RestartRequiredViewModel.cs" />
-    <Compile Include="Views\Shared\ErrorViewModel.cs" />
     <Page Include="CaliburnShellView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -133,10 +133,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Shared\ErrorView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -157,7 +153,8 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.manifest" />
-    <Resource Include="Assets\fa-regular-400.ttf" />
+    <Resource Include="FontAwesome\Fonts\fa-regular-400.ttf" />
+    <Resource Include="FontAwesome\Fonts\fa-solid-900.ttf" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

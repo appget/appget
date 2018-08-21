@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:controls="clr-namespace:AppGet.Gui.Controls"
              mc:Ignorable="d" 
              d:DesignWidth="630" 
              d:DesignHeight="174.808">
@@ -16,7 +15,7 @@
                 Margin="0,0,15,0"
                 TextOptions.TextFormattingMode="Ideal"
                 >
-                <TextBlock Name="Icon" Text="&#xf5b3;" FontFamily="{StaticResource FontAwesome}" Foreground="{Binding IconColor}" />
+                <TextBlock Name="Icon" Text="&#xf2ce;" FontFamily="{StaticResource FontAwesomeSolid}" Foreground="{Binding IconColor}" />
             </Viewbox>
             <StackPanel VerticalAlignment="Center" DockPanel.Dock="Right">
                 <TextBlock Name="Title"

@@ -1,20 +1,26 @@
-﻿using System.Threading;
-using System.Windows.Media;
-using System.Windows.Threading;
+﻿using System.Windows.Media;
+using AppGet.Gui.FontAwesome;
 using Caliburn.Micro;
-using JetBrains.Annotations;
 
 namespace AppGet.Gui.Controls
 {
-    [UsedImplicitly]
     public class DialogHeaderViewModel : Screen
     {
         public DialogHeaderViewModel(string title, string message, string icon, Color iconBrush)
         {
-            var unicode = int.Parse(icon, System.Globalization.NumberStyles.HexNumber);
+            char unicode;
+            if (FaIcons.Regular.ContainsKey(icon))
+            {
+                unicode = FaIcons.Regular[icon];
+            }
+            else
+            {
+                unicode = FaIcons.Solid[icon];
+            }
+
             Title = title;
             Message = message;
-            Icon = ((char)unicode).ToString();
+            Icon = unicode.ToString();
 
             IconColor = new SolidColorBrush(iconBrush);
             IconColor.Freeze();
