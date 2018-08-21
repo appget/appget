@@ -11,6 +11,7 @@
             <Viewbox 
                 Stretch="Uniform" 
                 Width="80"
+                Height="80"
                 DockPanel.Dock="Left"
                 Margin="0,0,15,0"
                 TextOptions.TextFormattingMode="Ideal"

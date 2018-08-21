@@ -13,6 +13,7 @@
             </ResourceDictionary.MergedDictionaries>
             <SolidColorBrush x:Key="AppGetAccent" Color="#FF065BB0"/>
             <!-- https://material-ui.com/style/color/ -->
+            <SolidColorBrush x:Key="AccentInfo" Color="#0288D1"/>
             <SolidColorBrush x:Key="AccentSuccess" Color="#64dd17"/>
             <SolidColorBrush x:Key="AccentError" Color="#C62828"/>
             <SolidColorBrush x:Key="AccentWarn" Color="#FFC107"/>

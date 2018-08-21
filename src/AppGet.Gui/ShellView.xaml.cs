@@ -29,12 +29,20 @@ namespace AppGet.Gui
             ViewModelBinder.Bind(_viewModel, view, null);
             _viewModel.Activate();
 
+            _viewModel.Deactivated += _viewModel_Deactivated;
 
             Closing += ShellView_Closing;
         }
 
+        private void _viewModel_Deactivated(object sender, DeactivationEventArgs e)
+        {
+            _viewModel.Deactivated -= _viewModel_Deactivated;
+            Close();
+        }
+
         private void ShellView_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            _viewModel.Deactivated -= _viewModel_Deactivated;
             _viewModel.Deactivate(true);
         }
     }

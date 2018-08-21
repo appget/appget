@@ -41,5 +41,11 @@ namespace AppGet.Gui
                 }
             });
         }
+
+        public void Close()
+        {
+            var shell = (IDeactivate)this;
+            shell.Deactivate(true);
+        }
     }
 }

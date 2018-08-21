@@ -1,9 +1,11 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
 using AppGet.Commands;
 using AppGet.Commands.Install;
 using AppGet.FileTransfer;
+using AppGet.Gui.Controls;
 using AppGet.Gui.Views.Shared;
 using AppGet.Infrastructure.Events;
 using AppGet.Installers;
@@ -48,27 +50,21 @@ namespace AppGet.Gui.Views.Installation
                 }
                 catch (PackageNotFoundException e)
                 {
-                    ShowError("Sorry, We couldn't find the package you were looking for.", $"Package ID: \"{e.PackageId}\"");
+                    ActivateItem(e.CreateDialog());
                 }
                 catch (InstallerException e)
                 {
-                    if (e.ExitReason.Category == ExitCodeTypes.RestartRequired)
-                    {
-                        ActivateItem(new RestartRequiredViewModel());
-                        return;
-                    }
-                    var errorVm = new ErrorViewModel(
-                        "Something strange has happened!",
-                        $"Installer for {e.PackageManifest.Name} exited with a non-success status code of {e.ExitCode}:{e.ExitReason.Message}");
-                    ActivateItem(errorVm);
+                    ActivateItem(e.CreateDialog());
+                }
+                catch (Win32Exception e)
+                {
+                    ActivateItem(e.CreateDialog());
                 }
                 catch (Exception e)
                 {
-                    var errorVm = new ErrorViewModel(e);
-                    ActivateItem(errorVm);
+                    ActivateItem(e.CreateDialog());
                 }
             });
-
 
             _hub.Subscribe<FileTransferStartedEvent>(e =>
             {

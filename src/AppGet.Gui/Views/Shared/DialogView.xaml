@@ -3,17 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
-             d:DesignWidth="630" Height="174.808">
-    <Grid>
-        <StackPanel>
-            <ContentControl x:Name="ActiveItem" />
-            <Button Name="Close" Content="Close" 
+             d:DesignWidth="630" 
+             d:DesignHeight="174.808">
+    <DockPanel>
+        <ContentControl x:Name="ActiveItem" DockPanel.Dock="Top"/>
+        <Button Name="Close" 
+                DockPanel.Dock="Bottom"
+                    Content="Close"
+                    cal:Message.Attach="Close()"
                     Width="100" 
                     HorizontalAlignment="Right" 
                     VerticalAlignment="Bottom">
-            </Button>
-        </StackPanel>
-    </Grid>
+        </Button>
+    </DockPanel>
 </UserControl>
 
