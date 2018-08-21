@@ -1,3 +1,3 @@
 [submodule "mui"]
 	path = mui
-	url = git@github.com:appget/mui.git
+	url = https://github.com/appget/mui.git
