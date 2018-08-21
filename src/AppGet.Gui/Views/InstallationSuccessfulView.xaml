@@ -28,7 +28,11 @@
                     />
                 </StackPanel>
             </StackPanel>
-            <Button Name="LaunchButton" Content="Lau"></Button>
+            <Button Name="Close" Content="Close" 
+                    Width="100" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Bottom">
+            </Button>
         </StackPanel>
     </Grid>
 </UserControl>

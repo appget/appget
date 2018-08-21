@@ -71,6 +71,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\Accents.cs" />
+    <Compile Include="Controls\DialogHeaderViewModel.cs" />
     <Compile Include="Framework\AppSession.cs" />
     <Compile Include="Framework\CaliburnBootstrapper.cs" />
     <Compile Include="CaliburnShellViewModel.cs" />
@@ -88,7 +90,14 @@
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ShellViewModel.cs" />
+    <Compile Include="Views\Shared\DialogViewModel.cs" />
+    <Compile Include="Views\Shared\RestartRequiredViewModel.cs" />
+    <Compile Include="Views\Shared\ErrorViewModel.cs" />
     <Page Include="CaliburnShellView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\DialogHeaderView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -116,6 +125,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Shared\DialogView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Shared\RestartRequiredView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Shared\ErrorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -136,6 +157,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.manifest" />
+    <Resource Include="Assets\fa-regular-400.ttf" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

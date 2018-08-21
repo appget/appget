@@ -1,9 +1,14 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using System.Windows;
 using AppGet.Commands;
 using AppGet.Commands.Install;
 using AppGet.FileTransfer;
+using AppGet.Gui.Views.Shared;
 using AppGet.Infrastructure.Events;
+using AppGet.Installers;
 using AppGet.Installers.Events;
+using AppGet.PackageRepository;
 
 namespace AppGet.Gui.Views.Installation
 {
@@ -35,9 +40,33 @@ namespace AppGet.Gui.Views.Installation
         {
             ActivateItem(_initializingViewModel);
 
-            Task.Run(() =>
+            Task.Run(async () =>
             {
-                _executor.ExecuteCommand(Options);
+                try
+                {
+                    await _executor.ExecuteCommand(Options);
+                }
+                catch (PackageNotFoundException e)
+                {
+                    ShowError("Sorry, We couldn't find the package you were looking for.", $"Package ID: \"{e.PackageId}\"");
+                }
+                catch (InstallerException e)
+                {
+                    if (e.ExitReason.Category == ExitCodeTypes.RestartRequired)
+                    {
+                        ActivateItem(new RestartRequiredViewModel());
+                        return;
+                    }
+                    var errorVm = new ErrorViewModel(
+                        "Something strange has happened!",
+                        $"Installer for {e.PackageManifest.Name} exited with a non-success status code of {e.ExitCode}:{e.ExitReason.Message}");
+                    ActivateItem(errorVm);
+                }
+                catch (Exception e)
+                {
+                    var errorVm = new ErrorViewModel(e);
+                    ActivateItem(errorVm);
+                }
             });
 
 

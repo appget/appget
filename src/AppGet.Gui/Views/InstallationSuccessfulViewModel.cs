@@ -11,12 +11,14 @@ namespace AppGet.Gui.Views
         {
             var manifest = AppSession.CurrentManifest;
             this.Message = $"{manifest.Name} {manifest.Version}";
-            this.LaunchButton = $"Launch {manifest.Name}";
         }
 
         public string Message { get; private set; }
 
-        public string LaunchButton { get; private set; }
+        public void Close()
+        {
+
+        }
 
     }
 }

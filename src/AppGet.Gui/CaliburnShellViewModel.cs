@@ -25,7 +25,7 @@ namespace AppGet.Gui
                     {
                         args = new[]
                         {
-                            "appget://install/slack"
+                            "appget://install/atoadwadm"
                         };
                     }
 

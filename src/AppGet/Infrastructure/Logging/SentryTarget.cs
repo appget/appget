@@ -115,7 +115,7 @@ namespace AppGet.Infrastructure.Logging
                 {
                     foreach (DictionaryEntry data in ex.Data)
                     {
-                        extras.Add(data.Key.ToString(), data.Value.ToString());
+                        extras.Add(data.Key.ToString(), data.Value?.ToString());
                     }
                 }
 
