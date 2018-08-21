@@ -53,6 +53,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -73,7 +74,9 @@
     </ApplicationDefinition>
     <Compile Include="Controls\Accents.cs" />
     <Compile Include="Controls\DialogHeaderViewModel.cs" />
+    <Compile Include="FontAwesome\FaFamily.cs" />
     <Compile Include="FontAwesome\FaIcons.cs" />
+    <Compile Include="FontAwesome\FaStyles.cs" />
     <Compile Include="Framework\AppSession.cs" />
     <Compile Include="Framework\CaliburnBootstrapper.cs" />
     <Compile Include="CaliburnShellViewModel.cs" />

@@ -15,7 +15,10 @@
                 Margin="0,0,15,0"
                 TextOptions.TextFormattingMode="Ideal"
                 >
-                <TextBlock Name="Icon" Text="&#xf2ce;" FontFamily="{StaticResource FontAwesomeSolid}" Foreground="{Binding IconColor}" />
+                <TextBlock Name="Icon" 
+                           Text="&#xf2ce;" 
+                           FontFamily="{Binding IconFamily, FallbackValue={StaticResource FontAwesomeSolid}}" 
+                           Foreground="{Binding IconColor, FallbackValue={StaticResource AccentSuccess}}" />
             </Viewbox>
             <StackPanel VerticalAlignment="Center" DockPanel.Dock="Right">
                 <TextBlock Name="Title"

@@ -1,5 +1,7 @@
-﻿using System.Windows.Media;
+﻿using System.Windows;
+using System.Windows.Media;
 using AppGet.Gui.FontAwesome;
+using AppGet.Gui.Properties;
 using Caliburn.Micro;
 
 namespace AppGet.Gui.Controls
@@ -12,10 +14,12 @@ namespace AppGet.Gui.Controls
             if (FaIcons.Regular.ContainsKey(icon))
             {
                 unicode = FaIcons.Regular[icon];
+                IconFamily = FaFamily.Regular;
             }
             else
             {
                 unicode = FaIcons.Solid[icon];
+                IconFamily = FaFamily.Solid;
             }
 
             Title = title;
@@ -30,5 +34,6 @@ namespace AppGet.Gui.Controls
         public string Message { get; }
         public string Icon { get; }
         public Brush IconColor { get; }
+        public FontFamily IconFamily { get; set; }
     }
 }
