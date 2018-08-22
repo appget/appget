@@ -14,6 +14,8 @@ namespace AppGet.Manifest
 
         private static string ParseTarget(string text)
         {
+            text = text.ToLowerInvariant();
+
             if (text.IndexOfAny(new[] { '\\' }) >= 0 || text.EndsWith(".yaml"))
             {
                 return Path.GetFileNameWithoutExtension(text).ToLowerInvariant();
