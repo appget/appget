@@ -3,7 +3,7 @@ using AppGet.Manifest.Serialization;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace AppGet.Tests.Serialization
+namespace AppGet.Manifest.Tests.Serialization
 {
     [TestFixture]
     public class JsonFixture

@@ -2,16 +2,16 @@
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace AppGet.Tests.Crypto.Hash.Algorithms
+namespace AppGet.Manifest.Tests.Hash
 {
     [TestFixture()]
-    public class Sha256HashFixture : TestBase<Sha256>
+    public class Sha256Fixture
     {
         [Test]
         public void should_get_sha1()
         {
             var path = GetType().Assembly.Location;
-            var hash = Subject.CalculateHash(path);
+            var hash = new Sha256().CalculateHash(path);
             hash.Should().HaveLength(64);
         }
     }
