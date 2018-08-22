@@ -15,6 +15,8 @@ namespace AppGet.Infrastructure.Logging
     [Target("Sentry")]
     public class SentryTarget : TargetWithLayout
     {
+        private const string SENTRY_REPORTED = "S_REPORTED";
+
         private readonly RavenClient _client;
 
         private static readonly IDictionary<LogLevel, ErrorLevel> LoggingLevelMap = new Dictionary<LogLevel, ErrorLevel>
