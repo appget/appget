@@ -1,12 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AppGet.ProgressTracker;
 
 namespace AppGet.FileTransfer
 {
-    public interface IFileTransferClient : IReportProgress
+    public interface IFileTransferClient
     {
         bool CanHandleProtocol(string source);
-        Task TransferFile(string source, string destinationFile);
+        Task TransferFile(string source, string destinationFile, Action<ProgressState> progressCallback);
         Task<string> ReadString(string source);
         Task<string> GetFileName(string source);
     }

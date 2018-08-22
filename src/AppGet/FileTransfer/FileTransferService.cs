@@ -89,11 +89,11 @@ namespace AppGet.FileTransfer
             }
             else
             {
-                client.OnStatusUpdated = p => _tinyMessengerHub.Publish(new GenericTinyMessage<ProgressState>(this, p));
+                var progressCallback = new Action<ProgressState>(p => _tinyMessengerHub.Publish(new GenericTinyMessage<ProgressState>(this, p)));
 
                 Console.WriteLine();
                 _logger.Info($"Downloading installer from {source}");
-                await client.TransferFile(source, destinationPath);
+                await client.TransferFile(source, destinationPath, progressCallback);
                 _logger.Debug($"Installer downloaded to {destinationPath}");
 
                 if (sha256 == null)

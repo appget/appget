@@ -16,7 +16,7 @@ namespace AppGet.Tests.ProgressTracker
                 MaxValue = 20
             };
 
-            state.ToString().Should().Contain("50");
+            state.GetPercentCompleted().Should().Be(50);
         }
     }
 }

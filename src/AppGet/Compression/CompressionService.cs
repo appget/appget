@@ -7,7 +7,7 @@ using SharpCompress.Common;
 
 namespace AppGet.Compression
 {
-    public interface ICompressionService : IReportProgress
+    public interface ICompressionService 
     {
         void Decompress(string sourcePath, string destination);
     }
@@ -44,13 +44,7 @@ namespace AppGet.Compression
                 }
 
                 progress.Value++;
-
-                OnStatusUpdated?.Invoke(progress);
-                OnCompleted?.Invoke(progress);
             }
         }
-
-        public Action<ProgressState> OnStatusUpdated { get; set; }
-        public Action<ProgressState> OnCompleted { get; set; }
     }
 }

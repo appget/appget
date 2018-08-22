@@ -22,7 +22,7 @@ namespace AppGet.Tests.FileTransfer.Protocols
         {
             Assert.ThrowsAsync<InvalidDownloadUrlException>(async () =>
             {
-                await Subject.TransferFile(url, Path.Combine(Path.GetTempPath(), Subject.GetFileName(url).Result));
+                await Subject.TransferFile(url, Path.Combine(Path.GetTempPath(), Subject.GetFileName(url).Result), a => { });
             });
         }
 
@@ -31,7 +31,7 @@ namespace AppGet.Tests.FileTransfer.Protocols
         {
             var target = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
 
-            await Subject.TransferFile(url, target);
+            await Subject.TransferFile(url, target, a => { });
 
 
             var fileInfo = new FileInfo(target);

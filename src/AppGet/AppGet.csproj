@@ -216,7 +216,6 @@
     <Compile Include="PackageSearch\PackageSearchService.cs" />
     <Compile Include="Windows\ProcessController.cs" />
     <Compile Include="CommandLine\ConsoleProgressReporter.cs" />
-    <Compile Include="ProgressTracker\IReportProgress.cs" />
     <Compile Include="ProgressTracker\ProgressState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Installers\Requirements\EnforcementResult.cs" />

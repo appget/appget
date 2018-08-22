@@ -49,7 +49,7 @@ namespace AppGet.FileTransfer.Protocols
             throw new InvalidDownloadUrlException(source);
         }
 
-        public async Task TransferFile(string source, string destinationFile)
+        public async Task TransferFile(string source, string destinationFile, Action<ProgressState> progressCallback)
         {
             using (var resp = await _httpClient.GetAsync(new Uri(source), HttpCompletionOption.ResponseHeadersRead))
             {
@@ -77,12 +77,12 @@ namespace AppGet.FileTransfer.Protocols
                         {
                             tempFileStream.Write(buffer, 0, len);
                             progress.Value += len;
-                            OnStatusUpdated(progress);
+                            progressCallback(progress);
                         }
                     }
 
                     progress.IsCompleted = true;
-                    OnStatusUpdated(progress);
+                    progressCallback(progress);
                     _fileSystem.Move(tempFile, destinationFile);
                 }
             }
@@ -101,7 +101,5 @@ namespace AppGet.FileTransfer.Protocols
 
             return await resp.Content.ReadAsString();
         }
-
-        public Action<ProgressState> OnStatusUpdated { get; set; }
     }
 }
