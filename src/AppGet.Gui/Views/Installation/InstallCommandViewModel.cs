@@ -1,11 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
-using System.Windows;
 using AppGet.Commands;
 using AppGet.Commands.Install;
 using AppGet.FileTransfer;
-using AppGet.Gui.Controls;
 using AppGet.Gui.Views.Shared;
 using AppGet.Infrastructure.Events;
 using AppGet.Installers;

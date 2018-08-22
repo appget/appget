@@ -1,24 +1,20 @@
-﻿using AppGet.Gui.Framework;
-using Caliburn.Micro;
+﻿using AppGet.Gui.Controls;
+using AppGet.Gui.Framework;
+using AppGet.Gui.Views.Shared;
 using JetBrains.Annotations;
 
 namespace AppGet.Gui.Views
 {
     [UsedImplicitly]
-    public class InstallationSuccessfulViewModel : Screen
+    public class InstallationSuccessfulViewModel : DialogViewModel
     {
-        protected override void OnInitialize()
+        protected override void OnActivate()
         {
             var manifest = AppSession.CurrentManifest;
-            this.Message = $"{manifest.Name} {manifest.Version}";
+            var nameVersion = $"{manifest.Name} {manifest.Version}";
+
+            this.HeaderViewModel = new DialogHeaderViewModel(nameVersion, "Installed Successfully", "check", Accents.Success);
+            base.OnActivate();
         }
-
-        public string Message { get; private set; }
-
-        public void Close()
-        {
-
-        }
-
     }
 }

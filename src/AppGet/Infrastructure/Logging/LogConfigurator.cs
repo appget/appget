@@ -1,5 +1,4 @@
-﻿using System;
-using AppGet.HostSystem;
+﻿using AppGet.HostSystem;
 using NLog;
 using NLog.Config;
 using NLog.Layouts;

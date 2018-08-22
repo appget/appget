@@ -1,5 +1,4 @@
-﻿using System;
-using AppGet.Infrastructure.Events;
+﻿using AppGet.Infrastructure.Events;
 using AppGet.ProgressTracker;
 
 namespace AppGet.CommandLine

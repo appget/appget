@@ -1,5 +1,4 @@
 ﻿using AppGet.Commands.Install;
-using AppGet.Manifest;
 using Caliburn.Micro;
 
 namespace AppGet.Gui.Views
@@ -13,12 +12,6 @@ namespace AppGet.Gui.Views
             _options = options;
         }
 
-        public string Message
-        {
-            get
-            {
-                return $"Initializing Installation for {_options.Package}";
-            }
-        }
+        public string Message => $"Initializing Installation for {_options.Package}";
     }
 }

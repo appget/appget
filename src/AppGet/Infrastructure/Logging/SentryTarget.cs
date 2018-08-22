@@ -122,9 +122,17 @@ namespace AppGet.Infrastructure.Logging
                 lock (_client)
                 {
                     _client.Logger = logEvent.LoggerName;
-                    _client.Capture(sentryEvent);
+                    var result = _client.Capture(sentryEvent);
+
                     _client.Logger = "root";
+
+                    if (ex != null)
+                    {
+                        ex.Data[SENTRY_REPORTED] = true;
+                        ex.Data["SENTRY_ID"] = result;
+                    }
                 }
+
             }
             catch (Exception e)
             {

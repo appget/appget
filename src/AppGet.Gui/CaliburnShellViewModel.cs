@@ -25,7 +25,7 @@ namespace AppGet.Gui
                     {
                         args = new[]
                         {
-                            "appget://install/atoadwadm"
+                            "appget://install/atom"
                         };
                     }
 

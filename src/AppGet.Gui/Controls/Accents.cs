@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 
 namespace AppGet.Gui.Controls
 {

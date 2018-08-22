@@ -1,7 +1,5 @@
-﻿using System.Windows;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 using AppGet.Gui.FontAwesome;
-using AppGet.Gui.Properties;
 using Caliburn.Micro;
 
 namespace AppGet.Gui.Controls

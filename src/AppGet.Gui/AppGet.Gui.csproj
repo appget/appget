@@ -96,7 +96,6 @@
     <Compile Include="ShellViewModel.cs" />
     <Compile Include="Views\Shared\DialogFactory.cs" />
     <Compile Include="Views\Shared\DialogViewModel.cs" />
-    <Compile Include="Views\Shared\RestartRequiredViewModel.cs" />
     <Page Include="CaliburnShellView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -130,10 +129,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Shared\DialogView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Shared\RestartRequiredView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
