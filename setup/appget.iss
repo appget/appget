@@ -58,7 +58,7 @@ Root: HKCU; Subkey:"Environment"; ValueType:expandsz; ValueName:"Path"; ValueDat
 
 Root: HKCU; Subkey: "SOFTWARE\Classes\appget"; ValueType: "string"; ValueData: "URL:AppGet Protocol"; Flags: uninsdeletekey
 Root: HKCU; Subkey: "SOFTWARE\Classes\appget"; ValueType: "string"; ValueName: "URL Protocol"; ValueData: ""
-Root: HKCU; Subkey: "SOFTWARE\Classes\appget\DefaultIcon"; ValueType: "string"; ValueData: "{app}\appget.gui.exe,0"
+Root: HKCU; Subkey: "SOFTWARE\Classes\appget\DefaultIcon"; ValueType: "string"; ValueData: "{app}\appget.gui.exe,2"
 Root: HKCU; Subkey: "SOFTWARE\Classes\appget\shell\open\command"; ValueType: "string"; ValueData: """{app}\appget.gui.exe"" ""%1"""
 
 [Code]
