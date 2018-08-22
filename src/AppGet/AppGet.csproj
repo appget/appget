@@ -99,6 +99,7 @@
     <Compile Include="CommandLine\Prompts\EnumPrompt.cs" />
     <Compile Include="CommandLine\Prompts\UrlPrompt.cs" />
     <Compile Include="Commands\CommandExecutor.cs" />
+    <Compile Include="Commands\CustomHelpWriter.cs" />
     <Compile Include="Commands\ICommandExecutor.cs" />
     <Compile Include="Commands\Update\UpdateCommandHandler.cs" />
     <Compile Include="Commands\Update\UpdateOptions.cs" />
@@ -150,6 +151,7 @@
     <Compile Include="Installers\InstallInteractivityLevels.cs" />
     <Compile Include="Installers\UninstallerWhisperer\UninstallerBase.cs" />
     <Compile Include="Installers\UninstallerWhisperer\WixWhisperer.cs" />
+    <Compile Include="Properties\SharedAssemblyInfo.cs" />
     <Compile Include="Update\NovoClient.cs" />
     <Compile Include="Github\GithubKeys.cs" />
     <Compile Include="Installers\ExistReason.cs" />

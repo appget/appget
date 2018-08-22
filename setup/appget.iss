@@ -47,10 +47,10 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [CustomMessages]
 IDP_FormCaption           =Downloading Microsoft .NET Framework
-IDP_FormDescription       =Please wait while Setup is downloading Microsoft .NET Framework...
+IDP_FormDescription       =Please wait while Setup downloads Microsoft .NET Framework...
 
 [Files]
-Source: "..\src\AppGet\bin\x86\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\src\AppGet.Gui\bin\x86\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]
@@ -58,8 +58,8 @@ Root: HKCU; Subkey:"Environment"; ValueType:expandsz; ValueName:"Path"; ValueDat
 
 Root: HKCU; Subkey: "SOFTWARE\Classes\appget"; ValueType: "string"; ValueData: "URL:AppGet Protocol"; Flags: uninsdeletekey
 Root: HKCU; Subkey: "SOFTWARE\Classes\appget"; ValueType: "string"; ValueName: "URL Protocol"; ValueData: ""
-Root: HKCU; Subkey: "SOFTWARE\Classes\appget\DefaultIcon"; ValueType: "string"; ValueData: "{app}\appget.exe,0"
-Root: HKCU; Subkey: "SOFTWARE\Classes\appget\shell\open\command"; ValueType: "string"; ValueData: """{app}\appget.exe"" ""%1"""
+Root: HKCU; Subkey: "SOFTWARE\Classes\appget\DefaultIcon"; ValueType: "string"; ValueData: "{app}\appget.gui.exe,0"
+Root: HKCU; Subkey: "SOFTWARE\Classes\appget\shell\open\command"; ValueType: "string"; ValueData: """{app}\appget.gui.exe"" ""%1"""
 
 [Code]
 function NeedsAddPath(Param: string): boolean;

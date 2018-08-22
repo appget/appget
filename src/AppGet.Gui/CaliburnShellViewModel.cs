@@ -21,13 +21,14 @@ namespace AppGet.Gui
                 try
                 {
 
-                    if (args.Length <= 1)
-                    {
-                        args = new[]
-                        {
-                            "appget://install/atom"
-                        };
-                    }
+//                    if (args.Length <= 1)
+//                    {
+//                        args = new[]
+//                        {
+//                            "appget://install/vlc",
+////                            "appget://install/visual-studio-code"
+//                        };
+//                    }
 
                     var option = optionsParser.Parse(args.Last());
 

@@ -54,6 +54,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\AppGet\Properties\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="ArchitectureTypes.cs" />
     <Compile Include="Builder\ManifestAttribute.cs" />
     <Compile Include="Builder\ManifestAttributeCandidate.cs" />
