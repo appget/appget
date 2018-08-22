@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AppGet.HostSystem;
 using AppGet.Installers.UninstallerWhisperer;
 using AppGet.Manifest;
 
@@ -37,9 +38,9 @@ namespace AppGet.Installers.InstallerWhisperer
 
         public void Initialize(PackageManifest packageManifest, string installerPath)
         {
-            if (InstallerPath != null)
+            if (InstallerPath != null && BuildInfo.IsDebug)
             {
-                throw new InvalidOperationException("Can\'t reuse installer.");
+                throw new InvalidOperationException(@"Can't reuse installer.");
             }
 
             InstallerPath = installerPath;

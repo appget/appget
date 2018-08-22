@@ -13,7 +13,7 @@
                 Width="80"
                 Height="80"
                 DockPanel.Dock="Left"
-                Margin="0,0,15,0"
+                Margin="0,0,20,0"
                 TextOptions.TextFormattingMode="Ideal"
                 >
                 <TextBlock Name="Icon" 
@@ -30,12 +30,14 @@
                                >
                         Sorry, We couldn't find the package you were looking for and then it should wrap
                 </TextBlock>
-                <Label 
-                        Name="Message"
-                        Content="I'm sorry Dave! I can't do that!" 
-                        HorizontalAlignment="Left" 
-                        FontSize="16"
-                    />
+                <TextBlock Name="Message"
+                           TextWrapping="WrapWithOverflow"
+                           HorizontalAlignment="Stretch" 
+                           FontSize="15"
+                           Margin="0,0,0,10"
+                >
+                    Sorry, We couldn't find the package you were looking for and then it should wrap
+                </TextBlock>
             </StackPanel>
         </DockPanel>
     </Grid>

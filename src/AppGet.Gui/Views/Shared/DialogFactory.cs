@@ -10,20 +10,21 @@ namespace AppGet.Gui.Views.Shared
     {
         public static DialogViewModel CreateDialog(this Exception ex)
         {
-            var headerVm = new DialogHeaderViewModel(ex.GetType().Name.Replace("Exception", ""), ex.Message, "sad-cry", Accents.Error);
+            var headerVm = new DialogHeaderViewModel("Oops! This is embarrassing.",
+                $"{ex.GetType().Name}: {ex.Message.TrimEnd('.')}.", "sad-cry", Accents.Error);
+            return new DialogViewModel(headerVm);
+        }
+
+        public static DialogViewModel CreateDialog(this Win32Exception ex)
+        {
+            var headerVm = new DialogHeaderViewModel("Microsoft Windows",
+                $"{ex.Message.Trim('.')}.", "exclamation-triangle", Accents.Warn);
             return new DialogViewModel(headerVm);
         }
 
         public static DialogViewModel CreateDialog(this PackageNotFoundException ex)
         {
             var headerVm = new DialogHeaderViewModel("Sorry, We couldn't find the package you were looking for.", $"Package ID: \"{ex.PackageId}\"", "crow", Accents.Warn);
-            return new DialogViewModel(headerVm);
-        }
-
-
-        public static DialogViewModel CreateDialog(this Win32Exception ex)
-        {
-            var headerVm = new DialogHeaderViewModel("Microsoft Windows", ex.Message, "window-restore", Accents.Warn);
             return new DialogViewModel(headerVm);
         }
 
@@ -37,15 +38,15 @@ namespace AppGet.Gui.Views.Shared
                     {
                         var headerVm = new DialogHeaderViewModel($"Installer for {ex.PackageManifest.Name} is corrupted.",
                             exitCode,
-                            "exclamation",
+                            "exclamation-triangle ",
                             Accents.Warn);
                         return new DialogViewModel(headerVm);
                     }
                 case ExitCodeTypes.RequirementUnmet:
                     {
-                        var headerVm = new DialogHeaderViewModel("Installer has reported that your system doesn\'t meet one of it\'s requirements.",
+                        var headerVm = new DialogHeaderViewModel(@"Installer has reported that your system doesn't meet one of it's requirements.",
                             exitCode,
-                            "exclamation",
+                            "exclamation-triangle",
                             Accents.Warn);
                         return new DialogViewModel(headerVm);
                     }
@@ -59,16 +60,16 @@ namespace AppGet.Gui.Views.Shared
                     }
                 case ExitCodeTypes.UserCanceled:
                     {
-                        var headerVm = new DialogHeaderViewModel($"User has canceled the installation",
+                        var headerVm = new DialogHeaderViewModel("User has canceled the installation",
                             "But you probably knew that :)",
-                            "undo",
+                            "user-times",
                             Accents.Info);
                         return new DialogViewModel(headerVm);
                     }
             }
 
             return new DialogViewModel(new DialogHeaderViewModel($"Installer for {ex.PackageManifest.Name} exited with a non-success status code",
-                exitCode, "exclamation", Accents.Error));
+                exitCode, "exclamation-triangle", Accents.Error));
 
         }
     }
