@@ -12,32 +12,31 @@ namespace AppGet.Gui.Views
         bool CanHandle(AppGetOption options);
     }
 
-    public class DownloadProgressViewModel : Screen
+    public class DownloadProgressViewModel : Screen, Infrastructure.Events.IHandle<ProgressChangeEvent>
     {
-        private readonly ITinyMessengerHub _hub;
-        private TinyMessageSubscriptionToken _progressToken;
+        private readonly IEventHub _hub;
         private decimal _currentProgressState;
 
-        public DownloadProgressViewModel(ITinyMessengerHub hub)
+        public DownloadProgressViewModel(IEventHub hub)
         {
             _hub = hub;
         }
 
-
-        private void InstallProgressViewModel_Deactivated(object sender, DeactivationEventArgs e)
+        protected override void OnInitialize()
         {
-            _progressToken?.Dispose();
+            ProgressStatus = $"Initializing";
         }
 
-        private void InstallProgressViewModel_Activated(object sender, ActivationEventArgs e)
-        {
-            _progressToken = _hub.Subscribe<GenericTinyMessage<ProgressState>>(OnProgressUpdated);
-        }
+        public string ProgressStatus { get; private set; }
+        public long Progress { get; private set; }
 
+        public string DetailedStatus { get; private set; }
 
-        private void OnProgressUpdated(GenericTinyMessage<ProgressState> e)
+        public void Handle(ProgressChangeEvent message)
         {
-            var newPercent = e.Content.GetPercentCompleted();
+            var progress = message.Progress;
+
+            var newPercent = progress.GetPercentCompleted();
 
             if (newPercent < 99 && _currentProgressState + 1 > newPercent)
             {
@@ -49,20 +48,7 @@ namespace AppGet.Gui.Views
             _currentProgressState = newPercent;
             Progress = (long)newPercent;
 
-            DetailedStatus = e.Content.Value.ToFileSize() + " / " + e.Content.MaxValue.ToFileSize();
+            DetailedStatus = progress.Value.ToFileSize() + " / " + progress.MaxValue.ToFileSize();
         }
-
-        protected override void OnInitialize()
-        {
-            ProgressStatus = $"Initializing";
-            Activated += InstallProgressViewModel_Activated;
-            Deactivated += InstallProgressViewModel_Deactivated;
-        }
-
-        public string ProgressStatus { get; private set; }
-        public long Progress { get; private set; }
-
-        public string DetailedStatus { get; private set; }
-
     }
 }

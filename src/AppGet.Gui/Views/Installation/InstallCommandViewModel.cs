@@ -12,24 +12,24 @@ using AppGet.PackageRepository;
 
 namespace AppGet.Gui.Views.Installation
 {
-    public class InstallCommandViewModel : CommandViewModel<InstallOptions>
+    public class InstallCommandViewModel : CommandViewModel<InstallOptions>,
+        IHandle<FileTransferStartedEvent>,
+        IHandle<ExecutingInstallerEvent>,
+        IHandle<InstallationSuccessfulEvent>
     {
         private readonly ICommandExecutor _executor;
-        private readonly ITinyMessengerHub _hub;
         private readonly InitializingViewModel _initializingViewModel;
         private readonly DownloadProgressViewModel _installProgressViewModel;
         private readonly InstallingViewModel _installingViewModel;
         private readonly InstallationSuccessfulViewModel _installationSuccessfulViewModel;
-        private TinyMessageSubscriptionToken _progressToken;
 
-        public InstallCommandViewModel(ICommandExecutor executor, ITinyMessengerHub hub,
+        public InstallCommandViewModel(ICommandExecutor executor,
             InitializingViewModel initializingViewModel,
             DownloadProgressViewModel installProgressViewModel,
             InstallingViewModel installingViewModel,
             InstallationSuccessfulViewModel installationSuccessfulViewModel)
         {
             _executor = executor;
-            _hub = hub;
             _initializingViewModel = initializingViewModel;
             _installProgressViewModel = installProgressViewModel;
             _installingViewModel = installingViewModel;
@@ -63,21 +63,21 @@ namespace AppGet.Gui.Views.Installation
                     ActivateItem(e.CreateDialog());
                 }
             });
+        }
 
-            _hub.Subscribe<FileTransferStartedEvent>(e =>
-            {
-                ActivateItem(_installProgressViewModel);
-            });
+        public void Handle(FileTransferStartedEvent message)
+        {
+            ActivateItem(_installProgressViewModel);
+        }
 
-            _hub.Subscribe<ExecutingInstallerEvent>(e =>
-            {
-                ActivateItem(_installingViewModel);
-            });
+        public void Handle(ExecutingInstallerEvent message)
+        {
+            ActivateItem(_installingViewModel);
+        }
 
-            _hub.Subscribe<InstallationSuccessfulEvent>(e =>
-            {
-                ActivateItem(_installationSuccessfulViewModel);
-            });
+        public void Handle(InstallationSuccessfulEvent message)
+        {
+            ActivateItem(_installationSuccessfulViewModel);
         }
     }
 }

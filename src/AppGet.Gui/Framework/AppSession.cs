@@ -3,23 +3,13 @@ using AppGet.Manifest;
 
 namespace AppGet.Gui.Framework
 {
-    public class AppSession : IStartupHandler
+    public class AppSession : IHandle<ManifestLoadedEvent>
     {
-        private readonly ITinyMessengerHub _hub;
-
-        public AppSession(ITinyMessengerHub hub)
-        {
-            _hub = hub;
-        }
-
-        public void OnApplicationStartup()
-        {
-            _hub.Subscribe<ManifestLoadedEvent>(e =>
-            {
-                CurrentManifest = e.Manifest;
-            });
-        }
-
         public static PackageManifest CurrentManifest { get; private set; }
+
+        public void Handle(ManifestLoadedEvent message)
+        {
+            CurrentManifest = message.Manifest;
+        }
     }
 }

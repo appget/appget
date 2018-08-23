@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 namespace AppGet.AppData
 {
     [UsedImplicitly]
-    public class AppDataService : IStartupHandler
+    public class AppDataService : IHandle<ApplicationStartingEvent>
     {
         private readonly IPathResolver _pathResolver;
         private readonly IFileSystem _fileSystem;
@@ -19,7 +19,7 @@ namespace AppGet.AppData
             _fileSystem = fileSystem;
         }
 
-        public void OnApplicationStartup()
+        public void Handle(ApplicationStartingEvent message)
         {
             var path = _pathResolver.AppDataDirectory;
 

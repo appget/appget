@@ -33,17 +33,17 @@ namespace AppGet.Installers
         private readonly IProcessController _processController;
         private readonly IFileTransferService _fileTransferService;
         private readonly WindowsInstallerClient _windowsInstallerClient;
-        private readonly List<InstallerBase> _installWhisperers;
-        private readonly List<UninstallerBase> _uninstallers;
-        private readonly ITinyMessengerHub _hub;
+        private readonly IEnumerable<InstallerBase> _installWhisperers;
+        private readonly IEnumerable<UninstallerBase> _uninstallers;
+        private readonly IEventHub _hub;
         private readonly IUnlocker _unlocker;
         private readonly NovoClient _novoClient;
         private readonly UpdateService _updateService;
 
         public InstallService(Logger logger, IFindInstaller findInstaller, IPathResolver pathResolver, IProcessController processController,
-            IFileTransferService fileTransferService, WindowsInstallerClient windowsInstallerClient, List<InstallerBase> installWhisperers,
-            List<UninstallerBase> uninstallers,
-            ITinyMessengerHub hub,
+            IFileTransferService fileTransferService, WindowsInstallerClient windowsInstallerClient, IEnumerable<InstallerBase> installWhisperers,
+            IEnumerable<UninstallerBase> uninstallers,
+            IEventHub hub,
             IUnlocker unlocker, NovoClient novoClient, UpdateService updateService)
         {
             _logger = logger;
@@ -63,7 +63,7 @@ namespace AppGet.Installers
         public async Task Install(PackageManifest packageManifest, InstallOptions installOptions)
         {
             _logger.Info("Beginning installation of '{0}'", packageManifest);
-            _hub.PublishAsync(new InitializationInstallationEvent(this, packageManifest));
+            _hub.Publish(new InitializationInstallationEvent(this, packageManifest));
 
             var installer = _findInstaller.GetBestInstaller(packageManifest.Installers);
             var installerPath = await _fileTransferService.TransferFile(installer.Location, _pathResolver.TempFolder, installer.Sha256);
@@ -81,7 +81,7 @@ namespace AppGet.Installers
             RunInstaller(installOptions.InteractivityLevel, packageManifest, whisperer);
 
             _logger.Info("Installation completed succesfully for '{0}'", packageManifest);
-            _hub.PublishAsync(new InstallationSuccessfulEvent(this, packageManifest));
+            _hub.Publish(new InstallationSuccessfulEvent(this, packageManifest));
         }
 
         public async Task Uninstall(UninstallOptions uninstallOptions)
@@ -129,7 +129,7 @@ namespace AppGet.Installers
 
         private void RunInstaller(InstallInteractivityLevels interactivity, PackageManifest packageManifest, IInstaller whisperer)
         {
-            _hub.PublishAsync(new ExecutingInstallerEvent(this, packageManifest));
+            _hub.Publish(new ExecutingInstallerEvent(this, packageManifest));
 
             var logPath = _pathResolver.GetInstallerLogFile(packageManifest.Id);
 

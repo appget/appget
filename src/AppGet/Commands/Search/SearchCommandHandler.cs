@@ -3,7 +3,7 @@ using AppGet.PackageSearch;
 
 namespace AppGet.Commands.Search
 {
-    public class SearchCommandHandler : ICommandHandler
+    public class SearchCommandHandler : ICommandHandler<SearchOptions>
     {
         private readonly IPackageSearchService _packageSearchService;
 
@@ -13,7 +13,7 @@ namespace AppGet.Commands.Search
         }
 
 
-        public async Task Execute(AppGetOption commandOptions)
+        public async Task Execute(SearchOptions commandOptions)
         {
             var searchOptions = (SearchOptions)commandOptions;
             await _packageSearchService.DisplayResults(searchOptions.Query);

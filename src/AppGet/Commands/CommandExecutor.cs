@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using AppGet.Infrastructure.Logging;
@@ -9,16 +10,16 @@ namespace AppGet.Commands
     public interface ICommandExecutor
     {
         Task ExecuteCommand(string[] args);
-        Task ExecuteCommand(AppGetOption option);
+        Task ExecuteCommand<T>(T option) where T : AppGetOption;
     }
 
     public class CommandExecutor : ICommandExecutor
     {
-        private readonly Func<string, ICommandHandler> _handlerFactory;
+        private readonly IEnumerable<ICommandHandler> _handlerFactory;
         private readonly IParseOptions _optionParser;
         private readonly Logger _logger;
 
-        public CommandExecutor(Func<String, ICommandHandler> handlerFactory, IParseOptions optionParser, Logger logger)
+        public CommandExecutor(IEnumerable<ICommandHandler> handlerFactory, IParseOptions optionParser, Logger logger)
         {
             _handlerFactory = handlerFactory;
             _optionParser = optionParser;
@@ -32,26 +33,29 @@ namespace AppGet.Commands
             await ExecuteCommand(options);
         }
 
-        public async Task ExecuteCommand(AppGetOption option)
+        public async Task ExecuteCommand<T>(T option) where T : AppGetOption
         {
             if (option.Verbose)
             {
                 LogConfigurator.EnableVerboseLogging();
             }
 
-            var commandHandler = _handlerFactory.Invoke(option.GetType().FullName);
-
-            if (commandHandler == null)
+            foreach (var handler in _handlerFactory)
             {
-                throw new UnknownCommandException(option);
+                if (handler is ICommandHandler<T> h)
+                {
+                    _logger.Debug("Starting command [{0}]", option.CommandName);
+                    var stopwatch = Stopwatch.StartNew();
+                    await h.Execute(option);
+                    stopwatch.Stop();
+                    Console.WriteLine();
+                    _logger.Debug("Completed command [{0}]. took: {1:N}s", option.CommandName, stopwatch.Elapsed.TotalSeconds);
+                    return;
+                }
             }
 
-            _logger.Debug("Starting command [{0}]", option.CommandName);
-            var stopwatch = Stopwatch.StartNew();
-            await commandHandler.Execute(option);
-            stopwatch.Stop();
-            Console.WriteLine();
-            _logger.Debug("Completed command [{0}]. took: {1:N}s", option.CommandName, stopwatch.Elapsed.TotalSeconds);
+            throw new UnknownCommandException(option);
+
         }
     }
 }

@@ -4,7 +4,7 @@ using AppGet.PackageRepository;
 
 namespace AppGet.Commands.ViewManifest
 {
-    public class ViewManifestCommandHandler : ICommandHandler
+    public class ViewManifestCommandHandler : ICommandHandler<ViewManifestOptions>
     {
         private readonly IPackageRepository _packageRepository;
         private readonly IPackageManifestService _packageManifestService;
@@ -15,7 +15,7 @@ namespace AppGet.Commands.ViewManifest
             _packageManifestService = packageManifestService;
         }
 
-        public async Task Execute(AppGetOption searchCommandOptions)
+        public async Task Execute(ViewManifestOptions searchCommandOptions)
         {
             var viewOptions = (ViewManifestOptions)searchCommandOptions;
             var package = await _packageRepository.GetAsync(viewOptions.PackageId, viewOptions.Tag);

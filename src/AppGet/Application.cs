@@ -2,6 +2,7 @@
 using AppGet.Commands;
 using AppGet.Infrastructure.Composition;
 using AppGet.Update;
+using Autofac;
 
 namespace AppGet
 {
@@ -9,7 +10,7 @@ namespace AppGet
     {
         public static async Task Execute(string[] args)
         {
-            var container = ContainerBuilder.Container;
+            var container = AutofacBuilder.Container;
 
             IAppGetUpdateService updatedService = null;
             try

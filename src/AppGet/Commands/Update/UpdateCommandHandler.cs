@@ -6,7 +6,7 @@ using AppGet.PackageRepository;
 
 namespace AppGet.Commands.Update
 {
-    public class UpdateCommandHandler : ICommandHandler
+    public class UpdateCommandHandler : ICommandHandler<UpdateOptions>
     {
         private readonly IPackageRepository _packageRepository;
         private readonly IPackageManifestService _packageManifestService;
@@ -20,7 +20,7 @@ namespace AppGet.Commands.Update
         }
 
 
-        public async Task Execute(AppGetOption commandOptions)
+        public async Task Execute(UpdateOptions commandOptions)
         {
             var updateOptions = (UpdateOptions)commandOptions;
 

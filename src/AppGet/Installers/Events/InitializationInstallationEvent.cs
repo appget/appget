@@ -23,9 +23,12 @@ namespace AppGet.Installers.Events
 
     public class InstallationSuccessfulEvent : StatusUpdateEvent
     {
+        public PackageManifest Manifest { get; }
+
         public InstallationSuccessfulEvent(object sender, PackageManifest manifest)
             : base(sender)
         {
+            Manifest = manifest;
             Message = $"{manifest.Name} {manifest.Version} Installed.".Trim();
         }
     }

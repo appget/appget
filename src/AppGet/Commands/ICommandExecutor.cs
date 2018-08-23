@@ -2,8 +2,14 @@
 
 namespace AppGet.Commands
 {
+
     public interface ICommandHandler
     {
-        Task Execute(AppGetOption commandOptions);
+
+    }
+
+    public interface ICommandHandler<T> : ICommandHandler where T : AppGetOption
+    {
+        Task Execute(T commandOptions);
     }
 }

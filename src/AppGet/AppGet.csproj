@@ -66,9 +66,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppData\AppDataService.cs" />
+    <Compile Include="AppData\InstalledPackagesStore.cs" />
+    <Compile Include="AppData\StoreBase.cs" />
     <Compile Include="AppData\Config.cs" />
     <Compile Include="Application.cs" />
-    <Compile Include="CommandLine\ConsoleEventReporter.cs" />
     <Compile Include="CommandLine\ConsoleTable.cs" />
     <Compile Include="CommandLine\TableHelper.cs" />
     <Compile Include="CommandLine\Prompts\BooleanPrompt.cs" />
@@ -117,8 +118,11 @@
     <Compile Include="Extensions\FileVersionInfoExtensions.cs" />
     <Compile Include="Extensions\NumeralExtensions.cs" />
     <Compile Include="Http\JsonContent.cs" />
+    <Compile Include="Infrastructure\Composition\AutofacBuilder.cs" />
+    <Compile Include="Infrastructure\Events\ApplicationStartingEvent.cs" />
     <Compile Include="Infrastructure\Events\IStartupHandler.cs" />
     <Compile Include="Infrastructure\Events\ManifestLoadedEvent.cs" />
+    <Compile Include="Infrastructure\Events\ProgressChangeEvent.cs" />
     <Compile Include="Infrastructure\Events\StatusUpdateEvent.cs" />
     <Compile Include="Infrastructure\Events\TinyMessenger.cs" />
     <Compile Include="Installers\Events\InitializationInstallationEvent.cs" />
@@ -162,9 +166,6 @@
     <Compile Include="Installers\InstallerWhisperer\SquirrelWhisperer.cs" />
     <Compile Include="Exceptions\AppGetException.cs" />
     <Compile Include="HostSystem\PathResolver.cs" />
-    <Compile Include="Http\GZipWebClient.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Http\HttpClient.cs" />
     <Compile Include="Infrastructure\Logging\LogConfigurator.cs" />
     <Compile Include="Update\PackageUpdate.cs" />
@@ -230,6 +231,9 @@
     <Folder Include="CreatePackage\ManifestBuilder\" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Autofac">
+      <Version>4.8.1</Version>
+    </PackageReference>
     <PackageReference Include="Colorful.Console">
       <Version>1.2.9</Version>
     </PackageReference>

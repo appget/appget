@@ -5,7 +5,7 @@ using AppGet.PackageRepository;
 
 namespace AppGet.Commands.Install
 {
-    public class InstallCommandHandler : ICommandHandler
+    public class InstallCommandHandler : ICommandHandler<InstallOptions>
     {
         private readonly IPackageRepository _packageRepository;
         private readonly IPackageManifestService _packageManifestService;
@@ -19,7 +19,7 @@ namespace AppGet.Commands.Install
         }
 
 
-        public async Task Execute(AppGetOption commandOptions)
+        public async Task Execute(InstallOptions commandOptions)
         {
             var installOptions = (InstallOptions)commandOptions;
 

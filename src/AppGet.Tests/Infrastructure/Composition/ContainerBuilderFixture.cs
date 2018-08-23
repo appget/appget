@@ -6,7 +6,9 @@ using AppGet.CreatePackage.Installer;
 using AppGet.CreatePackage.Root;
 using AppGet.FileTransfer;
 using AppGet.Infrastructure.Composition;
+using AppGet.Infrastructure.Events;
 using AppGet.Installers.InstallerWhisperer;
+using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -15,11 +17,12 @@ namespace AppGet.Tests.Infrastructure.Composition
     [TestFixture]
     public class ContainerBuilderFixture
     {
+        private static IContainer container = AutofacBuilder.Container;
+
+
         [Test]
         public void check_multi_registration()
         {
-            var container = ContainerBuilder.Container;
-
             var allTypes = Assembly.Load("AppGet").DefinedTypes.Where(c => !c.IsAbstract).ToList();
 
             void Assert<T>()
@@ -30,7 +33,7 @@ namespace AppGet.Tests.Infrastructure.Composition
                 commandHandler.Should().Equal(registered);
             }
 
-            Assert<ICommandHandler>();
+//            Assert<ICommandHandler>();
             Assert<InstallerBase>();
             Assert<IExtractToManifestRoot>();
             Assert<IManifestPrompt>();
@@ -42,11 +45,25 @@ namespace AppGet.Tests.Infrastructure.Composition
         [Test]
         public void installer_whisperer_check()
         {
-            var container = ContainerBuilder.Container;
-
             var whisperers = container.Resolve<IEnumerable<InstallerBase>>();
 
             whisperers.Should().OnlyHaveUniqueItems(c => c.InstallMethod);
+        }
+
+
+        [Test]
+        public void should_resolve_all_event_handlers()
+        {
+//            var events = ContainerBuilder.AssemblyTypes
+//                .Where(c => typeof(ITinyMessage)
+//                                .IsAssignableFrom(c))
+//                                .ToList();
+//
+//            foreach (var t in events)
+//            {
+//                var handlers = container.ResolveAll(t.GetType());
+//                handlers.Should().NotBeEmpty();
+//            }
         }
     }
 }

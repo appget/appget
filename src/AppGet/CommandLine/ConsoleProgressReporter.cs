@@ -5,17 +5,10 @@ using AppGet.ProgressTracker;
 
 namespace AppGet.CommandLine
 {
-    public class ConsoleProgressReporter : IStartupHandler
+    public class ConsoleProgressReporter : IHandle<GenericTinyMessage<ProgressState>>
     {
-        private readonly ITinyMessengerHub _hub;
         private static string _lastState = "";
         private const int PROGRESS_LENGTH = 20;
-
-
-        public ConsoleProgressReporter(ITinyMessengerHub hub)
-        {
-            _hub = hub;
-        }
 
         private string RenderBar(ProgressState state)
         {
@@ -38,8 +31,9 @@ namespace AppGet.CommandLine
             return "";
         }
 
-        private void HandleProgress(ProgressState state)
+        public void Handle(GenericTinyMessage<ProgressState> message)
         {
+            var state = message.Content;
             if (state.IsCompleted)
             {
                 Console.WriteLine();
@@ -53,11 +47,6 @@ namespace AppGet.CommandLine
 
             _lastState = newState;
             Console.Write("\r{0}", newState);
-        }
-
-        public void OnApplicationStartup()
-        {
-            _hub.Subscribe<GenericTinyMessage<ProgressState>>(s => HandleProgress(s.Content));
         }
     }
 }

@@ -47,16 +47,16 @@ namespace AppGet.FileTransfer
         private readonly IEnumerable<IFileTransferClient> _transferClients;
         private readonly ITransferCacheService _transferCacheService;
         private readonly IChecksumService _checksumService;
-        private readonly ITinyMessengerHub _tinyMessengerHub;
+        private readonly IEventHub _hub;
         private readonly Logger _logger;
 
         public FileTransferService(IEnumerable<IFileTransferClient> transferClients, ITransferCacheService transferCacheService,
-            IChecksumService checksumService, ITinyMessengerHub tinyMessengerHub, Logger logger)
+            IChecksumService checksumService, IEventHub hub, Logger logger)
         {
             _transferClients = transferClients;
             _transferCacheService = transferCacheService;
             _checksumService = checksumService;
-            _tinyMessengerHub = tinyMessengerHub;
+            _hub = hub;
             _transferCacheService = transferCacheService;
             _logger = logger;
         }
@@ -77,7 +77,7 @@ namespace AppGet.FileTransfer
 
         public async Task<string> TransferFile(string source, string destinationFolder, string sha256)
         {
-            _tinyMessengerHub.PublishAsync(new FileTransferStartedEvent(this, source, destinationFolder));
+            _hub.Publish(new FileTransferStartedEvent(this, source, destinationFolder));
             _logger.Debug($"Transfering file from {source} to {destinationFolder}");
             var client = GetClient(source);
             var fileName = await client.GetFileName(source);
@@ -89,7 +89,7 @@ namespace AppGet.FileTransfer
             }
             else
             {
-                var progressCallback = new Action<ProgressState>(p => _tinyMessengerHub.Publish(new GenericTinyMessage<ProgressState>(this, p)));
+                var progressCallback = new Action<ProgressState>(p => _hub.Publish(new GenericTinyMessage<ProgressState>(this, p)));
 
                 Console.WriteLine();
                 _logger.Info($"Downloading installer from {source}");
@@ -106,7 +106,7 @@ namespace AppGet.FileTransfer
                 }
             }
 
-            _tinyMessengerHub.PublishAsync(new FileTransferCompletedEvent(this, source, destinationFolder));
+            _hub.Publish(new FileTransferCompletedEvent(this, source, destinationFolder));
 
             return destinationPath;
         }

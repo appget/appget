@@ -7,7 +7,7 @@ using Console = Colorful.Console;
 
 namespace AppGet.Commands.Outdated
 {
-    public class OutdatedCommandHandler : ICommandHandler
+    public class OutdatedCommandHandler : ICommandHandler<OutdatedOptions>
     {
         private readonly UpdateService _updateService;
 
@@ -17,7 +17,7 @@ namespace AppGet.Commands.Outdated
         }
 
 
-        public async Task Execute(AppGetOption commandOptions)
+        public async Task Execute(OutdatedOptions commandOptions)
         {
             var matches = await _updateService.GetUpdates();
 
