@@ -29,12 +29,12 @@ namespace AppGet.Update
         }
 
 
-        public async Task<PackageUpdate> GetUpdate(string packageId)
+        public async Task<List<PackageUpdate>> GetUpdate(string packageId)
         {
             _logger.Debug("Getting list of installed application");
             var records = _windowsInstallerClient.GetRecords();
             var result = await _novoClient.GetUpdate(records, packageId);
-            return result.SingleOrDefault();
+            return result.ToList();
         }
     }
 }

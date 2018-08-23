@@ -68,11 +68,14 @@ namespace AppGet.Installers
             var installer = _findInstaller.GetBestInstaller(packageManifest.Installers);
             var installerPath = await _fileTransferService.TransferFile(installer.Location, _pathResolver.TempFolder, installer.Sha256);
 
-            var update = await _updateService.GetUpdate(packageManifest.Id);
+            var updates = await _updateService.GetUpdate(packageManifest.Id);
 
-            if (update?.InstallationPath != null)
+            foreach (var update in updates)
             {
-                _unlocker.UnlockFolder(update.InstallationPath, packageManifest.InstallMethod);
+                if (update?.InstallationPath != null)
+                {
+                    _unlocker.UnlockFolder(update.InstallationPath, packageManifest.InstallMethod);
+                }   
             }
 
             var whisperer = _installWhisperers.Single(c => c.InstallMethod == packageManifest.InstallMethod);
