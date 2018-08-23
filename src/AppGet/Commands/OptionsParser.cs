@@ -10,6 +10,7 @@ using AppGet.Commands.Uninstall;
 using AppGet.Commands.Update;
 using AppGet.Commands.ViewManifest;
 using CommandLine;
+using CommandLine.Text;
 using JetBrains.Annotations;
 
 namespace AppGet.Commands
@@ -22,6 +23,11 @@ namespace AppGet.Commands
     [UsedImplicitly]
     public class OptionsParser : IParseOptions
     {
+        public OptionsParser(AppGetSentenceBuilder sentenceBuilder)
+        {
+            SentenceBuilder.Factory = () => sentenceBuilder;
+        }
+
         public List<string> ParseUrl(string url)
         {
             var uri = new Uri(url);

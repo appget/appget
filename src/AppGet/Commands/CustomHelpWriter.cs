@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using AppGet.Extensions;
-using Colorful;
+using Console = Colorful.Console;
 
 namespace AppGet.Commands
 {
@@ -29,12 +29,6 @@ namespace AppGet.Commands
             {
                 if (line.StartsWith("Copyright")) continue;
                 if (line.StartsWith("AppGet ")) continue;
-
-                if (line.StartsWith("ERROR"))
-                {
-                    Console.WriteLine("");
-                    continue;
-                }
 
                 if (line.StartsWith("  ") || line.IsNullOrWhiteSpace())
                 {

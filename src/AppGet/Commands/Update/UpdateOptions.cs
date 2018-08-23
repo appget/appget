@@ -8,7 +8,7 @@ namespace AppGet.Commands.Update
         private bool _interactive;
         private bool _silent;
 
-        [Value(0, MetaName = PACKAGE_META_NAME, HelpText = "Package to update", Required = false)]
+        [Value(0, MetaName = PACKAGE_META_NAME, HelpText = "Package to update", Required = true)]
         public override string Package { get; set; }
 
         [Option('i', "interactive", HelpText = "Start the installer in interactive mode. This allows the user to step through the installer manually.")]

@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Text;
+using System.Text.RegularExpressions;
 
 namespace AppGet.Extensions
 {
@@ -20,6 +21,32 @@ namespace AppGet.Extensions
         {
             if (value == null) return string.Empty;
             return value;
+        }
+
+        public static string JoinTo(this string value, params string[] others)
+        {
+            var builder = new StringBuilder(value);
+            foreach (var v in others)
+            {
+                builder.Append(v);
+            }
+            return builder.ToString();
+        }
+
+        public static StringBuilder AppendWhen(this StringBuilder builder, bool condition, params string[] values)
+        {
+            if (condition)
+                foreach (var value in values)
+                    builder.Append(value);
+
+            return builder;
+        }
+
+        public static StringBuilder AppendIf(this StringBuilder builder, bool condition, string ifTrue, string ifFalse)
+        {
+            return condition
+                ? builder.Append(ifTrue)
+                : builder.Append(ifFalse);
         }
     }
 }

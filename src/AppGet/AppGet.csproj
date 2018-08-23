@@ -77,6 +77,7 @@
     <Compile Include="CommandLine\Prompts\TextPrompt.cs" />
     <Compile Include="CommandLine\Prompts\EnumPrompt.cs" />
     <Compile Include="CommandLine\Prompts\UrlPrompt.cs" />
+    <Compile Include="Commands\AppGetSentenceBuilder.cs" />
     <Compile Include="Commands\CommandExecutor.cs" />
     <Compile Include="Commands\CustomHelpWriter.cs" />
     <Compile Include="Commands\ICommandExecutor.cs" />
