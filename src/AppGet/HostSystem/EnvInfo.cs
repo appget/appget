@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Security.Principal;
 
 namespace AppGet.HostSystem
 {
@@ -13,6 +14,7 @@ namespace AppGet.HostSystem
         bool Is64BitOperatingSystem { get; }
         bool UserInteractive { get; }
         string AppDir { get; }
+        bool IsAdministrator { get; }
     }
 
     public class EnvInfo : IEnvInfo
@@ -22,7 +24,9 @@ namespace AppGet.HostSystem
         public string FullName { get; }
         public bool Is64BitOperatingSystem { get; }
         public bool UserInteractive => Environment.UserInteractive;
+        public bool IsAdministrator => new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
         public string AppDir { get; }
+
 
         public bool IsGui { get; }
 
