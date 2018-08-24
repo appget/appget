@@ -83,7 +83,7 @@ namespace AppGet.Installers
 
             RunInstaller(installOptions.InteractivityLevel, packageManifest, whisperer);
 
-            _logger.Info("Installation completed succesfully for '{0}'", packageManifest);
+            _logger.Info("Installation completed successfully for '{0}'", packageManifest);
             _hub.PublishAsync(new InstallationSuccessfulEvent(this, packageManifest));
         }
 

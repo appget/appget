@@ -10,9 +10,13 @@ namespace AppGet.Infrastructure.Logging
     {
         private static LoggingRule _consoleRule;
 
-        public static void ConfigureLogger(bool sentry = true)
+        static LogConfigurator()
         {
             LogManager.Configuration = new LoggingConfiguration();
+        }
+
+        public static void ConfigureLogger(bool sentry = true)
+        {
 
             if (!new EnvInfo().IsGui)
             {
