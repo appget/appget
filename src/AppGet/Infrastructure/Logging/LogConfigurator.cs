@@ -7,8 +7,6 @@ namespace AppGet.Infrastructure.Logging
 {
     public static class LogConfigurator
     {
-        private static LoggingRule _consoleRule;
-
         public static readonly Layout FriendlyLayout = new SimpleLayout("${trim-whitespace:${message} ${exception:format=message}}");
         public static readonly Layout DetailedLayout = new SimpleLayout("[${Logger}] ${trim-whitespace:${message} ${exception:format=ToString}}");
 
@@ -17,35 +15,38 @@ namespace AppGet.Infrastructure.Logging
             LogManager.Configuration = new LoggingConfiguration();
         }
 
-        public static void EnableSentryTarget(string dsn)
+        private static void RegisterTarget(Target target, LogLevel level)
         {
-            var sentryTarget = new SentryTarget(dsn);
-
-            var rule = new LoggingRule("*", LogLevel.Trace, sentryTarget);
-            LogManager.Configuration.AddTarget("sentry", sentryTarget);
-
+            var rule = new LoggingRule("*", level, target);
+            LogManager.Configuration.AddTarget(target.GetType().Name, target);
             LogManager.Configuration.LoggingRules.Add(rule);
-        }
-
-        public static void EnableFileTarget()
-        {
-            var fileTarget = new FileTarget
-            {
-                Layout =
-                    new SimpleLayout("[${level}] ${longdate} ${logger} ${message}${exception:format=ToString}"),
-                FileName = "${basedir}/logs.txt"
-            };
-
-
-            var rule = new LoggingRule("*", LogLevel.Trace, fileTarget);
-            LogManager.Configuration.AddTarget("fileTarget", fileTarget);
-
-            LogManager.Configuration.LoggingRules.Add(rule);
-
             LogManager.ReconfigExistingLoggers();
         }
 
-        public static void EnableConsoleTarget(Layout layout)
+        public static void EnableSentryTarget(string dsn)
+        {
+            var sentryTarget = new SentryTarget(dsn);
+            RegisterTarget(sentryTarget, LogLevel.Trace);
+        }
+
+        public static void EnableFileTarget(LogLevel level, int maxArchiveFiles = 7)
+        {
+            var fileTarget = new FileTarget
+            {
+                Layout = new SimpleLayout("${longdate} ${processid}:${threadid} [${level:padding=5}]  ${logger}: ${message}${exception:format=ToString}"),
+                FileName = "${basedir}/${processname}.log",
+                ArchiveFileName = "${basedir}/${processname}.{#}.log",
+                ArchiveEvery = FileArchivePeriod.Day,
+                ArchiveNumbering = ArchiveNumberingMode.Date,
+                MaxArchiveFiles = maxArchiveFiles,
+                KeepFileOpen = false,
+                ConcurrentWrites = false
+            };
+
+            RegisterTarget(fileTarget, level);
+        }
+
+        public static void EnableConsoleTarget(Layout layout, LogLevel level)
         {
             var consoleTarget = new ColoredConsoleTarget
             {
@@ -98,11 +99,7 @@ namespace AppGet.Infrastructure.Logging
             consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Info", ConsoleOutputColor.NoChange,
                 ConsoleOutputColor.NoChange));
 
-            _consoleRule = new LoggingRule("*", LogLevel.Info, consoleTarget);
-            LogManager.Configuration.AddTarget("console", consoleTarget);
-            LogManager.Configuration.LoggingRules.Add(_consoleRule);
-
-            return;
+            RegisterTarget(consoleTarget, level);
         }
 
         public static void EnableVerboseLogging()

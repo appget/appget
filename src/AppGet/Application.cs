@@ -3,6 +3,7 @@ using AppGet.Commands;
 using AppGet.Infrastructure.Composition;
 using AppGet.Infrastructure.Logging;
 using AppGet.Update;
+using NLog;
 
 namespace AppGet
 {
@@ -10,8 +11,9 @@ namespace AppGet
     {
         public static async Task Execute(string[] args)
         {
-            LogConfigurator.EnableConsoleTarget(LogConfigurator.FriendlyLayout);
+            LogConfigurator.EnableConsoleTarget(LogConfigurator.FriendlyLayout, LogLevel.Info);
             LogConfigurator.EnableSentryTarget("https://79eabeab1aa84c8db73ee2675c5bce7d@sentry.io/306545");
+            LogConfigurator.EnableFileTarget(LogLevel.Trace);
 
             var container = ContainerBuilder.Container;
 

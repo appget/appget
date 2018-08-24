@@ -5,6 +5,7 @@ using System.Windows.Threading;
 using AppGet.Gui.Views;
 using AppGet.Gui.Views.Installation;
 using AppGet.Infrastructure.Composition;
+using AppGet.Infrastructure.Logging;
 using Caliburn.Micro;
 using NLog;
 using LogManager = NLog.LogManager;
@@ -19,6 +20,9 @@ namespace AppGet.Gui.Framework
         public CaliburnBootstrapper()
         {
             Initialize();
+            LogConfigurator.EnableSentryTarget("https://79eabeab1aa84c8db73ee2675c5bce7d@sentry.io/306545");
+            LogConfigurator.EnableFileTarget(LogLevel.Trace);
+
             _container = ContainerBuilder.Container;
             _container.RegisterMultiple<ICommandViewModel>(new[] { typeof(InstallCommandViewModel) });
 
