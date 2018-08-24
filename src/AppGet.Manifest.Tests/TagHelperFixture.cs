@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace AppGet.Manifest.Tests
@@ -35,6 +36,19 @@ namespace AppGet.Manifest.Tests
             TagHelper.ParseId(input).Should().Be(TagHelper.ParseId(input.ToUpper()));
 
             return TagHelper.ParseId(input);
+        }
+
+        [TestCase("")]
+        [TestCase(" ")]
+        public void null_empty_should_throw_exception_on_blank(string input)
+        {
+            Assert.Throws<ArgumentException>(() => TagHelper.ParseId(input));
+        }
+
+        [Test]
+        public void null_empty_should_throw_on_null()
+        {
+            Assert.Throws<ArgumentNullException>(() => TagHelper.ParseId(null));
         }
     }
 }

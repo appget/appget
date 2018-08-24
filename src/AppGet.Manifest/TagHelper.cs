@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace AppGet.Manifest
 {
@@ -12,21 +13,31 @@ namespace AppGet.Manifest
             return text?.IndexOfAny(new[] { '_', ':', '@' }) ?? -1;
         }
 
-        private static string ParseTarget(string text)
+        private static string ParseTarget(string input)
         {
-            text = text.ToLowerInvariant();
-
-            if (text.IndexOfAny(new[] { '\\' }) >= 0 || text.EndsWith(".yaml"))
+            if (input == null)
             {
-                return Path.GetFileNameWithoutExtension(text).ToLowerInvariant();
+                throw new ArgumentNullException(nameof(input));
             }
 
-            return text.Trim();
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                throw new ArgumentException("Input can't be empty or blank", nameof(input));
+            }
+
+            input = input.ToLowerInvariant();
+
+            if (input.IndexOfAny(new[] { '\\' }) >= 0 || input.EndsWith(".yaml"))
+            {
+                return Path.GetFileNameWithoutExtension(input).ToLowerInvariant();
+            }
+
+            return input.Trim();
         }
 
-        public static string ParseTag(string text)
+        public static string ParseTag(string input)
         {
-            var target = ParseTarget(text);
+            var target = ParseTarget(input);
             var indexOfTag = IndexOfTag(target);
 
             if (indexOfTag > 0)
@@ -37,9 +48,9 @@ namespace AppGet.Manifest
             return null;
         }
 
-        public static string ParseId(string text)
+        public static string ParseId(string input)
         {
-            var target = ParseTarget(text);
+            var target = ParseTarget(input);
             var indexOfTag = IndexOfTag(target);
 
             if (indexOfTag > 0)
