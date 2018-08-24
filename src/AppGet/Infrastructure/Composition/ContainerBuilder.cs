@@ -18,7 +18,6 @@ using AppGet.CreatePackage.Root.Prompts;
 using AppGet.FileTransfer;
 using AppGet.FileTransfer.Protocols;
 using AppGet.Infrastructure.Events;
-using AppGet.Infrastructure.Logging;
 using AppGet.Installers.InstallerWhisperer;
 using AppGet.Installers.UninstallerWhisperer;
 using AppGet.Manifest;
@@ -42,7 +41,6 @@ namespace AppGet.Infrastructure.Composition
 
             AssemblyTypes = ass.SelectMany(c => c.ExportedTypes.Where(t => !t.IsAbstract && !t.IsInterface && !t.IsEnum && t.Namespace != null && t.Namespace.StartsWith("AppGet."))).ToList();
 
-            LogConfigurator.ConfigureLogger();
             Container = Build();
 
             foreach (var startupHandler in Container.ResolveAll<IStartupHandler>())

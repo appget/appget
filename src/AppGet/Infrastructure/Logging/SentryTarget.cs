@@ -41,10 +41,8 @@ namespace AppGet.Infrastructure.Logging
             },
         };
 
-        public SentryTarget()
+        public SentryTarget(string DSN)
         {
-            const string DSN = "https://79eabeab1aa84c8db73ee2675c5bce7d@sentry.io/306545";
-
             _client = new RavenClient(new Dsn(DSN), new JsonPacketFactory(), new SentryRequestFactory(), new SentryUserFactory())
             {
                 Compression = true,

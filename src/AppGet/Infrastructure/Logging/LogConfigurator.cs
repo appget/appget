@@ -1,5 +1,4 @@
-﻿using AppGet.HostSystem;
-using NLog;
+﻿using NLog;
 using NLog.Config;
 using NLog.Layouts;
 using NLog.Targets;
@@ -10,30 +9,17 @@ namespace AppGet.Infrastructure.Logging
     {
         private static LoggingRule _consoleRule;
 
+        public static readonly Layout FriendlyLayout = new SimpleLayout("${trim-whitespace:${message} ${exception:format=message}}");
+        public static readonly Layout DetailedLayout = new SimpleLayout("[${Logger}] ${trim-whitespace:${message} ${exception:format=ToString}}");
+
         static LogConfigurator()
         {
             LogManager.Configuration = new LoggingConfiguration();
         }
 
-        public static void ConfigureLogger(bool sentry = true)
+        public static void EnableSentryTarget(string dsn)
         {
-
-            if (!new EnvInfo().IsGui)
-            {
-                BuildConsoleTarget();
-            }
-
-            if (sentry)
-            {
-                BuildSentryTarget();
-            }
-
-            LogManager.ReconfigExistingLoggers();
-        }
-
-        private static void BuildSentryTarget()
-        {
-            var sentryTarget = new SentryTarget();
+            var sentryTarget = new SentryTarget(dsn);
 
             var rule = new LoggingRule("*", LogLevel.Trace, sentryTarget);
             LogManager.Configuration.AddTarget("sentry", sentryTarget);
@@ -41,11 +27,29 @@ namespace AppGet.Infrastructure.Logging
             LogManager.Configuration.LoggingRules.Add(rule);
         }
 
-        private static ColoredConsoleTarget BuildConsoleTarget()
+        public static void EnableFileTarget()
+        {
+            var fileTarget = new FileTarget
+            {
+                Layout =
+                    new SimpleLayout("[${level}] ${longdate} ${logger} ${message}${exception:format=ToString}"),
+                FileName = "${basedir}/logs.txt"
+            };
+
+
+            var rule = new LoggingRule("*", LogLevel.Trace, fileTarget);
+            LogManager.Configuration.AddTarget("fileTarget", fileTarget);
+
+            LogManager.Configuration.LoggingRules.Add(rule);
+
+            LogManager.ReconfigExistingLoggers();
+        }
+
+        public static void EnableConsoleTarget(Layout layout)
         {
             var consoleTarget = new ColoredConsoleTarget
             {
-                Layout = new SimpleLayout("${trim-whitespace:${message} ${exception:format=message}}"),
+                Layout = layout,
             };
 
             consoleTarget.WordHighlightingRules.Add(new ConsoleWordHighlightingRule
@@ -98,13 +102,17 @@ namespace AppGet.Infrastructure.Logging
             LogManager.Configuration.AddTarget("console", consoleTarget);
             LogManager.Configuration.LoggingRules.Add(_consoleRule);
 
-            return consoleTarget;
+            return;
         }
 
         public static void EnableVerboseLogging()
         {
-            _consoleRule.EnableLoggingForLevel(LogLevel.Debug);
-            _consoleRule.EnableLoggingForLevel(LogLevel.Trace);
+            foreach (var rule in LogManager.Configuration.LoggingRules)
+            {
+                rule.EnableLoggingForLevel(LogLevel.Debug);
+                rule.EnableLoggingForLevel(LogLevel.Trace);
+            }
+
             LogManager.ReconfigExistingLoggers();
         }
     }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using AppGet.Infrastructure.Logging;
 using NLog;
 using NUnit.Framework;
 
@@ -13,8 +12,6 @@ namespace AppGet.Tests.Infrastructure.Logging
         [Test]
         public void send_sample_error()
         {
-            LogConfigurator.ConfigureLogger();
-
             var logger = LogManager.GetLogger("SentryTargetFixture");
 
             try
