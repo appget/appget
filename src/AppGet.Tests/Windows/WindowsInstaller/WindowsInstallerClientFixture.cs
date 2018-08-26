@@ -19,7 +19,7 @@ namespace AppGet.Tests.Windows.WindowsInstaller
             Console.WriteLine(Json.Serialize(keys, Formatting.Indented));
 
 
-            keys.Should().HaveCountGreaterThan(200);
+            keys.Should().HaveCountGreaterThan(100);
 
             keys.Should().Contain(c => c.IsUpgradeNode);
             keys.Should().Contain(c => !c.IsUpgradeNode);
