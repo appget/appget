@@ -34,8 +34,8 @@ namespace AppGet.Infrastructure.Logging
             var fileTarget = new FileTarget
             {
                 Layout = new SimpleLayout("${longdate} ${processid}:${threadid} [${level:padding=5}]  ${logger}: ${message}${exception:format=ToString}"),
-                FileName = "${basedir}/${processname}.log",
-                ArchiveFileName = "${basedir}/${processname}.{#}.log",
+                FileName = "${specialfolder:folder=LocalApplicationData}/AppGet/Logs/${processname}.log",
+                ArchiveFileName = "${specialfolder:folder=LocalApplicationData}/AppGet/Logs/${processname}.{#}.log",
                 ArchiveEvery = FileArchivePeriod.Day,
                 ArchiveNumbering = ArchiveNumberingMode.Date,
                 MaxArchiveFiles = maxArchiveFiles,
