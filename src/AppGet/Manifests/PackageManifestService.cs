@@ -4,7 +4,8 @@ using System.Threading.Tasks;
 using AppGet.AppData;
 using AppGet.FileSystem;
 using AppGet.FileTransfer;
-using AppGet.Infrastructure.Events;
+using AppGet.Infrastructure.Eventing;
+using AppGet.Infrastructure.Eventing.Events;
 using AppGet.Manifest;
 using AppGet.Manifest.Builder;
 using AppGet.Manifest.Serialization;
@@ -24,10 +25,10 @@ namespace AppGet.Manifests
         private readonly IFileTransferService _fileTransferService;
         private readonly IFileSystem _fileSystem;
         private readonly IConfig _config;
-        private readonly ITinyMessengerHub _hub;
+        private readonly IHub _hub;
         private readonly Logger _logger;
 
-        public PackageManifestService(IFileTransferService fileTransferService, IFileSystem fileSystem, IConfig config, ITinyMessengerHub hub, Logger logger)
+        public PackageManifestService(IFileTransferService fileTransferService, IFileSystem fileSystem, IConfig config, IHub hub, Logger logger)
         {
             _fileTransferService = fileTransferService;
             _fileSystem = fileSystem;

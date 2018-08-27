@@ -10,7 +10,7 @@ namespace AppGet.Tests.ProgressTracker
         [Test]
         public void should_return_correct_percent()
         {
-            var state = new ProgressState
+            var state = new ProgressUpdatedEvent
             {
                 Value = 10,
                 MaxValue = 20

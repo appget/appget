@@ -1,8 +1,8 @@
 ﻿using AppGet.Manifest;
 
-namespace AppGet.Infrastructure.Events
+namespace AppGet.Infrastructure.Eventing.Events
 {
-    public class ManifestLoadedEvent : ITinyMessage
+    public class ManifestLoadedEvent : IEvent
     {
         public object Sender { get; }
         public PackageManifest Manifest { get; }

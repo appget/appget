@@ -5,7 +5,7 @@ using AppGet.Commands;
 using AppGet.Commands.Install;
 using AppGet.FileTransfer;
 using AppGet.Gui.Views.Shared;
-using AppGet.Infrastructure.Events;
+using AppGet.Infrastructure.Eventing;
 using AppGet.Installers;
 using AppGet.Installers.Events;
 using AppGet.PackageRepository;
@@ -15,14 +15,14 @@ namespace AppGet.Gui.Views.Installation
     public class InstallCommandViewModel : CommandViewModel<InstallOptions>
     {
         private readonly ICommandExecutor _executor;
-        private readonly ITinyMessengerHub _hub;
+        private readonly IHub _hub;
         private readonly InitializingViewModel _initializingViewModel;
         private readonly DownloadProgressViewModel _installProgressViewModel;
         private readonly InstallingViewModel _installingViewModel;
         private readonly InstallationSuccessfulViewModel _installationSuccessfulViewModel;
-        private TinyMessageSubscriptionToken _progressToken;
 
-        public InstallCommandViewModel(ICommandExecutor executor, ITinyMessengerHub hub,
+        public InstallCommandViewModel(ICommandExecutor executor,
+            IHub hub,
             InitializingViewModel initializingViewModel,
             DownloadProgressViewModel installProgressViewModel,
             InstallingViewModel installingViewModel,
@@ -34,6 +34,29 @@ namespace AppGet.Gui.Views.Installation
             _installProgressViewModel = installProgressViewModel;
             _installingViewModel = installingViewModel;
             _installationSuccessfulViewModel = installationSuccessfulViewModel;
+        }
+
+        protected override void OnInitialize()
+        {
+            _hub.Subscribe<FileTransferStartedEvent>(this, e =>
+            {
+                ActivateItem(_installProgressViewModel);
+            });
+
+            _hub.Subscribe<FileTransferCompletedEvent>(this, e =>
+            {
+                ActivateItem(_installingViewModel);
+            });
+
+            _hub.Subscribe<InstallationSuccessfulEvent>(this, e =>
+            {
+                ActivateItem(_installationSuccessfulViewModel);
+            });
+
+            Deactivated += (sender, args) =>
+            {
+                _hub.UnSubscribe(this);
+            };
         }
 
         protected override void OnActivate()
@@ -64,20 +87,6 @@ namespace AppGet.Gui.Views.Installation
                 }
             });
 
-            _hub.Subscribe<FileTransferStartedEvent>(e =>
-            {
-                ActivateItem(_installProgressViewModel);
-            });
-
-            _hub.Subscribe<ExecutingInstallerEvent>(e =>
-            {
-                ActivateItem(_installingViewModel);
-            });
-
-            _hub.Subscribe<InstallationSuccessfulEvent>(e =>
-            {
-                ActivateItem(_installationSuccessfulViewModel);
-            });
         }
     }
 }

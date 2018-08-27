@@ -1,7 +1,7 @@
 using AppGet.Commands;
 using AppGet.Extensions;
 using AppGet.Gui.Framework;
-using AppGet.Infrastructure.Events;
+using AppGet.Infrastructure.Eventing;
 using AppGet.ProgressTracker;
 using Caliburn.Micro;
 
@@ -14,30 +14,17 @@ namespace AppGet.Gui.Views
 
     public class DownloadProgressViewModel : Screen
     {
-        private readonly ITinyMessengerHub _hub;
-        private TinyMessageSubscriptionToken _progressToken;
+        private readonly IHub _hub;
         private decimal _currentProgressState;
 
-        public DownloadProgressViewModel(ITinyMessengerHub hub)
+        public DownloadProgressViewModel(IHub hub)
         {
             _hub = hub;
         }
 
-
-        private void InstallProgressViewModel_Deactivated(object sender, DeactivationEventArgs e)
+        private void OnProgressUpdated(ProgressUpdatedEvent e)
         {
-            _progressToken?.Dispose();
-        }
-
-        private void InstallProgressViewModel_Activated(object sender, ActivationEventArgs e)
-        {
-            _progressToken = _hub.Subscribe<GenericTinyMessage<ProgressState>>(OnProgressUpdated);
-        }
-
-
-        private void OnProgressUpdated(GenericTinyMessage<ProgressState> e)
-        {
-            var newPercent = e.Content.GetPercentCompleted();
+            var newPercent = e.GetPercentCompleted();
 
             if (newPercent < 99 && _currentProgressState + 1 > newPercent)
             {
@@ -49,20 +36,27 @@ namespace AppGet.Gui.Views
             _currentProgressState = newPercent;
             Progress = (long)newPercent;
 
-            DetailedStatus = e.Content.Value.ToFileSize() + " / " + e.Content.MaxValue.ToFileSize();
+            DetailedStatus = e.Value.ToFileSize() + " / " + e.MaxValue.ToFileSize();
         }
 
         protected override void OnInitialize()
         {
-            ProgressStatus = $"Initializing";
-            Activated += InstallProgressViewModel_Activated;
-            Deactivated += InstallProgressViewModel_Deactivated;
+            ProgressStatus = "Initializing";
+
+            Activated += (sender, e) =>
+            {
+                _hub.Subscribe<ProgressUpdatedEvent>(this, OnProgressUpdated);
+            };
+
+            Deactivated += (sender, e) =>
+            {
+                _hub.UnSubscribe(this);
+            };
         }
 
         public string ProgressStatus { get; private set; }
         public long Progress { get; private set; }
 
         public string DetailedStatus { get; private set; }
-
     }
 }

@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using AppGet.Commands;
+using AppGet.Infrastructure.Eventing;
+using AppGet.Infrastructure.Eventing.Events;
 using DryIoc;
 using NLog;
 
@@ -45,6 +47,8 @@ namespace AppGet.Infrastructure.Composition
             Container.RegisterMany(ass, ShouldRegisterAs, made: made);
 
             RegisterHandlers<ICommandHandler>();
+
+            Container.Resolve<IHub>().Publish(new ApplicationStartedEvent());
         }
 
         private static void RegisterHandlers<THandler>()

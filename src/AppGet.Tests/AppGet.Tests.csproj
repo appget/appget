@@ -49,6 +49,7 @@
     <Compile Include="Http\HttpClientFixture.cs" />
     <Compile Include="Http\UserAgentBuilderFixture.cs" />
     <Compile Include="Infrastructure\Composition\ContainerBuilderFixture.cs" />
+    <Compile Include="Infrastructure\Hub\HubFixture.cs" />
     <Compile Include="Infrastructure\Logging\SentryTargetFixture.cs" />
     <Compile Include="Installers\InstallerExceptionFixture.cs" />
     <Compile Include="Manifests\PackageManifestFixture.cs" />

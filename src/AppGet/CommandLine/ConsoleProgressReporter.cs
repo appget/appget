@@ -1,53 +1,47 @@
 ﻿using System;
 using AppGet.Extensions;
-using AppGet.Infrastructure.Events;
+using AppGet.Infrastructure.Eventing;
 using AppGet.ProgressTracker;
 
 namespace AppGet.CommandLine
 {
-    public class ConsoleProgressReporter : IStartupHandler
+    public class ConsoleProgressReporter : IHandle<ProgressUpdatedEvent>
     {
-        private readonly ITinyMessengerHub _hub;
         private static string _lastState = "";
         private const int PROGRESS_LENGTH = 20;
 
 
-        public ConsoleProgressReporter(ITinyMessengerHub hub)
+        private string RenderBar(ProgressUpdatedEvent updatedEvent)
         {
-            _hub = hub;
-        }
-
-        private string RenderBar(ProgressState state)
-        {
-            if (state.MaxValue != 0)
+            if (updatedEvent.MaxValue != 0)
             {
-                var percentCompleted = state.GetPercentCompleted();
+                var percentCompleted = updatedEvent.GetPercentCompleted();
                 var percent = Math.Round(percentCompleted);
                 var filled = (int)Math.Round(PROGRESS_LENGTH * percentCompleted / 100);
 
                 var progress = new string('█', filled);
 
-                return $"   {progress.PadRight(PROGRESS_LENGTH, '░')} {percent}%: {state.Value.ToFileSize()} / {state.MaxValue.ToFileSize()}";
+                return $"   {progress.PadRight(PROGRESS_LENGTH, '░')} {percent}%: {updatedEvent.Value.ToFileSize()} / {updatedEvent.MaxValue.ToFileSize()}";
             }
 
-            if (state.Value != 0)
+            if (updatedEvent.Value != 0)
             {
-                return $"   {state.Value:N0} downloaded";
+                return $"   {updatedEvent.Value:N0} downloaded";
             }
 
             return "";
         }
 
-        private void HandleProgress(ProgressState state)
+        private void HandleProgress(ProgressUpdatedEvent updatedEvent)
         {
-            if (state.IsCompleted)
+            if (updatedEvent.IsCompleted)
             {
                 Console.WriteLine();
                 Console.WriteLine();
                 return;
             }
 
-            var newState = RenderBar(state);
+            var newState = RenderBar(updatedEvent);
 
             if (_lastState == newState) return;
 
@@ -55,9 +49,9 @@ namespace AppGet.CommandLine
             Console.Write("\r{0}", newState);
         }
 
-        public void OnApplicationStartup()
+        public void Handle(ProgressUpdatedEvent @event)
         {
-            _hub.Subscribe<GenericTinyMessage<ProgressState>>(s => HandleProgress(s.Content));
+            HandleProgress(@event);
         }
     }
 }

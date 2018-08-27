@@ -1,25 +1,18 @@
-﻿using AppGet.Infrastructure.Events;
+﻿using AppGet.Infrastructure.Eventing;
 using AppGet.ProgressTracker;
 
 namespace AppGet.CommandLine
 {
-    public class ConsoleEventReporter : IStartupHandler
+    public class ConsoleEventReporter : IHandle<ProgressUpdatedEvent>
     {
-        private readonly ITinyMessengerHub _hub;
-
-
-        public ConsoleEventReporter(ITinyMessengerHub hub)
-        {
-            _hub = hub;
-        }
-
-        private void HandleProgress(ProgressState state)
+        private void HandleProgress(ProgressUpdatedEvent updatedEvent)
         {
         }
 
-        public void OnApplicationStartup()
+
+        public void Handle(ProgressUpdatedEvent @event)
         {
-            _hub.Subscribe<GenericTinyMessage<ProgressState>>(s => HandleProgress(s.Content));
+            HandleProgress(@event);
         }
     }
 }

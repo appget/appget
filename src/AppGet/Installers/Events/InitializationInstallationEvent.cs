@@ -1,12 +1,11 @@
-﻿using AppGet.Infrastructure.Events;
+﻿using AppGet.Infrastructure.Eventing.Events;
 using AppGet.Manifest;
 
 namespace AppGet.Installers.Events
 {
     public class InitializationInstallationEvent : StatusUpdateEvent
     {
-        public InitializationInstallationEvent(object sender, PackageManifest manifest)
-            : base(sender)
+        public InitializationInstallationEvent(PackageManifest manifest)
         {
             this.Message = $"Initializing installation of {manifest.Name}";
         }
@@ -14,8 +13,7 @@ namespace AppGet.Installers.Events
 
     public class ExecutingInstallerEvent : StatusUpdateEvent
     {
-        public ExecutingInstallerEvent(object sender, PackageManifest manifest)
-            : base(sender)
+        public ExecutingInstallerEvent(PackageManifest manifest)
         {
             Message = $"Installing {manifest.Name} {manifest.Version}".Trim();
         }
@@ -23,8 +21,7 @@ namespace AppGet.Installers.Events
 
     public class InstallationSuccessfulEvent : StatusUpdateEvent
     {
-        public InstallationSuccessfulEvent(object sender, PackageManifest manifest)
-            : base(sender)
+        public InstallationSuccessfulEvent(PackageManifest manifest)
         {
             Message = $"{manifest.Name} {manifest.Version} Installed.".Trim();
         }

@@ -25,7 +25,7 @@ namespace AppGet.Compression
             _logger.Info("Extracting package to " + destination);
             var archive = ArchiveFactory.Open(sourcePath).Entries.ToList();
 
-            var progress = new ProgressState
+            var progress = new ProgressUpdatedEvent
             {
                 MaxValue = archive.Count
             };

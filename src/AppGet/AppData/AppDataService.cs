@@ -2,13 +2,14 @@
 using System.Security.Principal;
 using AppGet.FileSystem;
 using AppGet.HostSystem;
-using AppGet.Infrastructure.Events;
+using AppGet.Infrastructure.Eventing;
+using AppGet.Infrastructure.Eventing.Events;
 using JetBrains.Annotations;
 
 namespace AppGet.AppData
 {
     [UsedImplicitly]
-    public class AppDataService : IStartupHandler
+    public class AppDataService : IHandle<ApplicationStartedEvent>
     {
         private readonly IPathResolver _pathResolver;
         private readonly IFileSystem _fileSystem;
@@ -19,7 +20,7 @@ namespace AppGet.AppData
             _fileSystem = fileSystem;
         }
 
-        public void OnApplicationStartup()
+        public void Handle(ApplicationStartedEvent @event)
         {
             var path = _pathResolver.AppDataDirectory;
 

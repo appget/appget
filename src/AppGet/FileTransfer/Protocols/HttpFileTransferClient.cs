@@ -49,7 +49,7 @@ namespace AppGet.FileTransfer.Protocols
             throw new InvalidDownloadUrlException(source);
         }
 
-        public async Task TransferFile(string source, string destinationFile, Action<ProgressState> progressCallback)
+        public async Task TransferFile(string source, string destinationFile, Action<ProgressUpdatedEvent> progressCallback)
         {
             using (var resp = await _httpClient.GetAsync(new Uri(source), HttpCompletionOption.ResponseHeadersRead))
             {
@@ -60,7 +60,7 @@ namespace AppGet.FileTransfer.Protocols
 
                 var maxValue = resp.Content.Headers.ContentLength ?? 0;
 
-                var progress = new ProgressState
+                var progress = new ProgressUpdatedEvent
                 {
                     MaxValue = maxValue
                 };
