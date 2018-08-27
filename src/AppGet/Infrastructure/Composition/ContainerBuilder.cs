@@ -34,7 +34,7 @@ namespace AppGet.Infrastructure.Composition
             var made = FactoryMethod.Constructor(mostResolvable: true);
             Container = new Container(rules);
 
-            Container.Register(Made.Of(() => LogManager.GetLogger(Arg.Index<string>(0)), request => request.Parent.ImplementationType.Name));
+            Container.Register(Made.Of(() => LogManager.GetLogger(Arg.Index<string>(0)), request => request.Parent.ImplementationType.Name), Reuse.Transient);
 
             bool ShouldRegisterAs(Type type)
             {
