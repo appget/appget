@@ -1,10 +1,13 @@
 ﻿using System.Threading.Tasks;
+using AppGet.Commands.CreateManifest;
+using AppGet.Infrastructure.Composition;
 using AppGet.Installers;
 using AppGet.Manifests;
 using AppGet.PackageRepository;
 
 namespace AppGet.Commands.Install
 {
+    [Handles(typeof(InstallOptions))]
     public class InstallCommandHandler : ICommandHandler
     {
         private readonly IPackageRepository _packageRepository;

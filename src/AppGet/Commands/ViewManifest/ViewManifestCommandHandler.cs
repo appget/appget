@@ -1,9 +1,12 @@
 using System.Threading.Tasks;
+using AppGet.Commands.CreateManifest;
+using AppGet.Infrastructure.Composition;
 using AppGet.Manifests;
 using AppGet.PackageRepository;
 
 namespace AppGet.Commands.ViewManifest
 {
+    [Handles(typeof(ViewManifestOptions))]
     public class ViewManifestCommandHandler : ICommandHandler
     {
         private readonly IPackageRepository _packageRepository;

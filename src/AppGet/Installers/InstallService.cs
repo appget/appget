@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AppGet.Commands.Install;
@@ -33,16 +32,16 @@ namespace AppGet.Installers
         private readonly IProcessController _processController;
         private readonly IFileTransferService _fileTransferService;
         private readonly WindowsInstallerClient _windowsInstallerClient;
-        private readonly List<InstallerBase> _installWhisperers;
-        private readonly List<UninstallerBase> _uninstallers;
+        private readonly InstallerBase[] _installWhisperers;
+        private readonly UninstallerBase[] _uninstallers;
         private readonly ITinyMessengerHub _hub;
         private readonly IUnlocker _unlocker;
         private readonly NovoClient _novoClient;
         private readonly UpdateService _updateService;
 
         public InstallService(Logger logger, IFindInstaller findInstaller, IPathResolver pathResolver, IProcessController processController,
-            IFileTransferService fileTransferService, WindowsInstallerClient windowsInstallerClient, List<InstallerBase> installWhisperers,
-            List<UninstallerBase> uninstallers,
+            IFileTransferService fileTransferService, WindowsInstallerClient windowsInstallerClient, InstallerBase[] installWhisperers,
+            UninstallerBase[] uninstallers,
             ITinyMessengerHub hub,
             IUnlocker unlocker, NovoClient novoClient, UpdateService updateService)
         {
@@ -75,7 +74,7 @@ namespace AppGet.Installers
                 if (update?.InstallationPath != null)
                 {
                     _unlocker.UnlockFolder(update.InstallationPath, packageManifest.InstallMethod);
-                }   
+                }
             }
 
             var whisperer = _installWhisperers.Single(c => c.InstallMethod == packageManifest.InstallMethod);

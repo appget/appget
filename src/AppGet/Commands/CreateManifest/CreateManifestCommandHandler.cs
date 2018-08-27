@@ -4,12 +4,14 @@ using System.Threading.Tasks;
 using AppGet.CommandLine.Prompts;
 using AppGet.CreatePackage;
 using AppGet.CreatePackage.Installer;
+using AppGet.Infrastructure.Composition;
 using AppGet.Manifests;
 using AppGet.Manifests.Submission;
 using NLog;
 
 namespace AppGet.Commands.CreateManifest
 {
+    [Handles(typeof(CreateManifestOptions))]
     public class CreateManifestCommandHandler : ICommandHandler
     {
         private readonly IComposeInstaller _installerBuilder;

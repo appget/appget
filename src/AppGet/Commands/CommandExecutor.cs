@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using AppGet.Infrastructure.Logging;
 using NLog;
@@ -14,13 +16,13 @@ namespace AppGet.Commands
 
     public class CommandExecutor : ICommandExecutor
     {
-        private readonly Func<string, ICommandHandler> _handlerFactory;
+        private readonly KeyValuePair<Type, Lazy<ICommandHandler>>[] _handlers;
         private readonly IParseOptions _optionParser;
         private readonly Logger _logger;
 
-        public CommandExecutor(Func<String, ICommandHandler> handlerFactory, IParseOptions optionParser, Logger logger)
+        public CommandExecutor(KeyValuePair<Type, Lazy<ICommandHandler>>[] handlers, IParseOptions optionParser, Logger logger)
         {
-            _handlerFactory = handlerFactory;
+            _handlers = handlers;
             _optionParser = optionParser;
             _logger = logger;
         }
@@ -39,7 +41,7 @@ namespace AppGet.Commands
                 LogConfigurator.EnableVerboseLogging();
             }
 
-            var commandHandler = _handlerFactory.Invoke(option.GetType().FullName);
+            var commandHandler = _handlers.Single(c => c.Key == option.GetType()).Value.Value;
 
             if (commandHandler == null)
             {

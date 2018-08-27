@@ -2,13 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using AppGet.Commands.CreateManifest;
-using AppGet.Commands.Install;
-using AppGet.Commands.Outdated;
-using AppGet.Commands.Search;
-using AppGet.Commands.Uninstall;
-using AppGet.Commands.Update;
-using AppGet.Commands.ViewManifest;
 using CommandLine;
 using CommandLine.Text;
 using JetBrains.Annotations;
@@ -23,8 +16,11 @@ namespace AppGet.Commands
     [UsedImplicitly]
     public class OptionsParser : IParseOptions
     {
-        public OptionsParser(AppGetSentenceBuilder sentenceBuilder)
+        private readonly ICommandLineOption[] _options;
+
+        public OptionsParser(AppGetSentenceBuilder sentenceBuilder, ICommandLineOption[] options)
         {
+            _options = options;
             SentenceBuilder.Factory = () => sentenceBuilder;
         }
 
@@ -54,7 +50,7 @@ namespace AppGet.Commands
                 return c;
             }).ToList();
 
-            if (cleanArgs.Count() == 1 && cleanArgs[0].StartsWith("appget://"))
+            if (cleanArgs.Count == 1 && cleanArgs[0].StartsWith("appget://"))
             {
                 cleanArgs = ParseUrl(cleanArgs.Single());
             }
@@ -66,14 +62,8 @@ namespace AppGet.Commands
                 c.HelpWriter = new CustomHelpWriter();
             });
 
-            var result = parser.ParseArguments<
-                InstallOptions,
-                SearchOptions,
-                UninstallOptions,
-                CreateManifestOptions,
-                ViewManifestOptions,
-                OutdatedOptions,
-                UpdateOptions>(cleanArgs);
+            var result = parser.ParseArguments(cleanArgs, _options.Select(c => c.GetType()).ToArray());
+
 
 
             switch (result.Tag)

@@ -21,11 +21,11 @@ namespace AppGet.Update
     public class AppGetUpdateService : IAppGetUpdateService
     {
         private readonly IReleaseClient _releaseClient;
-        private readonly IInstallService _installService;
         private readonly Logger _logger;
         private Task<List<AppGetRelease>> _releaseTask;
+        private Lazy<IInstallService> _installService;
 
-        public AppGetUpdateService(IReleaseClient releaseClient, IInstallService installService, Logger logger)
+        public AppGetUpdateService(IReleaseClient releaseClient, Lazy<IInstallService> installService, Logger logger)
         {
             _releaseClient = releaseClient;
             _installService = installService;
@@ -67,7 +67,7 @@ namespace AppGet.Update
                     }
                 };
 
-                await _installService.Install(manifest, new InstallOptions
+                await _installService.Value.Install(manifest, new InstallOptions
                 {
                     Force = true,
                     Package = manifest.Id

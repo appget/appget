@@ -2,11 +2,15 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AppGet.CommandLine;
+using AppGet.Commands.CreateManifest;
+using AppGet.Infrastructure.Composition;
 using AppGet.Update;
 using Console = Colorful.Console;
 
 namespace AppGet.Commands.Outdated
 {
+
+    [Handles(typeof(OutdatedOptions))]
     public class OutdatedCommandHandler : ICommandHandler
     {
         private readonly UpdateService _updateService;

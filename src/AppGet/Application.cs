@@ -3,6 +3,7 @@ using AppGet.Commands;
 using AppGet.Infrastructure.Composition;
 using AppGet.Infrastructure.Logging;
 using AppGet.Update;
+using DryIoc;
 using NLog;
 
 namespace AppGet

@@ -76,6 +76,9 @@
     <PackageReference Include="FluentAssertions">
       <Version>5.4.1</Version>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>9.0.1</Version>
+    </PackageReference>
     <PackageReference Include="NUnit">
       <Version>3.10.1</Version>
     </PackageReference>

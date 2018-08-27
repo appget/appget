@@ -1,8 +1,11 @@
 ﻿using System.Threading.Tasks;
+using AppGet.Commands.CreateManifest;
+using AppGet.Infrastructure.Composition;
 using AppGet.Installers;
 
 namespace AppGet.Commands.Uninstall
 {
+    [Handles(typeof(UninstallOptions))]
     public class UninstallCommandHandler : ICommandHandler
     {
         private readonly IInstallService _installService;

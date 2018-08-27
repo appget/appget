@@ -3,7 +3,7 @@ using CommandLine;
 
 namespace AppGet.Commands
 {
-    public abstract class AppGetOption
+    public abstract class AppGetOption : ICommandLineOption
     {
         [Option('v', "verbose", HelpText = "Generate more verbose output", Required = false)]
         public bool Verbose { get; set; }
@@ -15,5 +15,9 @@ namespace AppGet.Commands
             var verbAttr = (VerbAttribute)Attribute.GetCustomAttribute(GetType(), typeof(VerbAttribute));
             CommandName = verbAttr.Name;
         }
+    }
+
+    public interface ICommandLineOption
+    {
     }
 }

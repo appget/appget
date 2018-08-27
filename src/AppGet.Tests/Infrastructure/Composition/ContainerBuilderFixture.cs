@@ -7,6 +7,7 @@ using AppGet.CreatePackage.Root;
 using AppGet.FileTransfer;
 using AppGet.Infrastructure.Composition;
 using AppGet.Installers.InstallerWhisperer;
+using DryIoc;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -26,7 +27,7 @@ namespace AppGet.Tests.Infrastructure.Composition
             {
                 var super = typeof(T);
                 var commandHandler = allTypes.Where(c => c.IsSubclassOf(super) || c.ImplementedInterfaces.Any(d => d == super)).Select(x => x.Name).OrderBy(o => o).ToList();
-                var registered = container.Resolve<IEnumerable<T>>().Select(e => e.GetType().Name).OrderBy(o => o).ToList();
+                var registered = container.ResolveMany<T>().Select(e => e.GetType().Name).OrderBy(o => o).ToList();
                 commandHandler.Should().Equal(registered);
             }
 
@@ -44,8 +45,7 @@ namespace AppGet.Tests.Infrastructure.Composition
         {
             var container = ContainerBuilder.Container;
 
-            var whisperers = container.Resolve<IEnumerable<InstallerBase>>();
-
+            var whisperers = container.ResolveMany<InstallerBase>();
             whisperers.Should().OnlyHaveUniqueItems(c => c.InstallMethod);
         }
     }
