@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Reflection;
 using AppGet.Commands;
 using AppGet.CreatePackage.Installer;
 using AppGet.CreatePackage.Root;
@@ -20,14 +19,11 @@ namespace AppGet.Tests.Infrastructure.Composition
         {
             var container = ContainerBuilder.Container;
 
-            var allTypes = Assembly.Load("AppGet").DefinedTypes.Where(c => !c.IsAbstract).ToList();
-
             void Assert<T>()
             {
-                var super = typeof(T);
-                var commandHandler = allTypes.Where(c => c.IsSubclassOf(super) || c.ImplementedInterfaces.Any(d => d == super)).Select(x => x.Name).OrderBy(o => o).ToList();
-                var registered = container.ResolveMany<T>().Select(e => e.GetType().Name).OrderBy(o => o).ToList();
-                commandHandler.Should().Equal(registered);
+                var commandHandler = ContainerBuilder.AssemblyTypes.Where(c => c.ImplementsServiceType<T>()).ToList();
+                var registered = container.ResolveMany<T>().Select(e => e.GetType()).ToList();
+                commandHandler.Should().BeEquivalentTo(registered);
             }
 
             Assert<ICommandHandler>();
@@ -46,6 +42,16 @@ namespace AppGet.Tests.Infrastructure.Composition
 
             var whisperers = container.ResolveMany<InstallerBase>();
             whisperers.Should().OnlyHaveUniqueItems(c => c.InstallMethod);
+        }
+
+        [Test]
+        public void check_commands()
+        {
+            var container = ContainerBuilder.Container;
+
+            var handlers = container.ResolveMany<ICommandHandler>();
+
+            handlers.Should().NotBeEmpty();
         }
     }
 }

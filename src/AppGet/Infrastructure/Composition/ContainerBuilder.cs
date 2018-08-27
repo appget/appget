@@ -13,7 +13,7 @@ namespace AppGet.Infrastructure.Composition
 {
     public static class ContainerBuilder
     {
-        private static readonly List<Type> AssemblyTypes;
+        public static readonly List<Type> AssemblyTypes;
 
         static ContainerBuilder()
         {
