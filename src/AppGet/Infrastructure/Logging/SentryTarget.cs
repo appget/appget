@@ -47,7 +47,7 @@ namespace AppGet.Infrastructure.Logging
             {
                 Compression = true,
                 ErrorOnCapture = OnError,
-                Release = BuildInfo.Version.ToString(),
+                Release = BuildInfo.AppVersion.ToString(),
                 Environment = BuildInfo.IsProduction ? "Production" : "Dev",
             };
 

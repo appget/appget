@@ -36,6 +36,20 @@ namespace AppGet.Tests.Infrastructure.Hub
         }
 
         [Test]
+        public void should_avoid_duplicate_registration()
+        {
+            var calledA = 0;
+            Action<EventA> callbackA = e => { calledA++; };
+
+            Subject.Subscribe(this, callbackA);
+            Subject.Subscribe(this, callbackA);
+
+            Subject.Publish(new EventA());
+
+            calledA.Should().Be(1);
+        }
+
+        [Test]
         public void should_unregister_Callback()
         {
             var called = 0;

@@ -14,7 +14,7 @@ namespace AppGet.Tests.Requirements.Specifications
         public void should_be_true_when_min_has_not_been_set()
         {
             Mocker.GetMock<IEnvInfo>()
-                  .SetupGet(s => s.Version)
+                  .SetupGet(s => s.WindowsVersion)
                   .Returns(new Version(1, 0));
 
             Subject.IsRequirementSatisfied(new Installer()).Success.Should().BeTrue();
@@ -24,7 +24,7 @@ namespace AppGet.Tests.Requirements.Specifications
         public void should_be_true_when_OS_is_greater_than_min()
         {
             Mocker.GetMock<IEnvInfo>()
-                  .SetupGet(s => s.Version)
+                  .SetupGet(s => s.WindowsVersion)
                   .Returns(new Version(10, 0));
 
             Subject.IsRequirementSatisfied(new Installer
@@ -37,7 +37,7 @@ namespace AppGet.Tests.Requirements.Specifications
         public void should_be_true_when_OS_is_same_as_min()
         {
             Mocker.GetMock<IEnvInfo>()
-                .SetupGet(s => s.Version)
+                .SetupGet(s => s.WindowsVersion)
                 .Returns(new Version(10, 0));
 
             Subject.IsRequirementSatisfied(new Installer
@@ -50,7 +50,7 @@ namespace AppGet.Tests.Requirements.Specifications
         public void should_be_false_when_OS_is_less_than_min()
         {
             Mocker.GetMock<IEnvInfo>()
-                  .SetupGet(s => s.Version)
+                  .SetupGet(s => s.WindowsVersion)
                 .Returns(new Version(6, 0));
 
             Subject.IsRequirementSatisfied(new Installer

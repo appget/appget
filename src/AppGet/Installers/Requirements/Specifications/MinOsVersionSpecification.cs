@@ -16,12 +16,12 @@ namespace AppGet.Installers.Requirements.Specifications
         {
             if (installer.MinWindowsVersion == null) return EnforcementResult.Pass();
 
-            if (_environmentProxy.Version >= installer.MinWindowsVersion)
+            if (_environmentProxy.WindowsVersion >= installer.MinWindowsVersion)
             {
                 return EnforcementResult.Pass();
             }
 
-            return EnforcementResult.Fail("Min supported OS version: {0}. Current version: {1}", installer.MinWindowsVersion, _environmentProxy.Version);
+            return EnforcementResult.Fail("Min supported OS version: {0}. Current version: {1}", installer.MinWindowsVersion, _environmentProxy.WindowsVersion);
         }
     }
 }

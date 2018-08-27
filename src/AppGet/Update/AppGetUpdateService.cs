@@ -73,10 +73,6 @@ namespace AppGet.Update
                     Package = manifest.Id
                 });
             }
-            catch (AggregateException e)
-            {
-                _logger.Fatal(e.Flatten().InnerExceptions.First(), "AppGet update failed");
-            }
             catch (Exception e)
             {
                 _logger.Fatal(e, "AppGet update failed");

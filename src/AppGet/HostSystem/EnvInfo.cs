@@ -8,7 +8,7 @@ namespace AppGet.HostSystem
 {
     public interface IEnvInfo
     {
-        Version Version { get; }
+        Version WindowsVersion { get; }
         string Name { get; }
         string FullName { get; }
         bool Is64BitOperatingSystem { get; }
@@ -19,7 +19,7 @@ namespace AppGet.HostSystem
 
     public class EnvInfo : IEnvInfo
     {
-        public Version Version { get; }
+        public Version WindowsVersion { get; }
         public string Name { get; }
         public string FullName { get; }
         public bool Is64BitOperatingSystem { get; }
@@ -49,13 +49,13 @@ namespace AppGet.HostSystem
                 Is64BitOperatingSystem = Environment.Is64BitOperatingSystem;
                 var windowsServer = IsWindowsServer();
                 Name = windowsServer ? "Windows Server" : "Windows";
-                Version = Environment.OSVersion.Version;
+                WindowsVersion = Environment.OSVersion.Version;
 
                 AppDir = Path.GetDirectoryName(GetType().Assembly.Location);
 
                 if (string.IsNullOrWhiteSpace(Environment.OSVersion.VersionString))
                 {
-                    FullName = $"{Name} {Version}";
+                    FullName = $"{Name} {WindowsVersion}";
                 }
 
                 FullName = Environment.OSVersion.VersionString;

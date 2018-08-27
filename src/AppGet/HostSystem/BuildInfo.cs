@@ -9,10 +9,10 @@ namespace AppGet.HostSystem
         static BuildInfo()
         {
             var assembly = Assembly.GetExecutingAssembly();
-            Version = assembly.GetName().Version;
+            AppVersion = assembly.GetName().Version;
         }
 
-        public static Version Version { get; }
+        public static Version AppVersion { get; }
 
         public static DateTime BuildDateTime
         {
@@ -30,7 +30,7 @@ namespace AppGet.HostSystem
             {
                 if (IsDebug) return false;
 
-                if (Version == new Version("1.0.0.0"))
+                if (AppVersion == new Version("1.0.0.0"))
                 {
                     return false;
                 }

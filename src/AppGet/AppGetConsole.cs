@@ -39,7 +39,7 @@ namespace AppGet
                 await Application.Execute(args);
                 return 0;
             }
-            catch (CommandLineParserException e)
+            catch (CommandLineParserException)
             {
                 return 1;
             }

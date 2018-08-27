@@ -67,7 +67,7 @@ namespace AppGet.Infrastructure.Eventing
         public void Subscribe<TEvent>(object owner, Action<TEvent> callback)
         {
             var handlers = GetCallBacks<TEvent>();
-            if (!handlers.Any(h => h.Owner == owner && h.Callback == callback))
+            if (!handlers.Any(h => h.Owner == owner && ReferenceEquals(h.Callback, callback)))
             {
                 handlers.Add(new EventCallBack(owner, callback));
             }

@@ -13,9 +13,9 @@ namespace AppGet.Tests.HostSystem
         public void should_get_os_info()
         {
             Subject.Name.Should().Contain("Windows");
-            Subject.Version.Major.Should().BeGreaterThan(7);
+            Subject.WindowsVersion.Major.Should().BeGreaterThan(7);
             Subject.FullName.Should().Contain("Windows NT");
-            Subject.FullName.Should().Contain(Subject.Version.ToString());
+            Subject.FullName.Should().Contain(Subject.WindowsVersion.ToString());
 
             Subject.Is64BitOperatingSystem.Should().BeTrue();
             Subject.AppDir.Should().Contain(Path.DirectorySeparatorChar.ToString());
