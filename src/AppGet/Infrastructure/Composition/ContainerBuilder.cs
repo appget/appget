@@ -11,7 +11,7 @@ namespace AppGet.Infrastructure.Composition
 {
     public static class ContainerBuilder
     {
-        private static List<Type> AssemblyTypes;
+        private static readonly List<Type> AssemblyTypes;
 
         static ContainerBuilder()
         {
@@ -19,7 +19,9 @@ namespace AppGet.Infrastructure.Composition
 
             var ass = files.Select(Assembly.LoadFile).ToList();
 
-            AssemblyTypes = ass.SelectMany(c => c.ExportedTypes.Where(t => !t.IsAbstract && !t.IsInterface && !t.IsEnum && t.Namespace != null && t.Namespace.StartsWith("AppGet."))).ToList();
+            AssemblyTypes = ass.SelectMany(c => c.ExportedTypes
+                .Where(t => !t.IsAbstract && !t.IsInterface && !t.IsEnum && t.Namespace != null && t.Namespace.StartsWith("AppGet.")))
+                .ToList();
 
             var rules = Rules.Default
                 .WithAutoConcreteTypeResolution()
@@ -29,7 +31,6 @@ namespace AppGet.Infrastructure.Composition
 
             var made = FactoryMethod.Constructor(mostResolvable: true);
             Container = new Container(rules);
-
 
             Container.Register(Made.Of(() => LogManager.GetLogger(Arg.Index<string>(0)), request => request.Parent.ImplementationType.Name));
 

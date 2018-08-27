@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using AppGet.Commands.CreateManifest;
 using AppGet.Commands.Install;
 using AppGet.Infrastructure.Composition;
 using AppGet.Installers;
