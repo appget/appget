@@ -24,15 +24,15 @@ namespace AppGet.Manifests
     {
         private readonly IFileTransferService _fileTransferService;
         private readonly IFileSystem _fileSystem;
-        private readonly IConfig _config;
+        private readonly IStore<Config> _configStore;
         private readonly IHub _hub;
         private readonly Logger _logger;
 
-        public PackageManifestService(IFileTransferService fileTransferService, IFileSystem fileSystem, IConfig config, IHub hub, Logger logger)
+        public PackageManifestService(IFileTransferService fileTransferService, IFileSystem fileSystem, IStore<Config> configStore, IHub hub, Logger logger)
         {
             _fileTransferService = fileTransferService;
             _fileSystem = fileSystem;
-            _config = config;
+            _configStore = configStore;
             _hub = hub;
             _logger = logger;
         }
@@ -51,7 +51,8 @@ namespace AppGet.Manifests
         {
             var manifest = manifestBuilder.Build();
             var fileName = $"{manifest.GetFileName()}.yaml";
-            var applicationManifestDir = Path.Combine(_config.LocalRepository, manifest.Id);
+            var config = _configStore.Load();
+            var applicationManifestDir = Path.Combine(config.LocalRepository, manifest.Id);
             var manifestPath = Path.Combine(applicationManifestDir, fileName);
             _fileSystem.CreateDirectory(applicationManifestDir);
 

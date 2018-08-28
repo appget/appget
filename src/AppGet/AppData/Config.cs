@@ -1,39 +1,32 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using AppGet.FileSystem;
 using AppGet.HostSystem;
-using AppGet.Manifest.Serialization;
-using Newtonsoft.Json;
 
 namespace AppGet.AppData
 {
-    public interface IConfig
+    public class Config
     {
-        string LocalRepository { get; }
-        string ApiKey { get; }
+        public string LocalRepository { get; set; }
+        public string ApiKey { get; set; }
     }
 
-    public class Config : IConfig
+    public class ConfigStore : StoreBase<Config>
     {
-        public string LocalRepository { get; }
-        public string ApiKey { get; }
+        private readonly IPathResolver _pathResolver;
 
-        public Config(IFileSystem fileSystem, IPathResolver pathResolver)
+        protected override string Name => "config";
+
+        public ConfigStore(IFileSystem fileSystem, IPathResolver pathResolver)
+            : base(fileSystem, pathResolver)
         {
-            var configFile = Path.Combine(pathResolver.AppDataDirectory, "config.json");
-            LocalRepository = Path.Combine(pathResolver.AppDataDirectory, "Repository\\");
+            _pathResolver = pathResolver;
+        }
 
-            if (fileSystem.FileExists(configFile))
+        protected override void SetDefaults(Config data)
+        {
+            if (data.LocalRepository == null)
             {
-                var text = fileSystem.ReadAllText(configFile);
-                var settings = Json.Deserialize<dynamic>(text);
-                LocalRepository = settings.localRepository;
-                ApiKey = settings.apiKey;
-            }
-            else
-            {
-                ApiKey = Guid.NewGuid().ToString().Replace("-", "");
-                fileSystem.WriteAllText(configFile, Json.Serialize(this, Formatting.Indented));
+                data.LocalRepository = Path.Combine(_pathResolver.AppDataDirectory, @"Repository\");
             }
         }
     }

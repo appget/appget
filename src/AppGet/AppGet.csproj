@@ -67,6 +67,8 @@
   <ItemGroup>
     <Compile Include="AppData\AppDataService.cs" />
     <Compile Include="AppData\Config.cs" />
+    <Compile Include="AppData\InstalledPackagesStore.cs" />
+    <Compile Include="AppData\StoreBase.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="CommandLine\ConsoleEventReporter.cs" />
     <Compile Include="CommandLine\ConsoleTable.cs" />

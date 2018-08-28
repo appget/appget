@@ -6,6 +6,7 @@ namespace AppGet.FileSystem
 {
     public interface IFileSystem
     {
+        void EnsureDirectory(string path);
         bool FileExists(string path);
         string ReadAllText(string path);
         void WriteAllText(string path, string content);
@@ -19,6 +20,14 @@ namespace AppGet.FileSystem
 
     public class FileSystem : IFileSystem
     {
+        public void EnsureDirectory(string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+        }
+
         public bool FileExists(string path)
         {
             return File.Exists(path);
