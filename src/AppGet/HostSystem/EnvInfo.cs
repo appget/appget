@@ -33,7 +33,7 @@ namespace AppGet.HostSystem
         [DllImport("shlwapi.dll", SetLastError = true, EntryPoint = "#437")]
         private static extern bool IsOS(int os);
 
-        private static bool IsWindowsServer()
+        public static bool IsWindowsServer()
         {
             const int OS_ANYSERVER = 29;
 
