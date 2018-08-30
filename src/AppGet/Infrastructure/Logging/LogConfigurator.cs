@@ -8,7 +8,7 @@ namespace AppGet.Infrastructure.Logging
     public static class LogConfigurator
     {
         public static readonly Layout FriendlyLayout = new SimpleLayout("${trim-whitespace:${message} ${exception:format=message}}");
-        public static readonly Layout DetailedLayout = new SimpleLayout("[${Logger}] ${trim-whitespace:${message} ${exception:format=ToString}}");
+        public static readonly Layout DetailedLayout = new SimpleLayout("${date:format=MM-dd HH\\:mm\\:ss.fff}: [${Logger}] ${trim-whitespace:${message} ${exception:format=ToString}}");
 
         static LogConfigurator()
         {
