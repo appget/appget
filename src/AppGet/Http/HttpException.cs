@@ -8,7 +8,7 @@ namespace AppGet.Http
         public HttpResponseMessage Response { get; }
 
         public HttpException(HttpResponseMessage response)
-            : base($"HTTP Request to {response.RequestMessage.RequestUri} failed. {(int)response.StatusCode}:{response.StatusCode}")
+            : base($"Request to {response.RequestMessage.RequestUri} failed. {(int)response.StatusCode}:{response.StatusCode}")
         {
             Response = response;
         }

@@ -43,14 +43,30 @@ namespace AppGet.Http
                 request.Headers.Add("User-Agent", _userAgentBuilder.GetUserAgent());
             }
 
-            var response = await _client.SendAsync(request, completionOption);
-
-            if (!response.IsSuccessStatusCode)
+            try
             {
-                throw new HttpException(response);
-            }
+                var response = await _client.SendAsync(request, completionOption);
 
-            return response;
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new HttpException(response);
+                }
+
+                return response;
+            }
+            catch (TaskCanceledException)
+            {
+                throw new HttpTimeoutException(request);
+            }
+            catch (HttpRequestException requestException)
+            {
+                if (requestException.InnerException != null)
+                {
+                    throw requestException.InnerException;
+                }
+
+                throw;
+            }
         }
 
         public Task<HttpResponseMessage> GetAsync(Uri uri, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead)

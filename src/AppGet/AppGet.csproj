@@ -121,6 +121,7 @@
     <Compile Include="Extensions\NumeralExtensions.cs" />
     <Compile Include="FileTransfer\FileTransferCompletedEvent.cs" />
     <Compile Include="FileTransfer\FileTransferStartedEvent.cs" />
+    <Compile Include="Http\HttpTimeoutException.cs" />
     <Compile Include="Http\JsonContent.cs" />
     <Compile Include="Infrastructure\Composition\ContainerBuilder.cs" />
     <Compile Include="Infrastructure\Composition\HandlesAttribute.cs" />
@@ -170,9 +171,6 @@
     <Compile Include="Installers\InstallerWhisperer\SquirrelWhisperer.cs" />
     <Compile Include="Exceptions\AppGetException.cs" />
     <Compile Include="HostSystem\PathResolver.cs" />
-    <Compile Include="Http\GZipWebClient.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Http\HttpClient.cs" />
     <Compile Include="Infrastructure\Logging\LogConfigurator.cs" />
     <Compile Include="Update\PackageUpdate.cs" />

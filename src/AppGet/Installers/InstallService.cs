@@ -198,11 +198,11 @@ namespace AppGet.Installers
             {
                 if (SupportsPassive())
                 {
-                    _logger.Warn("Silent install is not supported by installer. Falling back to Passive");
+                    _logger.Info("Silent install is not supported by installer. Switching to Passive");
                     return InstallInteractivityLevels.Passive;
                 }
 
-                _logger.Warn("Silent or Passive install is not supported by installer. Falling back to Interactive");
+                _logger.Warn("Silent or Passive install is not supported by installer. Switching to Interactive");
                 return InstallInteractivityLevels.Interactive;
             }
 
@@ -210,11 +210,11 @@ namespace AppGet.Installers
             {
                 if (SupportsSilent())
                 {
-                    _logger.Warn("Passive install is not supported by installer. Falling back to Silent.");
+                    _logger.Info("Passive install is not supported by installer. Switching to Silent.");
                     return InstallInteractivityLevels.Silent;
                 }
 
-                _logger.Warn("Silent or Passive install is not supported by installer. Falling back to Interactive");
+                _logger.Warn("Silent or Passive install is not supported by installer. Switching to Interactive");
                 return InstallInteractivityLevels.Interactive;
             }
 
