@@ -32,18 +32,16 @@ namespace AppGet.Installers
         private readonly IProcessController _processController;
         private readonly IFileTransferService _fileTransferService;
         private readonly WindowsInstallerClient _windowsInstallerClient;
-        private readonly InstallerBase[] _installWhisperers;
-        private readonly UninstallerBase[] _uninstallers;
+        private readonly Func<InstallerBase[]> _installWhisperers;
+        private readonly Func<UninstallerBase[]> _uninstallers;
         private readonly IHub _hub;
         private readonly IUnlocker _unlocker;
         private readonly NovoClient _novoClient;
         private readonly UpdateService _updateService;
 
         public InstallService(Logger logger, IFindInstaller findInstaller, IPathResolver pathResolver, IProcessController processController,
-            IFileTransferService fileTransferService, WindowsInstallerClient windowsInstallerClient, InstallerBase[] installWhisperers,
-            UninstallerBase[] uninstallers,
-            IHub hub,
-            IUnlocker unlocker, NovoClient novoClient, UpdateService updateService)
+            IFileTransferService fileTransferService, WindowsInstallerClient windowsInstallerClient, Func<InstallerBase[]> installWhisperers,
+            Func<UninstallerBase[]> uninstallers, IHub hub, IUnlocker unlocker, NovoClient novoClient, UpdateService updateService)
         {
             _logger = logger;
             _findInstaller = findInstaller;
@@ -77,7 +75,7 @@ namespace AppGet.Installers
                 }
             }
 
-            var whisperer = _installWhisperers.Single(c => c.InstallMethod == packageManifest.InstallMethod);
+            var whisperer = _installWhisperers().First(c => c.InstallMethod == packageManifest.InstallMethod);
             whisperer.Initialize(packageManifest, installerPath);
 
             RunInstaller(installOptions.InteractivityLevel, packageManifest, whisperer);
@@ -121,7 +119,7 @@ namespace AppGet.Installers
 
             var keys = _windowsInstallerClient.GetKey(uninstallRecord.WindowsInstallerId);
 
-            var whisperer = _uninstallers.Single(c => c.InstallMethod == uninstallRecord.InstallMethod);
+            var whisperer = _uninstallers().First(c => c.InstallMethod == uninstallRecord.InstallMethod);
             whisperer.InitUninstaller(keys, uninstallRecord);
 
             RunInstaller(uninstallOptions.InteractivityLevel, new PackageManifest(), whisperer);

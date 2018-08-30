@@ -1,10 +1,12 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using AppGet.Commands;
 using AppGet.CreatePackage.Installer;
 using AppGet.CreatePackage.Root;
 using AppGet.FileTransfer;
 using AppGet.Infrastructure.Composition;
 using AppGet.Installers.InstallerWhisperer;
+using AppGet.Installers.UninstallerWhisperer;
 using DryIoc;
 using FluentAssertions;
 using NUnit.Framework;
@@ -40,9 +42,48 @@ namespace AppGet.Tests.Infrastructure.Composition
         {
             var container = ContainerBuilder.Container;
 
-            var whisperers = container.ResolveMany<InstallerBase>();
+            var whisperersFac = container.Resolve<Func<InstallerBase[]>>();
+            var whisperers = whisperersFac();
             whisperers.Should().OnlyHaveUniqueItems(c => c.InstallMethod);
         }
+
+        [Test]
+        public void uninstaller_whisperer_check()
+        {
+            var container = ContainerBuilder.Container;
+
+            var whisperersFac = container.Resolve<Func<UninstallerBase[]>>();
+            var whisperers = whisperersFac();
+            whisperers.Should().OnlyHaveUniqueItems(c => c.InstallMethod);
+        }
+
+        [Test]
+        public void installers_should_be_transient()
+        {
+            var container = ContainerBuilder.Container;
+
+            var whisperersFac = container.Resolve<Func<InstallerBase[]>>();
+            var whisperers1 = whisperersFac();
+            var whisperers2 = whisperersFac();
+
+
+            whisperers2.Should().NotEqual(whisperers1);
+        }
+
+        
+        [Test]
+        public void uninstallers_should_be_transient()
+        {
+            var container = ContainerBuilder.Container;
+
+            var whisperersFac = container.Resolve<Func<UninstallerBase[]>>();
+            var whisperers1 = whisperersFac();
+            var whisperers2 = whisperersFac();
+
+
+            whisperers2.Should().NotEqual(whisperers1);
+        }
+
 
         [Test]
         public void check_commands()
