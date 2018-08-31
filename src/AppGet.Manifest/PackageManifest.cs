@@ -9,7 +9,7 @@ namespace AppGet.Manifest
     public class PackageManifest
     {
         public const string LATEST_TAG = "latest";
-        
+
         public string Id { get; set; }
         public string Name { get; set; }
         public string Version { get; set; }
@@ -34,6 +34,7 @@ namespace AppGet.Manifest
         public PackageManifest()
         {
             InstallMethod = InstallMethodTypes.Custom;
+            Installers = new List<Installer>();
         }
 
         public override string ToString()
