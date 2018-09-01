@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
@@ -12,7 +13,6 @@ namespace AppGet.Manifest.Serialization
         public static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
         {
             ContractResolver = new CamelCasePropertyNamesContractResolver(),
-
         };
 
         static Json()
@@ -38,11 +38,19 @@ namespace AppGet.Manifest.Serialization
 
         public static T Deserialize<T>(Stream stream)
         {
-            var serializer = new JsonSerializer();
-            using (var sr = new StreamReader(stream))
-            using (var jsonTextReader = new JsonTextReader(sr))
+            using (var reader = new StreamReader(stream))
+            using (var jsonTextReader = new JsonTextReader(reader))
             {
-                return serializer.Deserialize<T>(jsonTextReader);
+                return Serializer.Deserialize<T>(jsonTextReader);
+            }
+        }
+
+        public static object Deserialize(Stream stream, Type type)
+        {
+            using (var reader = new StreamReader(stream))
+            using (var jsonTextReader = new JsonTextReader(reader))
+            {
+                return Serializer.Deserialize(jsonTextReader, type);
             }
         }
     }
