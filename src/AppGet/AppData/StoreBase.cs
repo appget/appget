@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using AppGet.FileSystem;
 using AppGet.HostSystem;
 using AppGet.Manifest.Serialization;
@@ -9,6 +10,7 @@ namespace AppGet.AppData
     {
         T Load();
         void Save(T data);
+        void Save(Action<T> set);
     }
 
     public abstract class StoreBase<T> : IStore<T> where T : class, new()
@@ -53,6 +55,15 @@ namespace AppGet.AppData
         public void Save(T data)
         {
             _fileSystem.EnsureDirectory(_pathResolver.AppDataDirectory);
+            var yaml = Yaml.Serialize(data);
+            _fileSystem.WriteAllText(FilePath, yaml);
+        }
+
+        public void Save(Action<T> set)
+        {
+            _fileSystem.EnsureDirectory(_pathResolver.AppDataDirectory);
+            var data = Load();
+            set(data);
             var yaml = Yaml.Serialize(data);
             _fileSystem.WriteAllText(FilePath, yaml);
         }

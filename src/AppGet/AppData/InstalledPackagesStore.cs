@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AppGet.FileSystem;
 using AppGet.HostSystem;
 using AppGet.Infrastructure.Eventing;
@@ -44,9 +45,10 @@ namespace AppGet.AppData
 
         protected override string Name => "packages";
 
-        public void Handle(InstallationSuccessfulEvent message)
+        public Task Handle(InstallationSuccessfulEvent message)
         {
             Save(message.Manifest);
+            return Task.FromResult(0);
         }
     }
 }

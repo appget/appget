@@ -11,6 +11,7 @@ namespace AppGet.HostSystem
         Version WindowsVersion { get; }
         string Name { get; }
         string FullName { get; }
+        string MachineName { get; }
         bool Is64BitOperatingSystem { get; }
         bool UserInteractive { get; }
         string AppDir { get; }
@@ -22,6 +23,7 @@ namespace AppGet.HostSystem
         public Version WindowsVersion { get; }
         public string Name { get; }
         public string FullName { get; }
+        public string MachineName { get; }
         public bool Is64BitOperatingSystem { get; }
         public bool UserInteractive => Environment.UserInteractive;
         public bool IsAdministrator => new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
@@ -50,6 +52,8 @@ namespace AppGet.HostSystem
                 var windowsServer = IsWindowsServer();
                 Name = windowsServer ? "Windows Server" : "Windows";
                 WindowsVersion = Environment.OSVersion.Version;
+
+                MachineName = Environment.MachineName;
 
                 AppDir = Path.GetDirectoryName(GetType().Assembly.Location);
 

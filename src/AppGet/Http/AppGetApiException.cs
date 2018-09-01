@@ -3,7 +3,7 @@ using System.Net.Http;
 
 namespace AppGet.Http
 {
-    public class AppGetApiException : Exception
+    public class AppGetApiException : InvalidOperationException
     {
         public HttpResponseMessage Response { get; }
         public HttpRequestMessage Request { get; }

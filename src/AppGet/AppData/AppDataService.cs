@@ -1,5 +1,6 @@
 ﻿using System.Security.AccessControl;
 using System.Security.Principal;
+using System.Threading.Tasks;
 using AppGet.FileSystem;
 using AppGet.HostSystem;
 using AppGet.Infrastructure.Eventing;
@@ -20,12 +21,13 @@ namespace AppGet.AppData
             _fileSystem = fileSystem;
         }
 
-        public void Handle(ApplicationStartedEvent @event)
+        public Task Handle(ApplicationStartedEvent @event)
         {
             var path = _pathResolver.AppDataDirectory;
 
             _fileSystem.CreateDirectory(path);
             _fileSystem.SetPermissions(path, WellKnownSidType.WorldSid, FileSystemRights.FullControl, AccessControlType.Allow);
+            return Task.FromResult(0);
         }
     }
 }

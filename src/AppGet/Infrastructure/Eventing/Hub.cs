@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using DryIoc;
 
 namespace AppGet.Infrastructure.Eventing
 {
     public interface IHub
     {
-        void Publish<TEvent>(TEvent @event) where TEvent : IEvent;
+        Task Publish<TEvent>(TEvent @event) where TEvent : IEvent;
         void Subscribe<TEvent>(object owner, Action<TEvent> callback);
         void UnSubscribe(object owner);
     }
@@ -35,13 +36,13 @@ namespace AppGet.Infrastructure.Eventing
             _container = container;
         }
 
-        public void Publish<TEvent>(TEvent @event) where TEvent : IEvent
+        public async Task Publish<TEvent>(TEvent @event) where TEvent : IEvent
         {
             var handlers = _container.ResolveMany<IHandle<TEvent>>();
 
             foreach (var handler in handlers)
             {
-                handler.Handle(@event);
+                await handler.Handle(@event);
             }
 
             var callBacks = GetCallBacks<TEvent>().Select(c => c.Callback).Cast<Action<TEvent>>().ToList();

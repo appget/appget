@@ -1,4 +1,5 @@
-﻿using AppGet.Infrastructure.Eventing;
+﻿using System.Threading.Tasks;
+using AppGet.Infrastructure.Eventing;
 using AppGet.ProgressTracker;
 
 namespace AppGet.CommandLine
@@ -10,9 +11,10 @@ namespace AppGet.CommandLine
         }
 
 
-        public void Handle(ProgressUpdatedEvent @event)
+        public Task Handle(ProgressUpdatedEvent @event)
         {
             HandleProgress(@event);
+            return Task.FromResult(0);
         }
     }
 }

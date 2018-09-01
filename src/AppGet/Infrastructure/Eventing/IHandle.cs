@@ -1,7 +1,9 @@
-﻿namespace AppGet.Infrastructure.Eventing
+﻿using System.Threading.Tasks;
+
+namespace AppGet.Infrastructure.Eventing
 {
     public interface IHandle<in T> where T : IEvent
     {
-        void Handle(T @event);
+        Task Handle(T @event);
     }
 }
