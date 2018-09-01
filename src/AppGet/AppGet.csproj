@@ -121,7 +121,12 @@
     <Compile Include="Extensions\NumeralExtensions.cs" />
     <Compile Include="FileTransfer\FileTransferCompletedEvent.cs" />
     <Compile Include="FileTransfer\FileTransferStartedEvent.cs" />
+<<<<<<< HEAD
     <Compile Include="Http\HttpTimeoutException.cs" />
+=======
+    <Compile Include="Http\AppGetApiError.cs" />
+    <Compile Include="Http\AppGetApiException.cs" />
+>>>>>>> Added AppGetApiException
     <Compile Include="Http\JsonContent.cs" />
     <Compile Include="Infrastructure\Composition\ContainerBuilder.cs" />
     <Compile Include="Infrastructure\Composition\HandlesAttribute.cs" />
