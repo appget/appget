@@ -68,7 +68,7 @@ namespace AppGet.PackageRepository
                 uri = new Uri($"{uri}&s=1");
             }
 
-            var package = await _httpClient.GetAsync(uri);
+            var package = await _httpClient.GetAsync(uri, TimeSpan.FromSeconds(30));
 
             return await package.Deserialize<List<PackageInfo>>();
         }

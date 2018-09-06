@@ -7,14 +7,24 @@ namespace AppGet.Http
 {
     public interface IHttpClient
     {
-        Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead);
-        Task<HttpResponseMessage> GetAsync(Uri uri, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead);
+        Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, TimeSpan timeout, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead);
+        Task<HttpResponseMessage> GetAsync(Uri uri, TimeSpan timeout, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead);
     }
 
     public class HttpClient : IHttpClient
     {
         private readonly IUserAgentBuilder _userAgentBuilder;
-        private readonly System.Net.Http.HttpClient _client;
+        private readonly HttpClientHandler _handler;
+
+        private System.Net.Http.HttpClient GetClient(TimeSpan timeout)
+        {
+            var client = new System.Net.Http.HttpClient(_handler);
+            client.DefaultRequestHeaders.Add("User-Agent", _userAgentBuilder.GetUserAgent(true));
+            client.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate");
+            client.Timeout = timeout;
+
+            return client;
+        }
 
         public HttpClient(IUserAgentBuilder userAgentBuilder)
         {
@@ -24,19 +34,15 @@ namespace AppGet.Http
 
             _userAgentBuilder = userAgentBuilder;
 
-            var handler = new HttpClientHandler
+            _handler = new HttpClientHandler
             {
                 AllowAutoRedirect = true,
                 AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
             };
-
-            _client = new System.Net.Http.HttpClient(handler);
-            _client.DefaultRequestHeaders.Add("User-Agent", userAgentBuilder.GetUserAgent(true));
-            _client.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate");
         }
 
 
-        public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead)
+        public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, TimeSpan timeout, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead)
         {
             if (request.RequestUri.Host.EndsWith(".appget.net"))
             {
@@ -45,7 +51,8 @@ namespace AppGet.Http
 
             try
             {
-                var response = await _client.SendAsync(request, completionOption);
+                var client = GetClient(timeout);
+                var response = await client.SendAsync(request, completionOption);
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -69,9 +76,9 @@ namespace AppGet.Http
             }
         }
 
-        public Task<HttpResponseMessage> GetAsync(Uri uri, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead)
+        public Task<HttpResponseMessage> GetAsync(Uri uri, TimeSpan timeout, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead)
         {
-            return SendAsync(new HttpRequestMessage(HttpMethod.Get, uri), completionOption);
+            return SendAsync(new HttpRequestMessage(HttpMethod.Get, uri), timeout, completionOption);
         }
     }
 }

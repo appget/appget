@@ -3,6 +3,7 @@ using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using AppGet.FileSystem;
 using AppGet.Http;
@@ -40,7 +41,7 @@ namespace AppGet.FileTransfer.Protocols
 
             if (FileNameRegex.IsMatch(fileName)) return fileName;
 
-            var resp = await _httpClient.GetAsync(uri, HttpCompletionOption.ResponseHeadersRead);
+            var resp = await _httpClient.GetAsync(uri, TimeSpan.FromSeconds(60), HttpCompletionOption.ResponseHeadersRead);
 
             if (resp.RequestMessage.RequestUri != uri) return await GetFileName(resp.RequestMessage.RequestUri.ToString());
 
@@ -51,7 +52,7 @@ namespace AppGet.FileTransfer.Protocols
 
         public async Task TransferFile(string source, string destinationFile, Action<ProgressUpdatedEvent> progressCallback)
         {
-            using (var resp = await _httpClient.GetAsync(new Uri(source), HttpCompletionOption.ResponseHeadersRead))
+            using (var resp = await _httpClient.GetAsync(new Uri(source), Timeout.InfiniteTimeSpan, HttpCompletionOption.ResponseHeadersRead))
             {
                 if (resp.Content.Headers.ContentType.MediaType.Contains("text"))
                     throw new InvalidDownloadUrlException(source, $"[ContentType={resp.Content.Headers.ContentType.MediaType}]");
@@ -97,7 +98,7 @@ namespace AppGet.FileTransfer.Protocols
                 NoStore = true
             };
 
-            var resp = await _httpClient.SendAsync(req);
+            var resp = await _httpClient.SendAsync(req, TimeSpan.FromSeconds(20));
 
             return await resp.Content.ReadAsString();
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using AppGet.Http;
@@ -24,7 +25,7 @@ namespace AppGet.Update
                 Content = new JsonContent(records)
             };
 
-            var resp = await _httpClient.SendAsync(request);
+            var resp = await _httpClient.SendAsync(request, TimeSpan.FromSeconds(60));
 
 
             return await resp.Deserialize<List<PackageUpdate>>();
@@ -38,7 +39,7 @@ namespace AppGet.Update
                 Content = new JsonContent(records)
             };
 
-            var resp = await _httpClient.SendAsync(request);
+            var resp = await _httpClient.SendAsync(request, TimeSpan.FromSeconds(60));
 
             return await resp.Deserialize<List<PackageUpdate>>();
         }
@@ -50,7 +51,7 @@ namespace AppGet.Update
                 Content = new JsonContent(records)
             };
 
-            var resp = await _httpClient.SendAsync(request);
+            var resp = await _httpClient.SendAsync(request, TimeSpan.FromSeconds(60));
 
             return await resp.Deserialize<List<UninstallData>>();
         }

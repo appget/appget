@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,7 +41,7 @@ namespace AppGet.Manifests.Submission
                 Content = new StringContent(Json.Serialize(builder), Encoding.UTF8, "application/json")
             };
 
-            var resp = await _httpClient.SendAsync(req);
+            var resp = await _httpClient.SendAsync(req, TimeSpan.FromSeconds(30));
             return await resp.Deserialize<SubmissionResponse>();
         }
     };
