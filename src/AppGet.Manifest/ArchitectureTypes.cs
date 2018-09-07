@@ -1,4 +1,5 @@
-﻿namespace AppGet.Manifest
+﻿// ReSharper disable InconsistentNaming
+namespace AppGet.Manifest
 {
     public enum ArchitectureTypes
     {
