@@ -253,7 +253,7 @@
       <Version>2018.2.1</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
-      <Version>11.0.2</Version>
+      <Version>9.0.1</Version>
     </PackageReference>
     <PackageReference Include="NLog">
       <Version>4.5.9</Version>
