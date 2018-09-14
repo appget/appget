@@ -53,6 +53,7 @@
     <Compile Include="Infrastructure\Hub\HubFixture.cs" />
     <Compile Include="Infrastructure\Logging\SentryTargetFixture.cs" />
     <Compile Include="Installers\InstallerExceptionFixture.cs" />
+    <Compile Include="Installers\UninstallerWhisperer\UninstallerBaseFixture.cs" />
     <Compile Include="Manifests\PackageManifestFixture.cs" />
     <Compile Include="Options\OptionsParserFixture.cs" />
     <Compile Include="Manifests\FindInstallerFixture.cs" />

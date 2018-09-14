@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using AppGet.Manifest;
 using AppGet.Update;
 
@@ -63,6 +64,13 @@ namespace AppGet.Installers.UninstallerWhisperer
                 if (index > 0)
                 {
                     uninstallString = Path.GetFullPath(uninstallString.Substring(0, index)).Trim('"');
+                }
+
+                var exeMatch = Regex.Match(uninstallString, @".+\.exe", RegexOptions.IgnoreCase);
+
+                if (exeMatch.Value != "")
+                {
+                    return exeMatch.Value;
                 }
 
                 return uninstallString;
