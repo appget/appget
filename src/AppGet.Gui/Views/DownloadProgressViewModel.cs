@@ -1,4 +1,3 @@
-using AppGet.Commands;
 using AppGet.Extensions;
 using AppGet.Gui.Framework;
 using AppGet.Infrastructure.Eventing;
@@ -7,11 +6,6 @@ using Caliburn.Micro;
 
 namespace AppGet.Gui.Views
 {
-    public interface ICommandViewModel : IScreen
-    {
-        bool CanHandle(AppGetOption options);
-    }
-
     public class DownloadProgressViewModel : Screen
     {
         private readonly IHub _hub;

@@ -16,6 +16,7 @@ namespace AppGet.Gui.Views.Installation
     {
         private readonly ICommandExecutor _executor;
         private readonly IHub _hub;
+        private readonly InstallationConsentViewModel _consentViewModel;
         private readonly InitializingViewModel _initializingViewModel;
         private readonly DownloadProgressViewModel _installProgressViewModel;
         private readonly InstallingViewModel _installingViewModel;
@@ -23,6 +24,7 @@ namespace AppGet.Gui.Views.Installation
 
         public InstallCommandViewModel(ICommandExecutor executor,
             IHub hub,
+            InstallationConsentViewModel _consentViewModel,
             InitializingViewModel initializingViewModel,
             DownloadProgressViewModel installProgressViewModel,
             InstallingViewModel installingViewModel,
@@ -30,6 +32,7 @@ namespace AppGet.Gui.Views.Installation
         {
             _executor = executor;
             _hub = hub;
+            this._consentViewModel = _consentViewModel;
             _initializingViewModel = initializingViewModel;
             _installProgressViewModel = installProgressViewModel;
             _installingViewModel = installingViewModel;
@@ -61,6 +64,11 @@ namespace AppGet.Gui.Views.Installation
 
         protected override void OnActivate()
         {
+            ActivateItem(_consentViewModel);
+        }
+
+        public void Install()
+        {
             ActivateItem(_initializingViewModel);
 
             Task.Run(async () =>
@@ -86,7 +94,6 @@ namespace AppGet.Gui.Views.Installation
                     ActivateItem(e.CreateDialog());
                 }
             });
-
         }
     }
 }

@@ -92,6 +92,8 @@
     <Compile Include="Framework\CaliburnBootstrapper.cs" />
     <Compile Include="CaliburnShellViewModel.cs" />
     <Compile Include="Views\CommandViewModel.cs" />
+    <Compile Include="Views\ICommandViewModel.cs" />
+    <Compile Include="Views\InstallationConsentViewModel.cs" />
     <Compile Include="Views\InstallationSuccessfulViewModel.cs" />
     <Compile Include="Views\InstallingViewModel.cs" />
     <Compile Include="Views\Installation\InstallCommandViewModel.cs" />
@@ -112,6 +114,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\DialogHeaderView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\InstallationConsentView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="AppGet.Gui.Views.InstallationConsentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:cal="http://www.caliburnproject.org"
+             mc:Ignorable="d" 
+             d:DesignWidth="630" d:DesignHeight="174.808">
+    <DockPanel>
+        <ContentControl x:Name="ActiveItem" DockPanel.Dock="Top"/>
+        <DockPanel DockPanel.Dock="Bottom">
+            <Button Name="Close" 
+                DockPanel.Dock="Right"
+                    Content="Close"
+                    cal:Message.Attach="Close()"
+                    Width="100" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Bottom">
+            </Button>
+            <Button Name="Install" 
+                    Margin="10 0"
+                DockPanel.Dock="Right"
+                Content="Install"
+                cal:Message.Attach="Install()"
+                Width="100" 
+                HorizontalAlignment="Right" 
+                VerticalAlignment="Bottom">
+            </Button>
+        </DockPanel>
+    </DockPanel>
+</UserControl>

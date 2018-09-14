@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using AppGet.Commands;
+using AppGet.Gui.Framework;
 using AppGet.Gui.Views;
 using Caliburn.Micro;
 using JetBrains.Annotations;
@@ -32,6 +33,7 @@ namespace AppGet.Gui
 
                     var option = optionsParser.Parse(args.Last());
 
+                    AppSession.Options = option;
 
                     var viewModel = commandViewModels.First(c => c.CanHandle(option));
                     ActivateItem(viewModel);
