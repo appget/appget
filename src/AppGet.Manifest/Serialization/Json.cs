@@ -19,8 +19,7 @@ namespace AppGet.Manifest.Serialization
         {
             Settings.Converters.Add(new StringEnumConverter(false));
             Settings.Converters.Add(new Newtonsoft.Json.Converters.VersionConverter());
-            Settings.NullValueHandling = NullValueHandling.Ignore;
-            Settings.DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate;
+            Settings.DefaultValueHandling = DefaultValueHandling.Ignore;
             Settings.NullValueHandling = NullValueHandling.Ignore;
             Settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             Serializer = JsonSerializer.Create(Settings);
@@ -33,7 +32,7 @@ namespace AppGet.Manifest.Serialization
 
         public static T Deserialize<T>(string json)
         {
-            return JsonConvert.DeserializeObject<T>(json);
+            return JsonConvert.DeserializeObject<T>(json, Settings);
         }
 
         public static T Deserialize<T>(Stream stream)
