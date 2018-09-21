@@ -256,7 +256,7 @@
       <Version>9.0.1</Version>
     </PackageReference>
     <PackageReference Include="NLog">
-      <Version>4.5.9</Version>
+      <Version>4.5.10</Version>
     </PackageReference>
     <PackageReference Include="SharpCompress">
       <Version>0.22.0</Version>

@@ -54,8 +54,10 @@ namespace AppGet.FileTransfer.Protocols
         {
             using (var resp = await _httpClient.GetAsync(new Uri(source), Timeout.InfiniteTimeSpan, HttpCompletionOption.ResponseHeadersRead))
             {
-                if (resp.Content.Headers.ContentType.MediaType.Contains("text"))
-                    throw new InvalidDownloadUrlException(source, $"[ContentType={resp.Content.Headers.ContentType.MediaType}]");
+                var contentType = resp.Content.Headers.ContentType;
+
+                if (contentType != null && contentType.MediaType.Contains("text"))
+                    throw new InvalidDownloadUrlException(source, $"[ContentType={contentType.MediaType}]");
 
                 if (_fileSystem.FileExists(destinationFile)) _fileSystem.DeleteFile(destinationFile);
 

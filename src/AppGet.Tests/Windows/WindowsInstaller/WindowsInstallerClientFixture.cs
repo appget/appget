@@ -14,7 +14,7 @@ namespace AppGet.Tests.Windows.WindowsInstaller
         [Test]
         public void should_get_records()
         {
-            var keys = Subject.GetRecords().ToList();
+            var keys = Subject.GetRecords().OrderBy(c=>c.Id).ToList();
 
             Console.WriteLine(Json.Serialize(keys, Formatting.Indented));
 
