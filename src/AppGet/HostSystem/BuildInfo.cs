@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
@@ -9,10 +10,13 @@ namespace AppGet.HostSystem
         static BuildInfo()
         {
             var assembly = Assembly.GetExecutingAssembly();
-            AppVersion = assembly.GetName().Version;
+            var fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            AppVersion = new Version(fvi.ProductVersion);
+            ProductName = fvi.ProductName;
         }
 
         public static Version AppVersion { get; }
+        public static string ProductName { get; }
 
         public static DateTime BuildDateTime
         {

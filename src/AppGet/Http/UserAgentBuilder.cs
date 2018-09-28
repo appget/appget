@@ -19,10 +19,10 @@ namespace AppGet.Http
 
         public UserAgentBuilder(IEnvInfo envInfo)
         {
-            var bits = envInfo.Is64BitOperatingSystem ? "64" : "32";
+            var bits = envInfo.Is64BitOperatingSystem ? "Win64; x64;" : "Win32; x86;";
 
-            _userAgent = $"AppGet/{BuildInfo.AppVersion} ({envInfo.Name} {envInfo.WindowsVersion}; {bits})";
-            _userAgentSimplified = $"AppGet/{BuildInfo.AppVersion.ToString(2)}";
+            _userAgentSimplified = $"{BuildInfo.ProductName}/{BuildInfo.AppVersion}";
+            _userAgent = $"{_userAgentSimplified} ({envInfo.Name} {envInfo.WindowsVersion}; {bits})";
         }
     }
 }
