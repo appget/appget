@@ -8,7 +8,7 @@ namespace AppGet.Manifest.Serialization
 {
     public static class Yaml
     {
-        private static readonly Deserializer Deserializer = new DeserializerBuilder()
+        private static readonly IDeserializer Deserializer = new DeserializerBuilder()
             .WithNamingConvention(new CamelCaseNamingConvention())
             .WithTypeConverter(new VersionConverter())
             .IgnoreUnmatchedProperties()
