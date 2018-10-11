@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using AppGet.Manifest.Serialization;
 using YamlDotNet.Serialization;
 
 namespace AppGet.Manifest
@@ -42,6 +43,10 @@ namespace AppGet.Manifest
             return $"{Id} {Version}".Trim();
         }
 
+        public string ToYaml()
+        {
+            return Yaml.Serialize(this);
+        }
 
         public string GetFileName()
         {
