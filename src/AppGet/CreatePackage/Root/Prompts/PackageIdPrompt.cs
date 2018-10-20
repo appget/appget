@@ -20,7 +20,7 @@ namespace AppGet.CreatePackage.Root.Prompts
 
         public void Invoke(PackageManifestBuilder manifestBuilder)
         {
-            var suggestion = manifestBuilder.Name.Value.ToPackageId();
+            var suggestion = manifestBuilder.Name.Value?.ToPackageId();
             var id = _prompt.Request("Package ID", suggestion);
             manifestBuilder.Id.Add(id.ToPackageId(), Confidence.Authoritative, this);
         }

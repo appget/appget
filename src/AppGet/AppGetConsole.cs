@@ -33,7 +33,7 @@ namespace AppGet
             {
                 if (Debugger.IsAttached && !args.Any())
                 {
-                    args = TakeArgsFromInput();
+                    args = TakeArgsFromInput().SkipWhile(c=>c.ToLowerInvariant() == "appget").ToArray();
                 }
 
                 await Application.Execute(args);

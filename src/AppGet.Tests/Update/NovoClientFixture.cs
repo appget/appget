@@ -49,11 +49,10 @@ namespace AppGet.Tests.Update
         [Test]
         public async Task get_uninstall_records()
         {
-            var updates = await Subject.GetUninstall(_installerRecords, "python");
+            var updates = await Subject.GetUninstall(_installerRecords, "node-lts");
             updates.Should().NotBeEmpty();
-            updates.Should().NotBeEmpty();
-            updates[0].InstallMethod.Should().Be(InstallMethodTypes.Wix);
-            updates[0].PackageId.Should().Be("python");
+            updates[0].InstallMethod.Should().Be(InstallMethodTypes.MSI);
+            updates[0].PackageId.Should().Be("node-lts");
         }
     }
 }
