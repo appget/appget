@@ -37,7 +37,7 @@ namespace AppGet.Tests.Manifests
             };
 
 
-            Console.WriteLine(Yaml.Serialize(manifest));
+            Console.WriteLine(manifest.ToYaml());
         }
 
 

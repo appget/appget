@@ -56,7 +56,7 @@ namespace AppGet.Manifests
             var manifestPath = Path.Combine(applicationManifestDir, fileName);
             _fileSystem.CreateDirectory(applicationManifestDir);
 
-            _fileSystem.WriteAllText(manifestPath, Yaml.Serialize(manifest));
+            _fileSystem.WriteAllText(manifestPath, manifest.ToYaml());
 
             _logger.Info($"Package manifest was saved to {manifestPath}");
 
@@ -65,11 +65,9 @@ namespace AppGet.Manifests
 
         public void PrintManifest(PackageManifest manifest)
         {
-            var text = Yaml.Serialize(manifest);
-
             Console.WriteLine("===============================================");
             Console.WriteLine();
-            Console.WriteLine(text);
+            Console.WriteLine(manifest.ToYaml());
             Console.WriteLine();
             Console.WriteLine("===============================================");
         }

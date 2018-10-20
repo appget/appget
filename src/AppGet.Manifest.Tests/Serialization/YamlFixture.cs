@@ -1,5 +1,4 @@
-﻿using AppGet.Manifest.Serialization;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 
 namespace AppGet.Manifest.Tests.Serialization
@@ -17,7 +16,7 @@ namespace AppGet.Manifest.Tests.Serialization
                 Id = "test_manifest"
             };
 
-            var yaml = Yaml.Serialize(manifest);
+            var yaml = manifest.ToYaml();
 
             yaml.Should().NotContain("args");
         }
@@ -32,7 +31,7 @@ namespace AppGet.Manifest.Tests.Serialization
                 Id = "test_manifest"
             };
 
-            var yaml = Yaml.Serialize(manifest);
+            var yaml = manifest.ToYaml();
 
             yaml.Should().Contain("args");
             yaml.Should().Contain("/S");
