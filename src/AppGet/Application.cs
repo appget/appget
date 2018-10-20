@@ -13,7 +13,7 @@ namespace AppGet
         public static async Task Execute(string[] args)
         {
             LogConfigurator.EnableConsoleTarget(LogConfigurator.FriendlyLayout, LogLevel.Info);
-            LogConfigurator.EnableSentryTarget("https://79eabeab1aa84c8db73ee2675c5bce7d@sentry.io/306545");
+            LogConfigurator.EnableSentryTarget("https://aa5e806801bc4d4f99a6112160128dbe@sentry.appget.net/7");
             LogConfigurator.EnableFileTarget(LogLevel.Trace);
 
             var container = ContainerBuilder.Container;
