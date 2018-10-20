@@ -166,12 +166,12 @@
       <Version>3.0.2</Version>
     </PackageReference>
     <PackageReference Include="Fody">
-      <Version>3.2.2</Version>
+      <Version>3.2.11</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="PropertyChanged.Fody">
-      <Version>2.5.10</Version>
+      <Version>2.5.13</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
