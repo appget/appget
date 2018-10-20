@@ -8,7 +8,6 @@ namespace AppGet.Manifest
         public static readonly IEnumerable<Version> KnownVersions = new[]
         {
             new Version(0, 0),
-            new Version(6, 0),
             new Version(6, 1),
             new Version(6, 2),
             new Version(6, 3),
@@ -22,10 +21,6 @@ namespace AppGet.Manifest
                 case "0.0":
                 {
                     return "Any";
-                }
-                case "6.0":
-                {
-                    return "Windows Server 2008";
                 }
                 case "6.1":
                 {
@@ -57,10 +52,6 @@ namespace AppGet.Manifest
                 case "0.0":
                 {
                     return "Any";
-                }
-                case "6.0":
-                {
-                    return "Windows Vista";
                 }
                 case "6.1":
                 {
