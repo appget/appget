@@ -52,7 +52,7 @@ namespace AppGet.FileTransfer
         public async Task<string> TransferFile(string source, string destinationFolder, string sha256)
         {
             _hub.Publish(new FileTransferStartedEvent(source, destinationFolder));
-            _logger.Debug($"Transfering file from {source} to {destinationFolder}");
+            _logger.Debug($"Transferring file from {source} to {destinationFolder}");
             var client = GetClient(source);
             var fileName = await client.GetFileName(source);
             var destinationPath = Path.Combine(destinationFolder, fileName);
