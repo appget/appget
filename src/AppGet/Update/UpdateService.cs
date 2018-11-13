@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using AppGet.HostSystem;
 using AppGet.Installers;
 using AppGet.Manifest;
 using AppGet.Manifests;
@@ -19,16 +21,18 @@ namespace AppGet.Update
         private readonly IPackageRepository _packageRepository;
         private readonly IPackageManifestService _packageManifestService;
         private readonly IInstallService _installService;
+        private readonly IEnvInfo _envInfo;
         private readonly Logger _logger;
 
         public UpdateService(NovoClient novoClient, WindowsInstallerClient windowsInstallerClient, IPackageRepository packageRepository,
-            IPackageManifestService packageManifestService, IInstallService installService, Logger logger)
+            IPackageManifestService packageManifestService, IInstallService installService, IEnvInfo envInfo, Logger logger)
         {
             _novoClient = novoClient;
             _windowsInstallerClient = windowsInstallerClient;
             _packageRepository = packageRepository;
             _packageManifestService = packageManifestService;
             _installService = installService;
+            _envInfo = envInfo;
             _logger = logger;
         }
 
@@ -57,6 +61,13 @@ namespace AppGet.Update
 
         public async Task UpdateAllPackages(InstallInteractivityLevel interactivityLevel)
         {
+            if (!_envInfo.IsAdministrator)
+            {
+                Console.WriteLine();
+                _logger.Warn("Running as administrator is recommended to allow uninterrupted batch updates.");
+                Console.WriteLine();
+            }
+
             var updates = await GetUpdates();
             var toInstall = updates.Where(c => c.Status == UpdateStatus.Available).ToList();
 
@@ -81,11 +92,12 @@ namespace AppGet.Update
                 }
                 catch (Exception e)
                 {
-                    _logger.Fatal(e, "An error occured while updating {0}", update.PackageId);
+                    _logger.Fatal(e, "An error occurred while updating {0}", update.PackageId);
                     failed++;
                 }
             }
 
+            Console.WriteLine();
             _logger.Info("Updates Applied Successfully: {0:n0}   Updates failed to apply: {1:n0}", updated, failed);
 
             if (restartRequired)

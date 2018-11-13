@@ -29,6 +29,10 @@ namespace AppGet.Commands.Outdated
             {
                 Console.WriteLine("{0} Available Updates:", updates.Count);
                 updates.ShowTable();
+
+                Console.WriteLine("");
+                Console.WriteLine("Run 'appget update-all' to apply all updates.");
+
             }
             else
             {

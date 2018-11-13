@@ -48,7 +48,7 @@ namespace AppGet.Update
 
                 if (latest.Version <= current) return;
 
-                _logger.Info("There is an update avilable for AppGet client. Applying update...");
+                _logger.Info("There is an update available for AppGet client. Applying update...");
 
                 var manifest = new PackageManifest
                 {
