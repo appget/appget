@@ -1,17 +1,14 @@
 using CommandLine;
 
-namespace AppGet.Commands.Update
+namespace AppGet.Commands.UpdateAll
 {
-    [Verb("update", HelpText = "Update one or more of installed applications")]
-    public class UpdateOptions : PackageCommandOptions, IVariableInteractivityCommand
+    [Verb("update-all", HelpText = "Batch update all outdated applications. Running as Administrator is highly recommended.")]
+    public class UpdateAllOptions : AppGetOption, IVariableInteractivityCommand
     {
         private bool _interactive;
         private bool _silent;
 
-        [Value(0, MetaName = PACKAGE_META_NAME, HelpText = "Package to update", Required = true)]
-        public override string Package { get; set; }
-
-        [Option('i', "interactive", HelpText = "Start the installer in interactive mode. This allows the user to step through the installer manually.")]
+        [Option('i', "interactive", HelpText = "Start the installers in interactive mode. This allows the user to step through the installer manually.")]
         public bool Interactive
         {
             get => _interactive;
@@ -26,7 +23,7 @@ namespace AppGet.Commands.Update
             }
         }
 
-        [Option('s', "silent", HelpText = "Attempt to start the installer completely silently without showing any user dialogs")]
+        [Option('s', "silent", HelpText = "Attempt to start the installers completely silently without showing any user dialogs")]
         public bool Silent
         {
             get => _silent;

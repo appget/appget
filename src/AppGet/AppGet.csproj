@@ -81,8 +81,12 @@
     <Compile Include="CommandLine\Prompts\UrlPrompt.cs" />
     <Compile Include="Commands\AppGetSentenceBuilder.cs" />
     <Compile Include="Commands\CommandExecutor.cs" />
+    <Compile Include="Commands\CommandOptionExtensions.cs" />
     <Compile Include="Commands\CustomHelpWriter.cs" />
     <Compile Include="Commands\ICommandExecutor.cs" />
+    <Compile Include="Commands\IVariableInteractivityCommand.cs" />
+    <Compile Include="Commands\UpdateAll\UpdateAllCommandHandler.cs" />
+    <Compile Include="Commands\UpdateAll\UpdateAllOptions.cs" />
     <Compile Include="Commands\Update\UpdateCommandHandler.cs" />
     <Compile Include="Commands\Update\UpdateOptions.cs" />
     <Compile Include="Commands\Install\PackageAlreadyInstalledException.cs" />
@@ -138,7 +142,7 @@
     <Compile Include="Installers\UninstallerWhisperer\MsiUninstaller.cs" />
     <Compile Include="Installers\UninstallerWhisperer\NsisUninstaller.cs" />
     <Compile Include="Installers\UninstallerWhisperer\SquirrelUninstaller.cs" />
-    <Compile Include="Installers\InstallInteractivityLevels.cs" />
+    <Compile Include="Installers\InstallInteractivityLevel.cs" />
     <Compile Include="Installers\UninstallerWhisperer\UninstallerBase.cs" />
     <Compile Include="Installers\UninstallerWhisperer\WixWhisperer.cs" />
     <Compile Include="Properties\SharedAssemblyInfo.cs" />

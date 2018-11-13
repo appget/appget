@@ -28,7 +28,7 @@ namespace AppGet.Commands.Install
             var package = await _packageRepository.GetAsync(installOptions.PackageId, installOptions.Tag);
             var manifest = await _packageManifestService.LoadManifest(package.ManifestPath);
 
-            await _installService.Install(manifest, installOptions);
+            await _installService.Install(manifest, installOptions.GetInteractivityLevel());
         }
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using AppGet.Commands.Install;
 using AppGet.Github.Releases;
 using AppGet.Installers;
 using AppGet.Manifest;
@@ -67,11 +66,7 @@ namespace AppGet.Update
                     }
                 };
 
-                await _installService.Value.Install(manifest, new InstallOptions
-                {
-                    Force = true,
-                    Package = manifest.Id
-                });
+                await _installService.Value.Install(manifest, InstallInteractivityLevel.Interactive);
             }
             catch (Exception e)
             {

@@ -1,10 +1,9 @@
-using AppGet.Installers;
 using CommandLine;
 
 namespace AppGet.Commands.Install
 {
     [Verb("install", HelpText = "Install a package")]
-    public class InstallOptions : PackageCommandOptions
+    public class InstallOptions : PackageCommandOptions, IVariableInteractivityCommand
     {
         private bool _interactive;
         private bool _silent;
@@ -53,38 +52,6 @@ namespace AppGet.Commands.Install
             {
                 Silent = false;
                 Interactive = false;
-            }
-        }
-
-        public InstallInteractivityLevels InteractivityLevel
-        {
-            get
-            {
-                if (Interactive) return InstallInteractivityLevels.Interactive;
-                if (Silent) return InstallInteractivityLevels.Silent;
-                return InstallInteractivityLevels.Passive;
-            }
-
-            set
-            {
-                switch (value)
-                {
-                    case InstallInteractivityLevels.Interactive:
-                        {
-                            Interactive = true;
-                            break;
-                        }
-                    case InstallInteractivityLevels.Passive:
-                        {
-                            Passive = true;
-                            break;
-                        }
-                    case InstallInteractivityLevels.Silent:
-                        {
-                            Silent = true;
-                            break;
-                        }
-                }
             }
         }
     }

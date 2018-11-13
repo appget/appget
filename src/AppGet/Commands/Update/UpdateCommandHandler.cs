@@ -1,43 +1,23 @@
 ﻿using System.Threading.Tasks;
-using AppGet.Commands.Install;
 using AppGet.Infrastructure.Composition;
-using AppGet.Installers;
-using AppGet.Manifests;
-using AppGet.PackageRepository;
+using AppGet.Update;
 
 namespace AppGet.Commands.Update
 {
     [Handles(typeof(UpdateOptions))]
     public class UpdateCommandHandler : ICommandHandler
     {
-        private readonly IPackageRepository _packageRepository;
-        private readonly IPackageManifestService _packageManifestService;
-        private readonly IInstallService _installService;
+        private readonly UpdateService _updateService;
 
-        public UpdateCommandHandler(IPackageRepository packageRepository, IPackageManifestService packageManifestService, IInstallService installService)
+        public UpdateCommandHandler(UpdateService updateService)
         {
-            _packageRepository = packageRepository;
-            _packageManifestService = packageManifestService;
-            _installService = installService;
+            _updateService = updateService;
         }
-
 
         public async Task Execute(AppGetOption commandOptions)
         {
             var updateOptions = (UpdateOptions)commandOptions;
-
-            var package = await _packageRepository.GetAsync(updateOptions.PackageId, updateOptions.Tag);
-            var manifest = await _packageManifestService.LoadManifest(package.ManifestPath);
-
-            var installOptions = new InstallOptions
-            {
-                Package = updateOptions.Package,
-                Interactive = updateOptions.Interactive,
-                Passive = updateOptions.Passive,
-                Silent = updateOptions.Silent,
-            };
-
-            await _installService.Install(manifest, installOptions);
+            await _updateService.UpdatePackage(updateOptions.PackageId, updateOptions.Tag, updateOptions.GetInteractivityLevel());
         }
     }
 }
