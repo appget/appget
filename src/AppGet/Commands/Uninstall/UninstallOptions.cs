@@ -56,30 +56,30 @@ namespace AppGet.Commands.Uninstall
             }
         }
 
-        public InstallInteractivityLevels InteractivityLevel
+        public InstallInteractivityLevel InteractivityLevel
         {
             get
             {
-                if (Interactive) return InstallInteractivityLevels.Interactive;
-                if (Silent) return InstallInteractivityLevels.Silent;
-                return InstallInteractivityLevels.Passive;
+                if (Interactive) return InstallInteractivityLevel.Interactive;
+                if (Silent) return InstallInteractivityLevel.Silent;
+                return InstallInteractivityLevel.Passive;
             }
 
             set
             {
                 switch (value)
                 {
-                    case InstallInteractivityLevels.Interactive:
+                    case InstallInteractivityLevel.Interactive:
                         {
                             Interactive = true;
                             break;
                         }
-                    case InstallInteractivityLevels.Passive:
+                    case InstallInteractivityLevel.Passive:
                         {
                             Passive = true;
                             break;
                         }
-                    case InstallInteractivityLevels.Silent:
+                    case InstallInteractivityLevel.Silent:
                         {
                             Silent = true;
                             break;

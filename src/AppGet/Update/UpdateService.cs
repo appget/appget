@@ -1,8 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AppGet.Installers;
+using AppGet.Manifest;
+using AppGet.Manifests;
+using AppGet.PackageRepository;
 using AppGet.Windows.WindowsInstaller;
 using NLog;
+using Console = Colorful.Console;
 
 namespace AppGet.Update
 {
@@ -10,12 +16,19 @@ namespace AppGet.Update
     {
         private readonly NovoClient _novoClient;
         private readonly WindowsInstallerClient _windowsInstallerClient;
+        private readonly IPackageRepository _packageRepository;
+        private readonly IPackageManifestService _packageManifestService;
+        private readonly IInstallService _installService;
         private readonly Logger _logger;
 
-        public UpdateService(NovoClient novoClient, WindowsInstallerClient windowsInstallerClient, Logger logger)
+        public UpdateService(NovoClient novoClient, WindowsInstallerClient windowsInstallerClient, IPackageRepository packageRepository,
+            IPackageManifestService packageManifestService, IInstallService installService, Logger logger)
         {
             _novoClient = novoClient;
             _windowsInstallerClient = windowsInstallerClient;
+            _packageRepository = packageRepository;
+            _packageManifestService = packageManifestService;
+            _installService = installService;
             _logger = logger;
         }
 
@@ -25,16 +38,60 @@ namespace AppGet.Update
             var records = _windowsInstallerClient.GetRecords();
 
             _logger.Info("Getting list of available updates...");
-            return await _novoClient.GetUpdates(records);
+            var updates = await _novoClient.GetUpdates(records);
+
+            Console.WriteLine();
+            _logger.Info("Total Applications: {0:n0}   Updates Available: {1:n0}", updates.Count, updates.Count(c => c.Status == UpdateStatus.Available));
+            Console.WriteLine();
+
+            return updates;
         }
 
 
-        public async Task<List<PackageUpdate>> GetUpdate(string packageId)
+        public async Task UpdatePackage(string packageId, string tag, InstallInteractivityLevel interactivityLevel)
         {
-            _logger.Debug("Getting list of installed application");
-            var records = _windowsInstallerClient.GetRecords();
-            var result = await _novoClient.GetUpdate(records, packageId);
-            return result.ToList();
+            var package = await _packageRepository.GetAsync(packageId, tag);
+            var manifest = await _packageManifestService.LoadManifest(package.ManifestPath);
+            await _installService.Install(manifest, interactivityLevel);
+        }
+
+        public async Task UpdateAllPackages(InstallInteractivityLevel interactivityLevel)
+        {
+            var updates = await GetUpdates();
+            var toInstall = updates.Where(c => c.Status == UpdateStatus.Available).ToList();
+
+            var updated = 0;
+            var failed = 0;
+            var restartRequired = false;
+
+            for (var index = 0; index < toInstall.Count; index++)
+            {
+                var update = toInstall[index];
+
+                try
+                {
+                    _logger.Info("Installing update {0} of {1}", index + 1, toInstall.Count);
+                    Console.WriteLine();
+                    await UpdatePackage(update.PackageId, PackageManifest.LATEST_TAG, interactivityLevel);
+                    updated++;
+                }
+                catch (InstallerException e) when (e.ExitReason.Category == ExitCodeTypes.RestartRequired)
+                {
+                    restartRequired = true;
+                }
+                catch (Exception e)
+                {
+                    _logger.Fatal(e, "An error occured while updating {0}", update.PackageId);
+                    failed++;
+                }
+            }
+
+            _logger.Info("Updates Applied Successfully: {0:n0}   Updates failed to apply: {1:n0}", updated, failed);
+
+            if (restartRequired)
+            {
+                _logger.Warn("One or more installers have requested a system restart to complete the installation.");
+            }
         }
     }
 }

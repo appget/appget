@@ -1,6 +1,6 @@
 ﻿namespace AppGet.Installers
 {
-    public enum InstallInteractivityLevels
+    public enum InstallInteractivityLevel
     {
         Interactive,
         Passive,

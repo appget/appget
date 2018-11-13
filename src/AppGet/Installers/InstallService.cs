@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AppGet.Commands.Install;
 using AppGet.Commands.Uninstall;
 using AppGet.FileTransfer;
 using AppGet.HostSystem;
@@ -20,7 +20,7 @@ namespace AppGet.Installers
 {
     public interface IInstallService
     {
-        Task Install(PackageManifest packageManifest, InstallOptions installOptions);
+        Task Install(PackageManifest packageManifest, InstallInteractivityLevel interactivityLevel);
         Task Uninstall(UninstallOptions uninstallOptions);
     }
 
@@ -37,11 +37,10 @@ namespace AppGet.Installers
         private readonly IHub _hub;
         private readonly IUnlocker _unlocker;
         private readonly NovoClient _novoClient;
-        private readonly UpdateService _updateService;
 
         public InstallService(Logger logger, IFindInstaller findInstaller, IPathResolver pathResolver, IProcessController processController,
             IFileTransferService fileTransferService, WindowsInstallerClient windowsInstallerClient, Func<InstallerBase[]> installWhisperers,
-            Func<UninstallerBase[]> uninstallers, IHub hub, IUnlocker unlocker, NovoClient novoClient, UpdateService updateService)
+            Func<UninstallerBase[]> uninstallers, IHub hub, IUnlocker unlocker, NovoClient novoClient)
         {
             _logger = logger;
             _findInstaller = findInstaller;
@@ -54,10 +53,9 @@ namespace AppGet.Installers
             _hub = hub;
             _unlocker = unlocker;
             _novoClient = novoClient;
-            _updateService = updateService;
         }
 
-        public async Task Install(PackageManifest packageManifest, InstallOptions installOptions)
+        public async Task Install(PackageManifest packageManifest, InstallInteractivityLevel interactivityLevel)
         {
             _logger.Info("Beginning installation of '{0}'", packageManifest);
             _hub.Publish(new InitializationInstallationEvent(packageManifest));
@@ -65,7 +63,7 @@ namespace AppGet.Installers
             var installer = _findInstaller.GetBestInstaller(packageManifest.Installers);
             var installerPath = await _fileTransferService.TransferFile(installer.Location, _pathResolver.TempFolder, installer.Sha256);
 
-            var updates = await _updateService.GetUpdate(packageManifest.Id);
+            var updates = await GetUpdate(packageManifest.Id);
 
             foreach (var update in updates)
             {
@@ -75,10 +73,17 @@ namespace AppGet.Installers
                 }
             }
 
+            var availableUpdates = updates.Where(c => c.Status == UpdateStatus.Available);
+
+            if (availableUpdates.Any())
+            {
+                _logger.Info("Updating {0} to {1}. Currently Installed: {2}", packageManifest.Name, packageManifest.Version, updates.First().InstalledVersion);
+            }
+
             var whisperer = _installWhisperers().First(c => c.InstallMethod == packageManifest.InstallMethod);
             whisperer.Initialize(packageManifest, installerPath);
 
-            RunInstaller(installOptions.InteractivityLevel, packageManifest, whisperer);
+            RunInstaller(interactivityLevel, packageManifest, whisperer);
 
             _logger.Info("Installation completed successfully for '{0}'", packageManifest);
             _hub.Publish(new InstallationSuccessfulEvent(packageManifest));
@@ -126,8 +131,16 @@ namespace AppGet.Installers
 
         }
 
+        private async Task<List<PackageUpdate>> GetUpdate(string packageId)
+        {
+            _logger.Debug("Getting list of installed application");
+            var records = _windowsInstallerClient.GetRecords();
+            var result = await _novoClient.GetUpdate(records, packageId);
+            return result.ToList();
+        }
 
-        private void RunInstaller(InstallInteractivityLevels interactivity, PackageManifest packageManifest, IInstaller whisperer)
+
+        private void RunInstaller(InstallInteractivityLevel interactivity, PackageManifest packageManifest, IInstaller whisperer)
         {
             _hub.Publish(new ExecutingInstallerEvent(packageManifest));
 
@@ -163,24 +176,24 @@ namespace AppGet.Installers
             }
         }
 
-        private string GetInstallerArguments(InstallInteractivityLevels interactivity, PackageManifest manifest, IInstaller installer)
+        private string GetInstallerArguments(InstallInteractivityLevel interactivity, PackageManifest manifest, IInstaller installer)
         {
             var effectiveInteractivity = GetInteractivelyLevel(interactivity, manifest, installer);
 
             switch (effectiveInteractivity)
             {
-                case InstallInteractivityLevels.Silent:
+                case InstallInteractivityLevel.Silent:
                     return $"{installer.SilentArgs} {manifest.Args?.Silent}";
-                case InstallInteractivityLevels.Interactive:
+                case InstallInteractivityLevel.Interactive:
                     return $"{installer.InteractiveArgs} {manifest.Args?.Interactive}";
-                case InstallInteractivityLevels.Passive:
+                case InstallInteractivityLevel.Passive:
                     return $"{installer.PassiveArgs} {manifest.Args?.Passive}";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(effectiveInteractivity));
             }
         }
 
-        private InstallInteractivityLevels GetInteractivelyLevel(InstallInteractivityLevels interactivity, PackageManifest manifest, IInstaller installer)
+        private InstallInteractivityLevel GetInteractivelyLevel(InstallInteractivityLevel interactivity, PackageManifest manifest, IInstaller installer)
         {
             bool SupportsSilent()
             {
@@ -192,28 +205,28 @@ namespace AppGet.Installers
                 return manifest.Args?.Passive != null || installer.PassiveArgs != null;
             }
 
-            if (interactivity == InstallInteractivityLevels.Silent && !SupportsSilent())
+            if (interactivity == InstallInteractivityLevel.Silent && !SupportsSilent())
             {
                 if (SupportsPassive())
                 {
                     _logger.Info("Silent install is not supported by installer. Switching to Passive");
-                    return InstallInteractivityLevels.Passive;
+                    return InstallInteractivityLevel.Passive;
                 }
 
                 _logger.Warn("Silent or Passive install is not supported by installer. Switching to Interactive");
-                return InstallInteractivityLevels.Interactive;
+                return InstallInteractivityLevel.Interactive;
             }
 
-            if (interactivity == InstallInteractivityLevels.Passive && !SupportsPassive())
+            if (interactivity == InstallInteractivityLevel.Passive && !SupportsPassive())
             {
                 if (SupportsSilent())
                 {
                     _logger.Info("Passive install is not supported by installer. Switching to Silent.");
-                    return InstallInteractivityLevels.Silent;
+                    return InstallInteractivityLevel.Silent;
                 }
 
                 _logger.Warn("Silent or Passive install is not supported by installer. Switching to Interactive");
-                return InstallInteractivityLevels.Interactive;
+                return InstallInteractivityLevel.Interactive;
             }
 
             return interactivity;
