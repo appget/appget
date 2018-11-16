@@ -23,11 +23,11 @@ namespace AppGet.CommandLine
 
         public static void ShowTable(this IEnumerable<PackageUpdate> updates)
         {
-            var table = new ConsoleTable("Package ID", "Installed Version", "Available Version");
+            var table = new ConsoleTable("Name", "Package ID", "Installed Version", "Available Version");
 
             foreach (var update in updates.OrderBy(c => c.PackageId))
             {
-                table.AddRow(update.PackageId, update.InstalledVersion, update.AvailableVersion);
+                table.AddRow(update.Name, update.PackageId, update.InstalledVersion, update.AvailableVersion);
             }
 
             Print(table);
