@@ -31,8 +31,6 @@ namespace AppGet.Commands.Outdated
                 updates.ShowTable();
 
                 Console.WriteLine("");
-                Console.WriteLine("Run 'appget update-all' to apply all updates.");
-
             }
             else
             {
@@ -48,6 +46,11 @@ namespace AppGet.Commands.Outdated
                 var upToDate = matches.Where(c => c.Status == UpdateStatus.UpToDate);
 
                 upToDate.ShowTable();
+            }
+
+            if (updates.Any())
+            {
+                Console.WriteLine("Run 'appget update-all' to apply all updates.");
             }
         }
     }
