@@ -72,6 +72,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\Json.cs" />
     <Compile Include="Serialization\JsonComparator.cs" />
+    <Compile Include="Serialization\JsonClone.cs" />
     <Compile Include="Serialization\YamlDefaultGraphVisitor.cs" />
     <Compile Include="Serialization\JsonEquality.cs" />
     <Compile Include="Serialization\VersionConverter.cs" />
