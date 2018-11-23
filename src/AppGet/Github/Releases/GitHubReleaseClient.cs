@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AppGet.Http;
@@ -10,7 +9,7 @@ namespace AppGet.Github.Releases
 {
     public interface IReleaseClient
     {
-        Task<List<AppGetRelease>> GetReleases();
+        Task<AppGetRelease> GetLatest();
     }
 
     public class GitHubReleaseClient : IReleaseClient
@@ -24,29 +23,18 @@ namespace AppGet.Github.Releases
             _logger = logger;
         }
 
-        public async Task<List<AppGetRelease>> GetReleases()
+        public async Task<AppGetRelease> GetLatest()
         {
-            try
-            {
-                _logger.Trace("Checking for AppGet updates...");
-                var uri = new Uri($"https://api.github.com/repos/appget/appget/releases?{GithubKeys.AuthQuery}&no_cache={Guid.NewGuid()}");
-                var response = await _httpClient.GetAsync(uri, TimeSpan.FromSeconds(30));
-                var releases = await response.Deserialize<List<GithubRelease>>();
-                _logger.Trace($"Found {releases.Count} AppGet releases");
+            var uri = new Uri($"https://api.github.com/repos/appget/appget/releases/latest?{GithubKeys.AuthQuery}&no_cache={Guid.NewGuid()}");
+            var response = await _httpClient.GetAsync(uri, TimeSpan.FromSeconds(10));
+            var releases = await response.Deserialize<GithubRelease>();
+            _logger.Trace($"Found {releases.tag_name} AppGet releases");
 
-                return releases.Select(c => new AppGetRelease
-                {
-                    Url = c.Assets.Single(a => a.browser_download_url.EndsWith(".exe")).browser_download_url,
-                    Version = new Version(c.tag_name)
-                })
-                    .ToList();
-            }
-            catch (Exception e)
+            return new AppGetRelease
             {
-                _logger.Error(e, "Update check failed.");
-            }
-
-            return new List<AppGetRelease>();
+                Url = releases.Assets.Single(a => a.browser_download_url.EndsWith(".exe")).browser_download_url,
+                Version = new Version(releases.tag_name)
+            };
         }
     }
 }

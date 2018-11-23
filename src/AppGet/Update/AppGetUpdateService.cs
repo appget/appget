@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using AppGet.Github.Releases;
@@ -21,7 +20,7 @@ namespace AppGet.Update
     {
         private readonly IReleaseClient _releaseClient;
         private readonly Logger _logger;
-        private Task<List<AppGetRelease>> _releaseTask;
+        private Task<AppGetRelease> _releaseTask;
         private Lazy<IInstallService> _installService;
 
         public AppGetUpdateService(IReleaseClient releaseClient, Lazy<IInstallService> installService, Logger logger)
@@ -33,15 +32,15 @@ namespace AppGet.Update
 
         public void Start()
         {
-            _releaseTask = _releaseClient.GetReleases();
+            _releaseTask = _releaseClient.GetLatest();
         }
 
         public async Task Commit()
         {
             try
             {
-                var releases = await _releaseTask;
-                var latest = releases.OrderByDescending(c => c.Version).First();
+                var latest = await _releaseTask;
+
                 var current = Assembly.GetEntryAssembly().GetName().Version;
 
                 _logger.Trace($"AppGet update status:  Current: {current}    Latest: {latest.Version}");
@@ -70,7 +69,7 @@ namespace AppGet.Update
             }
             catch (Exception e)
             {
-                _logger.Fatal(e, "AppGet update failed");
+                _logger.Fatal(e, "AppGet update failed.");
             }
         }
     }

@@ -13,11 +13,12 @@ namespace AppGet.Tests.Github.Releases
         {
             WithRealHttp();
 
-            var release = await Subject.GetReleases();
+            var release = await Subject.GetLatest();
 
-            release.Should().NotBeEmpty();
-            release[0].Version.Should().NotBeNull();
-            release[0].Url.Should().EndWith(".exe");
+            release.Should().NotBeNull();
+            release.Version.Should().NotBeNull();
+            release.Url.Should().EndWith(".exe");
+            release.Url.Should().Contain(release.Version.ToString());
         }
     }
 }
