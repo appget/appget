@@ -58,6 +58,7 @@
     <Compile Include="Options\OptionsParserFixture.cs" />
     <Compile Include="Manifests\FindInstallerFixture.cs" />
     <Compile Include="PackageRepository\OfficialPackageRepositoryFixture.cs" />
+    <Compile Include="PackageRepository\RepositoryRegistryFixture.cs" />
     <Compile Include="Processes\FileInUseFixture.cs" />
     <Compile Include="Processes\HandleFixture.cs" />
     <Compile Include="Processes\ProcessControllerFixture.cs" />

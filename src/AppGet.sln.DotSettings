@@ -266,4 +266,5 @@
 	<s:String x:Key="/Default/FilterSettingsManager/CoverageFilterXml/@EntryValue">&lt;data&gt;&lt;IncludeFilters /&gt;&lt;ExcludeFilters&gt;&lt;Filter ModuleMask="AppGet.Tests" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="appget" ModuleVersionMask="*" ClassMask="AppGet.Infrastructure.Composition.*" FunctionMask="*" IsEnabled="True" /&gt;&lt;/ExcludeFilters&gt;&lt;/data&gt;</s:String>
 	<s:Boolean x:Key="/Default/Housekeeping/ExcludedProjects/ProjectMasksToIgnore/=ModernUI_002EApp/@EntryIndexedValue">False</s:Boolean>
 	<s:Boolean x:Key="/Default/Housekeeping/ExcludedProjects/ProjectMasksToIgnore/=ModernUI_002E_002A/@EntryIndexedValue">True</s:Boolean>
-	<s:Boolean x:Key="/Default/Housekeeping/ExcludedProjects/ProjectMasksToIgnore/=ModernUI_002EApp/@EntryIndexRemoved">True</s:Boolean></wpf:ResourceDictionary>
+	<s:Boolean x:Key="/Default/Housekeeping/ExcludedProjects/ProjectMasksToIgnore/=ModernUI_002EApp/@EntryIndexRemoved">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=APPGET/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>

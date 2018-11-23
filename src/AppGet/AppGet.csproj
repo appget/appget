@@ -79,6 +79,8 @@
     <Compile Include="CommandLine\Prompts\TextPrompt.cs" />
     <Compile Include="CommandLine\Prompts\EnumPrompt.cs" />
     <Compile Include="CommandLine\Prompts\UrlPrompt.cs" />
+    <Compile Include="Commands\AddRepo\InstallCommandHandler.cs" />
+    <Compile Include="Commands\AddRepo\AddRepoOptions.cs" />
     <Compile Include="Commands\AppGetSentenceBuilder.cs" />
     <Compile Include="Commands\CommandExecutor.cs" />
     <Compile Include="Commands\CommandOptionExtensions.cs" />
@@ -145,6 +147,8 @@
     <Compile Include="Installers\InstallInteractivityLevel.cs" />
     <Compile Include="Installers\UninstallerWhisperer\UninstallerBase.cs" />
     <Compile Include="Installers\UninstallerWhisperer\WixWhisperer.cs" />
+    <Compile Include="PackageRepository\AddRepositoryException.cs" />
+    <Compile Include="PackageRepository\Repository.cs" />
     <Compile Include="Properties\SharedAssemblyInfo.cs" />
     <Compile Include="Update\NovoClient.cs" />
     <Compile Include="Github\GithubKeys.cs" />
@@ -181,6 +185,7 @@
     <Compile Include="Update\PackageUpdate.cs" />
     <Compile Include="Update\UninstallData.cs" />
     <Compile Include="Update\UpdateService.cs" />
+    <Compile Include="PackageRepository\RepositoryRegistry.cs" />
     <Compile Include="Windows\Unlocker.cs" />
     <Compile Include="Windows\FileLockFinder.cs" />
     <Compile Include="Windows\ManagementObject.cs" />
