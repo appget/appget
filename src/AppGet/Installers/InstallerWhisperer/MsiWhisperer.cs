@@ -9,9 +9,9 @@ namespace AppGet.Installers.InstallerWhisperer
 
         private string BaseArg => $"/i \"{InstallerPath}\"";
 
-        public override string InteractiveArgs => $"{BaseArg} /qf";
-        public override string PassiveArgs => $"{BaseArg} /qb /norestart";
-        public override string SilentArgs => $"{BaseArg} /qn /norestart";
+        public override string InteractiveArgs => $"{BaseArg} /qf".Trim();
+        public override string PassiveArgs => $"{BaseArg} /qb /norestart".Trim();
+        public override string SilentArgs => $"{BaseArg} /qn /norestart".Trim();
         public override string LogArgs => "/L* {path}";
 
         public override string GetProcessPath()

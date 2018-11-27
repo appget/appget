@@ -2,12 +2,16 @@
 
 namespace AppGet.Installers.InstallerWhisperer
 {
-    public class AdvancedInstallerWhisperer : InstallerBase
+    public class AdvancedInstallerWhisperer : MsiWhisperer
     {
         public override InstallMethodTypes InstallMethod => InstallMethodTypes.AdvancedInstaller;
 
-        public override string PassiveArgs => "/exebasicui";
-        public override string SilentArgs => "/exenoui";
-        public override string LogArgs => "/exelog {path}";
+        public override string PassiveArgs => $"/exebasicui {base.PassiveArgs}";
+        public override string SilentArgs => $"/exenoui {base.SilentArgs}";
+
+        public override string GetProcessPath()
+        {
+            return InstallerPath;
+        }
     }
 }
