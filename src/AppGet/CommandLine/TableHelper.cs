@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AppGet.Manifest;
 using AppGet.PackageRepository;
 using AppGet.Update;
 
@@ -8,7 +9,7 @@ namespace AppGet.CommandLine
 {
     public static class TableHelper
     {
-        public static void ShowTable(this IEnumerable<PackageInfo> packages)
+        public static void ShowTable(this IEnumerable<PackageManifest> packages)
         {
             var table = new ConsoleTable("ID", "Name", "Version", "Tag");
 

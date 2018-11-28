@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using AppGet.HostSystem;
 using AppGet.Installers;
 using AppGet.Manifest;
-using AppGet.Manifests;
 using AppGet.PackageRepository;
 using AppGet.Windows.WindowsInstaller;
 using NLog;
@@ -18,18 +17,16 @@ namespace AppGet.Update
         private readonly NovoClient _novoClient;
         private readonly WindowsInstallerClient _windowsInstallerClient;
         private readonly IPackageRepository _packageRepository;
-        private readonly IPackageManifestService _packageManifestService;
         private readonly IInstallService _installService;
         private readonly IEnvInfo _envInfo;
         private readonly Logger _logger;
 
         public UpdateService(NovoClient novoClient, WindowsInstallerClient windowsInstallerClient, IPackageRepository packageRepository,
-            IPackageManifestService packageManifestService, IInstallService installService, IEnvInfo envInfo, Logger logger)
+            IInstallService installService, IEnvInfo envInfo, Logger logger)
         {
             _novoClient = novoClient;
             _windowsInstallerClient = windowsInstallerClient;
             _packageRepository = packageRepository;
-            _packageManifestService = packageManifestService;
             _installService = installService;
             _envInfo = envInfo;
             _logger = logger;
@@ -53,8 +50,7 @@ namespace AppGet.Update
 
         public async Task UpdatePackage(string packageId, string tag, InstallInteractivityLevel interactivityLevel)
         {
-            var package = await _packageRepository.GetAsync(packageId, tag);
-            var manifest = await _packageManifestService.LoadManifest(package.ManifestPath);
+            var manifest = await _packageRepository.GetAsync(packageId, tag);
             await _installService.Install(manifest, interactivityLevel);
         }
 

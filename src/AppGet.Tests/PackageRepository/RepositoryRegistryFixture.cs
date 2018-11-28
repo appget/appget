@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace AppGet.Tests.PackageRepository
 {
     [TestFixture]
-    public class RegistryStorageFixture : TestBase<RepositoryRegistry>
+    public class RepositoryRegistryFixture : TestBase<RepositoryRegistry>
     {
         [Test]
         public void add_repo()

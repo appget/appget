@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using AppGet.Manifest.Serialization;
 using YamlDotNet.Serialization;
@@ -27,6 +28,7 @@ namespace AppGet.Manifest
         public List<Installer> Installers { get; set; }
 
         [YamlIgnore]
+        [DefaultValue(LATEST_TAG)]
         public string Tag { get; set; }
 
         [YamlIgnore]
@@ -42,6 +44,8 @@ namespace AppGet.Manifest
         {
             return $"{Id} {Version}".Trim();
         }
+
+        public bool IsLatest => Tag == null || Tag == LATEST_TAG;
 
         public string ToYaml()
         {

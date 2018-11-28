@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using AppGet.Infrastructure.Composition;
 using AppGet.Installers;
-using AppGet.Manifests;
 using AppGet.PackageRepository;
 
 namespace AppGet.Commands.Install
@@ -10,13 +9,11 @@ namespace AppGet.Commands.Install
     public class InstallCommandHandler : ICommandHandler
     {
         private readonly IPackageRepository _packageRepository;
-        private readonly IPackageManifestService _packageManifestService;
         private readonly IInstallService _installService;
 
-        public InstallCommandHandler(IPackageRepository packageRepository, IPackageManifestService packageManifestService, IInstallService installService)
+        public InstallCommandHandler(IPackageRepository packageRepository, IInstallService installService)
         {
             _packageRepository = packageRepository;
-            _packageManifestService = packageManifestService;
             _installService = installService;
         }
 
@@ -26,9 +23,7 @@ namespace AppGet.Commands.Install
             var installOptions = (InstallOptions)commandOptions;
 
             var package = await _packageRepository.GetAsync(installOptions.PackageId, installOptions.Tag);
-            var manifest = await _packageManifestService.LoadManifest(package.ManifestPath);
-
-            await _installService.Install(manifest, installOptions.GetInteractivityLevel());
+            await _installService.Install(package, installOptions.GetInteractivityLevel());
         }
     }
 }
