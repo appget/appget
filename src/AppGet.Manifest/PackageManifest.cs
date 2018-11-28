@@ -20,8 +20,6 @@ namespace AppGet.Manifest
         public string Repo { get; set; }
         public string License { get; set; }
 
-        public string[] Exe { get; set; }
-
         public InstallMethodTypes InstallMethod { get; set; }
         public InstallArgs Args { get; set; }
 
@@ -30,9 +28,6 @@ namespace AppGet.Manifest
         [YamlIgnore]
         [DefaultValue(LATEST_TAG)]
         public string Tag { get; set; }
-
-        [YamlIgnore]
-        public string Path { get; set; }
 
         public PackageManifest()
         {

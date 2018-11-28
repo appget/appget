@@ -15,7 +15,6 @@ namespace AppGet.Manifest.Tests
             {
                 Id = "linqpad",
                 Version = "4.51.03",
-                Exe = new[] { "LINQPad.exe" },
                 Home = "http://www.linqpad.net/",
                 InstallMethod = InstallMethodTypes.Zip,
                 Installers = new List<Installer>
@@ -33,8 +32,7 @@ namespace AppGet.Manifest.Tests
                     }
                 }
             };
-
-
+            
             Console.WriteLine(manifest.ToYaml());
         }
 
