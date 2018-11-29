@@ -54,8 +54,7 @@ namespace AppGet.Tests.Manifests
         {
             GivenRejectedOnly();
             GivenInstallers(_x64Installer);
-
-            Subject.GetBestInstaller(_installers).Should().BeNull();
+            Assert.Throws<PackageNotCompatibleException>(() => Subject.GetBestInstaller(_installers));
         }
 
         [Test]

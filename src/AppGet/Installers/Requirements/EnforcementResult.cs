@@ -10,11 +10,6 @@
             };
         }
 
-        public static EnforcementResult Fail(string reason, params object[] args)
-        {
-            return Fail(string.Format(reason, args));
-        }
-
         public static EnforcementResult Fail(string reason)
         {
             return new EnforcementResult

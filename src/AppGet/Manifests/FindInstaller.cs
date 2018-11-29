@@ -20,13 +20,12 @@ namespace AppGet.Manifests
             _requirements = requirements;
         }
 
-        //TODO: We should return the package the user specified, if they supplied one
         public Installer GetBestInstaller(List<Installer> installers)
         {
             var decisions = ProcessRequirements(installers);
             var compatible = decisions.Where(d => d.IsCompatible).ToList();
 
-            if (!compatible.Any()) return null;
+            if (!compatible.Any()) throw new PackageNotCompatibleException(decisions);
 
             return compatible.OrderByDescending(d => d.Installer.Architecture).First().Installer;
         }
