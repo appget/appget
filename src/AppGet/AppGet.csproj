@@ -159,8 +159,11 @@
     <Compile Include="Infrastructure\Eventing\IHandle.cs" />
     <Compile Include="Infrastructure\Eventing\Events\ManifestLoadedEvent.cs" />
     <Compile Include="Infrastructure\Eventing\Events\StatusUpdateEvent.cs" />
+    <Compile Include="Installers\InstallerContext.cs" />
     <Compile Include="Installers\Events\InitializationInstallationEvent.cs" />
+    <Compile Include="Installers\InstallerContextFactory.cs" />
     <Compile Include="Installers\InstallerWhisperer\InstallerBase.cs" />
+    <Compile Include="Installers\PackageOperation.cs" />
     <Compile Include="Installers\Requirements\PackageNotCompatibleException.cs" />
     <Compile Include="Installers\UninstallerWhisperer\InnoUninstaller.cs" />
     <Compile Include="Installers\UninstallerWhisperer\MsiUninstaller.cs" />
