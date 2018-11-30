@@ -12,6 +12,12 @@ namespace AppGet.Tests.Http
     [TestFixture]
     public class HttpClientFixture : TestBase<HttpClient>
     {
+        [SetUp]
+        public void Setup()
+        {
+            WithRealHttp();
+        }
+
         [Test]
         public async Task should_send_gzip_headers()
         {

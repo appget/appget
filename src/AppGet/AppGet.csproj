@@ -147,6 +147,7 @@
     <Compile Include="Extensions\NumeralExtensions.cs" />
     <Compile Include="FileTransfer\FileTransferCompletedEvent.cs" />
     <Compile Include="FileTransfer\FileTransferStartedEvent.cs" />
+    <Compile Include="HostSystem\MachineId.cs" />
     <Compile Include="Http\AppGetApiError.cs" />
     <Compile Include="Http\AppGetApiException.cs" />
     <Compile Include="Http\HttpTimeoutException.cs" />
@@ -159,6 +160,7 @@
     <Compile Include="Infrastructure\Eventing\IHandle.cs" />
     <Compile Include="Infrastructure\Eventing\Events\ManifestLoadedEvent.cs" />
     <Compile Include="Infrastructure\Eventing\Events\StatusUpdateEvent.cs" />
+    <Compile Include="Installers\DiffGenerator.cs" />
     <Compile Include="Installers\InstallerArgFactory.cs" />
     <Compile Include="Installers\InstallerContext.cs" />
     <Compile Include="Installers\Events\InitializationInstallationEvent.cs" />
@@ -173,6 +175,7 @@
     <Compile Include="Installers\InstallInteractivityLevel.cs" />
     <Compile Include="Installers\UninstallerWhisperer\UninstallerBase.cs" />
     <Compile Include="Installers\UninstallerWhisperer\WixWhisperer.cs" />
+    <Compile Include="NexClient.cs" />
     <Compile Include="PackageRepository\AddRepositoryException.cs" />
     <Compile Include="PackageRepository\Repository.cs" />
     <Compile Include="Properties\SharedAssemblyInfo.cs" />

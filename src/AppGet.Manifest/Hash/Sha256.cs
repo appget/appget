@@ -15,5 +15,14 @@ namespace AppGet.Manifest.Hash
                 return BitConverter.ToString(checksum).ToLowerInvariant().Replace("-", string.Empty);
             }
         }
+
+        public string CalculateHash(byte[] buffer)
+        {
+            using (var algorithm = new SHA256Managed())
+            {
+                var checksum = algorithm.ComputeHash(buffer);
+                return BitConverter.ToString(checksum).ToLowerInvariant().Replace("-", string.Empty);
+            }
+        }
     }
 }

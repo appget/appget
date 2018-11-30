@@ -65,14 +65,16 @@
     <Compile Include="Extensions\UriExtensionsFixture.cs" />
     <Compile Include="FileTransfer\TransferCacheServiceFixture.cs" />
     <Compile Include="HostSystem\EnvInfoFixture.cs" />
+    <Compile Include="HostSystem\MachineIdFixture.cs" />
     <Compile Include="Http\HttpClientFixture.cs" />
     <Compile Include="Http\UserAgentBuilderFixture.cs" />
     <Compile Include="Infrastructure\Composition\ContainerBuilderFixture.cs" />
     <Compile Include="Infrastructure\Hub\HubFixture.cs" />
     <Compile Include="Infrastructure\Logging\SentryTargetFixture.cs" />
+    <Compile Include="Installers\DiffGeneratorFixture.cs" />
     <Compile Include="Installers\InstallerExceptionFixture.cs" />
-    <Compile Include="Installers\UninstallerWhisperer\UninstallerBaseFixture.cs" />
     <Compile Include="Manifests\PackageManifestFixture.cs" />
+    <Compile Include="NexClientFixture.cs" />
     <Compile Include="Options\OptionsParserFixture.cs" />
     <Compile Include="Manifests\FindInstallerFixture.cs" />
     <Compile Include="PackageRepository\OfficialPackageRepositoryFixture.cs" />
@@ -109,7 +111,9 @@
       <Name>AppGet</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Installers\UninstallerWhisperer\" />
+  </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>

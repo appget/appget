@@ -38,6 +38,14 @@ namespace AppGet.Tests.Windows.WindowsInstaller
         {
             var installerRecords = Subject.GetRecords().Where(c => !c.IsUpgradeNode).ToList();
 
+
+
+            var g = installerRecords.GroupBy(c => c.Id).ToList();
+
+            var pp = g.Where(c => c.Count() != 1).ToList();
+            var cc = g.Where(c => c.All(d => d.Is64)).ToList();
+            var c2 = g.Where(c => c.All(d => !d.Is64)).ToList();
+
             foreach (var record in installerRecords)
             {
                 var keys = Subject.GetKey(record.Id);

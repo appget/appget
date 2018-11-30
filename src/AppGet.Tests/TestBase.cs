@@ -2,6 +2,7 @@
 using AppGet.FileSystem;
 using AppGet.HostSystem;
 using AppGet.Http;
+using AppGet.Infrastructure.Logging;
 using AutoMoq;
 using NLog;
 using NUnit.Framework;
@@ -22,6 +23,8 @@ namespace AppGet.Tests
             _subject = null;
             Mocker = new AutoMoqer();
             Mocker.SetInstance(logger);
+
+            LogConfigurator.EnableConsoleTarget(LogConfigurator.DetailedLayout, LogLevel.Trace);
         }
 
         public T Subject
@@ -43,6 +46,7 @@ namespace AppGet.Tests
         {
             Mocker.SetInstance<IEnvInfo>(Mocker.Resolve<EnvInfo>());
             Mocker.SetInstance<IUserAgentBuilder>(Mocker.Resolve<UserAgentBuilder>());
+            Mocker.SetInstance(Mocker.Resolve<MachineId>());
             Mocker.SetInstance<IHttpClient>(Mocker.Resolve<HttpClient>());
         }
 
@@ -60,6 +64,5 @@ namespace AppGet.Tests
         {
             return File.ReadAllText(GetTestPath(path));
         }
-
     }
 }

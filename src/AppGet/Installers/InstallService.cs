@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,7 +12,6 @@ using AppGet.Manifest;
 using AppGet.Manifests;
 using AppGet.Update;
 using AppGet.Windows;
-using AppGet.Windows.WindowsInstaller;
 using NLog;
 
 namespace AppGet.Installers
@@ -31,7 +29,6 @@ namespace AppGet.Installers
         private readonly IProcessController _processController;
         private readonly InstallerContextFactory _installerContextFactory;
         private readonly IFileTransferService _fileTransferService;
-        private readonly WindowsInstallerClient _windowsInstallerClient;
         private readonly Func<InstallerBase[]> _installWhisperers;
         private readonly Func<UninstallerBase[]> _uninstallers;
         private readonly IHub _hub;
@@ -41,7 +38,7 @@ namespace AppGet.Installers
 
         public InstallService(Logger logger, IFindInstaller findInstaller, IProcessController processController,
             InstallerContextFactory installerContextFactory,
-            IFileTransferService fileTransferService, WindowsInstallerClient windowsInstallerClient, Func<InstallerBase[]> installWhisperers,
+            IFileTransferService fileTransferService, Func<InstallerBase[]> installWhisperers,
             Func<UninstallerBase[]> uninstallers, IHub hub, IUnlocker unlocker, NovoClient novoClient, InstallerArgFactory argFactory)
         {
             _logger = logger;
@@ -49,7 +46,6 @@ namespace AppGet.Installers
             _processController = processController;
             _installerContextFactory = installerContextFactory;
             _fileTransferService = fileTransferService;
-            _windowsInstallerClient = windowsInstallerClient;
             _installWhisperers = installWhisperers;
             _uninstallers = uninstallers;
             _hub = hub;
@@ -68,18 +64,21 @@ namespace AppGet.Installers
                 var installer = _findInstaller.GetBestInstaller(packageManifest.Installers);
                 var installerPath = await _fileTransferService.TransferFile(installer.Location, installer.Sha256);
 
-                var updates = await GetUpdate(packageManifest.Id, context.InstallerRecords);
+                _logger.Debug("Getting list of installed application");
+                var updates = await _novoClient.GetUpdate(context.InstallerRecords, packageManifest.Id);
 
                 var availableUpdates = updates.Where(c => c.Status == UpdateStatus.Available);
 
                 if (availableUpdates.Any())
                 {
-                    _logger.Info("Updating {0} to {1}. Currently Installed: {2}", packageManifest.Name, packageManifest.Version,
-                        updates.First().InstalledVersion);
+                    _logger.Info("Updating {0} to {1}. Currently Installed: {2}", packageManifest.Name, packageManifest.Version, updates.First().InstalledVersion);
                 }
 
                 var whisperer = _installWhisperers().First(c => c.InstallMethod == packageManifest.InstallMethod);
+
+                context.Whisperer = whisperer;
                 whisperer.Initialize(packageManifest, installerPath);
+
 
                 foreach (var update in updates)
                 {
@@ -128,16 +127,16 @@ namespace AppGet.Installers
                 }
 
                 var uninstallRecord = uninstallRecords.Single();
-                var keys = _windowsInstallerClient.GetKey(uninstallRecord.WindowsInstallerId);
 
                 var whisperer = _uninstallers().First(c => c.InstallMethod == uninstallRecord.InstallMethod);
-                whisperer.InitUninstaller(keys, uninstallRecord);
+                context.Whisperer = whisperer;
+                whisperer.InitUninstaller(uninstallRecord);
 
                 _unlocker.UnlockFolder(uninstallRecord.InstallationPath, uninstallRecord.InstallMethod);
 
                 try
                 {
-                    RunInstaller(uninstallOptions.InteractivityLevel, new PackageManifest { Id = uninstallOptions.PackageId }, whisperer);
+                    context.Process = RunInstaller(uninstallOptions.InteractivityLevel, new PackageManifest { Id = uninstallOptions.PackageId }, whisperer);
                 }
                 catch (InstallerException ex)
                 {
@@ -146,14 +145,6 @@ namespace AppGet.Installers
                 }
             }
         }
-
-        private async Task<List<PackageUpdate>> GetUpdate(string packageId, IEnumerable<WindowsInstallerRecord> records)
-        {
-            _logger.Debug("Getting list of installed application");
-            var result = await _novoClient.GetUpdate(records, packageId);
-            return result;
-        }
-
 
         private Process RunInstaller(InstallInteractivityLevel interactivity, PackageManifest packageManifest, IInstaller whisperer)
         {

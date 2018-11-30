@@ -14,6 +14,6 @@ namespace AppGet.Windows.WindowsInstaller
         public string Hive { get; set; }
 
         [JsonExtensionData]
-        public Dictionary<string, JToken> Values { get; set; }
+        public Dictionary<string, object> Values { get; set; }
     }
 }

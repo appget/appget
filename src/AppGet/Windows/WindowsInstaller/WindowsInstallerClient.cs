@@ -62,7 +62,7 @@ namespace AppGet.Windows.WindowsInstaller
                     return null;
                 }
 
-                var values = names.ToDictionary(c => c, key => JToken.FromObject(registryKey.GetValue(key)));
+                var values = names.ToDictionary(c => c, key => registryKey.GetValue(key));
 
                 return new WindowsInstallerRecord
                 {

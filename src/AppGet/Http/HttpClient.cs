@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using AppGet.HostSystem;
 
 namespace AppGet.Http
 {
@@ -14,6 +15,7 @@ namespace AppGet.Http
     public class HttpClient : IHttpClient
     {
         private readonly IUserAgentBuilder _userAgentBuilder;
+        private readonly MachineId _machineId;
         private readonly HttpClientHandler _handler;
 
         private System.Net.Http.HttpClient GetClient(TimeSpan timeout)
@@ -26,13 +28,14 @@ namespace AppGet.Http
             return client;
         }
 
-        public HttpClient(IUserAgentBuilder userAgentBuilder)
+        public HttpClient(IUserAgentBuilder userAgentBuilder, MachineId machineId)
         {
             ServicePointManager.DefaultConnectionLimit = 12;
             ServicePointManager.Expect100Continue = true;
             ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 
             _userAgentBuilder = userAgentBuilder;
+            _machineId = machineId;
 
             _handler = new HttpClientHandler
             {
@@ -44,9 +47,10 @@ namespace AppGet.Http
 
         public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, TimeSpan timeout, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead)
         {
-            if (request.RequestUri.Host.EndsWith(".appget.net"))
+            if (request.RequestUri.Host.EndsWith(".appget.net") || request.RequestUri.Host == "localhost")
             {
                 request.Headers.Add("User-Agent", _userAgentBuilder.GetUserAgent());
+                request.Headers.Add("X-Client-Key", _machineId.MachineKey.Value);
             }
 
             try
