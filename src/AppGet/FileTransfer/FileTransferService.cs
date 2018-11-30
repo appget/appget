@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AppGet.Crypto.Hash;
+using AppGet.HostSystem;
 using AppGet.Infrastructure.Eventing;
 using AppGet.ProgressTracker;
 using NLog;
@@ -13,6 +14,7 @@ namespace AppGet.FileTransfer
     public interface IFileTransferService
     {
         Task<string> TransferFile(string source, string destinationFolder, string sha256);
+        Task<string> TransferFile(string source, string sha256);
         Task<string> ReadContent(string source);
     }
 
@@ -22,15 +24,17 @@ namespace AppGet.FileTransfer
         private readonly ITransferCacheService _transferCacheService;
         private readonly IChecksumService _checksumService;
         private readonly IHub _hub;
+        private readonly IPathResolver _pahtResolver;
         private readonly Logger _logger;
 
         public FileTransferService(IEnumerable<IFileTransferClient> transferClients, ITransferCacheService transferCacheService,
-            IChecksumService checksumService, IHub hub, Logger logger)
+            IChecksumService checksumService, IHub hub, IPathResolver pahtResolver, Logger logger)
         {
             _transferClients = transferClients;
             _transferCacheService = transferCacheService;
             _checksumService = checksumService;
             _hub = hub;
+            _pahtResolver = pahtResolver;
             _transferCacheService = transferCacheService;
             _logger = logger;
         }
@@ -83,6 +87,12 @@ namespace AppGet.FileTransfer
             _hub.Publish(new FileTransferCompletedEvent(source, destinationFolder));
 
             return destinationPath;
+        }
+
+        public Task<string> TransferFile(string source, string sha256)
+        {
+            var dest = _pahtResolver.TempFolder;
+            return TransferFile(source, dest, sha256);
         }
 
         public async Task<string> ReadContent(string source)

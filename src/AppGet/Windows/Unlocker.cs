@@ -27,7 +27,7 @@ namespace AppGet.Windows
 
         public void UnlockFolder(string installationPath, InstallMethodTypes installMethod)
         {
-            if (installMethod == InstallMethodTypes.MSI || installMethod == InstallMethodTypes.Squirrel) return;
+            if (installationPath == null || installMethod == InstallMethodTypes.MSI || installMethod == InstallMethodTypes.Squirrel) return;
 
             _logger.Trace("Getting list of processes that are locking {0}", installationPath);
             var processIds = _managementObject.GetProcessByPath(installationPath).ToList();

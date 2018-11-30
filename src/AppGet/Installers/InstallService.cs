@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AppGet.Commands.Uninstall;
 using AppGet.FileTransfer;
-using AppGet.HostSystem;
 using AppGet.Infrastructure.Eventing;
 using AppGet.Installers.Events;
 using AppGet.Installers.InstallerWhisperer;
@@ -29,7 +28,6 @@ namespace AppGet.Installers
     {
         private readonly Logger _logger;
         private readonly IFindInstaller _findInstaller;
-        private readonly IPathResolver _pathResolver;
         private readonly IProcessController _processController;
         private readonly InstallerContextFactory _installerContextFactory;
         private readonly IFileTransferService _fileTransferService;
@@ -39,15 +37,15 @@ namespace AppGet.Installers
         private readonly IHub _hub;
         private readonly IUnlocker _unlocker;
         private readonly NovoClient _novoClient;
+        private readonly InstallerArgFactory _argFactory;
 
-        public InstallService(Logger logger, IFindInstaller findInstaller, IPathResolver pathResolver, IProcessController processController,
+        public InstallService(Logger logger, IFindInstaller findInstaller, IProcessController processController,
             InstallerContextFactory installerContextFactory,
             IFileTransferService fileTransferService, WindowsInstallerClient windowsInstallerClient, Func<InstallerBase[]> installWhisperers,
-            Func<UninstallerBase[]> uninstallers, IHub hub, IUnlocker unlocker, NovoClient novoClient)
+            Func<UninstallerBase[]> uninstallers, IHub hub, IUnlocker unlocker, NovoClient novoClient, InstallerArgFactory argFactory)
         {
             _logger = logger;
             _findInstaller = findInstaller;
-            _pathResolver = pathResolver;
             _processController = processController;
             _installerContextFactory = installerContextFactory;
             _fileTransferService = fileTransferService;
@@ -57,6 +55,7 @@ namespace AppGet.Installers
             _hub = hub;
             _unlocker = unlocker;
             _novoClient = novoClient;
+            _argFactory = argFactory;
         }
 
         public async Task Install(PackageManifest packageManifest, InstallInteractivityLevel interactivityLevel)
@@ -67,17 +66,9 @@ namespace AppGet.Installers
                 _hub.Publish(new InitializationInstallationEvent(packageManifest));
 
                 var installer = _findInstaller.GetBestInstaller(packageManifest.Installers);
-                var installerPath = await _fileTransferService.TransferFile(installer.Location, _pathResolver.TempFolder, installer.Sha256);
+                var installerPath = await _fileTransferService.TransferFile(installer.Location, installer.Sha256);
 
                 var updates = await GetUpdate(packageManifest.Id, context.InstallerRecords);
-
-                foreach (var update in updates)
-                {
-                    if (update?.InstallationPath != null)
-                    {
-                        _unlocker.UnlockFolder(update.InstallationPath, packageManifest.InstallMethod);
-                    }
-                }
 
                 var availableUpdates = updates.Where(c => c.Status == UpdateStatus.Available);
 
@@ -89,6 +80,11 @@ namespace AppGet.Installers
 
                 var whisperer = _installWhisperers().First(c => c.InstallMethod == packageManifest.InstallMethod);
                 whisperer.Initialize(packageManifest, installerPath);
+
+                foreach (var update in updates)
+                {
+                    _unlocker.UnlockFolder(update.InstallationPath, packageManifest.InstallMethod);
+                }
 
                 try
                 {
@@ -132,18 +128,22 @@ namespace AppGet.Installers
                 }
 
                 var uninstallRecord = uninstallRecords.Single();
-
-                if (uninstallRecord.InstallationPath != null)
-                {
-                    _unlocker.UnlockFolder(uninstallRecord.InstallationPath, uninstallRecord.InstallMethod);
-                }
-
                 var keys = _windowsInstallerClient.GetKey(uninstallRecord.WindowsInstallerId);
 
                 var whisperer = _uninstallers().First(c => c.InstallMethod == uninstallRecord.InstallMethod);
                 whisperer.InitUninstaller(keys, uninstallRecord);
 
-                RunInstaller(uninstallOptions.InteractivityLevel, new PackageManifest(), whisperer);
+                _unlocker.UnlockFolder(uninstallRecord.InstallationPath, uninstallRecord.InstallMethod);
+
+                try
+                {
+                    RunInstaller(uninstallOptions.InteractivityLevel, new PackageManifest { Id = uninstallOptions.PackageId }, whisperer);
+                }
+                catch (InstallerException ex)
+                {
+                    context.Exception = ex;
+                    throw;
+                }
             }
         }
 
@@ -151,7 +151,7 @@ namespace AppGet.Installers
         {
             _logger.Debug("Getting list of installed application");
             var result = await _novoClient.GetUpdate(records, packageId);
-            return result.ToList();
+            return result;
         }
 
 
@@ -159,94 +159,19 @@ namespace AppGet.Installers
         {
             _hub.Publish(new ExecutingInstallerEvent(packageManifest));
 
-            var logPath = _pathResolver.GetInstallerLogFile(packageManifest.Id);
+            var installArgs = _argFactory.GetInstallerArguments(interactivity, packageManifest, whisperer);
 
-            string GetLoggingArgs()
-            {
-                var template = packageManifest.Args?.Log ?? whisperer.LogArgs;
-                return template?.Replace("{path}", $"\"{logPath}\"");
-            }
-
-            var loggingArgs = GetLoggingArgs();
-
-            var installArgs = GetInstallerArguments(interactivity, packageManifest, whisperer);
-
-            if (loggingArgs != null)
-            {
-                _logger.Info($"Writing installer log files to {logPath}");
-                installArgs = $"{installArgs.Trim()} {loggingArgs.Trim()}";
-            }
-
-
-            var process = _processController.Start(whisperer.GetProcessPath(), installArgs);
+            var process = _processController.Start(whisperer.GetProcessPath(), installArgs.Arguments);
             _logger.Info("Waiting for installation to complete ...");
             _processController.WaitForExit(process);
 
             if (process.ExitCode != 0)
             {
-                var logFile = installArgs == null ? null : logPath;
                 whisperer.ExitCodes.TryGetValue(process.ExitCode, out var exitReason);
-
-                throw new InstallerException(process.ExitCode, packageManifest, exitReason, logFile);
+                throw new InstallerException(process.ExitCode, packageManifest, exitReason, installArgs.LogFile);
             }
 
             return process;
-        }
-
-        private string GetInstallerArguments(InstallInteractivityLevel interactivity, PackageManifest manifest, IInstaller installer)
-        {
-            var effectiveInteractivity = GetInteractivelyLevel(interactivity, manifest, installer);
-
-            switch (effectiveInteractivity)
-            {
-                case InstallInteractivityLevel.Silent:
-                    return $"{installer.SilentArgs} {manifest.Args?.Silent}";
-                case InstallInteractivityLevel.Interactive:
-                    return $"{installer.InteractiveArgs} {manifest.Args?.Interactive}";
-                case InstallInteractivityLevel.Passive:
-                    return $"{installer.PassiveArgs} {manifest.Args?.Passive}";
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(effectiveInteractivity));
-            }
-        }
-
-        private InstallInteractivityLevel GetInteractivelyLevel(InstallInteractivityLevel interactivity, PackageManifest manifest, IInstaller installer)
-        {
-            bool SupportsSilent()
-            {
-                return manifest.Args?.Silent != null || installer.SilentArgs != null;
-            }
-
-            bool SupportsPassive()
-            {
-                return manifest.Args?.Passive != null || installer.PassiveArgs != null;
-            }
-
-            if (interactivity == InstallInteractivityLevel.Silent && !SupportsSilent())
-            {
-                if (SupportsPassive())
-                {
-                    _logger.Info("Silent install is not supported by installer. Switching to Passive");
-                    return InstallInteractivityLevel.Passive;
-                }
-
-                _logger.Warn("Silent or Passive install is not supported by installer. Switching to Interactive");
-                return InstallInteractivityLevel.Interactive;
-            }
-
-            if (interactivity == InstallInteractivityLevel.Passive && !SupportsPassive())
-            {
-                if (SupportsSilent())
-                {
-                    _logger.Info("Passive install is not supported by installer. Switching to Silent.");
-                    return InstallInteractivityLevel.Silent;
-                }
-
-                _logger.Warn("Silent or Passive install is not supported by installer. Switching to Interactive");
-                return InstallInteractivityLevel.Interactive;
-            }
-
-            return interactivity;
         }
     }
 }

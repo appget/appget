@@ -159,6 +159,7 @@
     <Compile Include="Infrastructure\Eventing\IHandle.cs" />
     <Compile Include="Infrastructure\Eventing\Events\ManifestLoadedEvent.cs" />
     <Compile Include="Infrastructure\Eventing\Events\StatusUpdateEvent.cs" />
+    <Compile Include="Installers\InstallerArgFactory.cs" />
     <Compile Include="Installers\InstallerContext.cs" />
     <Compile Include="Installers\Events\InitializationInstallationEvent.cs" />
     <Compile Include="Installers\InstallerContextFactory.cs" />
