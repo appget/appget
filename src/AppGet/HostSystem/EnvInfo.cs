@@ -13,6 +13,7 @@ namespace AppGet.HostSystem
         string FullName { get; }
         string MachineName { get; }
         bool Is64BitOperatingSystem { get; }
+        bool Is64BitProcess { get; }
         bool UserInteractive { get; }
         string AppDir { get; }
         bool IsAdministrator { get; }
@@ -25,6 +26,7 @@ namespace AppGet.HostSystem
         public string FullName { get; }
         public string MachineName { get; }
         public bool Is64BitOperatingSystem { get; }
+        public bool Is64BitProcess => Environment.Is64BitProcess;
         public bool UserInteractive => Environment.UserInteractive;
         public bool IsAdministrator => new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
         public string AppDir { get; }
