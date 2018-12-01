@@ -20,17 +20,15 @@ namespace AppGet.HostSystem
         {
             try
             {
-                using (var guid = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Default)
-                    .OpenSubKey(@"SOFTWARE\Microsoft\Cryptography"))
+                using (var guid = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Default).OpenSubKey(@"SOFTWARE\Microsoft\Cryptography"))
                 {
                     var machineGuid = Guid.ParseExact(guid.GetValue("MachineGuid").ToString(), "d");
-
                     return _hash.CalculateHash(machineGuid.ToByteArray());
                 }
             }
             catch (Exception e)
             {
-                _logger.Error(e, "Couldn't read Machine GUID.");
+                _logger.Debug(e, "Couldn't read Machine GUID.");
                 return new string('=', 10);
             }
         }

@@ -48,13 +48,12 @@ namespace AppGet.Infrastructure.Logging
                 Compression = true,
                 ErrorOnCapture = OnError,
                 Release = BuildInfo.AppVersion.ToString(),
-                Environment = BuildInfo.IsProduction ? "Production" : "Dev",
+                Environment = BuildInfo.IsProduction ? "Production" : "Dev"
             };
 
-            var osInfo = new EnvInfo();
-
             _client.Tags.Add("culture", Thread.CurrentThread.CurrentCulture.Name);
-            _client.Tags.Add("args", Environment.CommandLine);
+            _client.Tags.Add("args", string.Join(" ", Environment.GetCommandLineArgs()));
+            _client.Tags.Add("64_process", Environment.Is64BitProcess.ToString());
         }
 
         private void OnError(Exception ex)
