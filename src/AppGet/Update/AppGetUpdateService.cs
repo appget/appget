@@ -65,7 +65,7 @@ namespace AppGet.Update
                     }
                 };
 
-                await _installService.Value.Install(manifest, InstallInteractivityLevel.Interactive);
+                await _installService.Value.Install(manifest, InstallInteractivityLevel.Silent);
             }
             catch (Exception e)
             {
