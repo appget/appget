@@ -21,12 +21,12 @@ namespace AppGet.Installers
         public ChangeSet<WindowsInstallerRecord> InstallerRecords { get; set; }
         public string PackageId { get; set; }
         public int ExitCode { get; set; }
-        public string Whisperer { get; set; }
         public InstallInteractivityLevel Interactivity { get; set; }
         public double Duration { get; set; }
         public bool IsAdmin { get; set; }
         public string ErrorCat { get; set; }
         public bool IsGui { get; set; }
+        public string Engine { get; set; }
     }
 
     public class InstallerContext : IDisposable
@@ -74,9 +74,9 @@ namespace AppGet.Installers
                 },
                 Interactivity = InteractivityLevel,
                 Duration = _stopWatch.Elapsed.TotalSeconds,
-                Whisperer = Whisperer?.GetType().Name,
+                Engine = Whisperer?.InstallMethod.ToString(),
                 IsAdmin = envInfo.IsAdministrator,
-                IsGui = envInfo.IsGui, 
+                IsGui = envInfo.IsGui,
             };
 
 
