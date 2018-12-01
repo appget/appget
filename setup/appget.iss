@@ -50,7 +50,7 @@ IDP_FormCaption           =Downloading Microsoft .NET Framework
 IDP_FormDescription       =Please wait while Setup downloads Microsoft .NET Framework...
 
 [Files]
-Source: "..\src\AppGet.Gui\bin\x86\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\src\AppGet.Gui\bin\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]

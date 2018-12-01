@@ -15,6 +15,7 @@ namespace AppGet.Tests.HostSystem
             var guid = Subject.MachineKey.Value;
 
             guid.Should().NotBeEmpty();
+            guid.Should().NotContain("=");
         }
     }
 }
