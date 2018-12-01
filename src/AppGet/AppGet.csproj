@@ -43,7 +43,7 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>appet.ico</ApplicationIcon>
+    <ApplicationIcon>appget.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -262,9 +262,6 @@
     <None Include="app.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="appet.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\AppGet.Manifest\AppGet.Manifest.csproj">
       <Project>{ac981e7d-75f6-4fad-8f99-de0a66cce463}</Project>
       <Name>AppGet.Manifest</Name>
@@ -301,6 +298,9 @@
     <PackageReference Include="SharpRaven">
       <Version>2.4.0</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="appget.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
