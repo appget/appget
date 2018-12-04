@@ -7,6 +7,7 @@ namespace AppGet.Windows
 {
     public interface IProcessController
     {
+        Process GetCurrentProcess();
         Process Start(string fileName, string args = null, bool useShellExecute = true);
         void Kill(Process process, int timeout);
         void WaitForExit(Process process, int? timeout = null);
@@ -20,6 +21,12 @@ namespace AppGet.Windows
         public ProcessController(Logger logger)
         {
             _logger = logger;
+        }
+
+
+        public Process GetCurrentProcess()
+        {
+            return Process.GetCurrentProcess();
         }
 
         public Process Start(string fileName, string args = null, bool useShellExecute = true)

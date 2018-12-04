@@ -37,7 +37,7 @@ namespace AppGet.Windows
             {
                 var process = _processController.TryGetRunningProcess(processId);
 
-                if (process == null || process.ProcessName == "System") continue;
+                if (process == null || process.ProcessName == "System" || process.Id == _processController.GetCurrentProcess().Id) continue;
 
                 try
                 {
