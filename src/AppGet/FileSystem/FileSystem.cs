@@ -1,6 +1,8 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Security.AccessControl;
 using System.Security.Principal;
+using NLog;
 
 namespace AppGet.FileSystem
 {
@@ -11,15 +13,22 @@ namespace AppGet.FileSystem
         string ReadAllText(string path);
         void WriteAllText(string path, string content);
         void CreateDirectory(string path);
+        int ClearDirectory(string path, bool ignoreErrors);
         void SetPermissions(string path, WellKnownSidType accountSid, FileSystemRights rights, AccessControlType controlType);
-        void DeleteFile(string tempFile);
+        void DeleteFile(string filePath);
         void Move(string sourceFile, string destinationFile);
-
         Stream Open(string path, FileMode fileMode, FileAccess fileAccess);
     }
 
     public class FileSystem : IFileSystem
     {
+        private readonly Logger _logger;
+
+        public FileSystem(Logger logger)
+        {
+            _logger = logger;
+        }
+
         public void EnsureDirectory(string path)
         {
             if (!Directory.Exists(path))
@@ -46,6 +55,38 @@ namespace AppGet.FileSystem
         public void CreateDirectory(string path)
         {
             Directory.CreateDirectory(path);
+        }
+
+
+        public int ClearDirectory(string path, bool ignoreErrors)
+        {
+            _logger.Debug("Deleting all files in {0}", path);
+            var files = Directory.GetFiles(path);
+
+            var deleted = 0;
+
+            foreach (var file in files)
+            {
+                try
+                {
+                    _logger.Trace("Deleting {0}", file);
+                    DeleteFile(file);
+                    deleted++;
+                }
+                catch (IOException e)
+                {
+                    if (ignoreErrors)
+                    {
+                        _logger.Warn(e, "Couldn't delete file {0}", file);
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+
+            return deleted;
         }
 
         public void SetPermissions(string path, WellKnownSidType accountSid, FileSystemRights rights, AccessControlType controlType)

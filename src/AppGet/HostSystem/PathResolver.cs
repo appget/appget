@@ -6,8 +6,9 @@ namespace AppGet.HostSystem
 {
     public interface IPathResolver
     {
-        string AppDataDirectory { get; }
         string TempFolder { get; }
+        string InstallerCacheFolder { get; }
+        string AppDataDirectory { get; }
         string GetInstallerLogFile(string packageId);
         string GetInstallationPath(PackageManifest packageManifest);
     }
@@ -18,9 +19,11 @@ namespace AppGet.HostSystem
         {
             Directory.CreateDirectory(TempFolder);
             Directory.CreateDirectory(AppDataDirectory);
+            Directory.CreateDirectory(InstallerCacheFolder);
         }
 
         public string TempFolder => Path.Combine(AppDataDirectory, "Temp");
+        public string InstallerCacheFolder => Path.Combine(AppDataDirectory, "InstallerCache");
 
         private string ProgramData => Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
 

@@ -109,6 +109,8 @@
     <Compile Include="Commands\CustomHelpWriter.cs" />
     <Compile Include="Commands\ICommandExecutor.cs" />
     <Compile Include="Commands\IVariableInteractivityCommand.cs" />
+    <Compile Include="Commands\Clean\CleanCommandHandler.cs" />
+    <Compile Include="Commands\Clean\CleanOptions.cs" />
     <Compile Include="Commands\UpdateAll\UpdateAllCommandHandler.cs" />
     <Compile Include="Commands\UpdateAll\UpdateAllOptions.cs" />
     <Compile Include="Commands\Update\UpdateCommandHandler.cs" />
