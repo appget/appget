@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using AppGet.CommandLine;
 using AppGet.Infrastructure.Composition;
 using AppGet.Update;
-using Console = Colorful.Console;
+using Colorful;
 
 namespace AppGet.Commands.Outdated
 {

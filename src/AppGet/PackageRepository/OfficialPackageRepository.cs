@@ -57,7 +57,7 @@ namespace AppGet.PackageRepository
             }
         }
 
-        public async Task<List<PackageInfo>> Search(string term, bool @select = false)
+        public async Task<List<PackageInfo>> Search(string term, bool select = false)
         {
             _logger.Debug($"Searching for '{term}' in {API_ROOT}");
 

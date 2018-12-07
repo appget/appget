@@ -3,7 +3,7 @@
     public enum UpdateStatus
     {
         UpToDate,
-        Available,
+        Available
     }
 
     public class PackageUpdate

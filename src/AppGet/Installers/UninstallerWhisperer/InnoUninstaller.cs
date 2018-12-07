@@ -35,7 +35,7 @@ namespace AppGet.Installers.UninstallerWhisperer
             },
             {
                 3010, new ExistReason(ExitCodeTypes.RestartRequired, null, true)
-            },
+            }
         };
 
         public override InstallMethodTypes InstallMethod => InstallMethodTypes.Inno;

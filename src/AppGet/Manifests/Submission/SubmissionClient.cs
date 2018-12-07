@@ -44,5 +44,5 @@ namespace AppGet.Manifests.Submission
             var resp = await _httpClient.SendAsync(req, TimeSpan.FromSeconds(30));
             return await resp.Deserialize<SubmissionResponse>();
         }
-    };
+    }
 }

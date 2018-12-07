@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using AppGet.Extensions;
-using Console = Colorful.Console;
+using Colorful;
 
 namespace AppGet.Commands
 {

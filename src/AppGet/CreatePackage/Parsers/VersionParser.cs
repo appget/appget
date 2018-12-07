@@ -18,7 +18,7 @@ namespace AppGet.CreatePackage.Parsers
             new Regex(@"(\w|\b)(ia|x|win)(64|32)(\w|\b)", RegexOptions.IgnoreCase | RegexOptions.Compiled),
             new Regex(@"(\w|\b)i?(x|\d)86(\w|\b)", RegexOptions.IgnoreCase | RegexOptions.Compiled),
             new Regex(@"(\w|\b)win(dows)?.?\d{1,4}(\w|\b)", RegexOptions.IgnoreCase | RegexOptions.Compiled),
-            new Regex(@"id=\d{2,}", RegexOptions.IgnoreCase | RegexOptions.Compiled),
+            new Regex(@"id=\d{2,}", RegexOptions.IgnoreCase | RegexOptions.Compiled)
         };
 
         public static string Parse(string text)

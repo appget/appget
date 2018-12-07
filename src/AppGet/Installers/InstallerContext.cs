@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using AppGet.HostSystem;
 using AppGet.Installers.UninstallerWhisperer;
 using AppGet.Windows.WindowsInstaller;
@@ -76,7 +75,7 @@ namespace AppGet.Installers
                 Duration = _stopWatch.Elapsed.TotalSeconds,
                 Engine = Whisperer?.InstallMethod.ToString(),
                 IsAdmin = envInfo.IsAdministrator,
-                IsGui = envInfo.IsGui,
+                IsGui = envInfo.IsGui
             };
 
 

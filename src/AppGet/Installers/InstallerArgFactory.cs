@@ -29,7 +29,7 @@ namespace AppGet.Installers
         {
             var result = new InstallerArguments
             {
-                LogFile = _pathResolver.GetInstallerLogFile(manifest.Id),
+                LogFile = _pathResolver.GetInstallerLogFile(manifest.Id)
             };
 
             var effectiveInteractivity = GetInteractivelyLevel(interactivity, manifest.Args, installer);

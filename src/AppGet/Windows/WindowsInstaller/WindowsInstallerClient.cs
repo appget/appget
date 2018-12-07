@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Win32;
-using Newtonsoft.Json.Linq;
 
 namespace AppGet.Windows.WindowsInstaller
 {
@@ -13,7 +12,7 @@ namespace AppGet.Windows.WindowsInstaller
         private static readonly string[] Paths =
         {
             @"SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UpgradeCodes",
-            @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall",
+            @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"
         };
 
         public List<WindowsInstallerRecord> GetRecords()
@@ -70,7 +69,7 @@ namespace AppGet.Windows.WindowsInstaller
                     Is64 = registryKey.View == RegistryView.Registry64,
                     Hive = hive.ToString(),
                     IsUpgradeNode = keyName.EndsWith("UpgradeCodes"),
-                    Values = values,
+                    Values = values
                 };
             }
         }

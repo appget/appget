@@ -50,7 +50,7 @@ namespace AppGet.Infrastructure.Logging
         {
             var consoleTarget = new ColoredConsoleTarget
             {
-                Layout = layout,
+                Layout = layout
             };
 
             consoleTarget.WordHighlightingRules.Add(new ConsoleWordHighlightingRule

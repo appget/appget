@@ -23,7 +23,7 @@ namespace AppGet.Installers.InstallerWhisperer
             },
             {
                 5100, new ExistReason(ExitCodeTypes.RequirementUnmet, "The user's computer does not meet system requirements.")
-            },
+            }
         };
 
 

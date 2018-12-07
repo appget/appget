@@ -38,7 +38,7 @@ namespace AppGet.Infrastructure.Logging
             },
             {
                 LogLevel.Warn, ErrorLevel.Warning
-            },
+            }
         };
 
         public SentryTarget(string DSN)

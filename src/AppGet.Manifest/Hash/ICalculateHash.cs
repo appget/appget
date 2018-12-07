@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AppGet.Manifest.Hash
+﻿namespace AppGet.Manifest.Hash
 {
     public interface ICalculateHash
     {

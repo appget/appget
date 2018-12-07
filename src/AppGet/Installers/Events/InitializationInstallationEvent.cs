@@ -7,7 +7,7 @@ namespace AppGet.Installers.Events
     {
         public InitializationInstallationEvent(PackageManifest manifest)
         {
-            this.Message = $"Initializing installation of {manifest.Name}";
+            Message = $"Initializing installation of {manifest.Name}";
         }
     }
 

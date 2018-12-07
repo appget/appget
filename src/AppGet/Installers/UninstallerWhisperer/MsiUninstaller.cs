@@ -240,7 +240,7 @@ namespace AppGet.Installers.UninstallerWhisperer
             // https://docs.microsoft.com/en-us/dotnet/framework/deployment/guide-for-administrators#return-codes
             {
                 5100, new ExistReason(ExitCodeTypes.RequirementUnmet, "The user's computer does not meet system requirements.")
-            },
+            }
         };
     }
 }

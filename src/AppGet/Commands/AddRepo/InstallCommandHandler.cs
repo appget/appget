@@ -11,8 +11,6 @@ namespace AppGet.Commands.AddRepo
         public async Task Execute(AppGetOption commandOptions)
         {
             var installOptions = (AddRepoOptions)commandOptions;
-
-            return;
         }
     }
 }

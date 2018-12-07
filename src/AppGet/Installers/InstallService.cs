@@ -62,6 +62,7 @@ namespace AppGet.Installers
                 _hub.Publish(new InitializationInstallationEvent(packageManifest));
 
                 var installer = _findInstaller.GetBestInstaller(packageManifest.Installers);
+
                 var installerPath = await _fileTransferService.TransferFile(installer.Location, installer.Sha256);
 
                 _logger.Debug("Getting list of installed application");

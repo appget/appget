@@ -6,7 +6,6 @@ using AppGet.Github.Releases;
 using AppGet.Installers;
 using AppGet.Manifest;
 using NLog;
-using Installer = AppGet.Manifest.Installer;
 
 namespace AppGet.Update
 {

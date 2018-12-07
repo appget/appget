@@ -16,7 +16,7 @@ namespace AppGet.Installers.InstallerWhisperer
             },
             {
                 103, new ExistReason(ExitCodeTypes.CorruptInstaller, "The installation's archive integrity check failed. This means that the setup's archive has been corrupted in some way.")
-            },
+            }
 
         };
 
