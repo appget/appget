@@ -48,9 +48,9 @@ namespace AppGet.Update
         }
 
 
-        public async Task UpdatePackage(string packageId, string tag, InstallInteractivityLevel interactivityLevel)
+        public async Task UpdatePackage(string packageId, string tag, string repository, InstallInteractivityLevel interactivityLevel)
         {
-            var manifest = await _packageRepository.GetAsync(packageId, tag);
+            var manifest = await _packageRepository.GetAsync(packageId, tag, repository);
             await _installService.Install(manifest, interactivityLevel);
         }
 
@@ -78,7 +78,7 @@ namespace AppGet.Update
                 {
                     _logger.Info("Installing update {0} of {1}", index + 1, toInstall.Count);
                     Console.WriteLine();
-                    await UpdatePackage(update.PackageId, PackageManifest.LATEST_TAG, interactivityLevel);
+                    await UpdatePackage(update.PackageId, PackageManifest.LATEST_TAG, null, interactivityLevel);
                     updated++;
                 }
                 catch (InstallerException e) when (e.ExitReason.Category == ExitCodeTypes.RestartRequired)

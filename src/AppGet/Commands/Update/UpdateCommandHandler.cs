@@ -17,7 +17,7 @@ namespace AppGet.Commands.Update
         public async Task Execute(AppGetOption commandOptions)
         {
             var updateOptions = (UpdateOptions)commandOptions;
-            await _updateService.UpdatePackage(updateOptions.PackageId, updateOptions.Tag, updateOptions.GetInteractivityLevel());
+            await _updateService.UpdatePackage(updateOptions.PackageId, updateOptions.Tag, updateOptions.Repository, updateOptions.GetInteractivityLevel());
         }
     }
 }

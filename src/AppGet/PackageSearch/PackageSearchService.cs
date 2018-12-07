@@ -24,7 +24,7 @@ namespace AppGet.PackageSearch
 
         public async Task DisplayResults(string query)
         {
-            var results = await _packageRepository.Search(query);
+            var results = await _packageRepository.Search(query, null);
 
             _logger.Info("Found {0} package(s)", results.Count);
 

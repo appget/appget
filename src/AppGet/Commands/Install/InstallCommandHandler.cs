@@ -22,7 +22,7 @@ namespace AppGet.Commands.Install
         {
             var installOptions = (InstallOptions)commandOptions;
 
-            var package = await _packageRepository.GetAsync(installOptions.PackageId, installOptions.Tag);
+            var package = await _packageRepository.GetAsync(installOptions.PackageId, installOptions.Tag, installOptions.Repository);
             await _installService.Install(package, installOptions.GetInteractivityLevel());
         }
     }

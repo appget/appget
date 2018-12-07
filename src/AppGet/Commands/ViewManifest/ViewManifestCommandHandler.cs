@@ -20,7 +20,7 @@ namespace AppGet.Commands.ViewManifest
         public async Task Execute(AppGetOption searchCommandOptions)
         {
             var viewOptions = (ViewManifestOptions)searchCommandOptions;
-            var package = await _packageRepository.GetAsync(viewOptions.PackageId, viewOptions.Tag);
+            var package = await _packageRepository.GetAsync(viewOptions.PackageId, viewOptions.Tag, viewOptions.Repository);
             var manifest = await _packageManifestService.LoadManifest(package.ManifestPath);
             _packageManifestService.PrintManifest(manifest);
         }

@@ -17,7 +17,7 @@ namespace AppGet.Tests.PackageRepository
 
             WithRealHttp();
 
-            var latest = await Subject.GetAsync(package, null);
+            var latest = await Subject.GetAsync(package, null, null);
 
             latest.Should().NotBeNull();
             latest.ManifestPath.Should().StartWith("https://raw.githubusercontent.com/appget/appget.packages/master/manifests/");
@@ -31,7 +31,7 @@ namespace AppGet.Tests.PackageRepository
         {
             WithRealHttp();
 
-            var latest = await Subject.GetAsync(package, null);
+            var latest = await Subject.GetAsync(package, null, null);
 
             latest.Should().NotBeNull();
             latest.ManifestPath.Should().StartWith("https://raw.githubusercontent.com/appget/appget.packages/master/manifests/");
@@ -44,14 +44,14 @@ namespace AppGet.Tests.PackageRepository
         {
             WithRealHttp();
 
-            Assert.ThrowsAsync<PackageNotFoundException>(() => Subject.GetAsync("bad-package-id", null));
+            Assert.ThrowsAsync<PackageNotFoundException>(() => Subject.GetAsync("bad-package-id", null, null));
         }
 
         [Test]
         public void should_get_null_for_unknown_tag()
         {
             WithRealHttp();
-            Assert.ThrowsAsync<PackageNotFoundException>(() => Subject.GetAsync("vlc", "1"));
+            Assert.ThrowsAsync<PackageNotFoundException>(() => Subject.GetAsync("vlc", "1", null));
         }
 
         [TestCase("vlc")]
@@ -74,7 +74,7 @@ namespace AppGet.Tests.PackageRepository
         public void should_get_manifest()
         {
             WithRealHttp();
-            var c = Subject.GetAsync("postman", null);
+            var c = Subject.GetAsync("postman", null, null);
 
             c.Should().NotBeNull();
         }

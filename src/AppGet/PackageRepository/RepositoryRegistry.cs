@@ -22,7 +22,9 @@ namespace AppGet.PackageRepository
                 {
                     using (var repoKey = baseKey.CreateSubKey($"{SOFTWARE_APPGET_REPOSITORIES}\\{repo.Name}", RegistryKeyPermissionCheck.ReadWriteSubTree))
                     {
-                        repoKey.SetValue("Connection", repo.Connection);
+                        repoKey.SetValue("Name", repo.Name);
+                        repoKey.SetValue("Token", repo.Token);
+                        repoKey.SetValue("RepoId", repo.RepoId);
                     }
                 }
             }
@@ -43,7 +45,16 @@ namespace AppGet.PackageRepository
 
         public Repository Get(string name)
         {
-            return All().First(c => c.Name.ToLower() == name.ToLowerInvariant());
+            name = name.ToLowerInvariant().Trim();
+
+            var repo = All().FirstOrDefault(c => c.Name.ToLower() == name);
+
+            if (repo == null)
+            {
+                throw new RepositoryNotFoundException(name);
+            }
+
+            return repo;
         }
 
         public IEnumerable<Repository> All()
@@ -58,10 +69,12 @@ namespace AppGet.PackageRepository
                     {
                         using (var repoKey = repositoryRoot.OpenSubKey(subKey))
                         {
+                            if (repoKey == null) continue;
                             yield return new Repository
                             {
                                 Name = subKey,
-                                Connection = repoKey.GetValue("Connection").ToString()
+                                Token = repoKey.GetValue("Token")?.ToString(),
+                                RepoId = repoKey.GetValue("RepoId")?.ToString()
                             };
                         }
                     }

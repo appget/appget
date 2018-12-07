@@ -15,12 +15,14 @@ namespace AppGet.Tests.PackageRepository
             var repo = new Repository
             {
                 Name = Guid.NewGuid().ToString(),
-                Connection = "repourl"
+                RepoId = Guid.NewGuid().ToString(),
+                Token = Guid.NewGuid().ToString()
             };
             Subject.AddRepo(repo);
 
+            Subject.All().Should().Contain(c => c.Name == repo.Name && c.Token == repo.Token && c.RepoId == repo.RepoId);
 
-            Subject.All().Should().Contain(c => c.Name == repo.Name && c.Connection == repo.Connection);
+            Subject.Remove(repo.Name);
         }
 
 
@@ -28,7 +30,6 @@ namespace AppGet.Tests.PackageRepository
         public void should_get_all()
         {
             var c = Subject.All();
-
             c.ToList().Should().NotBeNull();
         }
 
@@ -38,7 +39,8 @@ namespace AppGet.Tests.PackageRepository
             var repo = new Repository
             {
                 Name = Guid.NewGuid().ToString(),
-                Connection = "repourl"
+                Token = Guid.NewGuid().ToString(),
+                RepoId = Guid.NewGuid().ToString()
             };
 
             Subject.AddRepo(repo);

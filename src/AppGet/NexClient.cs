@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using AppGet.Http;
 using AppGet.Installers;
+using AppGet.PackageRepository;
 using NLog;
 
 namespace AppGet
@@ -37,6 +39,21 @@ namespace AppGet
             {
                 _logger.Trace(e, "Couldn't submit installation report.");
             }
+        }
+
+        public async Task<Repository> AuthenticateRepository(string repoId, string key)
+        {
+            _logger.Info("Requesting access to repository {0}", repoId);
+
+            var request = new HttpRequestMessage(HttpMethod.Post, $"{API_ROOT}/repos/{repoId}/auth");
+            request.Headers.Add("X-Repo-Key", key);
+
+            var resp = await _httpClient.SendAsync(request, TimeSpan.FromMinutes(1));
+            var repo = await resp.Deserialize<Repository>();
+
+            _logger.Info("Successfully authenticated to {0}", repo.Name);
+
+            return repo;
         }
     }
 }

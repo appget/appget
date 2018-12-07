@@ -101,8 +101,8 @@
     <Compile Include="CommandLine\Prompts\TextPrompt.cs" />
     <Compile Include="CommandLine\Prompts\EnumPrompt.cs" />
     <Compile Include="CommandLine\Prompts\UrlPrompt.cs" />
-    <Compile Include="Commands\AddRepo\InstallCommandHandler.cs" />
-    <Compile Include="Commands\AddRepo\AddRepoOptions.cs" />
+    <Compile Include="Commands\RepoActions\RepoActionsCommandHandler.cs" />
+    <Compile Include="Commands\RepoActions\RepoActionsOptions.cs" />
     <Compile Include="Commands\AppGetSentenceBuilder.cs" />
     <Compile Include="Commands\CommandExecutor.cs" />
     <Compile Include="Commands\CommandOptionExtensions.cs" />
@@ -180,7 +180,9 @@
     <Compile Include="Installers\UninstallerWhisperer\WixWhisperer.cs" />
     <Compile Include="NexClient.cs" />
     <Compile Include="PackageRepository\AddRepositoryException.cs" />
+    <Compile Include="PackageRepository\PrivateRepositoryService.cs" />
     <Compile Include="PackageRepository\Repository.cs" />
+    <Compile Include="PackageRepository\RepositoryNotFoundException.cs" />
     <Compile Include="Properties\SharedAssemblyInfo.cs" />
     <Compile Include="Update\NovoClient.cs" />
     <Compile Include="Github\GithubKeys.cs" />

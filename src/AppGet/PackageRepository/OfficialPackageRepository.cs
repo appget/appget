@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using AppGet.Http;
 using AppGet.Manifest;
@@ -12,17 +13,19 @@ namespace AppGet.PackageRepository
     public class OfficialPackageRepository : IPackageRepository
     {
         private readonly IHttpClient _httpClient;
+        private readonly RepositoryRegistry _repositoryRegistry;
         private readonly Logger _logger;
 
         private const string API_ROOT = "https://nex.appget.net";
 
-        public OfficialPackageRepository(IHttpClient httpClient, Logger logger)
+        public OfficialPackageRepository(IHttpClient httpClient, RepositoryRegistry repositoryRegistry, Logger logger)
         {
             _httpClient = httpClient;
+            _repositoryRegistry = repositoryRegistry;
             _logger = logger;
         }
 
-        public async Task<PackageInfo> GetAsync(string id, string tag)
+        public async Task<PackageInfo> GetAsync(string id, string tag, string repository)
         {
             _logger.Info($"Getting package {id}:{tag ?? PackageManifest.LATEST_TAG}");
 
@@ -35,7 +38,7 @@ namespace AppGet.PackageRepository
                     term += $":{tag}";
                 }
 
-                var packages = await Search(term, true);
+                var packages = await Search(term, repository, true);
 
                 var match = packages.FirstOrDefault(c => c.Selected);
 
@@ -57,18 +60,28 @@ namespace AppGet.PackageRepository
             }
         }
 
-        public async Task<List<PackageInfo>> Search(string term, bool select = false)
+        public async Task<List<PackageInfo>> Search(string term, string repository = null, bool @select = false)
         {
             _logger.Debug($"Searching for '{term}' in {API_ROOT}");
 
-            var uri = new Uri($"{API_ROOT}/packages?q={term}");
+            var url = $"{API_ROOT}/packages";
+
+            if (repository != null)
+            {
+                var repo = _repositoryRegistry.Get(repository);
+                url += $"/{repo.RepoId}";
+            }
+
+            url += $"?q={term}";
+
 
             if (select)
             {
-                uri = new Uri($"{uri}&s=1");
+                url += "&s=1";
             }
 
-            var package = await _httpClient.GetAsync(uri, TimeSpan.FromSeconds(30));
+
+            var package = await _httpClient.GetAsync(new Uri(url), TimeSpan.FromSeconds(30));
 
             return await package.Deserialize<List<PackageInfo>>();
         }
