@@ -11,7 +11,10 @@ namespace AppGet.Commands.RepoActions
         [Value(2, HelpText = "Connection string for remote repository")]
         public string ConnectionString { get; set; }
 
-        [Option(HelpText = "local name for the repository")]
+        [Option(HelpText = "Repository name")]
         public string Name { get; set; }
+
+        [Option(HelpText = "Repository ID")]
+        public string Id { get; set; }
     }
 }

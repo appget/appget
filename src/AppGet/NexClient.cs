@@ -51,7 +51,7 @@ namespace AppGet
             var resp = await _httpClient.SendAsync(request, TimeSpan.FromMinutes(1));
             var repo = await resp.Deserialize<Repository>();
 
-            _logger.Info("Successfully authenticated to {0}", repo.Name);
+            _logger.Info("Successfully authenticated to \"{0}\"", repo.Name);
 
             return repo;
         }

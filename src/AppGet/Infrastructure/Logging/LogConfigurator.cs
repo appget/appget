@@ -17,8 +17,13 @@ namespace AppGet.Infrastructure.Logging
 
         private static void RegisterTarget(Target target, LogLevel level)
         {
+            var name = target.GetType().Name;
+
+            if (LogManager.Configuration.FindTargetByName(name) != null) return;
+
+
             var rule = new LoggingRule("*", level, target);
-            LogManager.Configuration.AddTarget(target.GetType().Name, target);
+            LogManager.Configuration.AddTarget(name, target);
             LogManager.Configuration.LoggingRules.Add(rule);
             LogManager.ReconfigExistingLoggers();
         }
@@ -89,7 +94,7 @@ namespace AppGet.Infrastructure.Logging
             // package:tag
             consoleTarget.WordHighlightingRules.Add(new ConsoleWordHighlightingRule
             {
-                Regex = @"[a-z0-9-]{2,}\:[a-z0-9\.]+",
+                Regex = @"[a-z0-9-]{2,}\:[a-z0-9\.]+\s",
                 WholeWords = true,
                 CompileRegex = true,
                 IgnoreCase = false,

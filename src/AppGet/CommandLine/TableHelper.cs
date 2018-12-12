@@ -34,7 +34,7 @@ namespace AppGet.CommandLine
         }
 
 
-        private static void Print(ConsoleTable table)
+        public static void Print(this ConsoleTable table)
         {
             Console.WriteLine();
             table.Write(Format.MarkDown);

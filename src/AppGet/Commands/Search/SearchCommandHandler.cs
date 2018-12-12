@@ -14,7 +14,6 @@ namespace AppGet.Commands.Search
             _packageSearchService = packageSearchService;
         }
 
-
         public async Task Execute(AppGetOption commandOptions)
         {
             var searchOptions = (SearchOptions)commandOptions;
