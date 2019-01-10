@@ -6,7 +6,6 @@ namespace AppGet.Manifest.Tests.Serialization
     [TestFixture]
     public class YamlFixture
     {
-
         [Test]
         public void should_not_serialize_empty_args()
         {
@@ -35,6 +34,31 @@ namespace AppGet.Manifest.Tests.Serialization
 
             yaml.Should().Contain("args");
             yaml.Should().Contain("/S");
+        }
+
+        [Test]
+        public void should_not_serialize_is_latest()
+        {
+            var manifest = new PackageManifest
+            {
+            };
+
+            var yaml = manifest.ToYaml();
+
+            yaml.Should().NotContain("isLatest");
+        }
+
+        [Test]
+        public void should_not_serialize_tag()
+        {
+            var manifest = new PackageManifest
+            {
+                Tag = "1.0"
+            };
+
+            var yaml = manifest.ToYaml();
+
+            yaml.Should().NotContain("1.0");
         }
     }
 }

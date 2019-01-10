@@ -29,6 +29,9 @@ namespace AppGet.Manifest
         [DefaultValue(LATEST_TAG)]
         public string Tag { get; set; }
 
+        [YamlIgnore]
+        public bool IsLatest => Tag == null || Tag == LATEST_TAG;
+
         public PackageManifest()
         {
             InstallMethod = InstallMethodTypes.Custom;
@@ -40,7 +43,7 @@ namespace AppGet.Manifest
             return $"{Id} {Version}".Trim();
         }
 
-        public bool IsLatest => Tag == null || Tag == LATEST_TAG;
+
 
         public string ToYaml()
         {
