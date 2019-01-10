@@ -161,12 +161,11 @@
     <Compile Include="Infrastructure\Eventing\Hub.cs" />
     <Compile Include="Infrastructure\Eventing\IEvent.cs" />
     <Compile Include="Infrastructure\Eventing\IHandle.cs" />
-    <Compile Include="Infrastructure\Eventing\Events\ManifestLoadedEvent.cs" />
     <Compile Include="Infrastructure\Eventing\Events\StatusUpdateEvent.cs" />
     <Compile Include="Installers\DiffGenerator.cs" />
     <Compile Include="Installers\InstallerArgFactory.cs" />
     <Compile Include="Installers\InstallerContext.cs" />
-    <Compile Include="Installers\Events\InitializationInstallationEvent.cs" />
+    <Compile Include="Installers\Events\InstallationInitializedEvent.cs" />
     <Compile Include="Installers\InstallerContextFactory.cs" />
     <Compile Include="Installers\InstallerWhisperer\InstallerBase.cs" />
     <Compile Include="Installers\PackageOperation.cs" />

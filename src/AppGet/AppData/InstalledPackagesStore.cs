@@ -45,9 +45,9 @@ namespace AppGet.AppData
 
         protected override string Name => "packages";
 
-        public Task Handle(InstallationSuccessfulEvent message)
+        public Task Handle(InstallationSuccessfulEvent @event)
         {
-            Save(message.Manifest);
+            Save(@event.Manifest);
             return Task.FromResult(0);
         }
     }

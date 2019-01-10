@@ -4,8 +4,6 @@ using System.Threading.Tasks;
 using AppGet.AppData;
 using AppGet.FileSystem;
 using AppGet.FileTransfer;
-using AppGet.Infrastructure.Eventing;
-using AppGet.Infrastructure.Eventing.Events;
 using AppGet.Manifest;
 using AppGet.Manifest.Builder;
 using AppGet.Manifest.Serialization;
@@ -25,15 +23,13 @@ namespace AppGet.Manifests
         private readonly IFileTransferService _fileTransferService;
         private readonly IFileSystem _fileSystem;
         private readonly IStore<Config> _configStore;
-        private readonly IHub _hub;
         private readonly Logger _logger;
 
-        public PackageManifestService(IFileTransferService fileTransferService, IFileSystem fileSystem, IStore<Config> configStore, IHub hub, Logger logger)
+        public PackageManifestService(IFileTransferService fileTransferService, IFileSystem fileSystem, IStore<Config> configStore, Logger logger)
         {
             _fileTransferService = fileTransferService;
             _fileSystem = fileSystem;
             _configStore = configStore;
-            _hub = hub;
             _logger = logger;
         }
 
@@ -43,7 +39,6 @@ namespace AppGet.Manifests
             var text = await _fileTransferService.ReadContent(source);
 
             var manifest = Yaml.Deserialize<PackageManifest>(text);
-            _hub.Publish(new ManifestLoadedEvent(this, manifest));
             return manifest;
         }
 

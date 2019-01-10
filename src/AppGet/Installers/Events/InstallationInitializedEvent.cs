@@ -3,10 +3,13 @@ using AppGet.Manifest;
 
 namespace AppGet.Installers.Events
 {
-    public class InitializationInstallationEvent : StatusUpdateEvent
+    public class InstallationInitializedEvent : StatusUpdateEvent
     {
-        public InitializationInstallationEvent(PackageManifest manifest)
+        public PackageManifest Manifest { get; }
+
+        public InstallationInitializedEvent(PackageManifest manifest)
         {
+            Manifest = manifest;
             Message = $"Initializing installation of {manifest.Name}";
         }
     }

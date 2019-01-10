@@ -59,7 +59,7 @@ namespace AppGet.Installers
             using (var context = _installerContextFactory.Build(packageManifest, interactivityLevel, PackageOperation.Install))
             {
                 _logger.Info("Beginning installation of '{0}'", packageManifest);
-                _hub.Publish(new InitializationInstallationEvent(packageManifest));
+                _hub.Publish(new InstallationInitializedEvent(packageManifest));
 
                 var installer = _findInstaller.GetBestInstaller(packageManifest.Installers);
 
