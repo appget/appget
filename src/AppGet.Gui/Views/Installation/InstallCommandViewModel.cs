@@ -24,7 +24,7 @@ namespace AppGet.Gui.Views.Installation
 
         public InstallCommandViewModel(ICommandExecutor executor,
             IHub hub,
-            InstallationConsentViewModel _consentViewModel,
+            InstallationConsentViewModel consentViewModel,
             InitializingViewModel initializingViewModel,
             DownloadProgressViewModel installProgressViewModel,
             InstallingViewModel installingViewModel,
@@ -32,7 +32,7 @@ namespace AppGet.Gui.Views.Installation
         {
             _executor = executor;
             _hub = hub;
-            this._consentViewModel = _consentViewModel;
+            _consentViewModel = consentViewModel;
             _initializingViewModel = initializingViewModel;
             _installProgressViewModel = installProgressViewModel;
             _installingViewModel = installingViewModel;
