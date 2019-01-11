@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using AppGet.Manifest.Serialization;
+using Newtonsoft.Json;
 using YamlDotNet.Serialization;
 
 namespace AppGet.Manifest
@@ -30,6 +31,7 @@ namespace AppGet.Manifest
         public string Tag { get; set; }
 
         [YamlIgnore]
+        [JsonIgnore]
         public bool IsLatest => Tag == null || Tag == LATEST_TAG;
 
         public PackageManifest()
@@ -42,8 +44,6 @@ namespace AppGet.Manifest
         {
             return $"{Id} {Version}".Trim();
         }
-
-
 
         public string ToYaml()
         {
