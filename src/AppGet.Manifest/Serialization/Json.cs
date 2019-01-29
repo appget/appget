@@ -19,7 +19,7 @@ namespace AppGet.Manifest.Serialization
         {
             Settings.Converters.Add(new StringEnumConverter(false));
             Settings.Converters.Add(new Newtonsoft.Json.Converters.VersionConverter());
-            Settings.DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate;
+            Settings.DefaultValueHandling = DefaultValueHandling.Ignore;
             Settings.NullValueHandling = NullValueHandling.Ignore;
             Settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             Serializer = JsonSerializer.Create(Settings);
