@@ -2,7 +2,7 @@
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace AppGet.Tests.Processes
+namespace AppGet.Tests.Windows
 {
     [TestFixture]
     public class ProcessControllerFixture : TestBase<ProcessController>
