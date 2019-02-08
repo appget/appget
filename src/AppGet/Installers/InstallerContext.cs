@@ -87,7 +87,7 @@ namespace AppGet.Installers
             if (Exception != null)
             {
                 report.ExitCode = Exception.ExitCode;
-                report.ErrorCat = Exception.ExitReason.Category.ToString();
+                report.ErrorCat = Exception.ExitReason?.Category.ToString();
             }
 
             _nexClient.SubmitReport(report).Wait();

@@ -81,7 +81,7 @@ namespace AppGet.Update
                     await UpdatePackage(update.PackageId, PackageManifest.LATEST_TAG, interactivityLevel);
                     updated++;
                 }
-                catch (InstallerException e) when (e.ExitReason.Category == ExitCodeTypes.RestartRequired)
+                catch (InstallerException e) when (e.ExitReason?.Category == ExitCodeTypes.RestartRequired)
                 {
                     restartRequired = true;
                 }
