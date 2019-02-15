@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using AppGet.Manifest.Serialization;
 using Newtonsoft.Json;
@@ -27,12 +26,11 @@ namespace AppGet.Manifest
         public List<Installer> Installers { get; set; }
 
         [YamlIgnore]
-        [DefaultValue(LATEST_TAG)]
         public string Tag { get; set; }
 
         [YamlIgnore]
         [JsonIgnore]
-        public bool IsLatest => Tag == null || Tag == LATEST_TAG;
+        public bool IsLatest => TagHelper.IsLatest(Tag);
 
         public PackageManifest()
         {
@@ -53,12 +51,7 @@ namespace AppGet.Manifest
         public string GetFileName()
         {
             var tag = Tag?.Trim().ToLower();
-            if (string.IsNullOrWhiteSpace(tag) || tag == LATEST_TAG)
-            {
-                return $"{Id}";
-            }
-
-            return $"{Id}_{tag}";
+            return IsLatest ? $"{Id}" : $"{Id}_{tag}";
         }
     }
 

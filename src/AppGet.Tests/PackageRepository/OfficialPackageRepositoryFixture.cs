@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using AppGet.Manifest;
 using AppGet.PackageRepository;
 using FluentAssertions;
 using NUnit.Framework;
@@ -14,7 +13,6 @@ namespace AppGet.Tests.PackageRepository
         [TestCase("7zip")]
         public async Task should_get_package(string package)
         {
-
             WithRealHttp();
 
             var latest = await Subject.GetAsync(package, null);
@@ -22,7 +20,8 @@ namespace AppGet.Tests.PackageRepository
             latest.Should().NotBeNull();
             latest.ManifestPath.Should().StartWith("https://raw.githubusercontent.com/appget/appget.packages/master/manifests/");
             latest.Id.Should().Be(package);
-            latest.Tag.Should().Be(PackageManifest.LATEST_TAG);
+            latest.Tag.Should().BeNull();
+            latest.IsLatest.Should().BeTrue();
         }
 
 

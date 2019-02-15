@@ -5,12 +5,17 @@ namespace AppGet.Manifest
 {
     public static class TagHelper
     {
-
         private static readonly char[] TrimChars = { '.', ':', '@' };
 
         private static int IndexOfTag(string text)
         {
             return text?.IndexOfAny(new[] { '_', ':', '@' }) ?? -1;
+        }
+
+
+        public static bool IsLatest(string tag)
+        {
+            return tag == null || tag == PackageManifest.LATEST_TAG;
         }
 
         private static string ParseTarget(string input)

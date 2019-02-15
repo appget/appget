@@ -22,7 +22,7 @@ namespace AppGet.CreatePackage.Root.Prompts
         {
             var tag = _prompt.Request("Tag", PackageManifest.LATEST_TAG)?.ToLowerInvariant();
 
-            if (string.IsNullOrWhiteSpace(tag) || tag == PackageManifest.LATEST_TAG)
+            if (TagHelper.IsLatest(tag))
             {
                 tag = null;
             }
