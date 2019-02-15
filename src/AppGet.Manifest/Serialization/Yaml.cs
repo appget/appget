@@ -12,6 +12,7 @@ namespace AppGet.Manifest.Serialization
             .WithNamingConvention(new CamelCaseNamingConvention())
             .WithTypeConverter(new VersionConverter())
             .IgnoreUnmatchedProperties()
+            .IgnoreFields()
             .Build();
 
 
@@ -26,6 +27,7 @@ namespace AppGet.Manifest.Serialization
                     .WithTypeConverter(new VersionConverter())
                     .WithEmissionPhaseObjectGraphVisitor(args => new YamlDefaultGraphVisitor(args.InnerVisitor))
                     .DisableAliases()
+                    .IgnoreFields()
                     .Build().Serialize(textWriter, obj);
                 var yaml = textWriter.ToString();
 
