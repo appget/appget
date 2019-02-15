@@ -15,7 +15,7 @@ namespace AppGet.Manifest
 
         public static bool IsLatest(string tag)
         {
-            return tag == null || tag == PackageManifest.LATEST_TAG;
+            return string.IsNullOrWhiteSpace(tag) || tag.Trim().ToLowerInvariant() == PackageManifest.LATEST_TAG;
         }
 
         private static string ParseTarget(string input)

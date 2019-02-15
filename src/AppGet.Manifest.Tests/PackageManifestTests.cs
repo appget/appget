@@ -40,7 +40,9 @@ namespace AppGet.Manifest.Tests
 
         [TestCase("name", null, ExpectedResult = "name")]
         [TestCase("name", "latest", ExpectedResult = "name")]
+        [TestCase("name", "latest     ", ExpectedResult = "name")]
         [TestCase("name", "LATEST", ExpectedResult = "name")]
+        [TestCase("name   ", "", ExpectedResult = "name")]
         [TestCase("name", "", ExpectedResult = "name")]
         [TestCase("name", "1", ExpectedResult = "name_1")]
         public string get_filename(string id, string tag)

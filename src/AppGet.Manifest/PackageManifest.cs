@@ -51,7 +51,8 @@ namespace AppGet.Manifest
         public string GetFileName()
         {
             var tag = Tag?.Trim().ToLower();
-            return IsLatest ? $"{Id}" : $"{Id}_{tag}";
+            var id = Id.Trim().ToLower();
+            return IsLatest ? $"{id}" : $"{id}_{tag}";
         }
     }
 
