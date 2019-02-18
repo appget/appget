@@ -1,4 +1,5 @@
-﻿using NLog;
+﻿using System.Collections.Generic;
+using NLog;
 using NLog.Config;
 using NLog.Layouts;
 using NLog.Targets;
@@ -15,12 +16,24 @@ namespace AppGet.Infrastructure.Logging
             LogManager.Configuration = new LoggingConfiguration();
         }
 
+        private static readonly HashSet<string> RegisteredLoggers = new HashSet<string>();
+
         private static void RegisterTarget(Target target, LogLevel level)
         {
-            var rule = new LoggingRule("*", level, target);
-            LogManager.Configuration.AddTarget(target.GetType().Name, target);
-            LogManager.Configuration.LoggingRules.Add(rule);
-            LogManager.ReconfigExistingLoggers();
+            var key = $"{target.GetType().Name}:{level.Name}";
+
+            lock (RegisteredLoggers)
+            {
+                if (RegisteredLoggers.Contains(key)) return;
+
+                var rule = new LoggingRule("*", level, target);
+
+                LogManager.Configuration.AddTarget(target.GetType().Name, target);
+                LogManager.Configuration.LoggingRules.Add(rule);
+                LogManager.ReconfigExistingLoggers();
+
+                RegisteredLoggers.Add(key);
+            }
         }
 
         public static void EnableSentryTarget(string dsn)
