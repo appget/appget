@@ -37,12 +37,8 @@ namespace AppGet.Update
             _logger.Debug("Getting list of installed application");
             var records = _windowsInstallerClient.GetRecords();
 
-            _logger.Info("Getting list of available updates...");
+            _logger.Info("Getting list of matching packages...");
             var updates = await _novoClient.GetUpdates(records);
-
-            Console.WriteLine();
-            _logger.Info("Total Applications: {0:n0}   Updates Available: {1:n0}", updates.Count, updates.Count(c => c.Status == UpdateStatus.Available));
-            Console.WriteLine();
 
             return updates;
         }

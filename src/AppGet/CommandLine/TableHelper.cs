@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using AppGet.Manifest;
 using AppGet.Update;
 
@@ -21,13 +20,27 @@ namespace AppGet.CommandLine
         }
 
 
-        public static void ShowTable(this IEnumerable<PackageUpdate> updates)
+        public static void ShowTable(this IEnumerable<PackageUpdate> updates, bool printStatus = true)
         {
-            var table = new ConsoleTable("Name", "Package ID", "Installed Version", "Available Version");
+            var columns = new List<string> { "Name", "Package ID", "Installed Version", "Available Version" };
 
-            foreach (var update in updates.OrderBy(c => c.PackageId))
+            if (printStatus)
             {
-                table.AddRow(update.Name, update.PackageId, update.InstalledVersion, update.AvailableVersion);
+                columns.Add("Status");
+            }
+
+            var table = new ConsoleTable(columns.ToArray());
+
+            foreach (var update in updates)
+            {
+                var cols = new List<object> { update.Name, update.PackageId, update.InstalledVersion, update.AvailableVersion };
+
+                if (printStatus)
+                {
+                    cols.Add(update.Status);
+                }
+
+                table.AddRow(cols.ToArray());
             }
 
             Print(table);

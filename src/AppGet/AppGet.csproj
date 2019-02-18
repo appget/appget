@@ -111,6 +111,8 @@
     <Compile Include="Commands\IVariableInteractivityCommand.cs" />
     <Compile Include="Commands\Clean\CleanCommandHandler.cs" />
     <Compile Include="Commands\Clean\CleanOptions.cs" />
+    <Compile Include="Commands\List\ListCommandHandler.cs" />
+    <Compile Include="Commands\List\ListOptions.cs" />
     <Compile Include="Commands\UpdateAll\UpdateAllCommandHandler.cs" />
     <Compile Include="Commands\UpdateAll\UpdateAllOptions.cs" />
     <Compile Include="Commands\Update\UpdateCommandHandler.cs" />
