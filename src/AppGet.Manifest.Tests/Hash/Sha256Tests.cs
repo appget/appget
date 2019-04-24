@@ -4,8 +4,8 @@ using NUnit.Framework;
 
 namespace AppGet.Manifest.Tests.Hash
 {
-    [TestFixture()]
-    public class Sha256Fixture
+    [TestFixture]
+    public class Sha256Tests
     {
         [Test]
         public void should_get_sha1()

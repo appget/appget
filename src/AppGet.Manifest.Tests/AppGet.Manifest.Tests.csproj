@@ -62,7 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builder\ManifestAttributeCandidateFixture.cs" />
-    <Compile Include="Hash\Sha256Fixture.cs" />
+    <Compile Include="Hash\Sha256Tests.cs" />
     <Compile Include="PackageManifestTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\JsonCloneTests.cs" />

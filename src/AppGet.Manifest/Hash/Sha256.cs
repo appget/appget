@@ -9,20 +9,26 @@ namespace AppGet.Manifest.Hash
         public string CalculateHash(string file)
         {
             using (var stream = File.OpenRead(file))
-            using (var algorithm = new SHA256Managed())
+            using (var algorithm = SHA256.Create())
             {
-                var checksum = algorithm.ComputeHash(stream);
-                return BitConverter.ToString(checksum).ToLowerInvariant().Replace("-", string.Empty);
+                var hash = algorithm.ComputeHash(stream);
+                return HashToString(hash);
             }
         }
 
         public string CalculateHash(byte[] buffer)
         {
-            using (var algorithm = new SHA256Managed())
+            using (var algorithm = SHA256.Create())
             {
-                var checksum = algorithm.ComputeHash(buffer);
-                return BitConverter.ToString(checksum).ToLowerInvariant().Replace("-", string.Empty);
+                var hash = algorithm.ComputeHash(buffer);
+                return HashToString(hash);
             }
+        }
+
+
+        private static string HashToString(byte[] hash)
+        {
+            return BitConverter.ToString(hash).ToLowerInvariant().Replace("-", string.Empty);
         }
     }
 }
