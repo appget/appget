@@ -14,7 +14,7 @@ namespace AppGet.Gui.Views
             var installOptions = (InstallOptions)AppSession.Options;
 
 
-            this.HeaderViewModel = new DialogHeaderViewModel($"Install {installOptions.Package}", $"Are you sure you want to install {installOptions.Package}?", "question-circle", Accents.Info);
+            HeaderViewModel = new DialogHeaderViewModel($"Install {installOptions.Package}", $"Are you sure you want to install {installOptions.Package}?", "question-circle", Accents.Info);
             base.OnActivate();
         }
     }

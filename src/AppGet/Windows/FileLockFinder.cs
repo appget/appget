@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
 namespace AppGet.Windows
 {
@@ -10,7 +11,7 @@ namespace AppGet.Windows
         private struct RM_UNIQUE_PROCESS
         {
             public readonly int dwProcessId;
-            public readonly System.Runtime.InteropServices.ComTypes.FILETIME ProcessStartTime;
+            public readonly FILETIME ProcessStartTime;
         }
 
         private const int RmRebootReasonNone = 0;

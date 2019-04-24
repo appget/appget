@@ -30,7 +30,7 @@ namespace AppGet.Tests.Manifests
                     {
                         Location = "http://www.linqpad.net/GetFile.aspx?LINQPad4-AnyCPU.zip",
                         Architecture = ArchitectureTypes.x86,
-                        MinWindowsVersion = WindowsVersion.KnownVersions.First(),
+                        MinWindowsVersion = WindowsVersion.KnownVersions.First()
                     }
                 }
             };

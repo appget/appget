@@ -13,7 +13,7 @@ namespace AppGet.Gui.Views
             var manifest = AppSession.CurrentManifest;
             var nameVersion = $"{manifest.Name} {manifest.Version}";
 
-            this.HeaderViewModel = new DialogHeaderViewModel(nameVersion, "Installed Successfully", "check", Accents.Success);
+            HeaderViewModel = new DialogHeaderViewModel(nameVersion, "Installed Successfully", "check", Accents.Success);
             base.OnActivate();
         }
     }

@@ -33,7 +33,7 @@ namespace AppGet.Tests.Installers
 
             var newRecord = new WindowsInstallerRecord
             {
-                Id = "new",
+                Id = "new"
             };
 
             after.Add(newRecord);

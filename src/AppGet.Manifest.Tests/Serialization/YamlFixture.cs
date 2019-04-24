@@ -39,9 +39,7 @@ namespace AppGet.Manifest.Tests.Serialization
         [Test]
         public void should_not_serialize_is_latest()
         {
-            var manifest = new PackageManifest
-            {
-            };
+            var manifest = new PackageManifest();
 
             var yaml = manifest.ToYaml();
 

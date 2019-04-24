@@ -8,7 +8,7 @@ namespace AppGet.Gui.Views
         protected override void OnInitialize()
         {
             var manifest = AppSession.CurrentManifest;
-            this.Message = $"Installing {manifest.Name} {manifest.Version}";
+            Message = $"Installing {manifest.Name} {manifest.Version}";
         }
 
         public string Message { get; private set; }

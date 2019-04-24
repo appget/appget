@@ -4,8 +4,8 @@ namespace AppGet.Gui.FontAwesome
 {
     public static class FaIcons
     {
-        public static readonly Dictionary<string, char> Regular = new Dictionary<string, char>()
-{
+        public static readonly Dictionary<string, char> Regular = new Dictionary<string, char>
+        {
 {"address-book",  '\uf2b9'},
 {"address-card",  '\uf2bb'},
 {"angry",  '\uf556'},
@@ -157,10 +157,10 @@ namespace AppGet.Gui.FontAwesome
 {"window-close",  '\uf410'},
 {"window-maximize",  '\uf2d0'},
 {"window-minimize",  '\uf2d1'},
-{"window-restore",  '\uf2d2'},
+{"window-restore",  '\uf2d2'}
 };
-        public static readonly Dictionary<string, char> Solid = new Dictionary<string, char>()
-{
+        public static readonly Dictionary<string, char> Solid = new Dictionary<string, char>
+        {
 {"address-book",  '\uf2b9'},
 {"address-card",  '\uf2bb'},
 {"adjust",  '\uf042'},
@@ -927,10 +927,10 @@ namespace AppGet.Gui.FontAwesome
 {"won-sign",  '\uf159'},
 {"wrench",  '\uf0ad'},
 {"x-ray",  '\uf497'},
-{"yen-sign",  '\uf157'},
+{"yen-sign",  '\uf157'}
 };
-        public static readonly Dictionary<string, char> Brands = new Dictionary<string, char>()
-{
+        public static readonly Dictionary<string, char> Brands = new Dictionary<string, char>
+        {
 {"500px",  '\uf26e'},
 {"accessible-icon",  '\uf368'},
 {"accusoft",  '\uf369'},
@@ -1309,7 +1309,7 @@ namespace AppGet.Gui.FontAwesome
 {"yoast",  '\uf2b1'},
 {"youtube",  '\uf167'},
 {"youtube-square",  '\uf431'},
-{"zhihu",  '\uf63f'},
+{"zhihu",  '\uf63f'}
 };
     }
 }

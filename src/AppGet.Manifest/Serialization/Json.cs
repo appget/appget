@@ -12,7 +12,7 @@ namespace AppGet.Manifest.Serialization
 
         public static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
         {
-            ContractResolver = new CamelCasePropertyNamesContractResolver(),
+            ContractResolver = new CamelCasePropertyNamesContractResolver()
         };
 
         static Json()

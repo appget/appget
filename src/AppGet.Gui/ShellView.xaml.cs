@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using Caliburn.Micro;
 using JetBrains.Annotations;
@@ -40,7 +41,7 @@ namespace AppGet.Gui
             Close();
         }
 
-        private void ShellView_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void ShellView_Closing(object sender, CancelEventArgs e)
         {
             _viewModel.Deactivated -= _viewModel_Deactivated;
             _viewModel.Deactivate(true);

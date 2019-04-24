@@ -5,7 +5,6 @@ using AppGet.HostSystem;
 using AppGet.Http;
 using FluentAssertions;
 using NUnit.Framework;
-using HttpClient = AppGet.Http.HttpClient;
 
 namespace AppGet.Tests.Http
 {
