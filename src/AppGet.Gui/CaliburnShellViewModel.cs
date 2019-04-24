@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,14 +23,14 @@ namespace AppGet.Gui
                 try
                 {
 
-//                    if (args.Length <= 1)
-//                    {
-//                        args = new[]
-//                        {
-//                            "appget://install/vlc",
-////                            "appget://install/visual-studio-code"
-//                        };
-//                    }
+                    //                    if (args.Length <= 1)
+                    //                    {
+                    //                        args = new[]
+                    //                        {
+                    //                            "appget://install/vlc",
+                    ////                            "appget://install/visual-studio-code"
+                    //                        };
+                    //                    }
 
                     var option = optionsParser.Parse(args.Last());
 
@@ -38,9 +39,15 @@ namespace AppGet.Gui
                     var viewModel = commandViewModels.First(c => c.CanHandle(option));
                     ActivateItem(viewModel);
                 }
+                catch (CommandLineParserException)
+                {
+                    Process.Start("https://appget.net/packages");
+                    Environment.Exit(1);
+                }
                 catch (Exception e)
                 {
                     MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Environment.Exit(1);
                 }
             });
         }
