@@ -19,6 +19,8 @@ namespace AppGet.Infrastructure.Logging
 
         private readonly RavenClient _client;
 
+        private static readonly Dictionary<string, string> Tags = new Dictionary<string, string>();
+
         private static readonly IDictionary<LogLevel, ErrorLevel> LoggingLevelMap = new Dictionary<LogLevel, ErrorLevel>
         {
             {
@@ -41,6 +43,15 @@ namespace AppGet.Infrastructure.Logging
             }
         };
 
+
+        public static void AddTag(string key, string value)
+        {
+            lock (Tags)
+            {
+                Tags[key] = value;
+            }
+        }
+
         public SentryTarget(string DSN)
         {
             _client = new RavenClient(new Dsn(DSN), new JsonPacketFactory(), new SentryRequestFactory(), new SentryUserFactory())
@@ -48,12 +59,17 @@ namespace AppGet.Infrastructure.Logging
                 Compression = true,
                 ErrorOnCapture = OnError,
                 Release = BuildInfo.AppVersion.ToString(),
-                Environment = BuildInfo.IsProduction ? "Production" : "Dev"
+                Environment = BuildInfo.IsProduction ? "prod" : "dev"
             };
+
+            var env = new EnvInfo();
 
             _client.Tags.Add("culture", Thread.CurrentThread.CurrentCulture.Name);
             _client.Tags.Add("args", string.Join(" ", Environment.GetCommandLineArgs()));
             _client.Tags.Add("64_process", Environment.Is64BitProcess.ToString());
+            _client.Tags.Add("is_server", EnvInfo.IsWindowsServer().ToString());
+            _client.Tags.Add("is_admin", env.IsAdministrator.ToString());
+            _client.Tags.Add("is_gui", env.IsGui.ToString());
         }
 
         private void OnError(Exception ex)
@@ -78,6 +94,14 @@ namespace AppGet.Infrastructure.Logging
         {
             try
             {
+                lock (Tags)
+                {
+                    foreach (var tag in Tags)
+                    {
+                        _client.Tags[tag.Key] = tag.Value;
+                    }
+                }
+
                 var message = logEvent.FormattedMessage;
 
                 if (!string.IsNullOrEmpty(message))

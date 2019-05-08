@@ -36,6 +36,13 @@ namespace AppGet.Commands
 
         public async Task ExecuteCommand(AppGetOption option)
         {
+            var commandDic = option.ToDictionary();
+
+            foreach (var pair in commandDic)
+            {
+                SentryTarget.AddTag(pair.Key, pair.Value);
+            }
+
             if (option.Verbose)
             {
                 LogConfigurator.EnableVerboseLogging();

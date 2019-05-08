@@ -57,6 +57,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AppData\InstalledPackagesStoreFixture.cs" />
+    <Compile Include="Commands\CommandOptionExtensionsTests.cs" />
     <Compile Include="CreatePackage\Parsers\VersionParserFixture.cs" />
     <Compile Include="CreatePackage\Root\Prompts\HomePagePromptFixture.cs" />
     <Compile Include="CreatePackage\XRayClientFixture.cs" />
