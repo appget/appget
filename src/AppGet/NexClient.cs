@@ -31,7 +31,6 @@ namespace AppGet
                 };
 
                 await _httpClient.SendAsync(request, TimeSpan.FromSeconds(5));
-
             }
             catch (Exception e)
             {
