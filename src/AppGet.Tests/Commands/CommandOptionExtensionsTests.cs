@@ -20,9 +20,8 @@ namespace AppGet.Tests.Commands
             var dic = installCommand.ToDictionary();
 
             dic["cmd_package"].Should().Be(installCommand.Package);
-            dic["cmd_force"].Should().Be("False");
             dic["cmd_interactivity"].Should().Be("interactive");
-            dic["cmd_force"].Should().Be("false");
+            dic["cmd_force"].Should().Be("False");
             dic["cmd_tag"].Should().Be(null);
             dic["cmd_commandname"].Should().Be("install");
         }
