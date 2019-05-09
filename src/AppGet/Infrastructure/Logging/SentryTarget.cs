@@ -65,7 +65,6 @@ namespace AppGet.Infrastructure.Logging
             var env = new EnvInfo();
 
             _client.Tags.Add("culture", Thread.CurrentThread.CurrentCulture.Name);
-            _client.Tags.Add("args", string.Join(" ", Environment.GetCommandLineArgs()));
             _client.Tags.Add("64_process", Environment.Is64BitProcess.ToString());
             _client.Tags.Add("is_server", EnvInfo.IsWindowsServer().ToString());
             _client.Tags.Add("is_admin", env.IsAdministrator.ToString());
@@ -119,6 +118,7 @@ namespace AppGet.Infrastructure.Logging
                 }
 
                 var extras = logEvent.Properties.ToDictionary(x => x.Key.ToString(), x => x.Value.ToString());
+                extras["args"] = string.Join(" ", Environment.GetCommandLineArgs().Skip(1));
 
                 var ex = logEvent.Exception;
 
