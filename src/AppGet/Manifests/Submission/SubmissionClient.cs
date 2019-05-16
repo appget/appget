@@ -41,7 +41,7 @@ namespace AppGet.Manifests.Submission
                 Content = new StringContent(Json.Serialize(builder), Encoding.UTF8, "application/json")
             };
 
-            var resp = await _httpClient.SendAsync(req, TimeSpan.FromSeconds(30));
+            var resp = await _httpClient.SendAsync(req, TimeSpan.FromSeconds(120));
             return await resp.Deserialize<SubmissionResponse>();
         }
     }

@@ -36,7 +36,7 @@ namespace AppGet.CreatePackage
             _logger.Info($"Requesting analysis on {uri}");
             _logger.Info("This could take a couple of minutes...");
 
-            var resp = await _httpClient.GetAsync(new Uri(url), TimeSpan.FromSeconds(60));
+            var resp = await _httpClient.GetAsync(new Uri(url), TimeSpan.FromSeconds(180));
             var builder = await resp.Deserialize<PackageManifestBuilder>();
 
             _logger.Debug($"Received results for {uri}");
@@ -48,7 +48,7 @@ namespace AppGet.CreatePackage
         {
             var url = $"https://xray.appget.net/xray/installer?url={WebUtility.UrlEncode(uri.ToString())}";
 
-            var resp = await _httpClient.GetAsync(new Uri(url), TimeSpan.FromSeconds(60));
+            var resp = await _httpClient.GetAsync(new Uri(url), TimeSpan.FromSeconds(180));
             var builder = await resp.Deserialize<InstallerBuilder>();
 
             return builder;
