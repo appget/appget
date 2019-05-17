@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AppGet.HostSystem;
+using AppGet.Infrastructure.Logging;
 using AppGet.Installers;
 using AppGet.Manifest;
 using AppGet.PackageRepository;
@@ -70,6 +71,8 @@ namespace AppGet.Update
             {
                 var update = toInstall[index];
 
+                SentryTarget.AddTag("packageid", update.PackageId);
+
                 try
                 {
                     _logger.Info("Installing update {0} of {1}", index + 1, toInstall.Count);
@@ -85,6 +88,10 @@ namespace AppGet.Update
                 {
                     _logger.Fatal(e, "An error occurred while updating {0}", update.PackageId);
                     failed++;
+                }
+                finally
+                {
+                    SentryTarget.AddTag("packageid", null);
                 }
             }
 
