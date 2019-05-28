@@ -90,7 +90,7 @@ begin
   Result := True;
 
   bSuccess := RegQueryDWordValue(HKLM, 'Software\Microsoft\NET Framework Setup\NDP\v4\Full', 'Release', regVersion);
-  if (True = bSuccess) and (regVersion >= 378389) then begin
+  if (True = bSuccess) and (regVersion >= 394254) then begin
     Result := False;
   end;
 end;
@@ -99,7 +99,7 @@ procedure InitializeWizard;
 begin
   if Framework45IsNotInstalled() then
   begin
-    idpAddFile('https://go.microsoft.com/fwlink/?LinkId=863265', DotNetInstallerExe());
+    idpAddFile('https://go.microsoft.com/fwlink/?linkid=2088631', DotNetInstallerExe());
     idpDownloadAfter(wpReady);
   end;
 end;

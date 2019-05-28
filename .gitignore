@@ -183,3 +183,4 @@ FakesAssemblies/
 *.orig
 setup/Output/
 /src/.vs/*
+*/.idea/

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Security.Policy;
 using AppGet.Manifest.Serialization;
 using Newtonsoft.Json;
 
@@ -121,7 +120,7 @@ namespace AppGet.Manifest.Builder
             Location = location;
         }
 
-        public InstallerBuilder(Url url) : this()
+        public InstallerBuilder(Uri url) : this()
         {
             Location = url.ToString();
         }
