@@ -289,7 +289,7 @@
       <Version>2019.1.1</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
-      <Version>9.0.1</Version>
+      <Version>11.0.2</Version>
     </PackageReference>
     <PackageReference Include="NLog">
       <Version>4.6.4</Version>
