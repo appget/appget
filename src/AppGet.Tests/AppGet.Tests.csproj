@@ -67,6 +67,7 @@
     <Compile Include="FileTransfer\TransferCacheServiceFixture.cs" />
     <Compile Include="HostSystem\EnvInfoFixture.cs" />
     <Compile Include="HostSystem\MachineIdFixture.cs" />
+    <Compile Include="HttpBinResponse.cs" />
     <Compile Include="Http\HttpClientFixture.cs" />
     <Compile Include="Http\UserAgentBuilderFixture.cs" />
     <Compile Include="Infrastructure\Composition\ContainerBuilderFixture.cs" />

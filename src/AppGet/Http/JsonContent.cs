@@ -7,7 +7,7 @@ namespace AppGet.Http
     public class JsonContent : StringContent
     {
         public JsonContent(object obj)
-            : base(Json.Serialize(obj), Encoding.Default, "Application/Json")
+            : base(Json.Serialize(obj), Encoding.UTF8, "Application/Json")
         {
         }
     }
