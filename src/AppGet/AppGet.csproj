@@ -183,7 +183,6 @@
     <Compile Include="PackageRepository\Repository.cs" />
     <Compile Include="Properties\SharedAssemblyInfo.cs" />
     <Compile Include="Update\NovoClient.cs" />
-    <Compile Include="Github\GithubKeys.cs" />
     <Compile Include="Installers\ExistReason.cs" />
     <Compile Include="Installers\ExitCodeTypes.cs" />
     <Compile Include="Installers\InstallerWhisperer\AdvancedInstallerWhisperer.cs" />
