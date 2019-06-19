@@ -30,7 +30,7 @@ namespace AppGet.PackageRepository
             {
                 var term = $"{id}";
 
-                if (!string.IsNullOrWhiteSpace(tag))
+                if (!TagHelper.IsLatest(tag))
                 {
                     term += $":{tag}";
                 }

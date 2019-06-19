@@ -12,8 +12,6 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
   </ItemGroup>
   <ItemGroup>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\AppGet.Manifest\AppGet.Manifest.csproj" />
   </ItemGroup>
 </Project>
