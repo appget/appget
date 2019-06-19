@@ -13,7 +13,7 @@ namespace AppGet.Tests.CreatePackage.Root.Prompts
         [SetUp]
         public void Setup()
         {
-            Mocker.SetInstance<IUrlPrompt>(Mocker.Resolve<UrlPrompt>());
+            Mocker.Use<IUrlPrompt>(Mocker.CreateInstance<UrlPrompt>());
         }
 
 

@@ -3,7 +3,7 @@ using AppGet.FileSystem;
 using AppGet.HostSystem;
 using AppGet.Http;
 using AppGet.Infrastructure.Logging;
-using AutoMoq;
+using Moq.AutoMock;
 using NLog;
 using NUnit.Framework;
 
@@ -11,7 +11,7 @@ namespace AppGet.Tests
 {
     public abstract class TestBase<T> where T : class
     {
-        protected AutoMoqer Mocker { get; private set; }
+        protected AutoMocker Mocker { get; private set; }
 
         private T _subject;
 
@@ -21,8 +21,8 @@ namespace AppGet.Tests
         public void BaseSetup()
         {
             _subject = null;
-            Mocker = new AutoMoqer();
-            Mocker.SetInstance(logger);
+            Mocker = new AutoMocker();
+            Mocker.Use(logger);
 
             LogConfigurator.EnableConsoleTarget(LogConfigurator.DetailedLayout, LogLevel.Trace);
         }
@@ -33,7 +33,7 @@ namespace AppGet.Tests
             {
                 if (_subject == null)
                 {
-                    _subject = Mocker.Resolve<T>();
+                    _subject = Mocker.CreateInstance<T>();
                 }
 
                 return _subject;
@@ -44,15 +44,15 @@ namespace AppGet.Tests
 
         protected void WithRealHttp()
         {
-            Mocker.SetInstance<IEnvInfo>(Mocker.Resolve<EnvInfo>());
-            Mocker.SetInstance<IUserAgentBuilder>(Mocker.Resolve<UserAgentBuilder>());
-            Mocker.SetInstance(Mocker.Resolve<MachineId>());
-            Mocker.SetInstance<IHttpClient>(Mocker.Resolve<HttpClient>());
+            Mocker.Use<IEnvInfo>(Mocker.CreateInstance<EnvInfo>());
+            Mocker.Use<IUserAgentBuilder>(Mocker.CreateInstance<UserAgentBuilder>());
+            Mocker.Use(Mocker.CreateInstance<MachineId>());
+            Mocker.Use<IHttpClient>(Mocker.CreateInstance<HttpClient>());
         }
 
         protected void WithRealFileSystem()
         {
-            Mocker.SetInstance<IFileSystem>(Mocker.Resolve<FileSystem.FileSystem>());
+            Mocker.Use<IFileSystem>(Mocker.CreateInstance<FileSystem.FileSystem>());
         }
 
         protected string GetTestPath(string path)

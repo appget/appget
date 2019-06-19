@@ -36,12 +36,12 @@ namespace AppGet.Tests.Manifests
 
         private void GivenApprovedOnly()
         {
-            Mocker.SetInstance((IEnumerable<IEnforceRequirements>)new List<IEnforceRequirements> { _approved.Object });
+            Mocker.Use((IEnumerable<IEnforceRequirements>)new List<IEnforceRequirements> { _approved.Object });
         }
 
         private void GivenRejectedOnly()
         {
-            Mocker.SetInstance((IEnumerable<IEnforceRequirements>)new List<IEnforceRequirements> { _rejected.Object });
+            Mocker.Use((IEnumerable<IEnforceRequirements>)new List<IEnforceRequirements> { _rejected.Object });
         }
 
         private void GivenInstallers(params Installer[] installers)

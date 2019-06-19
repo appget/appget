@@ -10,7 +10,7 @@ namespace AppGet.Tests.HostSystem
         [Test]
         public void get_machine_guid()
         {
-            Mocker.SetInstance<ICalculateHash>(new Sha256());
+            Mocker.Use<ICalculateHash>(new Sha256());
 
             var guid = Subject.MachineKey.Value;
 

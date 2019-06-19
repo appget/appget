@@ -11,7 +11,7 @@ namespace AppGet.Tests.Http
         [Test]
         public void should_generate_user_agents()
         {
-            Mocker.SetInstance<IEnvInfo>(new EnvInfo());
+            Mocker.Use<IEnvInfo>(new EnvInfo());
 
             Subject.GetUserAgent(false).Should().NotBeNullOrWhiteSpace();
             Subject.GetUserAgent(true).Should().NotBeNullOrWhiteSpace();
