@@ -32,18 +32,19 @@ steps:
     solution: '$(solution)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+    maximumCpuCount: true
 
-- task: VSTest@2
-  inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
-    testSelector: 'testAssemblies'
-    testAssemblyVer2: |
-      **\\AppGet.Manifest.Tests.dll
-      !**\*TestAdapter.dll
-      !**\obj\** 
-    otherConsoleOptions: '/Framework:.NETCoreApp,Version=v2.2'
-    runInParallel: true
+# - task: VSTest@2
+#   inputs:
+#     platform: '$(buildPlatform)'
+#     configuration: '$(buildConfiguration)'
+#     testSelector: 'testAssemblies'
+#     testAssemblyVer2: |
+#       **\\AppGet.Manifest.Tests.dll
+#       !**\*TestAdapter.dll
+#       !**\obj\** 
+#     otherConsoleOptions: '/Framework:.NETCoreApp,Version=v2.2'
+#     runInParallel: true
 
 - task: VSTest@2
   inputs:
