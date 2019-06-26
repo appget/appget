@@ -8,6 +8,7 @@ namespace AppGet.Tests.HostSystem
     public class MachineIdFixture : TestBase<MachineId>
     {
         [Test]
+        [Explicit]
         public void get_machine_guid()
         {
             Mocker.Use<ICalculateHash>(new Sha256());

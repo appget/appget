@@ -1,0 +1,85 @@
+# .NET Desktop
+# Build and run tests for .NET Desktop or Windows classic desktop solutions.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
+
+name: 0.8$(Rev:.r)
+# trigger:
+#   branches:
+#     include:
+#     - *
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/AppGet.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+- checkout: self
+  submodules: recursive
+
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: 'Get-ChildItem Env:'
+    failOnStderr: true
+
+- task: NuGetToolInstaller@1
+  inputs:
+    versionSpec: '5.x'
+    checkLatest: true
+
+- task: NuGetCommand@2
+  displayName: Nuget Restore
+  inputs:
+    restoreSolution: '$(solution)'
+
+- task: VSBuild@1
+  displayName: Build
+  inputs:
+    solution: '$(solution)'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+    maximumCpuCount: true
+
+- task: VSTest@2
+  displayName: Test
+  inputs:
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\*tests.dll
+      !**\netcoreapp*\*.*
+      !**\*TestAdapter.dll
+      !**\obj\**
+    otherConsoleOptions: '/Framework:.NETFramework,Version=v4.6.1'
+    runInParallel: true
+
+- task: CmdLine@2
+  displayName: Create Installer
+  inputs:
+    script: 'setup\\inno\\ISCC.exe setup\\appget.iss'
+    failOnStderr: true
+
+- task: CmdLine@2
+  displayName: Sign Installer
+  inputs:
+    script: 'setup\\AzureSignTool\\AzureSignTool.exe sign ^
+      --description-url "https://appget.net" ^
+      --file-digest sha512 ^
+      --azure-key-vault-url $(AKV_URL) ^
+      --azure-key-vault-client-id $(AKV_CLIENT_ID) ^
+      --azure-key-vault-client-secret $(AKV_CLIENT_SECRET) ^
+      --azure-key-vault-certificate appget-authenticode ^
+      --timestamp-rfc3161 http://timestamp.digicert.com ^
+      --timestamp-digest sha512 ^
+      -v ^
+      $(build.artifactstagingdirectory)\appget.$(Build.BuildNumber).exe'
+    failOnStderr: true
+
+- publish: '$(build.artifactstagingdirectory)'
+  artifact: drop

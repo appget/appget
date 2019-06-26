@@ -1,3 +1,5 @@
+ECHO %BUILD_BUILDNUMBER%
+
 setup\AzureSignTool\AzureSignTool.exe sign ^
 --description-url "https://appget.net" ^
 --file-digest sha512 ^
@@ -8,4 +10,4 @@ setup\AzureSignTool\AzureSignTool.exe sign ^
 --timestamp-rfc3161 http://timestamp.digicert.com ^
 --timestamp-digest sha512 ^
 -v ^
-setup\Output\appget.%APPVEYOR_BUILD_VERSION%.exe
+setup\Output\appget.%BUILD_BUILDNUMBER%.exe

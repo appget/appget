@@ -8,7 +8,8 @@
 #define AppURL "https://appget.net/"
 #define SupportURL "https://github.com/appget/appget/issues"
 #define UpdatesURL "https://github.com/appget/appget/releases"
-#define BuildNumber GetEnv('APPVEYOR_BUILD_VERSION')
+#define BuildNumber GetEnv('BUILD_BUILDNUMBER')
+#define OutputDir GetEnv('BUILD_ARTIFACTSTAGINGDIRECTORY')
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -36,6 +37,7 @@ AppContact={#SupportURL}
 VersionInfoVersion={#BuildNumber}
 UninstallDisplayName={#AppName}
 ChangesEnvironment=yes
+OutputDir={#OutputDir}
 
 ;Windows 7 SP1
 MinVersion=6.1sp1
@@ -136,5 +138,3 @@ begin
       end;
   end;
 end;
-
-
