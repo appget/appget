@@ -1,5 +1,9 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
+using System.Linq;
+using System.Reflection;
+using AppGet.Extensions;
 using AppGet.FileSystem;
 using AppGet.HostSystem;
 using AppGet.Manifest.Serialization;
@@ -28,13 +32,17 @@ namespace AppGet.AppData
             _pathResolver = pathResolver;
         }
 
+        public string YamlText => _fileSystem.FileExists(FilePath) ? _fileSystem.ReadAllText(FilePath) : null;
+
         public T Load()
         {
+            var yaml = YamlText;
+
             T data = null;
-            if (_fileSystem.FileExists(FilePath))
+
+            if (!yaml.IsNullOrWhiteSpace())
             {
-                var content = _fileSystem.ReadAllText(FilePath);
-                data = Yaml.Deserialize<T>(content);
+                data = Yaml.Deserialize<T>(YamlText);
             }
 
             if (data == null)
@@ -42,14 +50,34 @@ namespace AppGet.AppData
                 data = new T();
             }
 
-            SetDefaults(data);
+            LoadDefaults(data);
+            SetInitialValues(data);
 
             return data;
         }
 
-        protected virtual void SetDefaults(T data)
+        private void LoadDefaults(T data)
         {
+            var props = data.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
+            foreach (var prop in props)
+            {
+                if (!(prop.GetCustomAttributes().FirstOrDefault(c => c is DefaultValueAttribute) is DefaultValueAttribute defaultValueAttribute)) continue;
+
+                if (Nullable.GetUnderlyingType(prop.PropertyType) == null)
+                {
+                    throw new InvalidOperationException($"Config Property {prop.Name} has a DefaultValue attribute but is not nullable");
+                }
+
+                if (prop.GetValue(data) == null)
+                {
+                    prop.SetValue(data, defaultValueAttribute.Value);
+                }
+            }
+        }
+
+        protected virtual void SetInitialValues(T data)
+        {
         }
 
         public void Save(T data)

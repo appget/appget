@@ -105,6 +105,8 @@
     <Compile Include="Commands\AppGetSentenceBuilder.cs" />
     <Compile Include="Commands\CommandExecutor.cs" />
     <Compile Include="Commands\CommandOptionExtensions.cs" />
+    <Compile Include="Commands\Config\ConfigOptions.cs" />
+    <Compile Include="Commands\Config\ConfigCommandHandler.cs" />
     <Compile Include="Commands\CustomHelpWriter.cs" />
     <Compile Include="Commands\ICommandExecutor.cs" />
     <Compile Include="Commands\IVariableInteractivityCommand.cs" />

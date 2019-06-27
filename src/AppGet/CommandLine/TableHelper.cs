@@ -19,10 +19,12 @@ namespace AppGet.CommandLine
             Print(table);
         }
 
-
         public static void ShowTable(this IEnumerable<PackageUpdate> updates, bool printStatus = true)
         {
-            var columns = new List<string> { "Name", "Package ID", "Installed Version", "Available Version" };
+            var columns = new List<string>
+            {
+                "Name", "Package ID", "Installed Version", "Available Version"
+            };
 
             if (printStatus)
             {
@@ -33,7 +35,10 @@ namespace AppGet.CommandLine
 
             foreach (var update in updates)
             {
-                var cols = new List<object> { update.Name, update.PackageId, update.InstalledVersion, update.AvailableVersion };
+                var cols = new List<object>
+                {
+                    update.Name, update.PackageId, update.InstalledVersion, update.AvailableVersion
+                };
 
                 if (printStatus)
                 {
@@ -46,8 +51,7 @@ namespace AppGet.CommandLine
             Print(table);
         }
 
-
-        private static void Print(ConsoleTable table)
+        public static void Print(this ConsoleTable table)
         {
             Console.WriteLine();
             table.Write(Format.MarkDown);

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.ComponentModel;
+using System.IO;
 using AppGet.FileSystem;
 using AppGet.HostSystem;
 
@@ -8,6 +9,9 @@ namespace AppGet.AppData
     {
         public string LocalRepository { get; set; }
         public string ApiKey { get; set; }
+
+        [DefaultValue(true)]
+        public bool? ShareAnonymousData { get; set; }
     }
 
     public class ConfigStore : StoreBase<Config>
@@ -22,7 +26,7 @@ namespace AppGet.AppData
             _pathResolver = pathResolver;
         }
 
-        protected override void SetDefaults(Config data)
+        protected override void SetInitialValues(Config data)
         {
             if (data.LocalRepository == null)
             {
