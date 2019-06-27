@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using AppGet.Commands.Config;
 using CommandLine;
 using CommandLine.Text;
 using JetBrains.Annotations;
@@ -37,18 +38,18 @@ namespace AppGet.Commands
             return args;
         }
 
-
         public AppGetOption Parse(params string[] args)
         {
             var cleanArgs = args.Select(c =>
-            {
-                if (c.StartsWith("/"))
                 {
-                    return "-" + c.Remove(0, 1);
-                }
+                    if (c.StartsWith("/"))
+                    {
+                        return "-" + c.Remove(0, 1);
+                    }
 
-                return c;
-            }).ToList();
+                    return c;
+                })
+                .ToList();
 
             if (cleanArgs.Count == 1 && cleanArgs[0].StartsWith("appget://"))
             {
@@ -69,18 +70,20 @@ namespace AppGet.Commands
             switch (result.Tag)
             {
                 case ParserResultType.Parsed:
-                    {
-                        return (AppGetOption)((Parsed<object>)result).Value;
-                    }
+                {
+                    return (AppGetOption)((Parsed<object>)result).Value;
+                }
+
                 case ParserResultType.NotParsed:
-                    {
-                        var notParsed = (NotParsed<object>)result;
-                        throw new CommandLineParserException(notParsed.Errors);
-                    }
+                {
+                    var notParsed = (NotParsed<object>)result;
+                    throw new CommandLineParserException(notParsed.Errors);
+                }
+
                 default:
-                    {
-                        throw new ArgumentOutOfRangeException(nameof(result.Tag), result.Tag, "Invalid Tag");
-                    }
+                {
+                    throw new ArgumentOutOfRangeException(nameof(result.Tag), result.Tag, "Invalid Tag");
+                }
             }
         }
     }
