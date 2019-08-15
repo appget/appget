@@ -3,7 +3,7 @@
 # Add steps that publish symbols, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
 
-name: 0.8$(Rev:.r)
+name: 1.0$(Rev:.r)
 # trigger:
 #   branches:
 #     include:
@@ -37,6 +37,40 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
+- task: Assembly-Info-NetCore@2
+  inputs:
+    Path: '$(Build.SourcesDirectory)'
+    FileNames: '**/*.csproj'
+    InsertAttributes: true
+    FileEncoding: 'auto'
+    WriteBOM: false
+    Company: 'AppGet Software'
+    Copyright: 'Copyright © 2019'
+    Product: 'AppGet'
+    Description: 'Open Package Manager for WindowsⓇ'
+    PackageLicenseUrl: 'https://github.com/appget/appget/blob/master/LICENSE'
+    PackageProjectUrl: 'https://appget.url'
+    RepositoryUrl: 'https://github.com/appget/appget'
+    VersionNumber: '$(build.buildnumber)'
+    FileVersionNumber: '$(build.buildnumber)'
+    PackageVersion: '$(build.buildnumber)'
+
+- task: Assembly-Info-NetFramework@2
+  inputs:
+    Path: '$(Build.SourcesDirectory)'
+    FileNames: '**\*AssemblyInfo.cs'
+    InsertAttributes: false
+    FileEncoding: 'auto'
+    WriteBOM: false
+    Title: 'AppGet'
+    Product: 'AppGet'
+    Description: 'Open Package Manager for WindowsⓇ'
+    Company: 'AppGet Software'
+    Copyright: 'Copyright © 2019'
+    VersionNumber: '$(build.buildnumber)'
+    FileVersionNumber: '$(build.buildnumber)'
+    InformationalVersion: '$(build.buildnumber)'
+
 - task: VSBuild@1
   displayName: Build
   inputs:
@@ -62,20 +96,19 @@ steps:
 - task: CmdLine@2
   displayName: Sign Binaries
   inputs:
-    script: |
-      setup\\AzureSignTool\\AzureSignTool.exe sign
-      --description-url "https://appget.net"
-      --file-digest sha512
-      --azure-key-vault-url $(AKV_URL)
-      --azure-key-vault-client-id $(AKV_CLIENT_ID)
-      --azure-key-vault-client-secret $(AKV_CLIENT_SECRET)
-      --azure-key-vault-certificate appget-authenticode
-      --timestamp-rfc3161 http://timestamp.digicert.com
-      --timestamp-digest sha512
-      --verbose
-      $(build.sourcedirectory)\src\AppGet.Gui\bin\Release\appget.exe
-      $(build.sourcedirectory)\src\AppGet.Gui\bin\Release\appget.gui.exe
-      $(build.sourcedirectory)\src\AppGet.Gui\bin\Release\AppGet.Manifest.dll
+    script: 'setup\\AzureSignTool\\AzureSignTool.exe sign ^
+      --description-url "https://appget.net" ^
+      --file-digest sha512 ^
+      --azure-key-vault-url $(AKV_URL) ^
+      --azure-key-vault-client-id $(AKV_CLIENT_ID) ^
+      --azure-key-vault-client-secret $(AKV_CLIENT_SECRET) ^
+      --azure-key-vault-certificate appget-authenticode ^
+      --timestamp-rfc3161 http://timestamp.digicert.com ^
+      --timestamp-digest sha512 ^
+      --verbose ^
+      $(build.sourcedirectory)\src\AppGet.Gui\bin\Release\appget.exe ^
+      $(build.sourcedirectory)\src\AppGet.Gui\bin\Release\appget.gui.exe ^
+      $(build.sourcedirectory)\src\AppGet.Gui\bin\Release\AppGet.Manifest.dll'
     failOnStderr: true
 
 - task: CmdLine@2
@@ -87,17 +120,16 @@ steps:
 - task: CmdLine@2
   displayName: Sign Installer
   inputs:
-    script: |
-      setup\\AzureSignTool\\AzureSignTool.exe sign
-      --description-url "https://appget.net"
-      --file-digest sha512
-      --azure-key-vault-url $(AKV_URL)
-      --azure-key-vault-client-id $(AKV_CLIENT_ID)
-      --azure-key-vault-client-secret $(AKV_CLIENT_SECRET)
-      --azure-key-vault-certificate appget-authenticode
-      --timestamp-rfc3161 http://timestamp.digicert.com
-      --timestamp-digest sha512
-      --verbose
+    script: 'setup\\AzureSignTool\\AzureSignTool.exe sign ^
+      --description-url "https://appget.net" ^
+      --file-digest sha512 ^
+      --azure-key-vault-url $(AKV_URL) ^
+      --azure-key-vault-client-id $(AKV_CLIENT_ID) ^
+      --azure-key-vault-client-secret $(AKV_CLIENT_SECRET) ^
+      --azure-key-vault-certificate appget-authenticode ^
+      --timestamp-rfc3161 http://timestamp.digicert.com ^
+      --timestamp-digest sha512 ^
+      --verbose ^
       $(build.artifactstagingdirectory)\appget.$(Build.BuildNumber).exe'
     failOnStderr: true
 
