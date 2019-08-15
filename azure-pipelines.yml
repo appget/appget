@@ -106,9 +106,9 @@ steps:
       --timestamp-rfc3161 http://timestamp.digicert.com ^
       --timestamp-digest sha512 ^
       --verbose ^
-      $(build.sourcedirectory)\src\AppGet.Gui\bin\Release\appget.exe ^
-      $(build.sourcedirectory)\src\AppGet.Gui\bin\Release\appget.gui.exe ^
-      $(build.sourcedirectory)\src\AppGet.Gui\bin\Release\AppGet.Manifest.dll'
+      $(build.sourcesdirectory)\src\AppGet.Gui\bin\Release\appget.exe ^
+      $(build.sourcesdirectory)\src\AppGet.Gui\bin\Release\appget.gui.exe ^
+      $(build.sourcesdirectory)\src\AppGet.Gui\bin\Release\AppGet.Manifest.dll'
     failOnStderr: true
 
 - task: CmdLine@2
