@@ -3,7 +3,7 @@
 # Add steps that publish symbols, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
 
-name: 0.8$(Rev:.r)
+name: 1.0$(Rev:.r)
 # trigger:
 #   branches:
 #     include:
@@ -36,6 +36,40 @@ steps:
   displayName: Nuget Restore
   inputs:
     restoreSolution: '$(solution)'
+
+- task: Assembly-Info-NetCore@2
+  inputs:
+    Path: '$(Build.SourcesDirectory)'
+    FileNames: '**/*.csproj'
+    InsertAttributes: true
+    FileEncoding: 'auto'
+    WriteBOM: false
+    Company: 'AppGet Software'
+    Copyright: 'Copyright © 2019'
+    Product: 'AppGet'
+    Description: 'Open Package Manager for WindowsⓇ'
+    PackageLicenseUrl: 'https://github.com/appget/appget/blob/master/LICENSE'
+    PackageProjectUrl: 'https://appget.url'
+    RepositoryUrl: 'https://github.com/appget/appget'
+    VersionNumber: '$(build.buildnumber)'
+    FileVersionNumber: '$(build.buildnumber)'
+    PackageVersion: '$(build.buildnumber)'
+
+- task: Assembly-Info-NetFramework@2
+  inputs:
+    Path: '$(Build.SourcesDirectory)'
+    FileNames: '**\*AssemblyInfo.cs'
+    InsertAttributes: false
+    FileEncoding: 'auto'
+    WriteBOM: false
+    Title: 'AppGet'
+    Product: 'AppGet'
+    Description: 'Open Package Manager for WindowsⓇ'
+    Company: 'AppGet Software'
+    Copyright: 'Copyright © 2019'
+    VersionNumber: '$(build.buildnumber)'
+    FileVersionNumber: '$(build.buildnumber)'
+    InformationalVersion: '$(build.buildnumber)'
 
 - task: VSBuild@1
   displayName: Build

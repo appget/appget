@@ -10,6 +10,5 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>AppGet package manifest facilities</description>
     <language>en-US</language>
-    <copyright>Copyright © 2018</copyright>
   </metadata>
 </package>

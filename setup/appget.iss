@@ -8,6 +8,7 @@
 #define AppURL "https://appget.net/"
 #define SupportURL "https://github.com/appget/appget/issues"
 #define UpdatesURL "https://github.com/appget/appget/releases"
+#define Copyright "Copyright 2019"
 #define BuildNumber GetEnv('BUILD_BUILDNUMBER')
 #define OutputDir GetEnv('BUILD_ARTIFACTSTAGINGDIRECTORY')
 
@@ -22,6 +23,8 @@ AppPublisher={#AppPublisher}
 AppPublisherURL={#AppURL}
 AppSupportURL={#SupportURL}
 AppUpdatesURL={#UpdatesURL}
+VersionInfoDescription='AppGet Installer'
+AppCopyright={#Copyright}
 DefaultDirName={commonappdata}\{#AppName}\bin
 DisableDirPage=yes
 DefaultGroupName={#AppName}
