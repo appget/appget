@@ -60,19 +60,22 @@ steps:
     runInParallel: true
 
 - task: CmdLine@2
-  displayName: Sign Installer
+  displayName: Sign Binaries
   inputs:
-    script: 'setup\\AzureSignTool\\AzureSignTool.exe sign ^
-      --description-url "https://appget.net" ^
-      --file-digest sha512 ^
-      --azure-key-vault-url $(AKV_URL) ^
-      --azure-key-vault-client-id $(AKV_CLIENT_ID) ^
-      --azure-key-vault-client-secret $(AKV_CLIENT_SECRET) ^
-      --azure-key-vault-certificate appget-authenticode ^
-      --timestamp-rfc3161 http://timestamp.digicert.com ^
-      --timestamp-digest sha512 ^
-      -v ^
-      $(build.sourcedirectory)\src\AppGet.Gui\bin\Release\appget*'
+    script: |
+      setup\\AzureSignTool\\AzureSignTool.exe sign
+      --description-url "https://appget.net"
+      --file-digest sha512
+      --azure-key-vault-url $(AKV_URL)
+      --azure-key-vault-client-id $(AKV_CLIENT_ID)
+      --azure-key-vault-client-secret $(AKV_CLIENT_SECRET)
+      --azure-key-vault-certificate appget-authenticode
+      --timestamp-rfc3161 http://timestamp.digicert.com
+      --timestamp-digest sha512
+      --verbose
+      $(build.sourcedirectory)\src\AppGet.Gui\bin\Release\appget.exe
+      $(build.sourcedirectory)\src\AppGet.Gui\bin\Release\appget.gui.exe
+      $(build.sourcedirectory)\src\AppGet.Gui\bin\Release\AppGet.Manifest.dll
     failOnStderr: true
 
 - task: CmdLine@2
@@ -84,16 +87,17 @@ steps:
 - task: CmdLine@2
   displayName: Sign Installer
   inputs:
-    script: 'setup\\AzureSignTool\\AzureSignTool.exe sign ^
-      --description-url "https://appget.net" ^
-      --file-digest sha512 ^
-      --azure-key-vault-url $(AKV_URL) ^
-      --azure-key-vault-client-id $(AKV_CLIENT_ID) ^
-      --azure-key-vault-client-secret $(AKV_CLIENT_SECRET) ^
-      --azure-key-vault-certificate appget-authenticode ^
-      --timestamp-rfc3161 http://timestamp.digicert.com ^
-      --timestamp-digest sha512 ^
-      -v ^
+    script: |
+      setup\\AzureSignTool\\AzureSignTool.exe sign
+      --description-url "https://appget.net"
+      --file-digest sha512
+      --azure-key-vault-url $(AKV_URL)
+      --azure-key-vault-client-id $(AKV_CLIENT_ID)
+      --azure-key-vault-client-secret $(AKV_CLIENT_SECRET)
+      --azure-key-vault-certificate appget-authenticode
+      --timestamp-rfc3161 http://timestamp.digicert.com
+      --timestamp-digest sha512
+      --verbose
       $(build.artifactstagingdirectory)\appget.$(Build.BuildNumber).exe'
     failOnStderr: true
 
