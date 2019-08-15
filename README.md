@@ -1,12 +1,12 @@
 # Getting Started
 
-### Install AppGet
+## Install AppGet
 
 Install the latest version of AppGet [Download](https://dl.appget.net/appget/appget.setup.exe)
 
 
 
-### Installing an Application
+## Installing an Application
 
 - Browse the list of [Available Packages](https://appget.net/packages)
 
@@ -18,7 +18,7 @@ C:\appget install firefox
 
 
 
-### Searching the Repository
+## Searching the Repository
 
 - You can search the AppGet repository for available packages using the `search` command
 
@@ -26,3 +26,5 @@ C:\appget install firefox
 C:\appget search fire
 ```
 
+## Documentation
+https://docs.appget.net/
