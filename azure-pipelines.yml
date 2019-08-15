@@ -94,6 +94,24 @@ steps:
     runInParallel: true
 
 - task: CmdLine@2
+  displayName: Sign Binaries
+  inputs:
+    script: 'setup\\AzureSignTool\\AzureSignTool.exe sign ^
+      --description-url "https://appget.net" ^
+      --file-digest sha512 ^
+      --azure-key-vault-url $(AKV_URL) ^
+      --azure-key-vault-client-id $(AKV_CLIENT_ID) ^
+      --azure-key-vault-client-secret $(AKV_CLIENT_SECRET) ^
+      --azure-key-vault-certificate appget-authenticode ^
+      --timestamp-rfc3161 http://timestamp.digicert.com ^
+      --timestamp-digest sha512 ^
+      --verbose ^
+      $(build.sourcesdirectory)\src\AppGet.Gui\bin\Release\appget.exe ^
+      $(build.sourcesdirectory)\src\AppGet.Gui\bin\Release\appget.gui.exe ^
+      $(build.sourcesdirectory)\src\AppGet.Gui\bin\Release\AppGet.Manifest.dll'
+    failOnStderr: true
+
+- task: CmdLine@2
   displayName: Create Installer
   inputs:
     script: 'setup\\inno\\ISCC.exe setup\\appget.iss'
@@ -111,7 +129,7 @@ steps:
       --azure-key-vault-certificate appget-authenticode ^
       --timestamp-rfc3161 http://timestamp.digicert.com ^
       --timestamp-digest sha512 ^
-      -v ^
+      --verbose ^
       $(build.artifactstagingdirectory)\appget.$(Build.BuildNumber).exe'
     failOnStderr: true
 
