@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using AppGet.Manifest.Serialization;
 using Newtonsoft.Json;
 using YamlDotNet.Serialization;
@@ -38,13 +39,42 @@ namespace AppGet.Manifest
             Installers = new List<Installer>();
         }
 
+        public PackageManifest(PackageManifest manifest)
+        {
+            Id = manifest.Id;
+            Name = manifest.Name;
+            Version = manifest.Version;
+
+            Home = manifest.Home;
+            Repo = manifest.Repo;
+            License = manifest.License;
+
+            InstallMethod = manifest.InstallMethod;
+            Args = manifest.Args;
+
+            Installers = manifest.Installers.Select(i => new Installer
+            {
+                Architecture = i.Architecture,
+                Location = i.Location,
+                Sha256 = i.Sha256
+            }).ToList();
+
+            Tag = manifest.Tag;
+        }
+
         public override string ToString()
         {
             return $"{Id} {Version}".Trim();
         }
 
-        public string ToYaml()
+        public virtual string ToYaml()
         {
+            // make sure we aren't serializing child classes.
+            if (this.GetType() != typeof(PackageManifest))
+            {
+                return new PackageManifest(this).ToYaml();
+            }
+
             return Yaml.Serialize(this);
         }
 
