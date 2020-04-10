@@ -84,6 +84,11 @@ namespace AppGet.Manifest
             var id = Id.Trim().ToLower();
             return IsLatest ? $"{id}" : $"{id}_{tag}";
         }
+
+        public string GetFilePath()
+        {
+            return $"manifests/{this.Id}/{GetFileName()}.yaml";
+        }
     }
 
     public class InstallArgs
