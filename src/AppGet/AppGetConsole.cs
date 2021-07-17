@@ -40,7 +40,6 @@ namespace AppGet
                 var container = ContainerBuilder.Container;
 
                 LogConfigurator.EnableConsoleTarget(LogConfigurator.FriendlyLayout, LogLevel.Info);
-                LogConfigurator.EnableSentryTarget("https://aa5e806801bc4d4f99a6112160128dbe@sentry.appget.net/7");
                 LogConfigurator.EnableFileTarget(LogLevel.Trace);
 
                 try
@@ -58,9 +57,11 @@ namespace AppGet
                     args = TakeArgsFromInput().SkipWhile(c => c.ToLowerInvariant() == "appget").ToArray();
                 }
 
-                var commandExecutor = container.Resolve<ICommandExecutor>();
-                await commandExecutor.ExecuteCommand(args);
-                return 0;
+                Logger.Warn("Thank you for all your support!");
+                Logger.Warn("AppGet is no longer maintained and is shutting down. You should probably look into WinGet ;)");
+                Logger.Warn("See https://appget.net for more details.");
+
+                return 404;
             }
             catch (CommandLineParserException)
             {
