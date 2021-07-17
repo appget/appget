@@ -79,19 +79,19 @@ steps:
     configuration: '$(buildConfiguration)'
     maximumCpuCount: true
 
-- task: VSTest@2
-  displayName: Test
-  inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
-    testSelector: 'testAssemblies'
-    testAssemblyVer2: |
-      **\*tests.dll
-      !**\netcoreapp*\*.*
-      !**\*TestAdapter.dll
-      !**\obj\**
-    otherConsoleOptions: '/Framework:.NETFramework,Version=v4.6.1'
-    runInParallel: true
+# - task: VSTest@2
+#   displayName: Test
+#   inputs:
+#     platform: '$(buildPlatform)'
+#     configuration: '$(buildConfiguration)'
+#     testSelector: 'testAssemblies'
+#     testAssemblyVer2: |
+#       **\*tests.dll
+#       !**\netcoreapp*\*.*
+#       !**\*TestAdapter.dll
+#       !**\obj\**
+#     otherConsoleOptions: '/Framework:.NETFramework,Version=v4.6.1'
+#     runInParallel: true
 
 # - task: CmdLine@2
 #   displayName: Sign Binaries
